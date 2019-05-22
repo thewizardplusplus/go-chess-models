@@ -33,7 +33,10 @@ func TestNewPieceGroup(test *testing.T) {
 			position: Position{4, 2},
 		},
 	}
-	if !reflect.DeepEqual(pieces, expectedPieces) {
+	if !reflect.DeepEqual(
+		pieces,
+		expectedPieces,
+	) {
 		test.Fail()
 	}
 }
@@ -51,7 +54,10 @@ func TestPieceGroupAdd(test *testing.T) {
 			position: Position{4, 2},
 		},
 	}
-	if !reflect.DeepEqual(pieces, expectedPieces) {
+	if !reflect.DeepEqual(
+		pieces,
+		expectedPieces,
+	) {
 		test.Fail()
 	}
 }
@@ -73,7 +79,10 @@ func TestPieceGroupMove(test *testing.T) {
 			position: Position{6, 5},
 		},
 	}
-	if !reflect.DeepEqual(pieces, expectedPieces) {
+	if !reflect.DeepEqual(
+		pieces,
+		expectedPieces,
+	) {
 		test.Fail()
 	}
 }
@@ -93,7 +102,10 @@ func TestPieceGroupCopy(test *testing.T) {
 			position: Position{4, 2},
 		},
 	}
-	if !reflect.DeepEqual(pieces, expectedPieces) {
+	if !reflect.DeepEqual(
+		pieces,
+		expectedPieces,
+	) {
 		test.Fail()
 	}
 
@@ -102,7 +114,10 @@ func TestPieceGroupCopy(test *testing.T) {
 			position: Position{2, 3},
 		},
 	}
-	if !reflect.DeepEqual(piecesCopy, expectedPiecesCopy) {
+	if !reflect.DeepEqual(
+		piecesCopy,
+		expectedPiecesCopy,
+	) {
 		test.Fail()
 	}
 }
