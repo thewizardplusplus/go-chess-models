@@ -58,3 +58,32 @@ func TestPieceGroupMove(test *testing.T) {
 		test.Fail()
 	}
 }
+
+func TestPieceGroupCopy(test *testing.T) {
+	pieces := make(PieceGroup)
+	pieces.Add(MockPiece{Position{2, 3}})
+
+	piecesCopy := pieces.Copy()
+	pieces.Add(MockPiece{Position{4, 2}})
+
+	expectedPieces := PieceGroup{
+		Position{2, 3}: MockPiece{
+			position: Position{2, 3},
+		},
+		Position{4, 2}: MockPiece{
+			position: Position{4, 2},
+		},
+	}
+	if !reflect.DeepEqual(pieces, expectedPieces) {
+		test.Fail()
+	}
+
+	expectedPiecesCopy := PieceGroup{
+		Position{2, 3}: MockPiece{
+			position: Position{2, 3},
+		},
+	}
+	if !reflect.DeepEqual(piecesCopy, expectedPiecesCopy) {
+		test.Fail()
+	}
+}

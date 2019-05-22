@@ -34,3 +34,13 @@ func (group PieceGroup) Move(move Move) {
 	group.Add(piece)
 	delete(group, move.Start)
 }
+
+// Copy ...
+func (group PieceGroup) Copy() PieceGroup {
+	groupCopy := make(PieceGroup)
+	for position, piece := range group {
+		groupCopy[position] = piece
+	}
+
+	return groupCopy
+}
