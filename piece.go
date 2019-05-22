@@ -21,6 +21,18 @@ type Piece interface {
 // PieceGroup ...
 type PieceGroup map[Position]Piece
 
+// NewPieceGroup ...
+func NewPieceGroup(
+	pieces []Piece,
+) PieceGroup {
+	group := make(PieceGroup)
+	for _, piece := range pieces {
+		group.Add(piece)
+	}
+
+	return group
+}
+
 // Add ...
 func (group PieceGroup) Add(piece Piece) {
 	group[piece.Position()] = piece

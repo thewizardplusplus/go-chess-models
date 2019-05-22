@@ -19,6 +19,25 @@ func (piece MockPiece) ApplyPosition(
 	return MockPiece{position}
 }
 
+func TestNewPieceGroup(test *testing.T) {
+	pieces := NewPieceGroup([]Piece{
+		MockPiece{Position{2, 3}},
+		MockPiece{Position{4, 2}},
+	})
+
+	expectedPieces := PieceGroup{
+		Position{2, 3}: MockPiece{
+			position: Position{2, 3},
+		},
+		Position{4, 2}: MockPiece{
+			position: Position{4, 2},
+		},
+	}
+	if !reflect.DeepEqual(pieces, expectedPieces) {
+		test.Fail()
+	}
+}
+
 func TestPieceGroupAdd(test *testing.T) {
 	pieces := make(PieceGroup)
 	pieces.Add(MockPiece{Position{2, 3}})
