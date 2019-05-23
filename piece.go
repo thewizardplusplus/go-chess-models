@@ -26,6 +26,7 @@ type Piece interface {
 	Color() Color
 	Position() Position
 	ApplyPosition(position Position) Piece
+	CheckMove(move Move, board Board) bool
 }
 
 // PieceGroup ...

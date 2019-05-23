@@ -24,6 +24,13 @@ func (piece MockPiece) ApplyPosition(
 	return MockPiece{piece.color, position}
 }
 
+func (piece MockPiece) CheckMove(
+	move Move,
+	board Board,
+) bool {
+	return true
+}
+
 func TestNewPieceGroup(test *testing.T) {
 	pieces := NewPieceGroup([]Piece{
 		MockPiece{position: Position{2, 3}},

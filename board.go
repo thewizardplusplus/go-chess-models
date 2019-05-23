@@ -2,36 +2,37 @@ package chessmodels
 
 // Size ...
 type Size struct {
-	Width  int
-	Height int
+  Width  int
+  Height int
 }
 
 // Board ...
 type Board struct {
-	size   Size
-	pieces PieceGroup
+  size   Size
+  pieces PieceGroup
 }
 
 // NewBoard ...
 func NewBoard(
-	size Size,
-	pieces PieceGroup,
+  size Size,
+  pieces PieceGroup,
 ) Board {
-	return Board{size, pieces}
+  return Board{size, pieces}
 }
 
 // ApplyMove ...
 // It doesn't check that the move is correct.
 func (board Board) ApplyMove(
-	move Move,
+  move Move,
 ) Board {
-	pieces := board.pieces.Copy()
-	pieces.Move(move)
+  pieces := board.pieces.Copy()
+  pieces.Move(move)
 
-	return NewBoard(board.size, pieces)
+  return NewBoard(board.size, pieces)
 }
 
 // CheckMove ...
+// It doesn't check that move positions is inside the board.
 /*func (board Board) CheckMove(
   move Move,
 ) error {
@@ -49,5 +50,11 @@ func (board Board) ApplyMove(
     return ErrFriendlyTarget
   }
 
-  return piece.CheckMove(board, move)
+  if !piece.CheckMove(move, board) {
+    return ErrIllegalMove
+  }
+
+  // TODO: check for a check
+
+  return nil
 }*/
