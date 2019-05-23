@@ -89,5 +89,18 @@ func (board Board) CheckColor() (
 	checkColor Color,
 	ok bool,
 ) {
+	moves := board.LegalMoves()
+	for _, move := range moves {
+		piece, ok := board.pieces[move.Finish]
+		if ok && piece.Kind() == King {
+			return piece.Color(), true
+		}
+	}
+
 	return Black, false
+}
+
+// LegalMoves ...
+func (board Board) LegalMoves() []Move {
+	return nil
 }
