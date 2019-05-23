@@ -23,10 +23,28 @@ type Size struct {
 	Height int
 }
 
+// Positions ...
+func (size Size) Positions() []Position {
+	var positions []Position
+	width, height := size.Width, size.Height
+	for rank := 0; rank < height; rank++ {
+		for file := 0; file < width; file++ {
+			position := Position{file, rank}
+			positions = append(
+				positions,
+				position,
+			)
+		}
+	}
+
+	return positions
+}
+
 // Board ...
 type Board struct {
-	size   Size
-	pieces PieceGroup
+	size      Size
+	positions []Position
+	pieces    PieceGroup
 }
 
 // NewBoard ...
@@ -34,7 +52,8 @@ func NewBoard(
 	size Size,
 	pieces PieceGroup,
 ) Board {
-	return Board{size, pieces}
+	positions := size.Positions()
+	return Board{size, positions, pieces}
 }
 
 // ApplyMove ...
@@ -45,7 +64,11 @@ func (board Board) ApplyMove(
 	pieces := board.pieces.Copy()
 	pieces.Move(move)
 
-	return NewBoard(board.size, pieces)
+	return Board{
+		size:      board.size,
+		positions: board.positions,
+		pieces:    pieces,
+	}
 }
 
 // CheckMove ...
@@ -102,5 +125,29 @@ func (board Board) CheckColor() (
 
 // LegalMoves ...
 func (board Board) LegalMoves() []Move {
-	return nil
+	var moves []Move
+	for _, piece := range board.pieces {
+		piecePosition := piece.Position()
+		pieceMoves := board.
+			LegalMovesForPosition(piecePosition)
+		moves = append(moves, pieceMoves...)
+	}
+
+	return moves
+}
+
+// LegalMovesForPosition ...
+func (board Board) LegalMovesForPosition(
+	start Position,
+) []Move {
+	var moves []Move
+	for _, finish := range board.positions {
+		move := Move{start, finish}
+		err := board.CheckMove(move)
+		if err == nil {
+			moves = append(moves, move)
+		}
+	}
+
+	return moves
 }

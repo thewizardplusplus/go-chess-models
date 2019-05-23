@@ -17,7 +17,8 @@ func TestBoardApplyMove(test *testing.T) {
 	})
 
 	expectedBoard := Board{
-		size: Size{5, 5},
+		size:      Size{5, 5},
+		positions: Size{5, 5}.Positions(),
 		pieces: PieceGroup{
 			Position{2, 3}: MockPiece{
 				position: Position{2, 3},
@@ -35,7 +36,8 @@ func TestBoardApplyMove(test *testing.T) {
 	}
 
 	expectedBoardCopy := Board{
-		size: Size{5, 5},
+		size:      Size{5, 5},
+		positions: Size{5, 5}.Positions(),
 		pieces: PieceGroup{
 			Position{2, 3}: MockPiece{
 				position: Position{2, 3},
