@@ -40,6 +40,19 @@ func (size Size) Positions() []Position {
 	return positions
 }
 
+// MovesForPosition ...
+func (size Size) MovesForPosition(
+	start Position,
+) []Move {
+	var moves []Move
+	for _, finish := range size.Positions() {
+		move := Move{start, finish}
+		moves = append(moves, move)
+	}
+
+	return moves
+}
+
 // Board ...
 type Board struct {
 	size   Size
@@ -134,13 +147,13 @@ func (board Board) LegalMovesForColor(
 func (board Board) LegalMovesForPosition(
 	start Position,
 ) []Move {
-	var moves []Move
-	positions := board.size.Positions()
-	for _, finish := range positions {
-		move := Move{start, finish}
+	var legalMoves []Move
+	moves := board.size.
+		MovesForPosition(start)
+	for _, move := range moves {
 		err := board.CheckMove(move)
 		if err == nil {
-			moves = append(moves, move)
+			legalMoves = append(legalMoves, move)
 		}
 	}
 
