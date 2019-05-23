@@ -42,9 +42,8 @@ func (size Size) Positions() []Position {
 
 // Board ...
 type Board struct {
-	size      Size
-	positions []Position
-	pieces    PieceGroup
+	size   Size
+	pieces PieceGroup
 }
 
 // NewBoard ...
@@ -52,8 +51,7 @@ func NewBoard(
 	size Size,
 	pieces PieceGroup,
 ) Board {
-	positions := size.Positions()
-	return Board{size, positions, pieces}
+	return Board{size, pieces}
 }
 
 // ApplyMove ...
@@ -64,11 +62,7 @@ func (board Board) ApplyMove(
 	pieces := board.pieces.Copy()
 	pieces.Move(move)
 
-	return Board{
-		size:      board.size,
-		positions: board.positions,
-		pieces:    pieces,
-	}
+	return Board{board.size, pieces}
 }
 
 // CheckMove ...
@@ -141,7 +135,8 @@ func (board Board) LegalMovesForPosition(
 	start Position,
 ) []Move {
 	var moves []Move
-	for _, finish := range board.positions {
+	positions := board.size.Positions()
+	for _, finish := range positions {
 		move := Move{start, finish}
 		err := board.CheckMove(move)
 		if err == nil {
