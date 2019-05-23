@@ -30,3 +30,24 @@ func (board Board) ApplyMove(
 
 	return NewBoard(board.size, pieces)
 }
+
+// CheckMove ...
+/*func (board Board) CheckMove(
+  move Move,
+) error {
+  if move.Start == move.Finish {
+    return ErrNoMove
+  }
+
+  piece, ok := board.pieces[move.Start]
+  if !ok {
+    return ErrNoPiece
+  }
+
+  target, ok := board.pieces[move.Finish]
+  if ok && piece.Color() == target.Color() {
+    return ErrFriendlyTarget
+  }
+
+  return piece.CheckMove(board, move)
+}*/

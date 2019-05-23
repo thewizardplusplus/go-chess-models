@@ -7,8 +7,8 @@ import (
 
 func TestBoardApplyMove(test *testing.T) {
 	pieces := NewPieceGroup([]Piece{
-		MockPiece{Position{2, 3}},
-		MockPiece{Position{4, 2}},
+		MockPiece{position: Position{2, 3}},
+		MockPiece{position: Position{4, 2}},
 	})
 	board := NewBoard(Size{5, 5}, pieces)
 	boardCopy := board.ApplyMove(Move{

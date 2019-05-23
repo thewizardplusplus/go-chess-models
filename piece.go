@@ -1,5 +1,14 @@
 package chessmodels
 
+// Color ...
+type Color int
+
+// ...
+const (
+	Black Color = iota
+	White
+)
+
 // Position ...
 type Position struct {
 	File int // column
@@ -14,6 +23,7 @@ type Move struct {
 
 // Piece ...
 type Piece interface {
+	Color() Color
 	Position() Position
 	ApplyPosition(position Position) Piece
 }
