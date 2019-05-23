@@ -6,8 +6,13 @@ import (
 )
 
 type MockPiece struct {
+	kind     Kind
 	color    Color
 	position Position
+}
+
+func (piece MockPiece) Kind() Kind {
+	return piece.kind
 }
 
 func (piece MockPiece) Color() Color {
@@ -21,7 +26,11 @@ func (piece MockPiece) Position() Position {
 func (piece MockPiece) ApplyPosition(
 	position Position,
 ) Piece {
-	return MockPiece{piece.color, position}
+	return MockPiece{
+		kind:     piece.kind,
+		color:    piece.color,
+		position: position,
+	}
 }
 
 func (piece MockPiece) CheckMove(

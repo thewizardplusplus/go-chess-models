@@ -1,5 +1,18 @@
 package chessmodels
 
+// Kind ...
+type Kind int
+
+// ...
+const (
+	King Kind = iota
+	Queen
+	Rook
+	Bishop
+	Knight
+	Pawn
+)
+
 // Color ...
 type Color int
 
@@ -23,6 +36,7 @@ type Move struct {
 
 // Piece ...
 type Piece interface {
+	Kind() Kind
 	Color() Color
 	Position() Position
 	ApplyPosition(position Position) Piece
