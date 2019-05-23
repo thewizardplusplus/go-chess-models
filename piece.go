@@ -22,6 +22,15 @@ const (
 	White
 )
 
+// Negative ...
+func (color Color) Negative() Color {
+	if color == Black {
+		return White
+	}
+
+	return Black
+}
+
 // Position ...
 type Position struct {
 	File int // column

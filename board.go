@@ -94,39 +94,39 @@ func (board Board) CheckMove(
 		return ErrIllegalMove
 	}
 
-	checkColor, ok := board.CheckColor()
-	if ok && checkColor == piece.Color() {
+	if board.IsCheckForColor(piece.Color()) {
 		return ErrCheck
 	}
 
 	return nil
 }
 
-// CheckColor checks for a check
-// and returns a color of a side under it.
-//
-// If there isn't a check on the board
-// the false will be returned
-// as a second result.
-func (board Board) CheckColor() (
-	checkColor Color,
-	ok bool,
-) {
-	moves := board.LegalMoves()
+// IsCheckForColor ...
+func (board Board) IsCheckForColor(
+	color Color,
+) bool {
+	moves := board.
+		LegalMovesForColor(color.Negative())
 	for _, move := range moves {
 		piece, ok := board.pieces[move.Finish]
 		if ok && piece.Kind() == King {
-			return piece.Color(), true
+			return true
 		}
 	}
 
-	return Black, false
+	return false
 }
 
 // LegalMoves ...
-func (board Board) LegalMoves() []Move {
+func (board Board) LegalMovesForColor(
+	color Color,
+) []Move {
 	var moves []Move
 	for _, piece := range board.pieces {
+		if piece.Color() != color {
+			continue
+		}
+
 		piecePosition := piece.Position()
 		pieceMoves := board.
 			LegalMovesForPosition(piecePosition)
