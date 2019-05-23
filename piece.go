@@ -25,6 +25,9 @@ type Move struct {
 	Finish Position
 }
 
+// MoveGroup ...
+type MoveGroup map[Position][]Move
+
 // Piece ...
 type Piece interface {
 	Kind() Kind

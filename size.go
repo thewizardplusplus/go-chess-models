@@ -35,3 +35,14 @@ func (size Size) MovesForPosition(
 
 	return moves
 }
+
+// Moves ...
+func (size Size) Moves() MoveGroup {
+	moves := make(MoveGroup)
+	for _, position := range size.Positions() {
+		moves[position] =
+			size.MovesForPosition(position)
+	}
+
+	return moves
+}
