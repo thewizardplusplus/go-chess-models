@@ -89,3 +89,17 @@ func (group PieceGroup) ByColor(
 
 	return pieces
 }
+
+// PositionsByColor ...
+func (group PieceGroup) PositionsByColor(
+	color Color,
+) []Position {
+	var positions []Position
+	pieces := group.ByColor(color)
+	for _, piece := range pieces {
+		position := piece.Position()
+		positions = append(positions, position)
+	}
+
+	return positions
+}

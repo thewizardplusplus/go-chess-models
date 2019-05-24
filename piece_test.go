@@ -194,3 +194,38 @@ func TestPieceGroupByColor(
 		test.Fail()
 	}
 }
+
+func TestPieceGroupPositionsByColor(
+	test *testing.T,
+) {
+	pieces := make(PieceGroup)
+	pieces.Add(MockPiece{
+		color:    Black,
+		position: Position{0, 5},
+	})
+	pieces.Add(MockPiece{
+		color:    White,
+		position: Position{1, 2},
+	})
+	pieces.Add(MockPiece{
+		color:    Black,
+		position: Position{2, 3},
+	})
+	pieces.Add(MockPiece{
+		color:    White,
+		position: Position{4, 2},
+	})
+
+	whitePositions := pieces.
+		PositionsByColor(White)
+	expectedWhitePositions := []Position{
+		Position{1, 2},
+		Position{4, 2},
+	}
+	if !reflect.DeepEqual(
+		whitePositions,
+		expectedWhitePositions,
+	) {
+		test.Fail()
+	}
+}
