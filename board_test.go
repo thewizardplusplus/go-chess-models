@@ -6,11 +6,10 @@ import (
 )
 
 func TestBoardApplyMove(test *testing.T) {
-	pieces := NewPieceGroup([]Piece{
+	board := NewBoard(Size{5, 5}, []Piece{
 		MockPiece{position: Position{2, 3}},
 		MockPiece{position: Position{4, 2}},
 	})
-	board := NewBoard(Size{5, 5}, pieces)
 	boardCopy := board.ApplyMove(Move{
 		Start:  Position{4, 2},
 		Finish: Position{6, 5},

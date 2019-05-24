@@ -27,12 +27,12 @@ type Board struct {
 // NewBoard ...
 func NewBoard(
 	size Size,
-	pieces PieceGroup,
+	pieces []Piece,
 ) Board {
 	return Board{
 		size:   size,
 		moves:  size.Moves(),
-		pieces: pieces,
+		pieces: NewPieceGroup(pieces),
 	}
 }
 
