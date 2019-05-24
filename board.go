@@ -102,11 +102,8 @@ func (board Board) LegalMovesForColor(
 	color Color,
 ) []Move {
 	var moves []Move
-	for _, piece := range board.pieces {
-		if piece.Color() != color {
-			continue
-		}
-
+	pieces := board.pieces.ByColor(color)
+	for _, piece := range pieces {
 		piecePosition := piece.Position()
 		pieceMoves := board.
 			LegalMovesForPosition(piecePosition)

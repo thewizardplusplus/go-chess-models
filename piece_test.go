@@ -154,3 +154,43 @@ func TestPieceGroupCopy(test *testing.T) {
 		test.Fail()
 	}
 }
+
+func TestPieceGroupByColor(
+	test *testing.T,
+) {
+	pieces := make(PieceGroup)
+	pieces.Add(MockPiece{
+		color:    Black,
+		position: Position{0, 5},
+	})
+	pieces.Add(MockPiece{
+		color:    White,
+		position: Position{1, 2},
+	})
+	pieces.Add(MockPiece{
+		color:    Black,
+		position: Position{2, 3},
+	})
+	pieces.Add(MockPiece{
+		color:    White,
+		position: Position{4, 2},
+	})
+
+	whitePieces := pieces.ByColor(White)
+	expectedWhitePieces := []Piece{
+		MockPiece{
+			color:    White,
+			position: Position{1, 2},
+		},
+		MockPiece{
+			color:    White,
+			position: Position{4, 2},
+		},
+	}
+	if !reflect.DeepEqual(
+		whitePieces,
+		expectedWhitePieces,
+	) {
+		test.Fail()
+	}
+}

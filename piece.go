@@ -75,3 +75,17 @@ func (group PieceGroup) Copy() PieceGroup {
 
 	return groupCopy
 }
+
+// ByColor ...
+func (group PieceGroup) ByColor(
+	color Color,
+) []Piece {
+	var pieces []Piece
+	for _, piece := range group {
+		if piece.Color() == color {
+			pieces = append(pieces, piece)
+		}
+	}
+
+	return pieces
+}
