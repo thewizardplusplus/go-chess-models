@@ -20,6 +20,7 @@ var (
 // Board ...
 type Board struct {
 	size   Size
+	moves  MoveGroup
 	pieces PieceGroup
 }
 
@@ -28,7 +29,11 @@ func NewBoard(
 	size Size,
 	pieces PieceGroup,
 ) Board {
-	return Board{size, pieces}
+	return Board{
+		size:   size,
+		moves:  size.Moves(),
+		pieces: pieces,
+	}
 }
 
 // ApplyMove ...
@@ -39,7 +44,11 @@ func (board Board) ApplyMove(
 	pieces := board.pieces.Copy()
 	pieces.Move(move)
 
-	return Board{board.size, pieces}
+	return Board{
+		size:   board.size,
+		moves:  board.moves,
+		pieces: pieces,
+	}
 }
 
 // CheckMove ...
@@ -111,13 +120,11 @@ func (board Board) LegalMovesForColor(
 func (board Board) LegalMovesForPosition(
 	start Position,
 ) []Move {
-	var legalMoves []Move
-	moves := board.size.
-		MovesForPosition(start)
-	for _, move := range moves {
+	var moves []Move
+	for _, move := range board.moves[start] {
 		err := board.CheckMove(move)
 		if err == nil {
-			legalMoves = append(legalMoves, move)
+			moves = append(moves, move)
 		}
 	}
 
