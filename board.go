@@ -55,6 +55,7 @@ func (board Board) ApplyMove(
 // It doesn't check that move positions is inside the board.
 func (board Board) CheckMove(
 	move Move,
+	allowedCheck bool,
 ) error {
 	if move.Start == move.Finish {
 		return ErrNoMove
@@ -74,11 +75,13 @@ func (board Board) CheckMove(
 		return ErrIllegalMove
 	}
 
-	nextBoard := board.ApplyMove(move)
-	if nextBoard.IsCheckForColor(
-		piece.Color(),
-	) {
-		return ErrCheck
+	if !allowedCheck {
+		nextBoard := board.ApplyMove(move)
+		if nextBoard.IsCheckForColor(
+			piece.Color(),
+		) {
+			return ErrCheck
+		}
 	}
 
 	return nil
@@ -88,8 +91,10 @@ func (board Board) CheckMove(
 func (board Board) IsCheckForColor(
 	color Color,
 ) bool {
-	moves := board.
-		LegalMovesForColor(color.Negative())
+	moves := board.LegalMovesForColor(
+		color.Negative(),
+		true, // allowedCheck
+	)
 	for _, move := range moves {
 		piece, ok := board.pieces[move.Finish]
 		if ok && piece.Kind() == King {
@@ -103,13 +108,17 @@ func (board Board) IsCheckForColor(
 // LegalMoves ...
 func (board Board) LegalMovesForColor(
 	color Color,
+	allowedCheck bool,
 ) []Move {
 	var moves []Move
 	positions := board.pieces.
 		PositionsByColor(color)
 	for _, position := range positions {
-		positionMoves := board.
-			LegalMovesForPosition(position)
+		positionMoves :=
+			board.LegalMovesForPosition(
+				position,
+				allowedCheck,
+			)
 		moves = append(moves, positionMoves...)
 	}
 
@@ -119,10 +128,14 @@ func (board Board) LegalMovesForColor(
 // LegalMovesForPosition ...
 func (board Board) LegalMovesForPosition(
 	start Position,
+	allowedCheck bool,
 ) []Move {
 	var moves []Move
 	for _, move := range board.moves[start] {
-		err := board.CheckMove(move)
+		err := board.CheckMove(
+			move,
+			allowedCheck,
+		)
 		if err == nil {
 			moves = append(moves, move)
 		}
