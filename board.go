@@ -74,7 +74,10 @@ func (board Board) CheckMove(
 		return ErrIllegalMove
 	}
 
-	if board.IsCheckForColor(piece.Color()) {
+	nextBoard := board.ApplyMove(move)
+	if nextBoard.IsCheckForColor(
+		piece.Color(),
+	) {
 		return ErrCheck
 	}
 

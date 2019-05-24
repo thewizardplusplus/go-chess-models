@@ -36,7 +36,7 @@ func TestBoardApplyMove(test *testing.T) {
 		MockPiece{position: Position{2, 3}},
 		MockPiece{position: Position{4, 2}},
 	})
-	boardCopy := board.ApplyMove(Move{
+	nextBoard := board.ApplyMove(Move{
 		Start:  Position{4, 2},
 		Finish: Position{6, 5},
 	})
@@ -60,7 +60,7 @@ func TestBoardApplyMove(test *testing.T) {
 		test.Fail()
 	}
 
-	expectedBoardCopy := Board{
+	expectedNextBoard := Board{
 		size:  Size{5, 5},
 		moves: Size{5, 5}.Moves(),
 		pieces: PieceGroup{
@@ -73,8 +73,8 @@ func TestBoardApplyMove(test *testing.T) {
 		},
 	}
 	if !reflect.DeepEqual(
-		boardCopy,
-		expectedBoardCopy,
+		nextBoard,
+		expectedNextBoard,
 	) {
 		test.Fail()
 	}
