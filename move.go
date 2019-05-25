@@ -6,9 +6,6 @@ type Move struct {
 	Finish Position
 }
 
-// MoveGroup ...
-type MoveGroup map[Position][]Move
-
 // MoveChecker ...
 type MoveChecker interface {
 	CheckMove(
@@ -31,9 +28,13 @@ func (
 	allowedCheck bool,
 ) []Move {
 	var moves []Move
-	positions := generator.Board.pieces.
-		PositionsByColor(color)
-	for _, position := range positions {
+	pieces := generator.Board.pieces
+	for _, piece := range pieces {
+		if piece.Color() != color {
+			continue
+		}
+
+		position := piece.Position()
 		positionMoves :=
 			generator.LegalMovesForPosition(
 				position,

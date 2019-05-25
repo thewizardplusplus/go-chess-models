@@ -138,8 +138,6 @@ func TestMoveCheckerLegalMovesForColor(
 			false,
 		)
 		if !reflect.DeepEqual(got, data.want) {
-			test.Log(got)
-			test.Log(data.want)
 			test.Fail()
 		}
 	}
