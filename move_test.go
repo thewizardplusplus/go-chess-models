@@ -17,7 +17,7 @@ func (checker MockMoveChecker) CheckMove(
 	return checker.handler(move)
 }
 
-func TestMoveCheckerLegalMovesForColor(
+func TestMoveCheckerMovesForColor(
 	test *testing.T,
 ) {
 	type args struct {
@@ -133,7 +133,7 @@ func TestMoveCheckerLegalMovesForColor(
 		})
 		checker := MockMoveChecker{data.checker}
 		got := MoveGenerator{board, checker}.
-			LegalMovesForColor(
+			MovesForColor(
 			data.args.color,
 			false,
 		)
@@ -143,7 +143,7 @@ func TestMoveCheckerLegalMovesForColor(
 	}
 }
 
-func TestMoveCheckerLegalMovesForPosition(
+func TestMoveCheckerMovesForPosition(
 	test *testing.T,
 ) {
 	type args struct {
@@ -211,7 +211,7 @@ func TestMoveCheckerLegalMovesForPosition(
 		board := NewBoard(Size{2, 2}, nil)
 		checker := MockMoveChecker{data.checker}
 		got := MoveGenerator{board, checker}.
-			LegalMovesForPosition(
+			MovesForPosition(
 			data.args.start,
 			false,
 		)

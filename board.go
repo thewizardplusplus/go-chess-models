@@ -95,7 +95,7 @@ func (board Board) IsCheckForColor(
 	color Color,
 ) bool {
 	generator := MoveGenerator{board, board}
-	moves := generator.LegalMovesForColor(
+	moves := generator.MovesForColor(
 		color.Negative(),
 		true, // allowedCheck
 	)

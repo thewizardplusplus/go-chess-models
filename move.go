@@ -20,10 +20,10 @@ type MoveGenerator struct {
 	MoveChecker MoveChecker
 }
 
-// LegalMovesForColor ...
+// MovesForColor ...
 func (
 	generator MoveGenerator,
-) LegalMovesForColor(
+) MovesForColor(
 	color Color,
 	allowedCheck bool,
 ) []Move {
@@ -36,7 +36,7 @@ func (
 
 		position := piece.Position()
 		positionMoves :=
-			generator.LegalMovesForPosition(
+			generator.MovesForPosition(
 				position,
 				allowedCheck,
 			)
@@ -46,10 +46,10 @@ func (
 	return moves
 }
 
-// LegalMovesForPosition ...
+// MovesForPosition ...
 func (
 	generator MoveGenerator,
-) LegalMovesForPosition(
+) MovesForPosition(
 	start Position,
 	allowedCheck bool,
 ) []Move {
