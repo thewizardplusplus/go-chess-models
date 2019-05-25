@@ -17,6 +17,134 @@ func (checker MockMoveChecker) CheckMove(
 	return checker.handler(move)
 }
 
+func TestMoveCheckerLegalMovesForColor(
+	test *testing.T,
+) {
+	type args struct {
+		color Color
+	}
+	type data struct {
+		args    args
+		checker func(move Move) error
+		want    []Move
+	}
+
+	for _, data := range []data{
+		data{
+			args: args{Black},
+			checker: func(move Move) error {
+				return nil
+			},
+			want: []Move{
+				Move{
+					Start:  Position{0, 0},
+					Finish: Position{0, 0},
+				},
+				Move{
+					Start:  Position{0, 0},
+					Finish: Position{1, 0},
+				},
+				Move{
+					Start:  Position{0, 0},
+					Finish: Position{0, 1},
+				},
+				Move{
+					Start:  Position{0, 0},
+					Finish: Position{1, 1},
+				},
+
+				Move{
+					Start:  Position{0, 1},
+					Finish: Position{0, 0},
+				},
+				Move{
+					Start:  Position{0, 1},
+					Finish: Position{1, 0},
+				},
+				Move{
+					Start:  Position{0, 1},
+					Finish: Position{0, 1},
+				},
+				Move{
+					Start:  Position{0, 1},
+					Finish: Position{1, 1},
+				},
+			},
+		},
+		data{
+			args: args{White},
+			checker: func(move Move) error {
+				return nil
+			},
+			want: []Move{
+				Move{
+					Start:  Position{1, 0},
+					Finish: Position{0, 0},
+				},
+				Move{
+					Start:  Position{1, 0},
+					Finish: Position{1, 0},
+				},
+				Move{
+					Start:  Position{1, 0},
+					Finish: Position{0, 1},
+				},
+				Move{
+					Start:  Position{1, 0},
+					Finish: Position{1, 1},
+				},
+
+				Move{
+					Start:  Position{1, 1},
+					Finish: Position{0, 0},
+				},
+				Move{
+					Start:  Position{1, 1},
+					Finish: Position{1, 0},
+				},
+				Move{
+					Start:  Position{1, 1},
+					Finish: Position{0, 1},
+				},
+				Move{
+					Start:  Position{1, 1},
+					Finish: Position{1, 1},
+				},
+			},
+		},
+	} {
+		board := NewBoard(Size{2, 2}, []Piece{
+			MockPiece{
+				color:    Black,
+				position: Position{0, 0},
+			},
+			MockPiece{
+				color:    Black,
+				position: Position{0, 1},
+			},
+			MockPiece{
+				color:    White,
+				position: Position{1, 0},
+			},
+			MockPiece{
+				color:    White,
+				position: Position{1, 1},
+			},
+		})
+		checker := MockMoveChecker{data.checker}
+		got := MoveGenerator{board, checker}.
+			LegalMovesForColor(
+			data.args.color,
+			false,
+		)
+		if !reflect.DeepEqual(got, data.want) {
+			test.Log(got)
+			test.Log(data.want)
+			test.Fail()
+		}
+	}
+}
+
 func TestMoveCheckerLegalMovesForPosition(
 	test *testing.T,
 ) {
@@ -43,10 +171,22 @@ func TestMoveCheckerLegalMovesForPosition(
 				return nil
 			},
 			want: []Move{
-				Move{Position{1, 1}, Position{0, 0}},
-				Move{Position{1, 1}, Position{1, 0}},
-				Move{Position{1, 1}, Position{0, 1}},
-				Move{Position{1, 1}, Position{1, 1}},
+				Move{
+					Start:  Position{1, 1},
+					Finish: Position{0, 0},
+				},
+				Move{
+					Start:  Position{1, 1},
+					Finish: Position{1, 0},
+				},
+				Move{
+					Start:  Position{1, 1},
+					Finish: Position{0, 1},
+				},
+				Move{
+					Start:  Position{1, 1},
+					Finish: Position{1, 1},
+				},
 			},
 		},
 		data{
@@ -59,8 +199,14 @@ func TestMoveCheckerLegalMovesForPosition(
 				return nil
 			},
 			want: []Move{
-				Move{Position{1, 1}, Position{0, 0}},
-				Move{Position{1, 1}, Position{1, 0}},
+				Move{
+					Start:  Position{1, 1},
+					Finish: Position{0, 0},
+				},
+				Move{
+					Start:  Position{1, 1},
+					Finish: Position{1, 0},
+				},
 			},
 		},
 	} {
@@ -72,8 +218,6 @@ func TestMoveCheckerLegalMovesForPosition(
 			false,
 		)
 		if !reflect.DeepEqual(got, data.want) {
-			test.Log(got)
-			test.Log(data.want)
 			test.Fail()
 		}
 	}
