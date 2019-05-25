@@ -52,17 +52,24 @@ func (
 	start Position,
 	allowedCheck bool,
 ) []Move {
-	var legalMoves []Move
-	moves := generator.Board.moves[start]
-	for _, move := range moves {
-		err := generator.MoveChecker.CheckMove(
-			move,
-			allowedCheck,
-		)
-		if err == nil {
-			legalMoves = append(legalMoves, move)
+	var moves []Move
+	width := generator.Board.size.Width
+	height := generator.Board.size.Height
+	for rank := 0; rank < height; rank++ {
+		for file := 0; file < width; file++ {
+			finish := Position{file, rank}
+			move := Move{start, finish}
+			err := generator.MoveChecker.CheckMove(
+				move,
+				allowedCheck,
+			)
+			if err != nil {
+				continue
+			}
+
+			moves = append(moves, move)
 		}
 	}
 
-	return legalMoves
+	return moves
 }

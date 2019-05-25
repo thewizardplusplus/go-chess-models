@@ -17,10 +17,15 @@ var (
 	ErrCheck = errors.New("check")
 )
 
+// Size ...
+type Size struct {
+	Width  int
+	Height int
+}
+
 // Board ...
 type Board struct {
 	size   Size
-	moves  MoveGroup
 	pieces PieceGroup
 }
 
@@ -31,7 +36,6 @@ func NewBoard(
 ) Board {
 	return Board{
 		size:   size,
-		moves:  size.Moves(),
 		pieces: NewPieceGroup(pieces),
 	}
 }
@@ -46,7 +50,6 @@ func (board Board) ApplyMove(
 
 	return Board{
 		size:   board.size,
-		moves:  board.moves,
 		pieces: pieces,
 	}
 }
