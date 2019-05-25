@@ -91,7 +91,8 @@ func (board Board) CheckMove(
 func (board Board) IsCheckForColor(
 	color Color,
 ) bool {
-	moves := board.LegalMovesForColor(
+	generator := MoveGenerator{board, board}
+	moves := generator.LegalMovesForColor(
 		color.Negative(),
 		true, // allowedCheck
 	)
@@ -103,43 +104,4 @@ func (board Board) IsCheckForColor(
 	}
 
 	return false
-}
-
-// LegalMoves ...
-func (board Board) LegalMovesForColor(
-	color Color,
-	allowedCheck bool,
-) []Move {
-	var moves []Move
-	positions := board.pieces.
-		PositionsByColor(color)
-	for _, position := range positions {
-		positionMoves :=
-			board.LegalMovesForPosition(
-				position,
-				allowedCheck,
-			)
-		moves = append(moves, positionMoves...)
-	}
-
-	return moves
-}
-
-// LegalMovesForPosition ...
-func (board Board) LegalMovesForPosition(
-	start Position,
-	allowedCheck bool,
-) []Move {
-	var moves []Move
-	for _, move := range board.moves[start] {
-		err := board.CheckMove(
-			move,
-			allowedCheck,
-		)
-		if err == nil {
-			moves = append(moves, move)
-		}
-	}
-
-	return moves
 }
