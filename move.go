@@ -64,5 +64,5 @@ func (
 		}
 	}
 
-	return moves
+	return legalMoves
 }
