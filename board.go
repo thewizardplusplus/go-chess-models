@@ -94,10 +94,13 @@ func (board Board) CheckMove(
 func (board Board) IsCheckForColor(
 	color Color,
 ) bool {
-	generator := MoveGenerator{board, board}
+	generator := DefaultMoveGenerator{
+		Board:          board,
+		MoveChecker:    board,
+		IsCheckAllowed: true,
+	}
 	moves := generator.MovesForColor(
 		color.Negative(),
-		true, // allowedCheck
 	)
 	for _, move := range moves {
 		piece, ok := board.pieces[move.Finish]

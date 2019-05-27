@@ -14,19 +14,17 @@ type MoveChecker interface {
 	) error
 }
 
-// MoveGenerator ...
-type MoveGenerator struct {
-	Board       Board
-	MoveChecker MoveChecker
+// DefaultMoveGenerator ...
+type DefaultMoveGenerator struct {
+	Board          Board
+	MoveChecker    MoveChecker
+	IsCheckAllowed bool
 }
 
 // MovesForColor ...
 func (
-	generator MoveGenerator,
-) MovesForColor(
-	color Color,
-	allowedCheck bool,
-) []Move {
+	generator DefaultMoveGenerator,
+) MovesForColor(color Color) []Move {
 	var moves []Move
 	pieces := generator.Board.pieces
 	for _, piece := range pieces {
@@ -36,10 +34,7 @@ func (
 
 		position := piece.Position()
 		positionMoves :=
-			generator.MovesForPosition(
-				position,
-				allowedCheck,
-			)
+			generator.MovesForPosition(position)
 		moves = append(moves, positionMoves...)
 	}
 
@@ -48,11 +43,8 @@ func (
 
 // MovesForPosition ...
 func (
-	generator MoveGenerator,
-) MovesForPosition(
-	start Position,
-	allowedCheck bool,
-) []Move {
+	generator DefaultMoveGenerator,
+) MovesForPosition(start Position) []Move {
 	var moves []Move
 	width := generator.Board.size.Width
 	height := generator.Board.size.Height
@@ -62,7 +54,7 @@ func (
 			move := Move{start, finish}
 			err := generator.MoveChecker.CheckMove(
 				move,
-				allowedCheck,
+				generator.IsCheckAllowed,
 			)
 			if err != nil {
 				continue
