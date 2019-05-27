@@ -37,7 +37,8 @@ func (piece MockPiece) CheckMove(
 	move Move,
 	board Board,
 ) bool {
-	return true
+	panic("not implemented")
+	return false
 }
 
 func TestNewPieceGroup(test *testing.T) {
@@ -126,21 +127,6 @@ func TestPieceGroupCopy(test *testing.T) {
 	pieces.Add(MockPiece{
 		position: Position{4, 2},
 	})
-
-	expectedPieces := PieceGroup{
-		Position{2, 3}: MockPiece{
-			position: Position{2, 3},
-		},
-		Position{4, 2}: MockPiece{
-			position: Position{4, 2},
-		},
-	}
-	if !reflect.DeepEqual(
-		pieces,
-		expectedPieces,
-	) {
-		test.Fail()
-	}
 
 	expectedPiecesCopy := PieceGroup{
 		Position{2, 3}: MockPiece{

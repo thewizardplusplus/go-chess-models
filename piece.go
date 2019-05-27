@@ -51,17 +51,19 @@ func (group PieceGroup) Add(piece Piece) {
 // Move ...
 // It doesn't check that the move is correct.
 func (group PieceGroup) Move(move Move) {
-	piece := group[move.Start].
-		ApplyPosition(move.Finish)
-	group.Add(piece)
+	piece := group[move.Start]
 	delete(group, move.Start)
+
+	movedPiece := piece.
+		ApplyPosition(move.Finish)
+	group.Add(movedPiece)
 }
 
 // Copy ...
 func (group PieceGroup) Copy() PieceGroup {
 	groupCopy := make(PieceGroup)
-	for position, piece := range group {
-		groupCopy[position] = piece
+	for _, piece := range group {
+		groupCopy.Add(piece)
 	}
 
 	return groupCopy
