@@ -33,13 +33,12 @@ func NewBoard(
 	size Size,
 	pieces []Piece,
 ) Board {
-	return Board{
-		size:   size,
-		pieces: NewPieceGroup(pieces),
-	}
+	pieceGroup := NewPieceGroup(pieces)
+	return Board{size, pieceGroup}
 }
 
 // ApplyMove ...
+//
 // It doesn't check that the move is correct.
 func (board Board) ApplyMove(
 	move Move,
@@ -47,14 +46,16 @@ func (board Board) ApplyMove(
 	pieces := board.pieces.Copy()
 	pieces.Move(move)
 
-	return Board{
-		size:   board.size,
-		pieces: pieces,
-	}
+	return Board{board.size, pieces}
 }
 
 // CheckMove ...
-// It doesn't check that move positions is inside the board.
+//
+// It doesn't check that move positions
+// is inside the board.
+//
+// It doesn't check for a check
+// before or after the move.
 func (board Board) CheckMove(
 	move Move,
 ) error {

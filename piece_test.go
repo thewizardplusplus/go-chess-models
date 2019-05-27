@@ -26,11 +26,8 @@ func (piece MockPiece) Position() Position {
 func (piece MockPiece) ApplyPosition(
 	position Position,
 ) Piece {
-	return MockPiece{
-		kind:     piece.kind,
-		color:    piece.color,
-		position: position,
-	}
+	kind, color := piece.kind, piece.color
+	return MockPiece{kind, color, position}
 }
 
 func (piece MockPiece) CheckMove(

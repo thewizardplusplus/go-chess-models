@@ -58,6 +58,7 @@ func (group PieceGroup) Add(piece Piece) {
 }
 
 // Move ...
+//
 // It doesn't check that the move is correct.
 func (group PieceGroup) Move(move Move) {
 	piece := group[move.Start]

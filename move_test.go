@@ -16,7 +16,7 @@ func (checker MockMoveChecker) CheckMove(
 	return checker.handler(move)
 }
 
-func TestDefaultMoveCheckerMovesForColor(
+func TestMoveCheckerMovesForColor(
 	test *testing.T,
 ) {
 	type args struct {
@@ -131,20 +131,15 @@ func TestDefaultMoveCheckerMovesForColor(
 			},
 		})
 		checker := MockMoveChecker{data.checker}
-		generator := DefaultMoveGenerator{
-			Board:       board,
-			MoveChecker: checker,
-		}
-		got := generator.MovesForColor(
-			data.args.color,
-		)
+		got := MoveGenerator{board, checker}.
+			MovesForColor(data.args.color)
 		if !reflect.DeepEqual(got, data.want) {
 			test.Fail()
 		}
 	}
 }
 
-func TestDefaultMoveCheckerMovesForPosition(
+func TestMoveCheckerMovesForPosition(
 	test *testing.T,
 ) {
 	type args struct {
@@ -211,13 +206,8 @@ func TestDefaultMoveCheckerMovesForPosition(
 	} {
 		board := NewBoard(Size{2, 2}, nil)
 		checker := MockMoveChecker{data.checker}
-		generator := DefaultMoveGenerator{
-			Board:       board,
-			MoveChecker: checker,
-		}
-		got := generator.MovesForPosition(
-			data.args.start,
-		)
+		got := MoveGenerator{board, checker}.
+			MovesForPosition(data.args.start)
 		if !reflect.DeepEqual(got, data.want) {
 			test.Fail()
 		}

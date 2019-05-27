@@ -11,15 +11,15 @@ type MoveChecker interface {
 	CheckMove(move Move) error
 }
 
-// DefaultMoveGenerator ...
-type DefaultMoveGenerator struct {
+// MoveGenerator ...
+type MoveGenerator struct {
 	Board       Board
 	MoveChecker MoveChecker
 }
 
 // MovesForColor ...
 func (
-	generator DefaultMoveGenerator,
+	generator MoveGenerator,
 ) MovesForColor(color Color) []Move {
 	var moves []Move
 	pieces := generator.Board.pieces
@@ -29,8 +29,8 @@ func (
 		}
 
 		position := piece.Position()
-		positionMoves :=
-			generator.MovesForPosition(position)
+		positionMoves := generator.
+			MovesForPosition(position)
 		moves = append(moves, positionMoves...)
 	}
 
@@ -39,7 +39,7 @@ func (
 
 // MovesForPosition ...
 func (
-	generator DefaultMoveGenerator,
+	generator MoveGenerator,
 ) MovesForPosition(start Position) []Move {
 	var moves []Move
 	width := generator.Board.size.Width
@@ -48,9 +48,8 @@ func (
 		for file := 0; file < width; file++ {
 			finish := Position{file, rank}
 			move := Move{start, finish}
-			err := generator.MoveChecker.CheckMove(
-				move,
-			)
+			err := generator.MoveChecker.
+				CheckMove(move)
 			if err != nil {
 				continue
 			}
