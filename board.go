@@ -42,6 +42,16 @@ func (board Board) Size() Size {
 	return board.size
 }
 
+// Pieces ...
+func (board Board) Pieces() []Piece {
+	var pieces []Piece
+	for _, piece := range board.pieces {
+		pieces = append(pieces, piece)
+	}
+
+	return pieces
+}
+
 // ApplyMove ...
 //
 // It doesn't check that the move is correct.

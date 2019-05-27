@@ -28,14 +28,9 @@ func (group MoveGroup) Swap(i, j int) {
 }
 
 func (group MoveGroup) Less(i, j int) bool {
-	less := func(a, b Position) bool {
-		return a.File < b.File &&
-			a.Rank < b.Rank
-	}
-
 	a, b := group[i], group[j]
-	return less(a.Start, b.Start) &&
-		less(a.Finish, b.Finish)
+	return positionLess(a.Start, b.Start) &&
+		positionLess(a.Finish, b.Finish)
 }
 
 func TestMoveCheckerMovesForColor(
@@ -158,8 +153,6 @@ func TestMoveCheckerMovesForColor(
 		sort.Sort(MoveGroup(got))
 
 		if !reflect.DeepEqual(got, data.want) {
-			test.Log(got)
-			test.Log(data.want)
 			test.Fail()
 		}
 	}
