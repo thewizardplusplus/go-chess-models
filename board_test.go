@@ -30,6 +30,17 @@ func TestNewBoard(test *testing.T) {
 	}
 }
 
+func TestBoardSize(test *testing.T) {
+	board := NewBoard(Size{5, 5}, nil)
+
+	if !reflect.DeepEqual(
+		board.size,
+		Size{5, 5},
+	) {
+		test.Fail()
+	}
+}
+
 func TestBoardApplyMove(test *testing.T) {
 	board := NewBoard(Size{5, 5}, []Piece{
 		MockPiece{position: Position{2, 3}},

@@ -37,6 +37,11 @@ func NewBoard(
 	return Board{size, pieceGroup}
 }
 
+// Size ...
+func (board Board) Size() Size {
+	return board.size
+}
+
 // ApplyMove ...
 //
 // It doesn't check that the move is correct.
