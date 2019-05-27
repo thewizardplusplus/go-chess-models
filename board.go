@@ -14,7 +14,6 @@ var (
 	ErrIllegalMove = errors.New(
 		"illegal move",
 	)
-	ErrCheck = errors.New("check")
 )
 
 // Size ...
@@ -58,7 +57,6 @@ func (board Board) ApplyMove(
 // It doesn't check that move positions is inside the board.
 func (board Board) CheckMove(
 	move Move,
-	allowedCheck bool,
 ) error {
 	if move.Start == move.Finish {
 		return ErrNoMove
@@ -78,36 +76,5 @@ func (board Board) CheckMove(
 		return ErrIllegalMove
 	}
 
-	if !allowedCheck {
-		nextBoard := board.ApplyMove(move)
-		if nextBoard.IsCheckForColor(
-			piece.Color(),
-		) {
-			return ErrCheck
-		}
-	}
-
 	return nil
-}
-
-// IsCheckForColor ...
-func (board Board) IsCheckForColor(
-	color Color,
-) bool {
-	generator := DefaultMoveGenerator{
-		Board:          board,
-		MoveChecker:    board,
-		IsCheckAllowed: true,
-	}
-	moves := generator.MovesForColor(
-		color.Negative(),
-	)
-	for _, move := range moves {
-		piece, ok := board.pieces[move.Finish]
-		if ok && piece.Kind() == King {
-			return true
-		}
-	}
-
-	return false
 }

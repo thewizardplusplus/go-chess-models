@@ -8,17 +8,13 @@ type Move struct {
 
 // MoveChecker ...
 type MoveChecker interface {
-	CheckMove(
-		move Move,
-		allowedCheck bool,
-	) error
+	CheckMove(move Move) error
 }
 
 // DefaultMoveGenerator ...
 type DefaultMoveGenerator struct {
-	Board          Board
-	MoveChecker    MoveChecker
-	IsCheckAllowed bool
+	Board       Board
+	MoveChecker MoveChecker
 }
 
 // MovesForColor ...
@@ -54,7 +50,6 @@ func (
 			move := Move{start, finish}
 			err := generator.MoveChecker.CheckMove(
 				move,
-				generator.IsCheckAllowed,
 			)
 			if err != nil {
 				continue

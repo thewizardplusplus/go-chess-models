@@ -12,7 +12,6 @@ type MockMoveChecker struct {
 
 func (checker MockMoveChecker) CheckMove(
 	move Move,
-	allowedCheck bool,
 ) error {
 	return checker.handler(move)
 }
