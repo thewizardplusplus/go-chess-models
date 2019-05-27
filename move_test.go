@@ -3,6 +3,7 @@ package chessmodels
 import (
 	"errors"
 	"reflect"
+	"sort"
 	"testing"
 )
 
@@ -14,6 +15,27 @@ func (checker MockMoveChecker) CheckMove(
 	move Move,
 ) error {
 	return checker.handler(move)
+}
+
+type MoveGroup []Move
+
+func (group MoveGroup) Len() int {
+	return len(group)
+}
+
+func (group MoveGroup) Swap(i, j int) {
+	group[i], group[j] = group[j], group[i]
+}
+
+func (group MoveGroup) Less(i, j int) bool {
+	less := func(a, b Position) bool {
+		return a.File < b.File &&
+			a.Rank < b.Rank
+	}
+
+	a, b := group[i], group[j]
+	return less(a.Start, b.Start) &&
+		less(a.Finish, b.Finish)
 }
 
 func TestMoveCheckerMovesForColor(
@@ -133,7 +155,11 @@ func TestMoveCheckerMovesForColor(
 		checker := MockMoveChecker{data.checker}
 		got := MoveGenerator{board, checker}.
 			MovesForColor(data.args.color)
+		sort.Sort(MoveGroup(got))
+
 		if !reflect.DeepEqual(got, data.want) {
+			test.Log(got)
+			test.Log(data.want)
 			test.Fail()
 		}
 	}
@@ -208,6 +234,7 @@ func TestMoveCheckerMovesForPosition(
 		checker := MockMoveChecker{data.checker}
 		got := MoveGenerator{board, checker}.
 			MovesForPosition(data.args.start)
+
 		if !reflect.DeepEqual(got, data.want) {
 			test.Fail()
 		}
