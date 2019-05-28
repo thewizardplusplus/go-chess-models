@@ -6,9 +6,13 @@ import (
 )
 
 type MockPiece struct {
-	kind     Kind
-	color    Color
-	position Position
+	kind      Kind
+	color     Color
+	position  Position
+	checkMove func(
+		move Move,
+		board Board,
+	) bool
 }
 
 func (piece MockPiece) Kind() Kind {
@@ -26,16 +30,23 @@ func (piece MockPiece) Position() Position {
 func (piece MockPiece) ApplyPosition(
 	position Position,
 ) Piece {
-	kind, color := piece.kind, piece.color
-	return MockPiece{kind, color, position}
+	return MockPiece{
+		kind:      piece.kind,
+		color:     piece.color,
+		position:  position,
+		checkMove: piece.checkMove,
+	}
 }
 
 func (piece MockPiece) CheckMove(
 	move Move,
 	board Board,
 ) bool {
-	panic("not implemented")
-	return false
+	if piece.checkMove == nil {
+		panic("not implemented")
+	}
+
+	return piece.checkMove(move, board)
 }
 
 func TestNewPieceGroup(test *testing.T) {

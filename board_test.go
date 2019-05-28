@@ -119,3 +119,125 @@ func TestBoardApplyMove(test *testing.T) {
 		test.Fail()
 	}
 }
+
+func TestBoardCheckMove(test *testing.T) {
+	type fields struct {
+		size   Size
+		pieces pieceGroup
+	}
+	type args struct {
+		move Move
+	}
+	type data struct {
+		fields fields
+		args   args
+		want   error
+	}
+
+	for _, data := range []data{
+		data{
+			fields: fields{
+				size:   Size{2, 2},
+				pieces: nil,
+			},
+			args: args{
+				move: Move{
+					Start:  Position{0, 0},
+					Finish: Position{0, 0},
+				},
+			},
+			want: ErrNoMove,
+		},
+		data{
+			fields: fields{
+				size:   Size{2, 2},
+				pieces: nil,
+			},
+			args: args{
+				move: Move{
+					Start:  Position{0, 0},
+					Finish: Position{1, 1},
+				},
+			},
+			want: ErrNoPiece,
+		},
+		data{
+			fields: fields{
+				size: Size{2, 2},
+				pieces: pieceGroup{
+					Position{0, 0}: MockPiece{
+						color:    Black,
+						position: Position{0, 0},
+					},
+					Position{1, 1}: MockPiece{
+						color:    Black,
+						position: Position{1, 1},
+					},
+				},
+			},
+			args: args{
+				move: Move{
+					Start:  Position{0, 0},
+					Finish: Position{1, 1},
+				},
+			},
+			want: ErrFriendlyTarget,
+		},
+		data{
+			fields: fields{
+				size: Size{2, 2},
+				pieces: pieceGroup{
+					Position{0, 0}: MockPiece{
+						position: Position{0, 0},
+						checkMove: func(
+							move Move,
+							board Board,
+						) bool {
+							return false
+						},
+					},
+				},
+			},
+			args: args{
+				move: Move{
+					Start:  Position{0, 0},
+					Finish: Position{1, 1},
+				},
+			},
+			want: ErrIllegalMove,
+		},
+		data{
+			fields: fields{
+				size: Size{2, 2},
+				pieces: pieceGroup{
+					Position{0, 0}: MockPiece{
+						position: Position{0, 0},
+						checkMove: func(
+							move Move,
+							board Board,
+						) bool {
+							return true
+						},
+					},
+				},
+			},
+			args: args{
+				move: Move{
+					Start:  Position{0, 0},
+					Finish: Position{1, 1},
+				},
+			},
+			want: nil,
+		},
+	} {
+		board := Board{
+			size:   data.fields.size,
+			pieces: data.fields.pieces,
+		}
+		got := board.CheckMove(data.args.move)
+
+		if got != data.want {
+			test.Fail()
+		}
+	}
+}
