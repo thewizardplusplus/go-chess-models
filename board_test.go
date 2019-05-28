@@ -21,8 +21,11 @@ func (group ByPosition) Less(
 ) bool {
 	a := group[i].Position()
 	b := group[j].Position()
-	return a.File < b.File &&
-		a.Rank < b.Rank
+	if a.File == b.File {
+		return a.Rank < b.Rank
+	}
+
+	return a.File < b.File
 }
 
 func TestBoardInterface(test *testing.T) {
