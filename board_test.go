@@ -25,6 +25,16 @@ func (group ByPosition) Less(
 		a.Rank < b.Rank
 }
 
+func TestBoardInterface(test *testing.T) {
+	boardType := reflect.TypeOf(Board{})
+	storageType := reflect.
+		TypeOf((*PieceStorage)(nil)).
+		Elem()
+	if !boardType.Implements(storageType) {
+		test.Fail()
+	}
+}
+
 func TestNewBoard(test *testing.T) {
 	board := NewBoard(Size{5, 5}, []Piece{
 		MockPiece{position: Position{2, 3}},

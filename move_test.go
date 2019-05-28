@@ -33,21 +33,47 @@ func (storage MockPieceStorage) CheckMove(
 func TestMoveCheckerMovesForColor(
 	test *testing.T,
 ) {
+	type fields struct {
+		size      Size
+		pieces    []Piece
+		checkMove func(move Move) error
+	}
 	type args struct {
 		color Color
 	}
 	type data struct {
-		args      args
-		checkMove func(move Move) error
-		want      []Move
+		fields fields
+		args   args
+		want   []Move
 	}
 
 	for _, data := range []data{
 		data{
-			args: args{Black},
-			checkMove: func(move Move) error {
-				return nil
+			fields: fields{
+				size: Size{2, 2},
+				pieces: []Piece{
+					MockPiece{
+						color:    Black,
+						position: Position{0, 0},
+					},
+					MockPiece{
+						color:    Black,
+						position: Position{0, 1},
+					},
+					MockPiece{
+						color:    White,
+						position: Position{1, 0},
+					},
+					MockPiece{
+						color:    White,
+						position: Position{1, 1},
+					},
+				},
+				checkMove: func(move Move) error {
+					return nil
+				},
 			},
+			args: args{Black},
 			want: []Move{
 				Move{
 					Start:  Position{0, 0},
@@ -85,10 +111,31 @@ func TestMoveCheckerMovesForColor(
 			},
 		},
 		data{
-			args: args{White},
-			checkMove: func(move Move) error {
-				return nil
+			fields: fields{
+				size: Size{2, 2},
+				pieces: []Piece{
+					MockPiece{
+						color:    Black,
+						position: Position{0, 0},
+					},
+					MockPiece{
+						color:    Black,
+						position: Position{0, 1},
+					},
+					MockPiece{
+						color:    White,
+						position: Position{1, 0},
+					},
+					MockPiece{
+						color:    White,
+						position: Position{1, 1},
+					},
+				},
+				checkMove: func(move Move) error {
+					return nil
+				},
 			},
+			args: args{White},
 			want: []Move{
 				Move{
 					Start:  Position{1, 0},
@@ -127,26 +174,9 @@ func TestMoveCheckerMovesForColor(
 		},
 	} {
 		storage := MockPieceStorage{
-			size: Size{2, 2},
-			pieces: []Piece{
-				MockPiece{
-					color:    Black,
-					position: Position{0, 0},
-				},
-				MockPiece{
-					color:    Black,
-					position: Position{0, 1},
-				},
-				MockPiece{
-					color:    White,
-					position: Position{1, 0},
-				},
-				MockPiece{
-					color:    White,
-					position: Position{1, 1},
-				},
-			},
-			checkMove: data.checkMove,
+			size:      data.fields.size,
+			pieces:    data.fields.pieces,
+			checkMove: data.fields.checkMove,
 		}
 		got := MoveGenerator{storage}.
 			MovesForColor(data.args.color)
@@ -160,10 +190,15 @@ func TestMoveCheckerMovesForColor(
 func TestMoveCheckerMovesForPosition(
 	test *testing.T,
 ) {
+	type fields struct {
+		size      Size
+		checkMove func(move Move) error
+	}
 	type args struct {
 		start Position
 	}
 	type data struct {
+		fields    fields
 		args      args
 		checkMove func(move Move) error
 		want      []Move
@@ -171,17 +206,23 @@ func TestMoveCheckerMovesForPosition(
 
 	for _, data := range []data{
 		data{
-			args: args{Position{1, 1}},
-			checkMove: func(move Move) error {
-				return errors.New("dummy")
+			fields: fields{
+				size: Size{2, 2},
+				checkMove: func(move Move) error {
+					return errors.New("dummy")
+				},
 			},
+			args: args{Position{1, 1}},
 			want: nil,
 		},
 		data{
-			args: args{Position{1, 1}},
-			checkMove: func(move Move) error {
-				return nil
+			fields: fields{
+				size: Size{2, 2},
+				checkMove: func(move Move) error {
+					return nil
+				},
 			},
+			args: args{Position{1, 1}},
 			want: []Move{
 				Move{
 					Start:  Position{1, 1},
@@ -202,14 +243,17 @@ func TestMoveCheckerMovesForPosition(
 			},
 		},
 		data{
-			args: args{Position{1, 1}},
-			checkMove: func(move Move) error {
-				if move.Finish.Rank == 1 {
-					return errors.New("dummy")
-				}
+			fields: fields{
+				size: Size{2, 2},
+				checkMove: func(move Move) error {
+					if move.Finish.Rank == 1 {
+						return errors.New("dummy")
+					}
 
-				return nil
+					return nil
+				},
 			},
+			args: args{Position{1, 1}},
 			want: []Move{
 				Move{
 					Start:  Position{1, 1},
@@ -223,8 +267,8 @@ func TestMoveCheckerMovesForPosition(
 		},
 	} {
 		storage := MockPieceStorage{
-			size:      Size{2, 2},
-			checkMove: data.checkMove,
+			size:      data.fields.size,
+			checkMove: data.fields.checkMove,
 		}
 		got := MoveGenerator{storage}.
 			MovesForPosition(data.args.start)
