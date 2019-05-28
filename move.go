@@ -6,15 +6,16 @@ type Move struct {
 	Finish Position
 }
 
-// MoveChecker ...
-type MoveChecker interface {
+// PieceStorage ...
+type PieceStorage interface {
+	Size() Size
+	Pieces() []Piece
 	CheckMove(move Move) error
 }
 
 // MoveGenerator ...
 type MoveGenerator struct {
-	Board       Board
-	MoveChecker MoveChecker
+	PieceStorage PieceStorage
 }
 
 // MovesForColor ...
@@ -22,7 +23,7 @@ func (
 	generator MoveGenerator,
 ) MovesForColor(color Color) []Move {
 	var moves []Move
-	pieces := generator.Board.pieces
+	pieces := generator.PieceStorage.Pieces()
 	for _, piece := range pieces {
 		if piece.Color() != color {
 			continue
@@ -42,13 +43,13 @@ func (
 	generator MoveGenerator,
 ) MovesForPosition(start Position) []Move {
 	var moves []Move
-	width := generator.Board.size.Width
-	height := generator.Board.size.Height
+	size := generator.PieceStorage.Size()
+	width, height := size.Width, size.Height
 	for rank := 0; rank < height; rank++ {
 		for file := 0; file < width; file++ {
 			finish := Position{file, rank}
 			move := Move{start, finish}
-			err := generator.MoveChecker.
+			err := generator.PieceStorage.
 				CheckMove(move)
 			if err != nil {
 				continue

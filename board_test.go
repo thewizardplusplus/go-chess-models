@@ -19,13 +19,8 @@ func (group ByPosition) Swap(i, j int) {
 func (group ByPosition) Less(
 	i, j int,
 ) bool {
-	return positionLess(
-		group[i].Position(),
-		group[j].Position(),
-	)
-}
-
-func positionLess(a, b Position) bool {
+	a := group[i].Position()
+	b := group[j].Position()
 	return a.File < b.File &&
 		a.Rank < b.Rank
 }
