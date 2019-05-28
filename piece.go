@@ -37,14 +37,12 @@ type Piece interface {
 	CheckMove(move Move, board Board) bool
 }
 
-// PieceGroup ...
-type PieceGroup map[Position]Piece
+type pieceGroup map[Position]Piece
 
-// NewPieceGroup ...
-func NewPieceGroup(
+func newPieceGroup(
 	pieces []Piece,
-) PieceGroup {
-	group := make(PieceGroup)
+) pieceGroup {
+	group := make(pieceGroup)
 	for _, piece := range pieces {
 		group.Add(piece)
 	}
@@ -52,15 +50,12 @@ func NewPieceGroup(
 	return group
 }
 
-// Add ...
-func (group PieceGroup) Add(piece Piece) {
+func (group pieceGroup) Add(piece Piece) {
 	group[piece.Position()] = piece
 }
 
-// Move ...
-//
 // It doesn't check that the move is correct.
-func (group PieceGroup) Move(move Move) {
+func (group pieceGroup) Move(move Move) {
 	piece := group[move.Start]
 	delete(group, move.Start)
 
@@ -69,9 +64,8 @@ func (group PieceGroup) Move(move Move) {
 	group.Add(movedPiece)
 }
 
-// Copy ...
-func (group PieceGroup) Copy() PieceGroup {
-	groupCopy := make(PieceGroup)
+func (group pieceGroup) Copy() pieceGroup {
+	groupCopy := make(pieceGroup)
 	for _, piece := range group {
 		groupCopy.Add(piece)
 	}

@@ -39,12 +39,12 @@ func (piece MockPiece) CheckMove(
 }
 
 func TestNewPieceGroup(test *testing.T) {
-	pieces := NewPieceGroup([]Piece{
+	pieces := newPieceGroup([]Piece{
 		MockPiece{position: Position{2, 3}},
 		MockPiece{position: Position{4, 2}},
 	})
 
-	expectedPieces := PieceGroup{
+	expectedPieces := pieceGroup{
 		Position{2, 3}: MockPiece{
 			position: Position{2, 3},
 		},
@@ -61,7 +61,7 @@ func TestNewPieceGroup(test *testing.T) {
 }
 
 func TestPieceGroupAdd(test *testing.T) {
-	pieces := make(PieceGroup)
+	pieces := make(pieceGroup)
 	pieces.Add(MockPiece{
 		position: Position{2, 3},
 	})
@@ -69,7 +69,7 @@ func TestPieceGroupAdd(test *testing.T) {
 		position: Position{4, 2},
 	})
 
-	expectedPieces := PieceGroup{
+	expectedPieces := pieceGroup{
 		Position{2, 3}: MockPiece{
 			position: Position{2, 3},
 		},
@@ -86,7 +86,7 @@ func TestPieceGroupAdd(test *testing.T) {
 }
 
 func TestPieceGroupMove(test *testing.T) {
-	pieces := make(PieceGroup)
+	pieces := make(pieceGroup)
 	pieces.Add(MockPiece{
 		position: Position{2, 3},
 	})
@@ -98,7 +98,7 @@ func TestPieceGroupMove(test *testing.T) {
 		Finish: Position{6, 5},
 	})
 
-	expectedPieces := PieceGroup{
+	expectedPieces := pieceGroup{
 		Position{2, 3}: MockPiece{
 			position: Position{2, 3},
 		},
@@ -115,7 +115,7 @@ func TestPieceGroupMove(test *testing.T) {
 }
 
 func TestPieceGroupCopy(test *testing.T) {
-	pieces := make(PieceGroup)
+	pieces := make(pieceGroup)
 	pieces.Add(MockPiece{
 		position: Position{2, 3},
 	})
@@ -125,7 +125,7 @@ func TestPieceGroupCopy(test *testing.T) {
 		position: Position{4, 2},
 	})
 
-	expectedPiecesCopy := PieceGroup{
+	expectedPiecesCopy := pieceGroup{
 		Position{2, 3}: MockPiece{
 			position: Position{2, 3},
 		},

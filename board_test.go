@@ -38,7 +38,7 @@ func TestNewBoard(test *testing.T) {
 
 	expectedBoard := Board{
 		size: Size{5, 5},
-		pieces: PieceGroup{
+		pieces: pieceGroup{
 			Position{2, 3}: MockPiece{
 				position: Position{2, 3},
 			},
@@ -98,7 +98,7 @@ func TestBoardApplyMove(test *testing.T) {
 
 	expectedNextBoard := Board{
 		size: Size{5, 5},
-		pieces: PieceGroup{
+		pieces: pieceGroup{
 			Position{2, 3}: MockPiece{
 				position: Position{2, 3},
 			},

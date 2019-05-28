@@ -25,7 +25,7 @@ type Size struct {
 // Board ...
 type Board struct {
 	size   Size
-	pieces PieceGroup
+	pieces pieceGroup
 }
 
 // NewBoard ...
@@ -33,7 +33,7 @@ func NewBoard(
 	size Size,
 	pieces []Piece,
 ) Board {
-	pieceGroup := NewPieceGroup(pieces)
+	pieceGroup := newPieceGroup(pieces)
 	return Board{size, pieceGroup}
 }
 
