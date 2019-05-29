@@ -1,6 +1,8 @@
 package pieces
 
 import (
+	"math"
+
 	models "github.com/thewizardplusplus/go-chess-models"
 )
 
@@ -30,5 +32,13 @@ func (piece Knight) CheckMove(
 	move models.Move,
 	board models.Board,
 ) bool {
-	return false
+	step := func(a int, b int) int {
+		return int(math.Abs(float64(a - b)))
+	}
+
+	start, finish := move.Start, move.Finish
+	fileSteps := step(start.File, finish.File)
+	rankSteps := step(start.Rank, finish.Rank)
+	return fileSteps == 1 && rankSteps == 2 ||
+		fileSteps == 2 && rankSteps == 1
 }
