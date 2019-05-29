@@ -43,6 +43,9 @@ func (board Board) Size() Size {
 }
 
 // Pieces ...
+//
+// It doesn't guarantee an order
+// of returned pieces.
 func (board Board) Pieces() []Piece {
 	var pieces []Piece
 	for _, piece := range board.pieces {
@@ -54,7 +57,8 @@ func (board Board) Pieces() []Piece {
 
 // ApplyMove ...
 //
-// It doesn't check that the move is correct.
+// It doesn't check that the move
+// is correct.
 func (board Board) ApplyMove(
 	move Move,
 ) Board {

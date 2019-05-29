@@ -19,6 +19,9 @@ type MoveGenerator struct {
 }
 
 // MovesForColor ...
+//
+// It doesn't guarantee an order
+// of returned moves.
 func (
 	generator MoveGenerator,
 ) MovesForColor(color Color) []Move {

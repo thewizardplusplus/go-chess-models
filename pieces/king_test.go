@@ -87,3 +87,110 @@ func TestKingApplyPosition(test *testing.T) {
 		test.Fail()
 	}
 }
+
+func TestKingCheckMove(test *testing.T) {
+	board := models.NewBoard(
+		models.Size{5, 5},
+		[]models.Piece{
+			NewKing(
+				models.White,
+				models.Position{File: 2, Rank: 2},
+			),
+		},
+	)
+	generator := models.MoveGenerator{
+		PieceStorage: board,
+	}
+	moves := generator.MovesForPosition(
+		models.Position{File: 2, Rank: 2},
+	)
+
+	expectedMoves := []models.Move{
+		models.Move{
+			Start: models.Position{
+				File: 2,
+				Rank: 2,
+			},
+			Finish: models.Position{
+				File: 1,
+				Rank: 1,
+			},
+		},
+		models.Move{
+			Start: models.Position{
+				File: 2,
+				Rank: 2,
+			},
+			Finish: models.Position{
+				File: 2,
+				Rank: 1,
+			},
+		},
+		models.Move{
+			Start: models.Position{
+				File: 2,
+				Rank: 2,
+			},
+			Finish: models.Position{
+				File: 3,
+				Rank: 1,
+			},
+		},
+		models.Move{
+			Start: models.Position{
+				File: 2,
+				Rank: 2,
+			},
+			Finish: models.Position{
+				File: 1,
+				Rank: 2,
+			},
+		},
+		models.Move{
+			Start: models.Position{
+				File: 2,
+				Rank: 2,
+			},
+			Finish: models.Position{
+				File: 3,
+				Rank: 2,
+			},
+		},
+		models.Move{
+			Start: models.Position{
+				File: 2,
+				Rank: 2,
+			},
+			Finish: models.Position{
+				File: 1,
+				Rank: 3,
+			},
+		},
+		models.Move{
+			Start: models.Position{
+				File: 2,
+				Rank: 2,
+			},
+			Finish: models.Position{
+				File: 2,
+				Rank: 3,
+			},
+		},
+		models.Move{
+			Start: models.Position{
+				File: 2,
+				Rank: 2,
+			},
+			Finish: models.Position{
+				File: 3,
+				Rank: 3,
+			},
+		},
+	}
+	if !reflect.DeepEqual(
+		moves,
+		expectedMoves,
+	) {
+		test.Fail()
+	}
+}
