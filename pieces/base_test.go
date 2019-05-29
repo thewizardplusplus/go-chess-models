@@ -45,3 +45,50 @@ func TestBasePosition(test *testing.T) {
 		test.Fail()
 	}
 }
+
+func TestBaseApplyPosition(test *testing.T) {
+	piece := Base{
+		kind:  models.Pawn,
+		color: models.White,
+		position: models.Position{
+			File: 2,
+			Rank: 3,
+		},
+	}
+	nextPiece := piece.ApplyPosition(
+		models.Position{
+			File: 4,
+			Rank: 2,
+		},
+	)
+
+	expectedPiece := Base{
+		kind:  models.Pawn,
+		color: models.White,
+		position: models.Position{
+			File: 2,
+			Rank: 3,
+		},
+	}
+	if !reflect.DeepEqual(
+		piece,
+		expectedPiece,
+	) {
+		test.Fail()
+	}
+
+	expectedNextPiece := Base{
+		kind:  models.Pawn,
+		color: models.White,
+		position: models.Position{
+			File: 4,
+			Rank: 2,
+		},
+	}
+	if !reflect.DeepEqual(
+		nextPiece,
+		expectedNextPiece,
+	) {
+		test.Fail()
+	}
+}
