@@ -104,6 +104,24 @@ func TestBoardApplyMove(test *testing.T) {
 		Finish: Position{6, 5},
 	})
 
+	expectedBoard := Board{
+		size: Size{5, 5},
+		pieces: pieceGroup{
+			Position{2, 3}: MockPiece{
+				position: Position{2, 3},
+			},
+			Position{4, 2}: MockPiece{
+				position: Position{4, 2},
+			},
+		},
+	}
+	if !reflect.DeepEqual(
+		board,
+		expectedBoard,
+	) {
+		test.Fail()
+	}
+
 	expectedNextBoard := Board{
 		size: Size{5, 5},
 		pieces: pieceGroup{
