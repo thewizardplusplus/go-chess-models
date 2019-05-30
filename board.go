@@ -42,6 +42,14 @@ func (board Board) Size() Size {
 	return board.size
 }
 
+// Piece ...
+func (board Board) Piece(
+	position Position,
+) (piece Piece, ok bool) {
+	piece, ok = board.pieces[position]
+	return piece, ok
+}
+
 // Pieces ...
 //
 // It doesn't guarantee an order
