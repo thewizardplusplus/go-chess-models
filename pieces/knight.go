@@ -32,13 +32,13 @@ func (piece Knight) CheckMove(
 	move models.Move,
 	board models.Board,
 ) bool {
-	step := func(a int, b int) int {
+	steps := func(a int, b int) int {
 		return int(math.Abs(float64(a - b)))
 	}
 
 	start, finish := move.Start, move.Finish
-	fileSteps := step(start.File, finish.File)
-	rankSteps := step(start.Rank, finish.Rank)
+	fileSteps := steps(start.File, finish.File)
+	rankSteps := steps(start.Rank, finish.Rank)
 	return fileSteps == 1 && rankSteps == 2 ||
 		fileSteps == 2 && rankSteps == 1
 }
