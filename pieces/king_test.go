@@ -41,7 +41,9 @@ func TestNewKing(test *testing.T) {
 	}
 }
 
-func TestKingApplyPosition(test *testing.T) {
+func TestKingApplyPosition(
+	test *testing.T,
+) {
 	piece := NewKing(
 		models.White,
 		models.Position{File: 2, Rank: 3},

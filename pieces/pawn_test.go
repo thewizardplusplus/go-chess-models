@@ -41,7 +41,9 @@ func TestNewPawn(test *testing.T) {
 	}
 }
 
-func TestPawnApplyPosition(test *testing.T) {
+func TestPawnApplyPosition(
+	test *testing.T,
+) {
 	piece := NewPawn(
 		models.White,
 		models.Position{File: 2, Rank: 3},

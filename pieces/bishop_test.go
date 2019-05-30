@@ -41,7 +41,9 @@ func TestNewBishop(test *testing.T) {
 	}
 }
 
-func TestBishopApplyPosition(test *testing.T) {
+func TestBishopApplyPosition(
+	test *testing.T,
+) {
 	piece := NewBishop(
 		models.White,
 		models.Position{File: 2, Rank: 3},

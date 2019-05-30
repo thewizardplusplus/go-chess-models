@@ -32,9 +32,6 @@ func (piece Rook) CheckMove(
 	move models.Move,
 	board models.Board,
 ) bool {
-	steps := func(a int, b int) int {
-		return int(math.Abs(float64(a - b)))
-	}
 	min := func(a int, b int) int {
 		fa, fb := float64(a), float64(b)
 		return int(math.Min(fa, fb))

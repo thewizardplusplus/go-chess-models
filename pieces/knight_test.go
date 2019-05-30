@@ -41,7 +41,9 @@ func TestNewKnight(test *testing.T) {
 	}
 }
 
-func TestKnightApplyPosition(test *testing.T) {
+func TestKnightApplyPosition(
+	test *testing.T,
+) {
 	piece := NewKnight(
 		models.White,
 		models.Position{File: 2, Rank: 3},

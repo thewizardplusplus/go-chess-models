@@ -41,7 +41,9 @@ func TestNewRook(test *testing.T) {
 	}
 }
 
-func TestRookApplyPosition(test *testing.T) {
+func TestRookApplyPosition(
+	test *testing.T,
+) {
 	piece := NewRook(
 		models.White,
 		models.Position{File: 2, Rank: 3},

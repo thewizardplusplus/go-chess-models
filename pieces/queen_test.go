@@ -41,7 +41,9 @@ func TestNewQueen(test *testing.T) {
 	}
 }
 
-func TestQueenApplyPosition(test *testing.T) {
+func TestQueenApplyPosition(
+	test *testing.T,
+) {
 	piece := NewQueen(
 		models.White,
 		models.Position{File: 2, Rank: 3},
