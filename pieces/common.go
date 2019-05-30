@@ -6,6 +6,16 @@ import (
 	models "github.com/thewizardplusplus/go-chess-models"
 )
 
+func min(a int, b int) int {
+	fa, fb := float64(a), float64(b)
+	return int(math.Min(fa, fb))
+}
+
+func max(a int, b int) int {
+	fa, fb := float64(a), float64(b)
+	return int(math.Max(fa, fb))
+}
+
 func steps(a int, b int) int {
 	return int(math.Abs(float64(a - b)))
 }
@@ -16,9 +26,8 @@ func search(
 	b int,
 	makePosition func(i int) models.Position,
 ) bool {
-	fa, fb := float64(a), float64(b)
-	start := int(math.Min(fa, fb))
-	finish := int(math.Max(fa, fb))
+	start := min(a, b)
+	finish := max(a, b)
 	for i := start + 1; i < finish; i++ {
 		position := makePosition(i)
 		_, ok := board.Piece(position)

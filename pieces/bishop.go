@@ -1,8 +1,6 @@
 package pieces
 
 import (
-	"math"
-
 	models "github.com/thewizardplusplus/go-chess-models"
 )
 
@@ -32,11 +30,6 @@ func (piece Bishop) CheckMove(
 	move models.Move,
 	board models.Board,
 ) bool {
-	min := func(a int, b int) int {
-		fa, fb := float64(a), float64(b)
-		return int(math.Min(fa, fb))
-	}
-
 	start, finish := move.Start, move.Finish
 	fileSteps := steps(start.File, finish.File)
 	rankSteps := steps(start.Rank, finish.Rank)
