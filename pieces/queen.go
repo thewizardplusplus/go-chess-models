@@ -30,5 +30,9 @@ func (piece Queen) CheckMove(
 	move models.Move,
 	board models.Board,
 ) bool {
-	return false
+	okForRook := Rook{piece.Base}.
+		CheckMove(move, board)
+	okForBishop := Bishop{piece.Base}.
+		CheckMove(move, board)
+	return okForRook || okForBishop
 }
