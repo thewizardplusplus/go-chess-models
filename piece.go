@@ -13,15 +13,6 @@ const (
 	Pawn
 )
 
-// Color ...
-type Color int
-
-// ...
-const (
-	Black Color = iota
-	White
-)
-
 // Position ...
 type Position struct {
 	File int // column
