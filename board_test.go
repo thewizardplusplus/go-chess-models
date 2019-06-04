@@ -65,11 +65,9 @@ func TestNewBoard(test *testing.T) {
 
 func TestBoardSize(test *testing.T) {
 	board := NewBoard(Size{5, 5}, nil)
+	size := board.Size()
 
-	if !reflect.DeepEqual(
-		board.size,
-		Size{5, 5},
-	) {
+	if !reflect.DeepEqual(size, Size{5, 5}) {
 		test.Fail()
 	}
 }

@@ -21,6 +21,7 @@ func TestColorNegative(test *testing.T) {
 		},
 	} {
 		got := data.color.Negative()
+
 		if got != data.want {
 			test.Fail()
 		}
