@@ -100,10 +100,9 @@ func TestKingCheckMove(test *testing.T) {
 			),
 		},
 	)
-	generator := models.MoveGenerator{
-		PieceStorage: board,
-	}
+	generator := models.MoveGenerator{}
 	moves := generator.MovesForPosition(
+		board,
 		models.Position{File: 2, Rank: 2},
 	)
 

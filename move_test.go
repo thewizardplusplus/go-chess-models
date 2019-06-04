@@ -178,8 +178,11 @@ func TestMoveCheckerMovesForColor(
 			pieces:    data.fields.pieces,
 			checkMove: data.fields.checkMove,
 		}
-		got := MoveGenerator{storage}.
-			MovesForColor(data.args.color)
+		generator := MoveGenerator{}
+		got := generator.MovesForColor(
+			storage,
+			data.args.color,
+		)
 
 		if !reflect.DeepEqual(got, data.want) {
 			test.Fail()
@@ -195,7 +198,7 @@ func TestMoveCheckerMovesForPosition(
 		checkMove func(move Move) error
 	}
 	type args struct {
-		start Position
+		position Position
 	}
 	type data struct {
 		fields    fields
@@ -270,8 +273,11 @@ func TestMoveCheckerMovesForPosition(
 			size:      data.fields.size,
 			checkMove: data.fields.checkMove,
 		}
-		got := MoveGenerator{storage}.
-			MovesForPosition(data.args.start)
+		generator := MoveGenerator{}
+		got := generator.MovesForPosition(
+			storage,
+			data.args.position,
+		)
 
 		if !reflect.DeepEqual(got, data.want) {
 			test.Fail()

@@ -465,10 +465,9 @@ func TestQueenCheckMove(test *testing.T) {
 			data.fields.size,
 			data.fields.pieces,
 		)
-		generator := models.MoveGenerator{
-			PieceStorage: board,
-		}
+		generator := models.MoveGenerator{}
 		got := generator.MovesForPosition(
+			board,
 			data.args.position,
 		)
 
