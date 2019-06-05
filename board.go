@@ -14,6 +14,9 @@ var (
 	ErrIllegalMove = errors.New(
 		"illegal move",
 	)
+	ErrKingCapture = errors.New(
+		"king capture",
+	)
 )
 
 // Size ...
@@ -102,6 +105,23 @@ func (board Board) CheckMove(
 
 	if !piece.CheckMove(move, board) {
 		return ErrIllegalMove
+	}
+
+	return nil
+}
+
+// CheckMoves ...
+//
+// It checks only for absence
+// of a king capture.
+func (board Board) CheckMoves(
+	moves []Move,
+) error {
+	for _, move := range moves {
+		piece, ok := board.pieces[move.Finish]
+		if ok && piece.Kind() == King {
+			return ErrKingCapture
+		}
 	}
 
 	return nil
