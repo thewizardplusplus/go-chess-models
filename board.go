@@ -25,6 +25,15 @@ type Size struct {
 	Height int
 }
 
+// PieceStorage ...
+type PieceStorage interface {
+	Size() Size
+	Pieces() []Piece
+	ApplyMove(move Move) PieceStorage
+	CheckMove(move Move) error
+	CheckMoves(moves []Move) error
+}
+
 // Board ...
 type Board struct {
 	size   Size
@@ -72,7 +81,7 @@ func (board Board) Pieces() []Piece {
 // is correct.
 func (board Board) ApplyMove(
 	move Move,
-) Board {
+) PieceStorage {
 	pieces := board.pieces.Copy()
 	pieces.Move(move)
 

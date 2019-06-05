@@ -6,30 +6,6 @@ import (
 	"testing"
 )
 
-type MockPieceStorage struct {
-	size      Size
-	pieces    []Piece
-	checkMove func(move Move) error
-}
-
-func (
-	storage MockPieceStorage,
-) Size() Size {
-	return storage.size
-}
-
-func (
-	storage MockPieceStorage,
-) Pieces() []Piece {
-	return storage.pieces
-}
-
-func (storage MockPieceStorage) CheckMove(
-	move Move,
-) error {
-	return storage.checkMove(move)
-}
-
 func TestMoveCheckerMovesForColor(
 	test *testing.T,
 ) {

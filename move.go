@@ -6,13 +6,6 @@ type Move struct {
 	Finish Position
 }
 
-// PieceStorage ...
-type PieceStorage interface {
-	Size() Size
-	Pieces() []Piece
-	CheckMove(move Move) error
-}
-
 // MoveGenerator ...
 type MoveGenerator struct{}
 
