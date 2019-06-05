@@ -28,7 +28,6 @@ func (storage MockPieceStorage) ApplyMove(
 	move Move,
 ) PieceStorage {
 	panic("not implemented")
-	return nil
 }
 
 func (storage MockPieceStorage) CheckMove(
@@ -41,7 +40,6 @@ func (storage MockPieceStorage) CheckMoves(
 	moves []Move,
 ) error {
 	panic("not implemented")
-	return nil
 }
 
 type ByPosition []Piece
