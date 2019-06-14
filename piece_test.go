@@ -6,9 +6,10 @@ import (
 )
 
 type MockPiece struct {
-	kind      Kind
-	color     Color
-	position  Position
+	kind     Kind
+	color    Color
+	position Position
+
 	checkMove func(
 		move Move,
 		board Board,

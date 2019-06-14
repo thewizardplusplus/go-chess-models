@@ -7,8 +7,9 @@ import (
 )
 
 type MockPieceStorage struct {
-	size      Size
-	pieces    []Piece
+	size   Size
+	pieces []Piece
+
 	checkMove func(move Move) error
 }
 
