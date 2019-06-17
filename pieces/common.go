@@ -21,7 +21,7 @@ func steps(a int, b int) int {
 }
 
 func search(
-	board models.Board,
+	storage models.PieceStorage,
 	a int,
 	b int,
 	makePosition func(i int) models.Position,
@@ -30,7 +30,7 @@ func search(
 	finish := max(a, b)
 	for i := start + 1; i < finish; i++ {
 		position := makePosition(i)
-		_, ok := board.Piece(position)
+		_, ok := storage.Piece(position)
 		if ok {
 			return true
 		}

@@ -28,7 +28,7 @@ func (piece Knight) ApplyPosition(
 // CheckMove ...
 func (piece Knight) CheckMove(
 	move models.Move,
-	board models.Board,
+	storage models.PieceStorage,
 ) bool {
 	start, finish := move.Start, move.Finish
 	fileSteps := steps(start.File, finish.File)

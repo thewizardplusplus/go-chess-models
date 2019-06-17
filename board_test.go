@@ -21,6 +21,14 @@ func (
 
 func (
 	storage MockPieceStorage,
+) Piece(
+	position Position,
+) (piece Piece, ok bool) {
+	panic("not implemented")
+}
+
+func (
+	storage MockPieceStorage,
 ) Pieces() []Piece {
 	return storage.pieces
 }
@@ -321,7 +329,7 @@ func TestBoardCheckMove(test *testing.T) {
 						position: Position{0, 0},
 						checkMove: func(
 							move Move,
-							board Board,
+							storage PieceStorage,
 						) bool {
 							return false
 						},
@@ -344,7 +352,7 @@ func TestBoardCheckMove(test *testing.T) {
 						position: Position{0, 0},
 						checkMove: func(
 							move Move,
-							board Board,
+							storage PieceStorage,
 						) bool {
 							return true
 						},

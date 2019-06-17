@@ -28,11 +28,11 @@ func (piece Queen) ApplyPosition(
 // CheckMove ...
 func (piece Queen) CheckMove(
 	move models.Move,
-	board models.Board,
+	storage models.PieceStorage,
 ) bool {
 	okForRook := Rook{piece.Base}.
-		CheckMove(move, board)
+		CheckMove(move, storage)
 	okForBishop := Bishop{piece.Base}.
-		CheckMove(move, board)
+		CheckMove(move, storage)
 	return okForRook || okForBishop
 }

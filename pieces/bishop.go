@@ -28,7 +28,7 @@ func (piece Bishop) ApplyPosition(
 // CheckMove ...
 func (piece Bishop) CheckMove(
 	move models.Move,
-	board models.Board,
+	storage models.PieceStorage,
 ) bool {
 	start, finish := move.Start, move.Finish
 	fileSteps := steps(start.File, finish.File)
@@ -40,7 +40,7 @@ func (piece Bishop) CheckMove(
 	fileMin := min(start.File, finish.File)
 	rankMin := min(start.Rank, finish.Rank)
 	ok := search(
-		board,
+		storage,
 		start.File,
 		finish.File,
 		func(i int) models.Position {

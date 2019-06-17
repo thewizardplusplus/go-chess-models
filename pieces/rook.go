@@ -28,7 +28,7 @@ func (piece Rook) ApplyPosition(
 // CheckMove ...
 func (piece Rook) CheckMove(
 	move models.Move,
-	board models.Board,
+	storage models.PieceStorage,
 ) bool {
 	start, finish := move.Start, move.Finish
 	fileSteps := steps(start.File, finish.File)
@@ -41,7 +41,7 @@ func (piece Rook) CheckMove(
 	switch 0 {
 	case fileSteps:
 		ok = search(
-			board,
+			storage,
 			start.Rank,
 			finish.Rank,
 			func(i int) models.Position {
@@ -53,7 +53,7 @@ func (piece Rook) CheckMove(
 		)
 	case rankSteps:
 		ok = search(
-			board,
+			storage,
 			start.File,
 			finish.File,
 			func(i int) models.Position {

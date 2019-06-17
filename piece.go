@@ -43,7 +43,10 @@ type Piece interface {
 	//
 	// It shouldn't check
 	// for a check before or after the move.
-	CheckMove(move Move, board Board) bool
+	CheckMove(
+		move Move,
+		storage PieceStorage,
+	) bool
 }
 
 type pieceGroup map[Position]Piece

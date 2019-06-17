@@ -28,6 +28,9 @@ type Size struct {
 // PieceStorage ...
 type PieceStorage interface {
 	Size() Size
+	Piece(
+		position Position,
+	) (piece Piece, ok bool)
 	Pieces() []Piece
 	ApplyMove(move Move) PieceStorage
 	CheckMove(move Move) error

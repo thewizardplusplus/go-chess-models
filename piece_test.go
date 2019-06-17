@@ -12,7 +12,7 @@ type MockPiece struct {
 
 	checkMove func(
 		move Move,
-		board Board,
+		storage PieceStorage,
 	) bool
 }
 
@@ -41,13 +41,13 @@ func (piece MockPiece) ApplyPosition(
 
 func (piece MockPiece) CheckMove(
 	move Move,
-	board Board,
+	storage PieceStorage,
 ) bool {
 	if piece.checkMove == nil {
 		panic("not implemented")
 	}
 
-	return piece.checkMove(move, board)
+	return piece.checkMove(move, storage)
 }
 
 func TestNewPieceGroup(test *testing.T) {

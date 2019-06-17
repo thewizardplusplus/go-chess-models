@@ -28,11 +28,11 @@ func (piece Pawn) ApplyPosition(
 // CheckMove ...
 func (piece Pawn) CheckMove(
 	move models.Move,
-	board models.Board,
+	storage models.PieceStorage,
 ) bool {
 	start, finish := move.Start, move.Finish
 
-	_, ok := board.Piece(finish)
+	_, ok := storage.Piece(finish)
 	fileSteps := steps(start.File, finish.File)
 	switch ok {
 	case false:
