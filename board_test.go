@@ -34,6 +34,10 @@ func (storage MockPieceStorage) ApplyMove(
 func (storage MockPieceStorage) CheckMove(
 	move Move,
 ) error {
+	if storage.checkMove == nil {
+		panic("not implemented")
+	}
+
 	return storage.checkMove(move)
 }
 
