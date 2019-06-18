@@ -49,12 +49,6 @@ func (storage MockPieceStorage) CheckMove(
 	return storage.checkMove(move)
 }
 
-func (storage MockPieceStorage) CheckMoves(
-	moves []Move,
-) error {
-	panic("not implemented")
-}
-
 type ByPosition []Piece
 
 func (group ByPosition) Len() int {
@@ -396,119 +390,6 @@ func TestBoardCheckMove(test *testing.T) {
 			pieces: data.fields.pieces,
 		}
 		got := board.CheckMove(data.args.move)
-
-		if got != data.want {
-			test.Fail()
-		}
-	}
-}
-
-func TestBoardCheckMoves(test *testing.T) {
-	type fields struct {
-		size   Size
-		pieces pieceGroup
-	}
-	type args struct {
-		moves []Move
-	}
-	type data struct {
-		fields fields
-		args   args
-		want   error
-	}
-
-	for _, data := range []data{
-		data{
-			fields: fields{
-				size: Size{2, 2},
-				pieces: pieceGroup{
-					Position{1, 1}: MockPiece{
-						kind:     King,
-						position: Position{1, 1},
-					},
-				},
-			},
-			args: args{nil},
-			want: nil,
-		},
-		data{
-			fields: fields{
-				size: Size{2, 2},
-				pieces: pieceGroup{
-					Position{1, 1}: MockPiece{
-						kind:     King,
-						position: Position{1, 1},
-					},
-				},
-			},
-			args: args{
-				moves: []Move{
-					Move{
-						Start:  Position{0, 0},
-						Finish: Position{1, 0},
-					},
-					Move{
-						Start:  Position{0, 0},
-						Finish: Position{0, 1},
-					},
-				},
-			},
-			want: nil,
-		},
-		data{
-			fields: fields{
-				size: Size{2, 2},
-				pieces: pieceGroup{
-					Position{1, 1}: MockPiece{
-						kind:     King,
-						position: Position{1, 1},
-					},
-				},
-			},
-			args: args{
-				moves: []Move{
-					Move{
-						Start:  Position{0, 0},
-						Finish: Position{1, 0},
-					},
-					Move{
-						Start:  Position{0, 0},
-						Finish: Position{1, 1},
-					},
-				},
-			},
-			want: ErrKingCapture,
-		},
-		data{
-			fields: fields{
-				size: Size{2, 2},
-				pieces: pieceGroup{
-					Position{1, 1}: MockPiece{
-						kind:     King,
-						position: Position{1, 1},
-					},
-				},
-			},
-			args: args{
-				moves: []Move{
-					Move{
-						Start:  Position{1, 0},
-						Finish: Position{1, 1},
-					},
-					Move{
-						Start:  Position{0, 0},
-						Finish: Position{1, 1},
-					},
-				},
-			},
-			want: ErrKingCapture,
-		},
-	} {
-		board := Board{
-			size:   data.fields.size,
-			pieces: data.fields.pieces,
-		}
-		got := board.CheckMoves(data.args.moves)
 
 		if got != data.want {
 			test.Fail()
