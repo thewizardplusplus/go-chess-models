@@ -13,12 +13,18 @@ type MoveGenerator struct{}
 //
 // It doesn't guarantee an order
 // of returned moves.
+//
+// It doesn't take into account
+// possible checks and can generate
+// such moves.
+//
+// It returns an error only on a king capture.
 func (
 	generator MoveGenerator,
 ) MovesForColor(
 	storage PieceStorage,
 	color Color,
-) []Move {
+) ([]Move, error) {
 	var moves []Move
 	for _, piece := range storage.Pieces() {
 		if piece.Color() != color {
@@ -26,12 +32,16 @@ func (
 		}
 
 		position := piece.Position()
-		positionMoves, _ := generator.
+		positionMoves, err := generator.
 			MovesForPosition(storage, position)
+		if err != nil {
+			return nil, err
+		}
+
 		moves = append(moves, positionMoves...)
 	}
 
-	return moves
+	return moves, nil
 }
 
 // MovesForPosition ...

@@ -18,9 +18,10 @@ func TestMoveCheckerMovesForColor(
 		color Color
 	}
 	type data struct {
-		fields fields
-		args   args
-		want   []Move
+		fields    fields
+		args      args
+		wantMoves []Move
+		wantErr   error
 	}
 
 	for _, data := range []data{
@@ -50,7 +51,7 @@ func TestMoveCheckerMovesForColor(
 				},
 			},
 			args: args{Black},
-			want: []Move{
+			wantMoves: []Move{
 				Move{
 					Start:  Position{0, 0},
 					Finish: Position{0, 0},
@@ -85,6 +86,7 @@ func TestMoveCheckerMovesForColor(
 					Finish: Position{1, 1},
 				},
 			},
+			wantErr: nil,
 		},
 		data{
 			fields: fields{
@@ -112,7 +114,7 @@ func TestMoveCheckerMovesForColor(
 				},
 			},
 			args: args{White},
-			want: []Move{
+			wantMoves: []Move{
 				Move{
 					Start:  Position{1, 0},
 					Finish: Position{0, 0},
@@ -147,6 +149,65 @@ func TestMoveCheckerMovesForColor(
 					Finish: Position{1, 1},
 				},
 			},
+			wantErr: nil,
+		},
+		data{
+			fields: fields{
+				size: Size{2, 2},
+				pieces: []Piece{
+					MockPiece{
+						color:    Black,
+						position: Position{0, 0},
+					},
+					MockPiece{
+						color:    Black,
+						position: Position{0, 1},
+					},
+					MockPiece{
+						color:    White,
+						position: Position{1, 0},
+					},
+					MockPiece{
+						color:    White,
+						position: Position{1, 1},
+					},
+				},
+				checkMove: func(move Move) error {
+					return errors.New("dummy")
+				},
+			},
+			args:      args{Black},
+			wantMoves: nil,
+			wantErr:   nil,
+		},
+		data{
+			fields: fields{
+				size: Size{2, 2},
+				pieces: []Piece{
+					MockPiece{
+						color:    Black,
+						position: Position{0, 0},
+					},
+					MockPiece{
+						color:    Black,
+						position: Position{0, 1},
+					},
+					MockPiece{
+						color:    White,
+						position: Position{1, 0},
+					},
+					MockPiece{
+						color:    White,
+						position: Position{1, 1},
+					},
+				},
+				checkMove: func(move Move) error {
+					return ErrKingCapture
+				},
+			},
+			args:      args{Black},
+			wantMoves: nil,
+			wantErr:   ErrKingCapture,
 		},
 	} {
 		storage := MockPieceStorage{
@@ -155,12 +216,22 @@ func TestMoveCheckerMovesForColor(
 			checkMove: data.fields.checkMove,
 		}
 		generator := MoveGenerator{}
-		got := generator.MovesForColor(
-			storage,
-			data.args.color,
-		)
+		gotMoves, gotErr :=
+			generator.MovesForColor(
+				storage,
+				data.args.color,
+			)
 
-		if !reflect.DeepEqual(got, data.want) {
+		if !reflect.DeepEqual(
+			gotMoves,
+			data.wantMoves,
+		) {
+			test.Fail()
+		}
+		if !reflect.DeepEqual(
+			gotErr,
+			data.wantErr,
+		) {
 			test.Fail()
 		}
 	}
