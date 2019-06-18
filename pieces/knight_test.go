@@ -101,7 +101,7 @@ func TestKnightCheckMove(test *testing.T) {
 		},
 	)
 	generator := models.MoveGenerator{}
-	moves := generator.MovesForPosition(
+	moves, err := generator.MovesForPosition(
 		board,
 		models.Position{File: 2, Rank: 2},
 	)
@@ -192,6 +192,9 @@ func TestKnightCheckMove(test *testing.T) {
 		moves,
 		expectedMoves,
 	) {
+		test.Fail()
+	}
+	if err != nil {
 		test.Fail()
 	}
 }

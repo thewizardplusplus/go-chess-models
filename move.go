@@ -26,7 +26,7 @@ func (
 		}
 
 		position := piece.Position()
-		positionMoves := generator.
+		positionMoves, _ := generator.
 			MovesForPosition(storage, position)
 		moves = append(moves, positionMoves...)
 	}
@@ -35,12 +35,18 @@ func (
 }
 
 // MovesForPosition ...
+//
+// It doesn't take into account
+// possible checks and can generate
+// such moves.
+//
+// It returns an error only on a king capture.
 func (
 	generator MoveGenerator,
 ) MovesForPosition(
 	storage PieceStorage,
 	position Position,
-) []Move {
+) ([]Move, error) {
 	var moves []Move
 	width := storage.Size().Width
 	height := storage.Size().Height
@@ -50,6 +56,14 @@ func (
 			move := Move{position, finish}
 			err := storage.CheckMove(move)
 			if err != nil {
+				// if the move captures a king,
+				// break a generating
+				if err == ErrKingCapture {
+					return nil, err
+				}
+
+				// on other errors
+				// just skip this move
 				continue
 			}
 
@@ -57,5 +71,5 @@ func (
 		}
 	}
 
-	return moves
+	return moves, nil
 }

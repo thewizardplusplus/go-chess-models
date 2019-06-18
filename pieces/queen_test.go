@@ -99,9 +99,10 @@ func TestQueenCheckMove(test *testing.T) {
 		position models.Position
 	}
 	type data struct {
-		fields fields
-		args   args
-		want   []models.Move
+		fields    fields
+		args      args
+		wantMoves []models.Move
+		wantErr   error
 	}
 
 	for _, data := range []data{
@@ -124,7 +125,7 @@ func TestQueenCheckMove(test *testing.T) {
 					Rank: 2,
 				},
 			},
-			want: []models.Move{
+			wantMoves: []models.Move{
 				models.Move{
 					Start: models.Position{
 						File: 2,
@@ -286,6 +287,7 @@ func TestQueenCheckMove(test *testing.T) {
 					},
 				},
 			},
+			wantErr: nil,
 		},
 		data{
 			fields: fields{
@@ -327,7 +329,7 @@ func TestQueenCheckMove(test *testing.T) {
 					Rank: 2,
 				},
 			},
-			want: []models.Move{
+			wantMoves: []models.Move{
 				models.Move{
 					Start: models.Position{
 						File: 2,
@@ -459,6 +461,7 @@ func TestQueenCheckMove(test *testing.T) {
 					},
 				},
 			},
+			wantErr: nil,
 		},
 	} {
 		board := models.NewBoard(
@@ -466,14 +469,21 @@ func TestQueenCheckMove(test *testing.T) {
 			data.fields.pieces,
 		)
 		generator := models.MoveGenerator{}
-		got := generator.MovesForPosition(
-			board,
-			data.args.position,
-		)
+		gotMoves, gotErr :=
+			generator.MovesForPosition(
+				board,
+				data.args.position,
+			)
 
 		if !reflect.DeepEqual(
-			got,
-			data.want,
+			gotMoves,
+			data.wantMoves,
+		) {
+			test.Fail()
+		}
+		if !reflect.DeepEqual(
+			gotErr,
+			data.wantErr,
 		) {
 			test.Fail()
 		}
