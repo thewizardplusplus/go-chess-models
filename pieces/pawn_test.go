@@ -148,21 +148,21 @@ func TestPawnCheckMove(test *testing.T) {
 							Rank: 2,
 						},
 					),
-					NewKing(
+					NewPawn(
 						models.White,
 						models.Position{
 							File: 1,
 							Rank: 1,
 						},
 					),
-					NewKing(
+					NewPawn(
 						models.White,
 						models.Position{
 							File: 2,
 							Rank: 1,
 						},
 					),
-					NewKing(
+					NewPawn(
 						models.White,
 						models.Position{
 							File: 3,
@@ -243,21 +243,21 @@ func TestPawnCheckMove(test *testing.T) {
 							Rank: 2,
 						},
 					),
-					NewKing(
+					NewPawn(
 						models.Black,
 						models.Position{
 							File: 1,
 							Rank: 3,
 						},
 					),
-					NewKing(
+					NewPawn(
 						models.Black,
 						models.Position{
 							File: 2,
 							Rank: 3,
 						},
 					),
-					NewKing(
+					NewPawn(
 						models.Black,
 						models.Position{
 							File: 3,

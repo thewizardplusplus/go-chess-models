@@ -298,21 +298,21 @@ func TestQueenCheckMove(test *testing.T) {
 							Rank: 2,
 						},
 					),
-					NewKing(
+					NewPawn(
 						models.Black,
 						models.Position{
 							File: 1,
 							Rank: 2,
 						},
 					),
-					NewKing(
+					NewPawn(
 						models.Black,
 						models.Position{
 							File: 1,
 							Rank: 1,
 						},
 					),
-					NewKing(
+					NewPawn(
 						models.Black,
 						models.Position{
 							File: 2,

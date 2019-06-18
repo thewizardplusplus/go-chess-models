@@ -218,14 +218,14 @@ func TestRookCheckMove(test *testing.T) {
 							Rank: 2,
 						},
 					),
-					NewKing(
+					NewPawn(
 						models.Black,
 						models.Position{
 							File: 2,
 							Rank: 1,
 						},
 					),
-					NewKing(
+					NewPawn(
 						models.Black,
 						models.Position{
 							File: 1,

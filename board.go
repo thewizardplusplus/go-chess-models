@@ -11,11 +11,11 @@ var (
 	ErrFriendlyTarget = errors.New(
 		"friendly target",
 	)
-	ErrIllegalMove = errors.New(
-		"illegal move",
-	)
 	ErrKingCapture = errors.New(
 		"king capture",
+	)
+	ErrIllegalMove = errors.New(
+		"illegal move",
 	)
 )
 
@@ -111,8 +111,13 @@ func (board Board) CheckMove(
 	}
 
 	target, ok := board.pieces[move.Finish]
-	if ok && target.Color() == piece.Color() {
-		return ErrFriendlyTarget
+	if ok {
+		if target.Color() == piece.Color() {
+			return ErrFriendlyTarget
+		}
+		if target.Kind() == King {
+			return ErrKingCapture
+		}
 	}
 
 	if !piece.CheckMove(move, board) {
