@@ -11,11 +11,11 @@ var (
 	ErrFriendlyTarget = errors.New(
 		"friendly target",
 	)
-	ErrKingCapture = errors.New(
-		"king capture",
-	)
 	ErrIllegalMove = errors.New(
 		"illegal move",
+	)
+	ErrKingCapture = errors.New(
+		"king capture",
 	)
 )
 
@@ -109,18 +109,26 @@ func (board Board) CheckMove(
 		return ErrNoPiece
 	}
 
-	target, ok := board.pieces[move.Finish]
-	if ok {
-		if target.Color() == piece.Color() {
-			return ErrFriendlyTarget
-		}
-		if target.Kind() == King {
-			return ErrKingCapture
-		}
+	target, hasTarget :=
+		board.pieces[move.Finish]
+	if hasTarget &&
+		target.Color() == piece.Color() {
+		return ErrFriendlyTarget
 	}
 
 	if !piece.CheckMove(move, board) {
 		return ErrIllegalMove
+	}
+
+	// this check should be occurred
+	// only for legal moves
+	// (i.e. after all rest check)
+	//
+	// it's necessary because of a wider area
+	// of ​​influence of this error
+	// compared to rest ones
+	if hasTarget && target.Kind() == King {
+		return ErrKingCapture
 	}
 
 	return nil

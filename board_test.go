@@ -320,29 +320,6 @@ func TestBoardCheckMove(test *testing.T) {
 				size: Size{2, 2},
 				pieces: pieceGroup{
 					Position{0, 0}: MockPiece{
-						color:    Black,
-						position: Position{0, 0},
-					},
-					Position{1, 1}: MockPiece{
-						kind:     King,
-						color:    White,
-						position: Position{1, 1},
-					},
-				},
-			},
-			args: args{
-				move: Move{
-					Start:  Position{0, 0},
-					Finish: Position{1, 1},
-				},
-			},
-			want: ErrKingCapture,
-		},
-		data{
-			fields: fields{
-				size: Size{2, 2},
-				pieces: pieceGroup{
-					Position{0, 0}: MockPiece{
 						position: Position{0, 0},
 						checkMove: func(
 							move Move,
@@ -360,6 +337,35 @@ func TestBoardCheckMove(test *testing.T) {
 				},
 			},
 			want: ErrIllegalMove,
+		},
+		data{
+			fields: fields{
+				size: Size{2, 2},
+				pieces: pieceGroup{
+					Position{0, 0}: MockPiece{
+						color:    Black,
+						position: Position{0, 0},
+						checkMove: func(
+							move Move,
+							storage PieceStorage,
+						) bool {
+							return true
+						},
+					},
+					Position{1, 1}: MockPiece{
+						kind:     King,
+						color:    White,
+						position: Position{1, 1},
+					},
+				},
+			},
+			args: args{
+				move: Move{
+					Start:  Position{0, 0},
+					Finish: Position{1, 1},
+				},
+			},
+			want: ErrKingCapture,
 		},
 		data{
 			fields: fields{
