@@ -23,7 +23,7 @@ func TestPerft(test *testing.T) {
 	for _, data := range []data{
 		data{
 			args: args{
-				storage: board(),
+				storage: initial(),
 				color:   models.White,
 				deep:    0,
 			},
@@ -31,7 +31,7 @@ func TestPerft(test *testing.T) {
 		},
 		data{
 			args: args{
-				storage: board(),
+				storage: initial(),
 				color:   models.White,
 				deep:    1,
 			},
@@ -39,7 +39,7 @@ func TestPerft(test *testing.T) {
 		},
 		data{
 			args: args{
-				storage: board(),
+				storage: initial(),
 				color:   models.White,
 				deep:    2,
 			},
@@ -47,20 +47,20 @@ func TestPerft(test *testing.T) {
 		},
 		data{
 			args: args{
-				storage: board(),
+				storage: initial(),
 				color:   models.White,
 				deep:    3,
 			},
 			want: 2124,
 		},
-		data{
-			args: args{
-				storage: board(),
-				color:   models.White,
-				deep:    4,
-			},
-			want: 31250,
-		},
+		/*data{
+		  args: args{
+		    storage: initial(),
+		    color:   models.White,
+		    deep:    4,
+		  },
+		  want: 31250,
+		},*/
 	} {
 		got := perft(
 			data.args.storage,
@@ -75,7 +75,7 @@ func TestPerft(test *testing.T) {
 	}
 }
 
-func board() models.Board {
+func initial() models.Board {
 	pawns := func(
 		color models.Color,
 		rank int,
@@ -172,6 +172,64 @@ func board() models.Board {
 	return models.NewBoard(
 		models.Size{8, 8},
 		pieces,
+	)
+}
+
+func kiwipete() models.Board {
+	type cons func(
+		models.Color,
+		models.Position,
+	) models.Piece
+	type positions map[int]int
+	type colors map[models.Color]positions
+	type kinds map[cons]colors
+
+	makePieces := func(
+		kinds kinds,
+	) []models.Piece {
+		var pieces []models.Piece
+		for cons, colors := range kinds {
+			for color, positions := range colors {
+				for file, rank := range positions {
+					pieces = append(pieces, cons(
+						color,
+						models.Position{file, rank},
+					))
+				}
+			}
+		}
+
+		return pieces
+	}
+
+	return models.NewBoard(
+		model.Size{8, 8},
+		makePieces(kinds{
+			models.NewKing: colors{
+				models.Black: positions{4: 7},
+				models.White: positions{4: 0},
+			},
+			models.NewQueen: colors{
+				models.Black: positions{4: 6},
+				models.White: positions{5: 2},
+			},
+			models.NewRook: colors{
+				models.Black: positions{0: 7, 7: 7},
+				models.White: positions{0: 0, 7: 0},
+			},
+			models.NewBishop: colors{
+				models.Black: positions{0: 5, 6: 6},
+				models.White: positions{3: 1, 4: 1},
+			},
+			models.NewKnight: colors{
+				models.Black: positions{0: 7, 7: 7},
+				models.White: positions{0: 0, 7: 0},
+			},
+			models.NewPawn: colors{
+				models.Black: positions{0: 7, 7: 7},
+				models.White: positions{0: 0, 7: 0},
+			},
+		}),
 	)
 }
 
