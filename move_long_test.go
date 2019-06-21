@@ -3,11 +3,14 @@
 package chessmodels_test
 
 import (
+	"syscall"
 	"testing"
 
 	models "github.com/thewizardplusplus/go-chess-models"
 	"github.com/thewizardplusplus/go-chess-models/pieces"
 )
+
+type PositionMap map[int]int
 
 func TestPerft(test *testing.T) {
 	type args struct {
@@ -16,11 +19,13 @@ func TestPerft(test *testing.T) {
 		deep    int
 	}
 	type data struct {
+		skip bool
 		args args
 		want int
 	}
 
-	for _, data := range []data{
+	_, longer := syscall.Getenv("LONGER")
+	for index, data := range []data{
 		data{
 			args: args{
 				storage: initial(),
@@ -53,15 +58,53 @@ func TestPerft(test *testing.T) {
 			},
 			want: 2124,
 		},
-		/*data{
-		  args: args{
-		    storage: initial(),
-		    color:   models.White,
-		    deep:    4,
-		  },
-		  want: 31250,
-		},*/
+		data{
+			skip: !longer,
+			args: args{
+				storage: initial(),
+				color:   models.White,
+				deep:    4,
+			},
+			want: 31250,
+		},
+		data{
+			args: args{
+				storage: kiwipete(),
+				color:   models.White,
+				deep:    0,
+			},
+			want: 1,
+		},
+		data{
+			args: args{
+				storage: kiwipete(),
+				color:   models.White,
+				deep:    1,
+			},
+			want: 44,
+		},
+		data{
+			args: args{
+				storage: kiwipete(),
+				color:   models.White,
+				deep:    2,
+			},
+			want: 1740,
+		},
+		data{
+			skip: !longer,
+			args: args{
+				storage: kiwipete(),
+				color:   models.White,
+				deep:    3,
+			},
+			want: 77305,
+		},
 	} {
+		if data.skip {
+			continue
+		}
+
 		got := perft(
 			data.args.storage,
 			data.args.color,
@@ -69,167 +112,198 @@ func TestPerft(test *testing.T) {
 		)
 
 		if got != data.want {
-			test.Log(got, data.want)
+			const msg = "#%d: %d/%d"
+			test.Logf(msg, index, got, data.want)
+
 			test.Fail()
 		}
 	}
 }
 
-func initial() models.Board {
-	pawns := func(
-		color models.Color,
-		rank int,
-	) []models.Piece {
-		var pawns []models.Piece
-		for file := 0; file < 8; file++ {
-			pawns = append(pawns, pieces.NewPawn(
-				color,
-				models.Position{file, rank},
-			))
-		}
-
-		return pawns
+func pawns(
+	color models.Color,
+	positions PositionMap,
+) []models.Piece {
+	var pawns []models.Piece
+	for file, rank := range positions {
+		pawns = append(pawns, pieces.NewPawn(
+			color,
+			models.Position{file, rank},
+		))
 	}
 
-	minorPieces := func(
+	return pawns
+}
+
+func initial() models.Board {
+	restPieces := func(
 		color models.Color,
-		files []int,
 		rank int,
 	) []models.Piece {
 		return []models.Piece{
 			pieces.NewRook(
 				color,
-				models.Position{files[0], rank},
+				models.Position{0, rank},
 			),
 			pieces.NewKnight(
 				color,
-				models.Position{files[1], rank},
+				models.Position{1, rank},
 			),
 			pieces.NewBishop(
 				color,
-				models.Position{files[2], rank},
+				models.Position{2, rank},
 			),
-		}
-	}
-
-	restPieces := func(
-		color models.Color,
-		rank int,
-	) []models.Piece {
-		var restPieces []models.Piece
-		restPieces = append(
-			restPieces,
-			minorPieces(
-				color,
-				[]int{0, 1, 2},
-				rank,
-			)...,
-		)
-		restPieces = append(
-			restPieces,
 			pieces.NewQueen(
 				color,
 				models.Position{3, rank},
 			),
-		)
-		restPieces = append(
-			restPieces,
 			pieces.NewKing(
 				color,
 				models.Position{4, rank},
 			),
-		)
-		restPieces = append(
-			restPieces,
-			minorPieces(
+			pieces.NewBishop(
 				color,
-				[]int{7, 6, 5},
-				rank,
-			)...,
-		)
-
-		return restPieces
+				models.Position{5, rank},
+			),
+			pieces.NewKnight(
+				color,
+				models.Position{6, rank},
+			),
+			pieces.NewRook(
+				color,
+				models.Position{7, rank},
+			),
+		}
 	}
 
-	var pieces []models.Piece
-	pieces = append(pieces, restPieces(
+	var allPieces []models.Piece
+	allPieces = append(allPieces, restPieces(
 		models.Black,
 		7,
 	)...)
-	pieces = append(pieces, pawns(
+	allPieces = append(allPieces, pawns(
 		models.Black,
-		6,
+		PositionMap{
+			0: 6, 1: 6, 2: 6, 3: 6,
+			4: 6, 5: 6, 6: 6, 7: 6,
+		},
 	)...)
-	pieces = append(pieces, pawns(
+	allPieces = append(allPieces, pawns(
 		models.White,
-		1,
+		PositionMap{
+			0: 1, 1: 1, 2: 1, 3: 1,
+			4: 1, 5: 1, 6: 1, 7: 1,
+		},
 	)...)
-	pieces = append(pieces, restPieces(
+	allPieces = append(allPieces, restPieces(
 		models.White,
 		0,
 	)...)
 
 	return models.NewBoard(
 		models.Size{8, 8},
-		pieces,
+		allPieces,
 	)
 }
 
 func kiwipete() models.Board {
-	type cons func(
-		models.Color,
-		models.Position,
-	) models.Piece
-	type positions map[int]int
-	type colors map[models.Color]positions
-	type kinds map[cons]colors
+	var allPieces []models.Piece
+	allPieces = append(
+		allPieces,
+		[]models.Piece{
+			// kings
+			pieces.NewKing(
+				models.Black,
+				models.Position{4, 7},
+			),
+			pieces.NewKing(
+				models.White,
+				models.Position{4, 0},
+			),
 
-	makePieces := func(
-		kinds kinds,
-	) []models.Piece {
-		var pieces []models.Piece
-		for cons, colors := range kinds {
-			for color, positions := range colors {
-				for file, rank := range positions {
-					pieces = append(pieces, cons(
-						color,
-						models.Position{file, rank},
-					))
-				}
-			}
-		}
+			// queens
+			pieces.NewQueen(
+				models.Black,
+				models.Position{4, 6},
+			),
+			pieces.NewQueen(
+				models.White,
+				models.Position{5, 2},
+			),
 
-		return pieces
-	}
+			// rooks
+			pieces.NewRook(
+				models.Black,
+				models.Position{0, 7},
+			),
+			pieces.NewRook(
+				models.Black,
+				models.Position{7, 7},
+			),
+			pieces.NewRook(
+				models.White,
+				models.Position{0, 0},
+			),
+			pieces.NewRook(
+				models.White,
+				models.Position{7, 0},
+			),
+
+			// bishops
+			pieces.NewBishop(
+				models.Black,
+				models.Position{0, 5},
+			),
+			pieces.NewBishop(
+				models.Black,
+				models.Position{6, 6},
+			),
+			pieces.NewBishop(
+				models.White,
+				models.Position{3, 1},
+			),
+			pieces.NewBishop(
+				models.White,
+				models.Position{4, 1},
+			),
+
+			// knights
+			pieces.NewKnight(
+				models.Black,
+				models.Position{1, 5},
+			),
+			pieces.NewKnight(
+				models.Black,
+				models.Position{5, 5},
+			),
+			pieces.NewKnight(
+				models.White,
+				models.Position{2, 2},
+			),
+			pieces.NewKnight(
+				models.White,
+				models.Position{4, 4},
+			),
+		}...,
+	)
+	allPieces = append(allPieces, pawns(
+		models.Black,
+		PositionMap{
+			0: 6, 1: 3, 2: 6, 3: 6,
+			4: 5, 5: 6, 6: 5, 7: 2,
+		},
+	)...)
+	allPieces = append(allPieces, pawns(
+		models.White,
+		PositionMap{
+			0: 1, 1: 1, 2: 1, 3: 4,
+			4: 3, 5: 1, 6: 1, 7: 1,
+		},
+	)...)
 
 	return models.NewBoard(
-		model.Size{8, 8},
-		makePieces(kinds{
-			models.NewKing: colors{
-				models.Black: positions{4: 7},
-				models.White: positions{4: 0},
-			},
-			models.NewQueen: colors{
-				models.Black: positions{4: 6},
-				models.White: positions{5: 2},
-			},
-			models.NewRook: colors{
-				models.Black: positions{0: 7, 7: 7},
-				models.White: positions{0: 0, 7: 0},
-			},
-			models.NewBishop: colors{
-				models.Black: positions{0: 5, 6: 6},
-				models.White: positions{3: 1, 4: 1},
-			},
-			models.NewKnight: colors{
-				models.Black: positions{0: 7, 7: 7},
-				models.White: positions{0: 0, 7: 0},
-			},
-			models.NewPawn: colors{
-				models.Black: positions{0: 7, 7: 7},
-				models.White: positions{0: 0, 7: 0},
-			},
-		}),
+		models.Size{8, 8},
+		allPieces,
 	)
 }
 
