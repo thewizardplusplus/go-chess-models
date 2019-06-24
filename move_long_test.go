@@ -20,6 +20,7 @@ func TestPerft(test *testing.T) {
 	}
 	type data struct {
 		skip bool
+		name string
 		args args
 		want int
 	}
@@ -27,6 +28,61 @@ func TestPerft(test *testing.T) {
 	_, longer := syscall.Getenv("LONGER")
 	for index, data := range []data{
 		data{
+			name: "kings",
+			args: args{
+				storage: kings(),
+				color:   models.White,
+				deep:    0,
+			},
+			want: 1,
+		},
+		data{
+			name: "kings",
+			args: args{
+				storage: kings(),
+				color:   models.White,
+				deep:    1,
+			},
+			want: 5,
+		},
+		data{
+			name: "kings",
+			args: args{
+				storage: kings(),
+				color:   models.White,
+				deep:    2,
+			},
+			want: 25,
+		},
+		data{
+			name: "kings",
+			args: args{
+				storage: kings(),
+				color:   models.White,
+				deep:    3,
+			},
+			want: 170,
+		},
+		data{
+			name: "kings",
+			args: args{
+				storage: kings(),
+				color:   models.White,
+				deep:    4,
+			},
+			want: 1156,
+		},
+		data{
+			name: "kings",
+			args: args{
+				storage: kings(),
+				color:   models.White,
+				deep:    5,
+			},
+			want: 7922,
+		},
+		data{
+			name: "initial",
 			args: args{
 				storage: initial(),
 				color:   models.White,
@@ -35,6 +91,7 @@ func TestPerft(test *testing.T) {
 			want: 1,
 		},
 		data{
+			name: "initial",
 			args: args{
 				storage: initial(),
 				color:   models.White,
@@ -43,6 +100,7 @@ func TestPerft(test *testing.T) {
 			want: 12,
 		},
 		data{
+			name: "initial",
 			args: args{
 				storage: initial(),
 				color:   models.White,
@@ -51,6 +109,7 @@ func TestPerft(test *testing.T) {
 			want: 144,
 		},
 		data{
+			name: "initial",
 			args: args{
 				storage: initial(),
 				color:   models.White,
@@ -59,6 +118,7 @@ func TestPerft(test *testing.T) {
 			want: 2124,
 		},
 		data{
+			name: "initial",
 			skip: !longer,
 			args: args{
 				storage: initial(),
@@ -68,6 +128,7 @@ func TestPerft(test *testing.T) {
 			want: 31250,
 		},
 		data{
+			name: "kiwipete",
 			args: args{
 				storage: kiwipete(),
 				color:   models.White,
@@ -76,6 +137,7 @@ func TestPerft(test *testing.T) {
 			want: 1,
 		},
 		data{
+			name: "kiwipete",
 			args: args{
 				storage: kiwipete(),
 				color:   models.White,
@@ -84,6 +146,7 @@ func TestPerft(test *testing.T) {
 			want: 44,
 		},
 		data{
+			name: "kiwipete",
 			args: args{
 				storage: kiwipete(),
 				color:   models.White,
@@ -92,6 +155,7 @@ func TestPerft(test *testing.T) {
 			want: 1740,
 		},
 		data{
+			name: "kiwipete",
 			skip: !longer,
 			args: args{
 				storage: kiwipete(),
@@ -112,12 +176,33 @@ func TestPerft(test *testing.T) {
 		)
 
 		if got != data.want {
-			const msg = "#%d: %d/%d"
-			test.Logf(msg, index, got, data.want)
+			test.Logf(
+				"%s/#%d: %d/%d",
+				data.name,
+				index,
+				got,
+				data.want,
+			)
 
 			test.Fail()
 		}
 	}
+}
+
+func kings() models.Board {
+	return models.NewBoard(
+		models.Size{8, 8},
+		[]models.Piece{
+			pieces.NewKing(
+				models.Black,
+				models.Position{4, 7},
+			),
+			pieces.NewKing(
+				models.White,
+				models.Position{4, 0},
+			),
+		},
+	)
 }
 
 func pawns(
