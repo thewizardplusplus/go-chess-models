@@ -118,6 +118,42 @@ func TestPerft(test *testing.T) {
 			want: 6063,
 		},
 		data{
+			name: "rooks",
+			args: args{
+				storage: rooks(),
+				color:   models.White,
+				deep:    0,
+			},
+			want: 1,
+		},
+		data{
+			name: "rooks",
+			args: args{
+				storage: rooks(),
+				color:   models.White,
+				deep:    1,
+			},
+			want: 24,
+		},
+		data{
+			name: "rooks",
+			args: args{
+				storage: rooks(),
+				color:   models.White,
+				deep:    2,
+			},
+			want: 482,
+		},
+		data{
+			name: "rooks",
+			args: args{
+				storage: rooks(),
+				color:   models.White,
+				deep:    3,
+			},
+			want: 11522,
+		},
+		data{
 			name: "initial",
 			args: args{
 				storage: initial(),
@@ -260,6 +296,38 @@ func queens() models.Board {
 			pieces.NewQueen(
 				models.White,
 				models.Position{3, 0},
+			),
+		},
+	)
+}
+
+func rooks() models.Board {
+	return models.NewBoard(
+		models.Size{8, 8},
+		[]models.Piece{
+			pieces.NewKing(
+				models.Black,
+				models.Position{4, 7},
+			),
+			pieces.NewRook(
+				models.Black,
+				models.Position{0, 7},
+			),
+			pieces.NewRook(
+				models.Black,
+				models.Position{7, 7},
+			),
+			pieces.NewKing(
+				models.White,
+				models.Position{4, 0},
+			),
+			pieces.NewRook(
+				models.White,
+				models.Position{0, 0},
+			),
+			pieces.NewRook(
+				models.White,
+				models.Position{7, 0},
 			),
 		},
 	)
