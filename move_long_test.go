@@ -235,6 +235,51 @@ func TestPerft(test *testing.T) {
 			want: 19764,
 		},
 		data{
+			name: "pawns",
+			args: args{
+				storage: pawns(),
+				color:   models.White,
+				deep:    0,
+			},
+			want: 1,
+		},
+		data{
+			name: "pawns",
+			args: args{
+				storage: pawns(),
+				color:   models.White,
+				deep:    1,
+			},
+			want: 10,
+		},
+		data{
+			name: "pawns",
+			args: args{
+				storage: pawns(),
+				color:   models.White,
+				deep:    2,
+			},
+			want: 100,
+		},
+		data{
+			name: "pawns",
+			args: args{
+				storage: pawns(),
+				color:   models.White,
+				deep:    3,
+			},
+			want: 1030,
+		},
+		data{
+			name: "pawns",
+			args: args{
+				storage: pawns(),
+				color:   models.White,
+				deep:    4,
+			},
+			want: 10609,
+		},
+		data{
 			name: "initial",
 			args: args{
 				storage: initial(),
@@ -478,7 +523,43 @@ func knights() models.Board {
 	)
 }
 
-func pawns(
+func pawns() models.Board {
+	var allPieces []models.Piece
+	allPieces = append(
+		allPieces,
+		[]models.Piece{
+			pieces.NewKing(
+				models.Black,
+				models.Position{4, 7},
+			),
+			pieces.NewKing(
+				models.White,
+				models.Position{4, 0},
+			),
+		}...,
+	)
+	allPieces = append(allPieces, makePawns(
+		models.Black,
+		PositionMap{
+			0: 6, 1: 6, 2: 6, 3: 6,
+			4: 6, 5: 6, 6: 6, 7: 6,
+		},
+	)...)
+	allPieces = append(allPieces, makePawns(
+		models.White,
+		PositionMap{
+			0: 1, 1: 1, 2: 1, 3: 1,
+			4: 1, 5: 1, 6: 1, 7: 1,
+		},
+	)...)
+
+	return models.NewBoard(
+		models.Size{8, 8},
+		allPieces,
+	)
+}
+
+func makePawns(
 	color models.Color,
 	positions PositionMap,
 ) []models.Piece {
@@ -539,14 +620,14 @@ func initial() models.Board {
 		models.Black,
 		7,
 	)...)
-	allPieces = append(allPieces, pawns(
+	allPieces = append(allPieces, makePawns(
 		models.Black,
 		PositionMap{
 			0: 6, 1: 6, 2: 6, 3: 6,
 			4: 6, 5: 6, 6: 6, 7: 6,
 		},
 	)...)
-	allPieces = append(allPieces, pawns(
+	allPieces = append(allPieces, makePawns(
 		models.White,
 		PositionMap{
 			0: 1, 1: 1, 2: 1, 3: 1,
@@ -644,14 +725,14 @@ func kiwipete() models.Board {
 			),
 		}...,
 	)
-	allPieces = append(allPieces, pawns(
+	allPieces = append(allPieces, makePawns(
 		models.Black,
 		PositionMap{
 			0: 6, 1: 3, 2: 6, 3: 6,
 			4: 5, 5: 6, 6: 5, 7: 2,
 		},
 	)...)
-	allPieces = append(allPieces, pawns(
+	allPieces = append(allPieces, makePawns(
 		models.White,
 		PositionMap{
 			0: 1, 1: 1, 2: 1, 3: 4,
