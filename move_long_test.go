@@ -3,7 +3,6 @@
 package chessmodels_test
 
 import (
-	"syscall"
 	"testing"
 
 	models "github.com/thewizardplusplus/go-chess-models"
@@ -19,13 +18,11 @@ func TestPerft(test *testing.T) {
 		deep    int
 	}
 	type data struct {
-		skip bool
 		name string
 		args args
 		want int
 	}
 
-	_, longer := syscall.Getenv("LONGER")
 	for index, data := range []data{
 		data{
 			name: "kings",
@@ -316,16 +313,6 @@ func TestPerft(test *testing.T) {
 			want: 2124,
 		},
 		data{
-			name: "initial",
-			skip: !longer,
-			args: args{
-				storage: initial(),
-				color:   models.White,
-				deep:    4,
-			},
-			want: 31250,
-		},
-		data{
 			name: "kiwipete",
 			args: args{
 				storage: kiwipete(),
@@ -352,21 +339,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 1740,
 		},
-		data{
-			name: "kiwipete",
-			skip: !longer,
-			args: args{
-				storage: kiwipete(),
-				color:   models.White,
-				deep:    3,
-			},
-			want: 77305,
-		},
 	} {
-		if data.skip {
-			continue
-		}
-
 		got := perft(
 			data.args.storage,
 			data.args.color,
@@ -374,13 +347,9 @@ func TestPerft(test *testing.T) {
 		)
 
 		if got != data.want {
-			test.Logf(
-				"%s/#%d: %d/%d",
-				data.name,
-				index,
-				got,
-				data.want,
-			)
+			const msg = "%s/#%d: %d/%d"
+			name, want := data.name, data.want
+			test.Logf(msg, name, index, got, want)
 
 			test.Fail()
 		}
