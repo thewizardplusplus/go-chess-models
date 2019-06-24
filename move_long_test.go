@@ -190,6 +190,51 @@ func TestPerft(test *testing.T) {
 			want: 5575,
 		},
 		data{
+			name: "knights",
+			args: args{
+				storage: knights(),
+				color:   models.White,
+				deep:    0,
+			},
+			want: 1,
+		},
+		data{
+			name: "knights",
+			args: args{
+				storage: knights(),
+				color:   models.White,
+				deep:    1,
+			},
+			want: 11,
+		},
+		data{
+			name: "knights",
+			args: args{
+				storage: knights(),
+				color:   models.White,
+				deep:    2,
+			},
+			want: 121,
+		},
+		data{
+			name: "knights",
+			args: args{
+				storage: knights(),
+				color:   models.White,
+				deep:    3,
+			},
+			want: 1551,
+		},
+		data{
+			name: "knights",
+			args: args{
+				storage: knights(),
+				color:   models.White,
+				deep:    4,
+			},
+			want: 19764,
+		},
+		data{
 			name: "initial",
 			args: args{
 				storage: initial(),
@@ -396,6 +441,38 @@ func bishops() models.Board {
 			pieces.NewBishop(
 				models.White,
 				models.Position{5, 0},
+			),
+		},
+	)
+}
+
+func knights() models.Board {
+	return models.NewBoard(
+		models.Size{8, 8},
+		[]models.Piece{
+			pieces.NewKing(
+				models.Black,
+				models.Position{4, 7},
+			),
+			pieces.NewKnight(
+				models.Black,
+				models.Position{1, 7},
+			),
+			pieces.NewKnight(
+				models.Black,
+				models.Position{6, 7},
+			),
+			pieces.NewKing(
+				models.White,
+				models.Position{4, 0},
+			),
+			pieces.NewKnight(
+				models.White,
+				models.Position{1, 0},
+			),
+			pieces.NewKnight(
+				models.White,
+				models.Position{6, 0},
 			),
 		},
 	)
