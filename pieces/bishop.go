@@ -37,8 +37,25 @@ func (piece Bishop) CheckMove(
 		return false
 	}
 
+	// if file in the move are descending,
+	// these will be scanned from a finish
+	// to a start (see the search() function)
+	//
+	// scanning direction of ranks
+	// should correspond to it
+	rankStart, rankFinish :=
+		start.Rank, finish.Rank
+	if start.File > finish.File {
+		rankStart, rankFinish =
+			rankFinish, rankStart
+	}
+
+	rankSign := 1
+	if rankStart > rankFinish {
+		rankSign = -1
+	}
+
 	fileMin := min(start.File, finish.File)
-	rankMin := min(start.Rank, finish.Rank)
 	ok := search(
 		storage,
 		start.File,
@@ -47,7 +64,7 @@ func (piece Bishop) CheckMove(
 			step := i - fileMin
 			return models.Position{
 				File: i,
-				Rank: rankMin + step,
+				Rank: rankStart + step*rankSign,
 			}
 		},
 	)

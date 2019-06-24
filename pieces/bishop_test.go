@@ -306,6 +306,88 @@ func TestBishopCheckMove(test *testing.T) {
 			},
 			wantErr: nil,
 		},
+		// specific test for the bug
+		// with a path scanning
+		data{
+			fields: fields{
+				size: models.Size{5, 5},
+				pieces: []models.Piece{
+					NewBishop(
+						models.White,
+						models.Position{
+							File: 1,
+							Rank: 3,
+						},
+					),
+					NewPawn(
+						models.Black,
+						models.Position{
+							File: 3,
+							Rank: 1,
+						},
+					),
+				},
+			},
+			args: args{
+				position: models.Position{
+					File: 1,
+					Rank: 3,
+				},
+			},
+			wantMoves: []models.Move{
+				models.Move{
+					Start: models.Position{
+						File: 1,
+						Rank: 3,
+					},
+					Finish: models.Position{
+						File: 3,
+						Rank: 1,
+					},
+				},
+				models.Move{
+					Start: models.Position{
+						File: 1,
+						Rank: 3,
+					},
+					Finish: models.Position{
+						File: 0,
+						Rank: 2,
+					},
+				},
+				models.Move{
+					Start: models.Position{
+						File: 1,
+						Rank: 3,
+					},
+					Finish: models.Position{
+						File: 2,
+						Rank: 2,
+					},
+				},
+				models.Move{
+					Start: models.Position{
+						File: 1,
+						Rank: 3,
+					},
+					Finish: models.Position{
+						File: 0,
+						Rank: 4,
+					},
+				},
+				models.Move{
+					Start: models.Position{
+						File: 1,
+						Rank: 3,
+					},
+					Finish: models.Position{
+						File: 2,
+						Rank: 4,
+					},
+				},
+			},
+			wantErr: nil,
+		},
 	} {
 		board := models.NewBoard(
 			data.fields.size,
@@ -322,6 +404,8 @@ func TestBishopCheckMove(test *testing.T) {
 			gotMoves,
 			data.wantMoves,
 		) {
+			test.Log(gotMoves,
+				data.wantMoves)
 			test.Fail()
 		}
 		if !reflect.DeepEqual(
