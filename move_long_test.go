@@ -3,6 +3,9 @@
 package chessmodels_test
 
 import (
+	"fmt"
+	"sort"
+	"strings"
 	"testing"
 
 	models "github.com/thewizardplusplus/go-chess-models"
@@ -340,14 +343,28 @@ func TestPerft(test *testing.T) {
 			want: 1740,
 		},
 	} {
+		var moves []string
 		got := perft(
 			data.args.storage,
 			data.args.color,
 			data.args.deep,
+			func(
+				move models.Move,
+				count int,
+			) {
+				moves = append(moves, fmt.Sprintf(
+					"%v: %d",
+					move,
+					count,
+				))
+			},
 		)
 
 		if got != data.want {
-			const msg = "%s/#%d: %d/%d"
+			sort.Strings(moves)
+
+			msg := "%s/#%d: %d/%d\n" +
+				strings.Join(moves, "\n")
 			name, want := data.name, data.want
 			test.Logf(msg, name, index, got, want)
 
@@ -719,6 +736,7 @@ func perft(
 	storage models.PieceStorage,
 	color models.Color,
 	deep int,
+	logger func(move models.Move, count int),
 ) int {
 	// check for a check should be first,
 	// including before a termination check,
@@ -738,11 +756,17 @@ func perft(
 	for _, move := range moves {
 		nextStorage := storage.ApplyMove(move)
 		nextColor := color.Negative()
-		count += perft(
+		moveCount := perft(
 			nextStorage,
 			nextColor,
 			deep-1,
+			nil, // log only a top level
 		)
+		if logger != nil {
+			logger(move, moveCount)
+		}
+
+		count += moveCount
 	}
 
 	return count
