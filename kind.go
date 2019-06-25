@@ -18,8 +18,20 @@ const (
 	Pawn
 )
 
+type kindGroup map[byte]Kind
+
+func (kinds kindGroup) Add(
+	fen byte,
+	fenCase int,
+	kind Kind,
+) {
+	casedFEN :=
+		byte(unicode.To(fenCase, rune(fen)))
+	kinds[casedFEN] = kind
+}
+
 var (
-	kindMap = map[byte]Kind{
+	kinds = kindGroup{
 		'k': King,
 		'q': Queen,
 		'r': Rook,
@@ -30,16 +42,15 @@ var (
 )
 
 func init() {
-	completedKindMap := make(map[byte]Kind)
-	for fen, kind := range kindMap {
-		lowerFEN := unicode.ToLower(rune(fen))
-		completedKindMap[byte(lowerFEN)] = kind
-
-		upperFEN := unicode.ToUpper(rune(fen))
-		completedKindMap[byte(upperFEN)] = kind
+	completedKinds := make(kindGroup)
+	lower, upper :=
+		unicode.LowerCase, unicode.UpperCase
+	for fen, kind := range kinds {
+		completedKinds.Add(fen, lower, kind)
+		completedKinds.Add(fen, upper, kind)
 	}
 
-	kindMap = completedKindMap
+	kinds = completedKinds
 }
 
 // ParseKind ...
@@ -49,7 +60,7 @@ func init() {
 func ParseKind(
 	kindInFEN byte,
 ) (Kind, error) {
-	kind, ok := kindMap[kindInFEN]
+	kind, ok := kinds[kindInFEN]
 	if !ok {
 		return 0, errors.New("unknown kind")
 	}
