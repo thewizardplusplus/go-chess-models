@@ -373,7 +373,7 @@ func TestPerft(test *testing.T) {
 	}
 }
 
-func kings() models.Board {
+func kings() models.PieceStorage {
 	return models.NewBoard(
 		models.Size{8, 8},
 		[]models.Piece{
@@ -389,7 +389,7 @@ func kings() models.Board {
 	)
 }
 
-func queens() models.Board {
+func queens() models.PieceStorage {
 	return models.NewBoard(
 		models.Size{8, 8},
 		[]models.Piece{
@@ -413,7 +413,7 @@ func queens() models.Board {
 	)
 }
 
-func rooks() models.Board {
+func rooks() models.PieceStorage {
 	return models.NewBoard(
 		models.Size{8, 8},
 		[]models.Piece{
@@ -445,7 +445,7 @@ func rooks() models.Board {
 	)
 }
 
-func bishops() models.Board {
+func bishops() models.PieceStorage {
 	return models.NewBoard(
 		models.Size{8, 8},
 		[]models.Piece{
@@ -477,7 +477,7 @@ func bishops() models.Board {
 	)
 }
 
-func knights() models.Board {
+func knights() models.PieceStorage {
 	return models.NewBoard(
 		models.Size{8, 8},
 		[]models.Piece{
@@ -509,7 +509,7 @@ func knights() models.Board {
 	)
 }
 
-func pawns() models.Board {
+func pawns() models.PieceStorage {
 	var allPieces []models.Piece
 	allPieces = append(
 		allPieces,
@@ -560,7 +560,7 @@ func makePawns(
 	return pawns
 }
 
-func initial() models.Board {
+func initial() models.PieceStorage {
 	restPieces := func(
 		color models.Color,
 		rank int,
@@ -631,7 +631,7 @@ func initial() models.Board {
 	)
 }
 
-func kiwipete() models.Board {
+func kiwipete() models.PieceStorage {
 	var allPieces []models.Piece
 	allPieces = append(
 		allPieces,
