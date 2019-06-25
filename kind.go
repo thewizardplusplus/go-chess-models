@@ -18,15 +18,14 @@ const (
 	Pawn
 )
 
-type kindGroup map[byte]Kind
+type kindGroup map[rune]Kind
 
 func (kinds kindGroup) Add(
-	fen byte,
+	fen rune,
 	fenCase int,
 	kind Kind,
 ) {
-	casedFEN :=
-		byte(unicode.To(fenCase, rune(fen)))
+	casedFEN := unicode.To(fenCase, fen)
 	kinds[casedFEN] = kind
 }
 
@@ -58,7 +57,7 @@ func init() {
 // It parses a kind of a piece
 // from one in FEN.
 func ParseKind(
-	kindInFEN byte,
+	kindInFEN rune,
 ) (Kind, error) {
 	kind, ok := kinds[kindInFEN]
 	if !ok {

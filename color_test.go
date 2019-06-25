@@ -6,7 +6,7 @@ import (
 
 func TestParseColor(test *testing.T) {
 	type args struct {
-		kindInFEN byte
+		kindInFEN rune
 	}
 	type data struct {
 		args args
