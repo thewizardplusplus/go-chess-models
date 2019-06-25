@@ -11,7 +11,8 @@ type PieceFactory func(
 	position Position,
 ) (Piece, error)
 
-func parseRank(
+// ParseRank ...
+func ParseRank(
 	rankIndex int,
 	rankInFEN string,
 	pieceFactory PieceFactory,
@@ -26,6 +27,7 @@ func parseRank(
 			}
 
 			maxFile += shift
+			continue
 		}
 
 		color := ParseColor(symbol)
