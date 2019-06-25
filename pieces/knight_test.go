@@ -17,6 +17,18 @@ func TestKnightInterface(test *testing.T) {
 	}
 }
 
+func TestKnightFactoryType(
+	test *testing.T,
+) {
+	gotType := reflect.TypeOf(NewKnight)
+	wantType := reflect.
+		TypeOf((*Factory)(nil)).
+		Elem()
+	if !gotType.AssignableTo(wantType) {
+		test.Fail()
+	}
+}
+
 func TestNewKnight(test *testing.T) {
 	piece := NewKnight(
 		models.White,

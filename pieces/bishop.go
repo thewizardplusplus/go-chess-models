@@ -11,7 +11,7 @@ type Bishop struct{ Base }
 func NewBishop(
 	color models.Color,
 	position models.Position,
-) Bishop {
+) models.Piece {
 	kind := models.Bishop
 	base := Base{kind, color, position}
 	return Bishop{base}

@@ -11,7 +11,7 @@ type Queen struct{ Base }
 func NewQueen(
 	color models.Color,
 	position models.Position,
-) Queen {
+) models.Piece {
 	kind := models.Queen
 	base := Base{kind, color, position}
 	return Queen{base}

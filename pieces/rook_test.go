@@ -17,6 +17,16 @@ func TestRookInterface(test *testing.T) {
 	}
 }
 
+func TestRookFactoryType(test *testing.T) {
+	gotType := reflect.TypeOf(NewRook)
+	wantType := reflect.
+		TypeOf((*Factory)(nil)).
+		Elem()
+	if !gotType.AssignableTo(wantType) {
+		test.Fail()
+	}
+}
+
 func TestNewRook(test *testing.T) {
 	piece := NewRook(
 		models.White,

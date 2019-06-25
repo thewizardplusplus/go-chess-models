@@ -17,6 +17,16 @@ func TestPawnInterface(test *testing.T) {
 	}
 }
 
+func TestPawnFactoryType(test *testing.T) {
+	gotType := reflect.TypeOf(NewPawn)
+	wantType := reflect.
+		TypeOf((*Factory)(nil)).
+		Elem()
+	if !gotType.AssignableTo(wantType) {
+		test.Fail()
+	}
+}
+
 func TestNewPawn(test *testing.T) {
 	piece := NewPawn(
 		models.White,

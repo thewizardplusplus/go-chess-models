@@ -17,6 +17,16 @@ func TestKingInterface(test *testing.T) {
 	}
 }
 
+func TestKingFactoryType(test *testing.T) {
+	gotType := reflect.TypeOf(NewKing)
+	wantType := reflect.
+		TypeOf((*Factory)(nil)).
+		Elem()
+	if !gotType.AssignableTo(wantType) {
+		test.Fail()
+	}
+}
+
 func TestNewKing(test *testing.T) {
 	piece := NewKing(
 		models.White,
