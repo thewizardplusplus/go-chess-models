@@ -14,11 +14,25 @@ import (
 
 type PositionMap map[int]int
 
+var (
+	kings   = "4k3/8/8/8/8/8/8/4K3"
+	queens  = "3qk3/8/8/8/8/8/8/3QK3"
+	rooks   = "r3k2r/8/8/8/8/8/8/R3K2R"
+	bishops = "2b1kb2/8/8/8/8/8/8/2B1KB2"
+	knights = "1n2k1n1/8/8/8/8/8/8/1N2K1N1"
+	pawns   = "4k3/pppppppp/8/8" +
+		"/8/8/PPPPPPPP/4K3"
+	initial = "rnbqkbnr/pppppppp/8/8" +
+		"/8/8/PPPPPPPP/RNBQKBNR"
+	kiwipete = "r3k2r/p1ppqpb1/bn2pnp1/3PN3" +
+		"/1p2P3/2N2Q1p/PPPBBPPP/R3K2R"
+)
+
 func TestPerft(test *testing.T) {
 	type args struct {
-		storage models.PieceStorage
-		color   models.Color
-		deep    int
+		boardInFEN string
+		color      models.Color
+		deep       int
 	}
 	type data struct {
 		name string
@@ -30,322 +44,338 @@ func TestPerft(test *testing.T) {
 		data{
 			name: "kings",
 			args: args{
-				storage: kings(),
-				color:   models.White,
-				deep:    0,
+				boardInFEN: kings,
+				color:      models.White,
+				deep:       0,
 			},
 			want: 1,
 		},
 		data{
 			name: "kings",
 			args: args{
-				storage: kings(),
-				color:   models.White,
-				deep:    1,
+				boardInFEN: kings,
+				color:      models.White,
+				deep:       1,
 			},
 			want: 5,
 		},
 		data{
 			name: "kings",
 			args: args{
-				storage: kings(),
-				color:   models.White,
-				deep:    2,
+				boardInFEN: kings,
+				color:      models.White,
+				deep:       2,
 			},
 			want: 25,
 		},
 		data{
 			name: "kings",
 			args: args{
-				storage: kings(),
-				color:   models.White,
-				deep:    3,
+				boardInFEN: kings,
+				color:      models.White,
+				deep:       3,
 			},
 			want: 170,
 		},
 		data{
 			name: "kings",
 			args: args{
-				storage: kings(),
-				color:   models.White,
-				deep:    4,
+				boardInFEN: kings,
+				color:      models.White,
+				deep:       4,
 			},
 			want: 1156,
 		},
 		data{
 			name: "kings",
 			args: args{
-				storage: kings(),
-				color:   models.White,
-				deep:    5,
+				boardInFEN: kings,
+				color:      models.White,
+				deep:       5,
 			},
 			want: 7922,
 		},
 		data{
 			name: "queens",
 			args: args{
-				storage: queens(),
-				color:   models.White,
-				deep:    0,
+				boardInFEN: queens,
+				color:      models.White,
+				deep:       0,
 			},
 			want: 1,
 		},
 		data{
 			name: "queens",
 			args: args{
-				storage: queens(),
-				color:   models.White,
-				deep:    1,
+				boardInFEN: queens,
+				color:      models.White,
+				deep:       1,
 			},
 			want: 20,
 		},
 		data{
 			name: "queens",
 			args: args{
-				storage: queens(),
-				color:   models.White,
-				deep:    2,
+				boardInFEN: queens,
+				color:      models.White,
+				deep:       2,
 			},
 			want: 301,
 		},
 		data{
 			name: "queens",
 			args: args{
-				storage: queens(),
-				color:   models.White,
-				deep:    3,
+				boardInFEN: queens,
+				color:      models.White,
+				deep:       3,
 			},
 			want: 6063,
 		},
 		data{
 			name: "rooks",
 			args: args{
-				storage: rooks(),
-				color:   models.White,
-				deep:    0,
+				boardInFEN: rooks,
+				color:      models.White,
+				deep:       0,
 			},
 			want: 1,
 		},
 		data{
 			name: "rooks",
 			args: args{
-				storage: rooks(),
-				color:   models.White,
-				deep:    1,
+				boardInFEN: rooks,
+				color:      models.White,
+				deep:       1,
 			},
 			want: 24,
 		},
 		data{
 			name: "rooks",
 			args: args{
-				storage: rooks(),
-				color:   models.White,
-				deep:    2,
+				boardInFEN: rooks,
+				color:      models.White,
+				deep:       2,
 			},
 			want: 482,
 		},
 		data{
 			name: "rooks",
 			args: args{
-				storage: rooks(),
-				color:   models.White,
-				deep:    3,
+				boardInFEN: rooks,
+				color:      models.White,
+				deep:       3,
 			},
 			want: 11522,
 		},
 		data{
 			name: "bishops",
 			args: args{
-				storage: bishops(),
-				color:   models.White,
-				deep:    0,
+				boardInFEN: bishops,
+				color:      models.White,
+				deep:       0,
 			},
 			want: 1,
 		},
 		data{
 			name: "bishops",
 			args: args{
-				storage: bishops(),
-				color:   models.White,
-				deep:    1,
+				boardInFEN: bishops,
+				color:      models.White,
+				deep:       1,
 			},
 			want: 18,
 		},
 		data{
 			name: "bishops",
 			args: args{
-				storage: bishops(),
-				color:   models.White,
-				deep:    2,
+				boardInFEN: bishops,
+				color:      models.White,
+				deep:       2,
 			},
 			want: 305,
 		},
 		data{
 			name: "bishops",
 			args: args{
-				storage: bishops(),
-				color:   models.White,
-				deep:    3,
+				boardInFEN: bishops,
+				color:      models.White,
+				deep:       3,
 			},
 			want: 5575,
 		},
 		data{
 			name: "knights",
 			args: args{
-				storage: knights(),
-				color:   models.White,
-				deep:    0,
+				boardInFEN: knights,
+				color:      models.White,
+				deep:       0,
 			},
 			want: 1,
 		},
 		data{
 			name: "knights",
 			args: args{
-				storage: knights(),
-				color:   models.White,
-				deep:    1,
+				boardInFEN: knights,
+				color:      models.White,
+				deep:       1,
 			},
 			want: 11,
 		},
 		data{
 			name: "knights",
 			args: args{
-				storage: knights(),
-				color:   models.White,
-				deep:    2,
+				boardInFEN: knights,
+				color:      models.White,
+				deep:       2,
 			},
 			want: 121,
 		},
 		data{
 			name: "knights",
 			args: args{
-				storage: knights(),
-				color:   models.White,
-				deep:    3,
+				boardInFEN: knights,
+				color:      models.White,
+				deep:       3,
 			},
 			want: 1551,
 		},
 		data{
 			name: "knights",
 			args: args{
-				storage: knights(),
-				color:   models.White,
-				deep:    4,
+				boardInFEN: knights,
+				color:      models.White,
+				deep:       4,
 			},
 			want: 19764,
 		},
 		data{
 			name: "pawns",
 			args: args{
-				storage: pawns(),
-				color:   models.White,
-				deep:    0,
+				boardInFEN: pawns,
+				color:      models.White,
+				deep:       0,
 			},
 			want: 1,
 		},
 		data{
 			name: "pawns",
 			args: args{
-				storage: pawns(),
-				color:   models.White,
-				deep:    1,
+				boardInFEN: pawns,
+				color:      models.White,
+				deep:       1,
 			},
 			want: 10,
 		},
 		data{
 			name: "pawns",
 			args: args{
-				storage: pawns(),
-				color:   models.White,
-				deep:    2,
+				boardInFEN: pawns,
+				color:      models.White,
+				deep:       2,
 			},
 			want: 100,
 		},
 		data{
 			name: "pawns",
 			args: args{
-				storage: pawns(),
-				color:   models.White,
-				deep:    3,
+				boardInFEN: pawns,
+				color:      models.White,
+				deep:       3,
 			},
 			want: 1030,
 		},
 		data{
 			name: "pawns",
 			args: args{
-				storage: pawns(),
-				color:   models.White,
-				deep:    4,
+				boardInFEN: pawns,
+				color:      models.White,
+				deep:       4,
 			},
 			want: 10609,
 		},
 		data{
 			name: "initial",
 			args: args{
-				storage: initial(),
-				color:   models.White,
-				deep:    0,
+				boardInFEN: initial,
+				color:      models.White,
+				deep:       0,
 			},
 			want: 1,
 		},
 		data{
 			name: "initial",
 			args: args{
-				storage: initial(),
-				color:   models.White,
-				deep:    1,
+				boardInFEN: initial,
+				color:      models.White,
+				deep:       1,
 			},
 			want: 12,
 		},
 		data{
 			name: "initial",
 			args: args{
-				storage: initial(),
-				color:   models.White,
-				deep:    2,
+				boardInFEN: initial,
+				color:      models.White,
+				deep:       2,
 			},
 			want: 144,
 		},
 		data{
 			name: "initial",
 			args: args{
-				storage: initial(),
-				color:   models.White,
-				deep:    3,
+				boardInFEN: initial,
+				color:      models.White,
+				deep:       3,
 			},
 			want: 2124,
 		},
 		data{
 			name: "kiwipete",
 			args: args{
-				storage: kiwipete(),
-				color:   models.White,
-				deep:    0,
+				boardInFEN: kiwipete,
+				color:      models.White,
+				deep:       0,
 			},
 			want: 1,
 		},
 		data{
 			name: "kiwipete",
 			args: args{
-				storage: kiwipete(),
-				color:   models.White,
-				deep:    1,
+				boardInFEN: kiwipete,
+				color:      models.White,
+				deep:       1,
 			},
 			want: 44,
 		},
 		data{
 			name: "kiwipete",
 			args: args{
-				storage: kiwipete(),
-				color:   models.White,
-				deep:    2,
+				boardInFEN: kiwipete,
+				color:      models.White,
+				deep:       2,
 			},
 			want: 1740,
 		},
 	} {
+		prefix := fmt.Sprintf(
+			"%s/#%d",
+			data.name,
+			index,
+		)
+		storage, err := models.ParseBoard(
+			data.args.boardInFEN,
+			pieces.NewPiece,
+		)
+		if err != nil {
+			test.Logf("%s: %v", prefix, err)
+			test.Fail()
+
+			continue
+		}
+
 		var moves []string
 		got := perft(
-			data.args.storage,
+			storage,
 			data.args.color,
 			data.args.deep,
 			func(
@@ -363,373 +393,13 @@ func TestPerft(test *testing.T) {
 		if got != data.want {
 			sort.Strings(moves)
 
-			msg := "%s/#%d: %d/%d\n" +
+			msg := "%s: %d/%d\n" +
 				strings.Join(moves, "\n")
-			name, want := data.name, data.want
-			test.Logf(msg, name, index, got, want)
+			test.Logf(msg, prefix, got, data.want)
 
 			test.Fail()
 		}
 	}
-}
-
-func kings() models.PieceStorage {
-	return models.NewBoard(
-		models.Size{8, 8},
-		[]models.Piece{
-			pieces.NewKing(
-				models.Black,
-				models.Position{4, 7},
-			),
-			pieces.NewKing(
-				models.White,
-				models.Position{4, 0},
-			),
-		},
-	)
-}
-
-func queens() models.PieceStorage {
-	return models.NewBoard(
-		models.Size{8, 8},
-		[]models.Piece{
-			pieces.NewKing(
-				models.Black,
-				models.Position{4, 7},
-			),
-			pieces.NewQueen(
-				models.Black,
-				models.Position{3, 7},
-			),
-			pieces.NewKing(
-				models.White,
-				models.Position{4, 0},
-			),
-			pieces.NewQueen(
-				models.White,
-				models.Position{3, 0},
-			),
-		},
-	)
-}
-
-func rooks() models.PieceStorage {
-	return models.NewBoard(
-		models.Size{8, 8},
-		[]models.Piece{
-			pieces.NewKing(
-				models.Black,
-				models.Position{4, 7},
-			),
-			pieces.NewRook(
-				models.Black,
-				models.Position{0, 7},
-			),
-			pieces.NewRook(
-				models.Black,
-				models.Position{7, 7},
-			),
-			pieces.NewKing(
-				models.White,
-				models.Position{4, 0},
-			),
-			pieces.NewRook(
-				models.White,
-				models.Position{0, 0},
-			),
-			pieces.NewRook(
-				models.White,
-				models.Position{7, 0},
-			),
-		},
-	)
-}
-
-func bishops() models.PieceStorage {
-	return models.NewBoard(
-		models.Size{8, 8},
-		[]models.Piece{
-			pieces.NewKing(
-				models.Black,
-				models.Position{4, 7},
-			),
-			pieces.NewBishop(
-				models.Black,
-				models.Position{2, 7},
-			),
-			pieces.NewBishop(
-				models.Black,
-				models.Position{5, 7},
-			),
-			pieces.NewKing(
-				models.White,
-				models.Position{4, 0},
-			),
-			pieces.NewBishop(
-				models.White,
-				models.Position{2, 0},
-			),
-			pieces.NewBishop(
-				models.White,
-				models.Position{5, 0},
-			),
-		},
-	)
-}
-
-func knights() models.PieceStorage {
-	return models.NewBoard(
-		models.Size{8, 8},
-		[]models.Piece{
-			pieces.NewKing(
-				models.Black,
-				models.Position{4, 7},
-			),
-			pieces.NewKnight(
-				models.Black,
-				models.Position{1, 7},
-			),
-			pieces.NewKnight(
-				models.Black,
-				models.Position{6, 7},
-			),
-			pieces.NewKing(
-				models.White,
-				models.Position{4, 0},
-			),
-			pieces.NewKnight(
-				models.White,
-				models.Position{1, 0},
-			),
-			pieces.NewKnight(
-				models.White,
-				models.Position{6, 0},
-			),
-		},
-	)
-}
-
-func pawns() models.PieceStorage {
-	var allPieces []models.Piece
-	allPieces = append(
-		allPieces,
-		[]models.Piece{
-			pieces.NewKing(
-				models.Black,
-				models.Position{4, 7},
-			),
-			pieces.NewKing(
-				models.White,
-				models.Position{4, 0},
-			),
-		}...,
-	)
-	allPieces = append(allPieces, makePawns(
-		models.Black,
-		PositionMap{
-			0: 6, 1: 6, 2: 6, 3: 6,
-			4: 6, 5: 6, 6: 6, 7: 6,
-		},
-	)...)
-	allPieces = append(allPieces, makePawns(
-		models.White,
-		PositionMap{
-			0: 1, 1: 1, 2: 1, 3: 1,
-			4: 1, 5: 1, 6: 1, 7: 1,
-		},
-	)...)
-
-	return models.NewBoard(
-		models.Size{8, 8},
-		allPieces,
-	)
-}
-
-func makePawns(
-	color models.Color,
-	positions PositionMap,
-) []models.Piece {
-	var pawns []models.Piece
-	for file, rank := range positions {
-		pawns = append(pawns, pieces.NewPawn(
-			color,
-			models.Position{file, rank},
-		))
-	}
-
-	return pawns
-}
-
-func initial() models.PieceStorage {
-	restPieces := func(
-		color models.Color,
-		rank int,
-	) []models.Piece {
-		return []models.Piece{
-			pieces.NewRook(
-				color,
-				models.Position{0, rank},
-			),
-			pieces.NewKnight(
-				color,
-				models.Position{1, rank},
-			),
-			pieces.NewBishop(
-				color,
-				models.Position{2, rank},
-			),
-			pieces.NewQueen(
-				color,
-				models.Position{3, rank},
-			),
-			pieces.NewKing(
-				color,
-				models.Position{4, rank},
-			),
-			pieces.NewBishop(
-				color,
-				models.Position{5, rank},
-			),
-			pieces.NewKnight(
-				color,
-				models.Position{6, rank},
-			),
-			pieces.NewRook(
-				color,
-				models.Position{7, rank},
-			),
-		}
-	}
-
-	var allPieces []models.Piece
-	allPieces = append(allPieces, restPieces(
-		models.Black,
-		7,
-	)...)
-	allPieces = append(allPieces, makePawns(
-		models.Black,
-		PositionMap{
-			0: 6, 1: 6, 2: 6, 3: 6,
-			4: 6, 5: 6, 6: 6, 7: 6,
-		},
-	)...)
-	allPieces = append(allPieces, makePawns(
-		models.White,
-		PositionMap{
-			0: 1, 1: 1, 2: 1, 3: 1,
-			4: 1, 5: 1, 6: 1, 7: 1,
-		},
-	)...)
-	allPieces = append(allPieces, restPieces(
-		models.White,
-		0,
-	)...)
-
-	return models.NewBoard(
-		models.Size{8, 8},
-		allPieces,
-	)
-}
-
-func kiwipete() models.PieceStorage {
-	var allPieces []models.Piece
-	allPieces = append(
-		allPieces,
-		[]models.Piece{
-			// kings
-			pieces.NewKing(
-				models.Black,
-				models.Position{4, 7},
-			),
-			pieces.NewKing(
-				models.White,
-				models.Position{4, 0},
-			),
-
-			// queens
-			pieces.NewQueen(
-				models.Black,
-				models.Position{4, 6},
-			),
-			pieces.NewQueen(
-				models.White,
-				models.Position{5, 2},
-			),
-
-			// rooks
-			pieces.NewRook(
-				models.Black,
-				models.Position{0, 7},
-			),
-			pieces.NewRook(
-				models.Black,
-				models.Position{7, 7},
-			),
-			pieces.NewRook(
-				models.White,
-				models.Position{0, 0},
-			),
-			pieces.NewRook(
-				models.White,
-				models.Position{7, 0},
-			),
-
-			// bishops
-			pieces.NewBishop(
-				models.Black,
-				models.Position{0, 5},
-			),
-			pieces.NewBishop(
-				models.Black,
-				models.Position{6, 6},
-			),
-			pieces.NewBishop(
-				models.White,
-				models.Position{3, 1},
-			),
-			pieces.NewBishop(
-				models.White,
-				models.Position{4, 1},
-			),
-
-			// knights
-			pieces.NewKnight(
-				models.Black,
-				models.Position{1, 5},
-			),
-			pieces.NewKnight(
-				models.Black,
-				models.Position{5, 5},
-			),
-			pieces.NewKnight(
-				models.White,
-				models.Position{2, 2},
-			),
-			pieces.NewKnight(
-				models.White,
-				models.Position{4, 4},
-			),
-		}...,
-	)
-	allPieces = append(allPieces, makePawns(
-		models.Black,
-		PositionMap{
-			0: 6, 1: 3, 2: 6, 3: 6,
-			4: 5, 5: 6, 6: 5, 7: 2,
-		},
-	)...)
-	allPieces = append(allPieces, makePawns(
-		models.White,
-		PositionMap{
-			0: 1, 1: 1, 2: 1, 3: 4,
-			4: 3, 5: 1, 6: 1, 7: 1,
-		},
-	)...)
-
-	return models.NewBoard(
-		models.Size{8, 8},
-		allPieces,
-	)
 }
 
 func perft(
