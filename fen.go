@@ -2,6 +2,7 @@ package chessmodels
 
 import (
 	"strconv"
+	"strings"
 )
 
 // PieceFactory ...
@@ -10,6 +11,40 @@ type PieceFactory func(
 	color Color,
 	position Position,
 ) (Piece, error)
+
+// ParseBoard ...
+func ParseBoard(
+	boardInFEN string,
+	pieceFactory PieceFactory,
+) (PieceStorage, error) {
+	ranks := strings.Split(boardInFEN, "/")
+	// reverse ranks
+	left, right := 0, len(ranks)-1
+	for left < right {
+		ranks[left], ranks[right] =
+			ranks[right], ranks[left]
+		left, right = left+1, right-1
+	}
+
+	var pieces []Piece
+	var width int
+	for index, rank := range ranks {
+		rankPieces, rankWidth, err :=
+			ParseRank(index, rank, pieceFactory)
+		if err != nil {
+			return nil, err
+		}
+
+		pieces = append(pieces, rankPieces...)
+		if width < rankWidth {
+			width = rankWidth
+		}
+	}
+
+	size := Size{width, len(ranks)}
+	board := NewBoard(size, pieces)
+	return board, nil
+}
 
 // ParseRank ...
 func ParseRank(

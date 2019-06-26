@@ -53,9 +53,6 @@ func init() {
 }
 
 // ParseKind ...
-//
-// It parses a kind of a piece
-// from one in FEN.
 func ParseKind(
 	kindInFEN rune,
 ) (Kind, error) {

@@ -9,6 +9,143 @@ import (
 	"github.com/thewizardplusplus/go-chess-models/pieces"
 )
 
+func TestParseBoard(test *testing.T) {
+	type args struct {
+		boardInFEN   string
+		pieceFactory models.PieceFactory
+	}
+	type data struct {
+		args        args
+		wantStorage models.PieceStorage
+		wantErr     bool
+	}
+
+	for _, data := range []data{
+		data{
+			args: args{
+				boardInFEN:   "2K3q/8/pp1R",
+				pieceFactory: pieces.NewPiece,
+			},
+			wantStorage: models.NewBoard(
+				models.Size{8, 3},
+				[]models.Piece{
+					pieces.NewPawn(
+						models.Black,
+						models.Position{0, 0},
+					),
+					pieces.NewPawn(
+						models.Black,
+						models.Position{1, 0},
+					),
+					pieces.NewRook(
+						models.White,
+						models.Position{3, 0},
+					),
+					pieces.NewKing(
+						models.White,
+						models.Position{2, 2},
+					),
+					pieces.NewQueen(
+						models.Black,
+						models.Position{6, 2},
+					),
+				},
+			),
+			wantErr: false,
+		},
+		data{
+			args: args{
+				boardInFEN:   "1/2K3q/8/pp1R",
+				pieceFactory: pieces.NewPiece,
+			},
+			wantStorage: models.NewBoard(
+				models.Size{8, 4},
+				[]models.Piece{
+					pieces.NewPawn(
+						models.Black,
+						models.Position{0, 0},
+					),
+					pieces.NewPawn(
+						models.Black,
+						models.Position{1, 0},
+					),
+					pieces.NewRook(
+						models.White,
+						models.Position{3, 0},
+					),
+					pieces.NewKing(
+						models.White,
+						models.Position{2, 2},
+					),
+					pieces.NewQueen(
+						models.Black,
+						models.Position{6, 2},
+					),
+				},
+			),
+			wantErr: false,
+		},
+		data{
+			args: args{
+				boardInFEN:   "2K3q/8/pp1R/1",
+				pieceFactory: pieces.NewPiece,
+			},
+			wantStorage: models.NewBoard(
+				models.Size{8, 4},
+				[]models.Piece{
+					pieces.NewPawn(
+						models.Black,
+						models.Position{0, 1},
+					),
+					pieces.NewPawn(
+						models.Black,
+						models.Position{1, 1},
+					),
+					pieces.NewRook(
+						models.White,
+						models.Position{3, 1},
+					),
+					pieces.NewKing(
+						models.White,
+						models.Position{2, 3},
+					),
+					pieces.NewQueen(
+						models.Black,
+						models.Position{6, 3},
+					),
+				},
+			),
+			wantErr: false,
+		},
+		data{
+			args: args{
+				boardInFEN:   "2K3q/#/pp1R",
+				pieceFactory: pieces.NewPiece,
+			},
+			wantStorage: nil,
+			wantErr:     true,
+		},
+	} {
+		gotStorage, gotErr :=
+			models.ParseBoard(
+				data.args.boardInFEN,
+				data.args.pieceFactory,
+			)
+
+		if !reflect.DeepEqual(
+			gotStorage,
+			data.wantStorage,
+		) {
+			test.Fail()
+		}
+
+		hasErr := gotErr != nil
+		if hasErr != data.wantErr {
+			test.Fail()
+		}
+	}
+}
+
 func TestParseRank(test *testing.T) {
 	type args struct {
 		rankIndex    int
