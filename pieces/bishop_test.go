@@ -103,15 +103,11 @@ func TestBishopApplyPosition(
 }
 
 func TestBishopCheckMove(test *testing.T) {
-	type fields struct {
-		size   models.Size
-		pieces []models.Piece
-	}
 	type args struct {
-		position models.Position
+		boardInFEN string
+		position   models.Position
 	}
 	type data struct {
-		fields    fields
 		args      args
 		wantMoves []models.Move
 		wantErr   error
@@ -119,19 +115,8 @@ func TestBishopCheckMove(test *testing.T) {
 
 	for _, data := range []data{
 		data{
-			fields: fields{
-				size: models.Size{5, 5},
-				pieces: []models.Piece{
-					NewBishop(
-						models.White,
-						models.Position{
-							File: 2,
-							Rank: 2,
-						},
-					),
-				},
-			},
 			args: args{
+				boardInFEN: "5/5/2B2/5/5",
 				position: models.Position{
 					File: 2,
 					Rank: 2,
@@ -222,33 +207,8 @@ func TestBishopCheckMove(test *testing.T) {
 			wantErr: nil,
 		},
 		data{
-			fields: fields{
-				size: models.Size{5, 5},
-				pieces: []models.Piece{
-					NewBishop(
-						models.White,
-						models.Position{
-							File: 2,
-							Rank: 2,
-						},
-					),
-					NewPawn(
-						models.Black,
-						models.Position{
-							File: 1,
-							Rank: 1,
-						},
-					),
-					NewPawn(
-						models.Black,
-						models.Position{
-							File: 3,
-							Rank: 1,
-						},
-					),
-				},
-			},
 			args: args{
+				boardInFEN: "5/5/2B2/1p1p1/5",
 				position: models.Position{
 					File: 2,
 					Rank: 2,
@@ -321,26 +281,8 @@ func TestBishopCheckMove(test *testing.T) {
 		// specific test for the bug
 		// with a path scanning
 		data{
-			fields: fields{
-				size: models.Size{5, 5},
-				pieces: []models.Piece{
-					NewBishop(
-						models.White,
-						models.Position{
-							File: 1,
-							Rank: 3,
-						},
-					),
-					NewPawn(
-						models.Black,
-						models.Position{
-							File: 3,
-							Rank: 1,
-						},
-					),
-				},
-			},
 			args: args{
+				boardInFEN: "5/1B3/5/3p1/5",
 				position: models.Position{
 					File: 1,
 					Rank: 3,
@@ -401,14 +343,19 @@ func TestBishopCheckMove(test *testing.T) {
 			wantErr: nil,
 		},
 	} {
-		board := models.NewBoard(
-			data.fields.size,
-			data.fields.pieces,
+		storage, err := models.ParseBoard(
+			data.args.boardInFEN,
+			NewPiece,
 		)
+		if err != nil {
+			test.Fail()
+			continue
+		}
+
 		generator := models.MoveGenerator{}
 		gotMoves, gotErr :=
 			generator.MovesForPosition(
-				board,
+				storage,
 				data.args.position,
 			)
 
@@ -416,8 +363,6 @@ func TestBishopCheckMove(test *testing.T) {
 			gotMoves,
 			data.wantMoves,
 		) {
-			test.Log(gotMoves,
-				data.wantMoves)
 			test.Fail()
 		}
 		if !reflect.DeepEqual(

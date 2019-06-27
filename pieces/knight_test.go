@@ -103,18 +103,18 @@ func TestKnightApplyPosition(
 }
 
 func TestKnightCheckMove(test *testing.T) {
-	board := models.NewBoard(
-		models.Size{5, 5},
-		[]models.Piece{
-			NewKnight(
-				models.White,
-				models.Position{File: 2, Rank: 2},
-			),
-		},
+	storage, err := models.ParseBoard(
+		"5/5/2N2/5/5",
+		NewPiece,
 	)
+	if err != nil {
+		test.Fail()
+		return
+	}
+
 	generator := models.MoveGenerator{}
 	moves, err := generator.MovesForPosition(
-		board,
+		storage,
 		models.Position{File: 2, Rank: 2},
 	)
 

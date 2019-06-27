@@ -7,7 +7,6 @@ import (
 	"unicode"
 
 	models "github.com/thewizardplusplus/go-chess-models"
-	"github.com/thewizardplusplus/go-chess-models/pieces"
 )
 
 var (
@@ -23,23 +22,8 @@ var (
 
 func main() {
 	storage := models.NewBoard(
-		models.Size{5, 5},
-		[]models.Piece{
-			pieces.NewBishop(
-				models.White,
-				models.Position{
-					File: 1,
-					Rank: 3,
-				},
-			),
-			pieces.NewPawn(
-				models.Black,
-				models.Position{
-					File: 3,
-					Rank: 1,
-				},
-			),
-		},
+		models.Size{8, 8},
+		[]models.Piece{},
 	)
 
 	var ranksInFEN []string
