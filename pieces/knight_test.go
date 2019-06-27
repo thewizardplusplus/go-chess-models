@@ -7,28 +7,6 @@ import (
 	models "github.com/thewizardplusplus/go-chess-models"
 )
 
-func TestKnightInterface(test *testing.T) {
-	knightType := reflect.TypeOf(Knight{})
-	pieceType := reflect.
-		TypeOf((*models.Piece)(nil)).
-		Elem()
-	if !knightType.Implements(pieceType) {
-		test.Fail()
-	}
-}
-
-func TestKnightFactoryType(
-	test *testing.T,
-) {
-	gotType := reflect.TypeOf(NewKnight)
-	wantType := reflect.
-		TypeOf((*Factory)(nil)).
-		Elem()
-	if !gotType.AssignableTo(wantType) {
-		test.Fail()
-	}
-}
-
 func TestNewKnight(test *testing.T) {
 	piece := NewKnight(
 		models.White,

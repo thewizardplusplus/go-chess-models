@@ -12,8 +12,6 @@ import (
 	"github.com/thewizardplusplus/go-chess-models/pieces"
 )
 
-type PositionMap map[int]int
-
 var (
 	kings   = "4k3/8/8/8/8/8/8/4K3"
 	queens  = "3qk3/8/8/8/8/8/8/3QK3"

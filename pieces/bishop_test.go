@@ -7,28 +7,6 @@ import (
 	models "github.com/thewizardplusplus/go-chess-models"
 )
 
-func TestBishopInterface(test *testing.T) {
-	bishopType := reflect.TypeOf(Bishop{})
-	pieceType := reflect.
-		TypeOf((*models.Piece)(nil)).
-		Elem()
-	if !bishopType.Implements(pieceType) {
-		test.Fail()
-	}
-}
-
-func TestBishopFactoryType(
-	test *testing.T,
-) {
-	gotType := reflect.TypeOf(NewBishop)
-	wantType := reflect.
-		TypeOf((*Factory)(nil)).
-		Elem()
-	if !gotType.AssignableTo(wantType) {
-		test.Fail()
-	}
-}
-
 func TestNewBishop(test *testing.T) {
 	piece := NewBishop(
 		models.White,

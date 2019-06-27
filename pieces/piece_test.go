@@ -1,21 +1,10 @@
 package pieces
 
 import (
-	"reflect"
 	"testing"
 
 	models "github.com/thewizardplusplus/go-chess-models"
 )
-
-func TestPieceFactoryType(test *testing.T) {
-	gotType := reflect.TypeOf(NewPiece)
-	wantType := reflect.
-		TypeOf((*models.PieceFactory)(nil)).
-		Elem()
-	if !gotType.AssignableTo(wantType) {
-		test.Fail()
-	}
-}
 
 func TestNewPiece(test *testing.T) {
 	type args struct {
