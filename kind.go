@@ -18,6 +18,21 @@ const (
 	Pawn
 )
 
+// ToFEN ...
+//
+// It converts the kind of a piece to FEN.
+//
+// Because its color is unknown, it uses
+// black one (i.e. a lower case).
+func (kind Kind) ToFEN() (rune, error) {
+	kindInFEN, ok := kindsInFEN[kind]
+	if !ok {
+		return 0, errUnknownKind
+	}
+
+	return kindInFEN, nil
+}
+
 type kindGroup map[rune]Kind
 
 func (kinds kindGroup) Add(
@@ -38,6 +53,9 @@ var (
 		'n': Knight,
 		'p': Pawn,
 	}
+	kindsInFEN = map[Kind]rune{}
+
+	errUnknownKind = errors.New("unknown kind")
 )
 
 func init() {
@@ -47,6 +65,10 @@ func init() {
 	for fen, kind := range kinds {
 		completedKinds.Add(fen, lower, kind)
 		completedKinds.Add(fen, upper, kind)
+
+		// force a lower case to be independent
+		// of a definition of the kinds variable
+		kindsInFEN[kind] = unicode.ToLower(fen)
 	}
 
 	kinds = completedKinds
@@ -58,7 +80,7 @@ func ParseKind(
 ) (Kind, error) {
 	kind, ok := kinds[kindInFEN]
 	if !ok {
-		return 0, errors.New("unknown kind")
+		return 0, errUnknownKind
 	}
 
 	return kind, nil

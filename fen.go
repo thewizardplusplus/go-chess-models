@@ -108,15 +108,7 @@ func (board Board) String() string {
 				shift = 0
 			}
 
-			kindsInFEN := map[Kind]rune{
-				King:   'k',
-				Queen:  'q',
-				Rook:   'r',
-				Bishop: 'b',
-				Knight: 'n',
-				Pawn:   'p',
-			}
-			kindInFEN := kindsInFEN[piece.Kind()]
+			kindInFEN, _ := piece.Kind().ToFEN()
 			if piece.Color() == White {
 				kindInFEN =
 					unicode.ToUpper(kindInFEN)
