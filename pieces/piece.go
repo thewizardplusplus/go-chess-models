@@ -6,14 +6,13 @@ import (
 	models "github.com/thewizardplusplus/go-chess-models"
 )
 
-// Factory ...
-type Factory func(
+type factory func(
 	color models.Color,
 	position models.Position,
 ) models.Piece
 
 var (
-	factories = map[models.Kind]Factory{
+	factories = map[models.Kind]factory{
 		models.King:   NewKing,
 		models.Queen:  NewQueen,
 		models.Rook:   NewRook,
