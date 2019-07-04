@@ -3,6 +3,7 @@ package chessmodels
 import (
 	"strconv"
 	"strings"
+	"unicode"
 )
 
 // PieceFactory ...
@@ -82,4 +83,65 @@ func ParseRank(
 	}
 
 	return pieces, maxFile, nil
+}
+
+// String ...
+//
+// It converts the board to FEN.
+func (board Board) String() string {
+	var ranksInFEN []string
+	width := board.size.Width
+	height := board.size.Height
+	for rank := 0; rank < height; rank++ {
+		var rankInFEN string
+		var shift int
+		for file := 0; file < width; file++ {
+			position := Position{file, rank}
+			piece, ok := board.Piece(position)
+			if !ok {
+				shift++
+				continue
+			}
+
+			if shift != 0 {
+				rankInFEN += strconv.Itoa(shift)
+				shift = 0
+			}
+
+			kindsInFEN := map[Kind]rune{
+				King:   'k',
+				Queen:  'q',
+				Rook:   'r',
+				Bishop: 'b',
+				Knight: 'n',
+				Pawn:   'p',
+			}
+			kindInFEN := kindsInFEN[piece.Kind()]
+			if piece.Color() == White {
+				kindInFEN =
+					unicode.ToUpper(kindInFEN)
+			}
+
+			rankInFEN += string(kindInFEN)
+		}
+
+		if shift != 0 {
+			rankInFEN += strconv.Itoa(shift)
+		}
+
+		ranksInFEN = append(
+			ranksInFEN,
+			rankInFEN,
+		)
+	}
+
+	// reverse ranks
+	left, right := 0, len(ranksInFEN)-1
+	for left < right {
+		ranksInFEN[left], ranksInFEN[right] =
+			ranksInFEN[right], ranksInFEN[left]
+		left, right = left+1, right-1
+	}
+
+	return strings.Join(ranksInFEN, "/")
 }
