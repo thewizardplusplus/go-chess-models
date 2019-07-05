@@ -29,6 +29,10 @@ type Piece interface {
 	// on the move finish position.
 	//
 	// It shouldn't check
+	// that there isn't an enemy king
+	// on the move finish position.
+	//
+	// It shouldn't check
 	// for a check before or after the move.
 	CheckMove(
 		move Move,

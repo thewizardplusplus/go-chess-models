@@ -1,67 +1,67 @@
 package chessmodels
 
 import (
-	"errors"
+  "errors"
 )
 
 // ...
 var (
-	ErrNoMove         = errors.New("no move")
-	ErrNoPiece        = errors.New("no piece")
-	ErrFriendlyTarget = errors.New(
-		"friendly target",
-	)
-	ErrIllegalMove = errors.New(
-		"illegal move",
-	)
-	ErrKingCapture = errors.New(
-		"king capture",
-	)
+  ErrNoMove         = errors.New("no move")
+  ErrNoPiece        = errors.New("no piece")
+  ErrFriendlyTarget = errors.New(
+    "friendly target",
+  )
+  ErrIllegalMove = errors.New(
+    "illegal move",
+  )
+  ErrKingCapture = errors.New(
+    "king capture",
+  )
 )
 
 // Size ...
 type Size struct {
-	Width  int
-	Height int
+  Width  int
+  Height int
 }
 
 // PieceStorage ...
 type PieceStorage interface {
-	Size() Size
-	Piece(
-		position Position,
-	) (piece Piece, ok bool)
-	Pieces() []Piece
-	ApplyMove(move Move) PieceStorage
-	CheckMove(move Move) error
+  Size() Size
+  Piece(
+    position Position,
+  ) (piece Piece, ok bool)
+  Pieces() []Piece
+  ApplyMove(move Move) PieceStorage
+  CheckMove(move Move) error
 }
 
 // Board ...
 type Board struct {
-	size   Size
-	pieces pieceGroup
+  size   Size
+  pieces pieceGroup
 }
 
 // NewBoard ...
 func NewBoard(
-	size Size,
-	pieces []Piece,
+  size Size,
+  pieces []Piece,
 ) PieceStorage {
-	pieceGroup := newPieceGroup(pieces)
-	return Board{size, pieceGroup}
+  pieceGroup := newPieceGroup(pieces)
+  return Board{size, pieceGroup}
 }
 
 // Size ...
 func (board Board) Size() Size {
-	return board.size
+  return board.size
 }
 
 // Piece ...
 func (board Board) Piece(
-	position Position,
+  position Position,
 ) (piece Piece, ok bool) {
-	piece, ok = board.pieces[position]
-	return piece, ok
+  piece, ok = board.pieces[position]
+  return piece, ok
 }
 
 // Pieces ...
@@ -69,12 +69,12 @@ func (board Board) Piece(
 // It doesn't guarantee an order
 // of returned pieces.
 func (board Board) Pieces() []Piece {
-	var pieces []Piece
-	for _, piece := range board.pieces {
-		pieces = append(pieces, piece)
-	}
+  var pieces []Piece
+  for _, piece := range board.pieces {
+    pieces = append(pieces, piece)
+  }
 
-	return pieces
+  return pieces
 }
 
 // ApplyMove ...
@@ -82,12 +82,12 @@ func (board Board) Pieces() []Piece {
 // It doesn't check that the move
 // is correct.
 func (board Board) ApplyMove(
-	move Move,
+  move Move,
 ) PieceStorage {
-	pieces := board.pieces.Copy()
-	pieces.Move(move)
+  pieces := board.pieces.Copy()
+  pieces.Move(move)
 
-	return Board{board.size, pieces}
+  return Board{board.size, pieces}
 }
 
 // CheckMove ...
@@ -98,38 +98,38 @@ func (board Board) ApplyMove(
 // It doesn't check for a check
 // before or after the move.
 func (board Board) CheckMove(
-	move Move,
+  move Move,
 ) error {
-	if move.Start == move.Finish {
-		return ErrNoMove
-	}
+  if move.Start == move.Finish {
+    return ErrNoMove
+  }
 
-	piece, ok := board.pieces[move.Start]
-	if !ok {
-		return ErrNoPiece
-	}
+  piece, ok := board.pieces[move.Start]
+  if !ok {
+    return ErrNoPiece
+  }
 
-	target, hasTarget :=
-		board.pieces[move.Finish]
-	if hasTarget &&
-		target.Color() == piece.Color() {
-		return ErrFriendlyTarget
-	}
+  target, hasTarget :=
+    board.pieces[move.Finish]
+  if hasTarget &&
+    target.Color() == piece.Color() {
+    return ErrFriendlyTarget
+  }
 
-	if !piece.CheckMove(move, board) {
-		return ErrIllegalMove
-	}
+  if !piece.CheckMove(move, board) {
+    return ErrIllegalMove
+  }
 
-	// this check should be occurred
-	// only for legal moves
-	// (i.e. after all rest check)
-	//
-	// it's necessary because of a wider area
-	// of ​​influence of this error
-	// compared to rest ones
-	if hasTarget && target.Kind() == King {
-		return ErrKingCapture
-	}
+  // this check should be occurred
+  // only for legal moves
+  // (i.e. after all rest checks)
+  //
+  // it's necessary because of a wider area
+  // of ​​influence of this error
+  // compared to rest ones
+  if hasTarget && target.Kind() == King {
+    return ErrKingCapture
+  }
 
-	return nil
+  return nil
 }
