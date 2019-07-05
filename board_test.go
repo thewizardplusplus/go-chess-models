@@ -6,49 +6,6 @@ import (
 	"testing"
 )
 
-type MockPieceStorage struct {
-	size   Size
-	pieces []Piece
-
-	checkMove func(move Move) error
-}
-
-func (
-	storage MockPieceStorage,
-) Size() Size {
-	return storage.size
-}
-
-func (
-	storage MockPieceStorage,
-) Piece(
-	position Position,
-) (piece Piece, ok bool) {
-	panic("not implemented")
-}
-
-func (
-	storage MockPieceStorage,
-) Pieces() []Piece {
-	return storage.pieces
-}
-
-func (storage MockPieceStorage) ApplyMove(
-	move Move,
-) PieceStorage {
-	panic("not implemented")
-}
-
-func (storage MockPieceStorage) CheckMove(
-	move Move,
-) error {
-	if storage.checkMove == nil {
-		panic("not implemented")
-	}
-
-	return storage.checkMove(move)
-}
-
 type ByPosition []Piece
 
 func (group ByPosition) Len() int {

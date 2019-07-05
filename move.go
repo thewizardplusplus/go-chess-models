@@ -18,7 +18,8 @@ type MoveGenerator struct{}
 // possible checks and can generate
 // such moves.
 //
-// It returns an error only on a king capture.
+// It returns an error
+// only on a king capture.
 func (
 	generator MoveGenerator,
 ) MovesForColor(
@@ -50,7 +51,8 @@ func (
 // possible checks and can generate
 // such moves.
 //
-// It returns an error only on a king capture.
+// It returns an error
+// only on a king capture.
 func (
 	generator MoveGenerator,
 ) MovesForPosition(
