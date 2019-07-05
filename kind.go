@@ -19,16 +19,22 @@ const (
 )
 
 // ToFEN ...
-//
-// It converts the kind of a piece to FEN.
-//
-// Because its color is unknown, it uses
-// black one (i.e. a lower case).
-func (kind Kind) ToFEN() (rune, error) {
+func (kind Kind) ToFEN(
+	color Color,
+) (rune, error) {
 	kindInFEN, ok := kindsInFEN[kind]
 	if !ok {
 		return 0, errUnknownKind
 	}
+
+	var kindCase int
+	if color == Black {
+		kindCase = unicode.LowerCase
+	} else {
+		kindCase = unicode.UpperCase
+	}
+	kindInFEN =
+		unicode.To(kindCase, kindInFEN)
 
 	return kindInFEN, nil
 }

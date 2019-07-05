@@ -3,7 +3,6 @@ package chessmodels
 import (
 	"strconv"
 	"strings"
-	"unicode"
 )
 
 // PieceFactory ...
@@ -107,11 +106,8 @@ func (board Board) String() string {
 				shift = 0
 			}
 
-			kindInFEN, _ := piece.Kind().ToFEN()
-			if piece.Color() == White {
-				kindInFEN =
-					unicode.ToUpper(kindInFEN)
-			}
+			kindInFEN, _ := piece.Kind().
+				ToFEN(piece.Color())
 
 			rankInFEN += string(kindInFEN)
 		}

@@ -5,8 +5,12 @@ import (
 )
 
 func TestKindToFEN(test *testing.T) {
+	type args struct {
+		color Color
+	}
 	type data struct {
 		kind    Kind
+		args    args
 		wantFEN rune
 		wantErr bool
 	}
@@ -14,21 +18,25 @@ func TestKindToFEN(test *testing.T) {
 	for _, data := range []data{
 		data{
 			kind:    King,
-			wantFEN: 'k',
+			args:    args{White},
+			wantFEN: 'K',
 			wantErr: false,
 		},
 		data{
 			kind:    Queen,
+			args:    args{Black},
 			wantFEN: 'q',
 			wantErr: false,
 		},
 		data{
-			kind:    23,
+			kind:    'a',
+			args:    args{Black},
 			wantFEN: 0,
 			wantErr: true,
 		},
 	} {
-		gotFEN, gotErr := data.kind.ToFEN()
+		gotFEN, gotErr :=
+			data.kind.ToFEN(data.args.color)
 
 		if gotFEN != data.wantFEN {
 			test.Fail()
