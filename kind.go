@@ -74,14 +74,21 @@ func init() {
 	kinds = completedKinds
 }
 
-// ParseKind ...
-func ParseKind(
+// ParsePiece ...
+func ParsePiece(
 	kindInFEN rune,
-) (Kind, error) {
+) (Kind, Color, error) {
 	kind, ok := kinds[kindInFEN]
 	if !ok {
-		return 0, errUnknownKind
+		return 0, 0, errUnknownKind
 	}
 
-	return kind, nil
+	var color Color
+	if unicode.IsLower(kindInFEN) {
+		color = Black
+	} else {
+		color = White
+	}
+
+	return kind, color, nil
 }

@@ -41,37 +41,45 @@ func TestKindToFEN(test *testing.T) {
 	}
 }
 
-func TestParseKind(test *testing.T) {
+func TestParsePiece(test *testing.T) {
 	type args struct {
 		kindInFEN rune
 	}
 	type data struct {
-		args     args
-		wantKind Kind
-		wantErr  bool
+		args      args
+		wantKind  Kind
+		wantColor Color
+		wantErr   bool
 	}
 
 	for _, data := range []data{
 		data{
-			args:     args{'K'},
-			wantKind: King,
-			wantErr:  false,
+			args:      args{'K'},
+			wantKind:  King,
+			wantColor: White,
+			wantErr:   false,
 		},
 		data{
-			args:     args{'q'},
-			wantKind: Queen,
-			wantErr:  false,
+			args:      args{'q'},
+			wantKind:  Queen,
+			wantColor: Black,
+			wantErr:   false,
 		},
 		data{
-			args:     args{'a'},
-			wantKind: 0,
-			wantErr:  true,
+			args:      args{'a'},
+			wantKind:  0,
+			wantColor: 0,
+			wantErr:   true,
 		},
 	} {
-		gotKind, gotErr :=
-			ParseKind(data.args.kindInFEN)
+		gotKind, gotColor, gotErr :=
+			ParsePiece(data.args.kindInFEN)
 
 		if gotKind != data.wantKind {
+			test.Fail()
+		}
+
+		if gotColor != data.wantColor {
 			test.Fail()
 		}
 

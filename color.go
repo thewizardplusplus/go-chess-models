@@ -1,9 +1,5 @@
 package chessmodels
 
-import (
-	"unicode"
-)
-
 // Color ...
 type Color int
 
@@ -12,21 +8,6 @@ const (
 	Black Color = iota
 	White
 )
-
-// ParseColor ...
-//
-// It parses a color of a piece
-// from its kind in FEN.
-//
-// It doesn't check that the kind is valid,
-// and relies only on its case.
-func ParseColor(kindInFEN rune) Color {
-	if unicode.IsUpper(kindInFEN) {
-		return White
-	}
-
-	return Black
-}
 
 // Negative ...
 func (color Color) Negative() Color {

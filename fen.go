@@ -54,7 +54,7 @@ func ParseRank(
 	pieceFactory PieceFactory,
 ) (pieces []Piece, maxFile int, err error) {
 	for _, symbol := range rankInFEN {
-		kind, err := ParseKind(symbol)
+		kind, color, err := ParsePiece(symbol)
 		if err != nil {
 			shift, err :=
 				strconv.Atoi(string(symbol))
@@ -66,7 +66,6 @@ func ParseRank(
 			continue
 		}
 
-		color := ParseColor(symbol)
 		position :=
 			Position{maxFile, rankIndex}
 		piece, err := pieceFactory(
