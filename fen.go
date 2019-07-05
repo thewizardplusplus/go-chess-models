@@ -18,13 +18,7 @@ func ParseBoard(
 	pieceFactory PieceFactory,
 ) (PieceStorage, error) {
 	ranks := strings.Split(boardInFEN, "/")
-	// reverse ranks
-	left, right := 0, len(ranks)-1
-	for left < right {
-		ranks[left], ranks[right] =
-			ranks[right], ranks[left]
-		left, right = left+1, right-1
-	}
+	reverseStrings(ranks)
 
 	var pieces []Piece
 	var width int
@@ -83,10 +77,8 @@ func ParseRank(
 	return pieces, maxFile, nil
 }
 
-// String ...
-//
-// It converts the board to FEN.
-func (board Board) String() string {
+// ToFEN ...
+func (board Board) ToFEN() (string, error) {
 	var ranksInFEN []string
 	width := board.size.Width
 	height := board.size.Height
@@ -106,8 +98,11 @@ func (board Board) String() string {
 				shift = 0
 			}
 
-			kindInFEN, _ := piece.Kind().
+			kindInFEN, err := piece.Kind().
 				ToFEN(piece.Color())
+			if err != nil {
+				return "", err
+			}
 
 			rankInFEN += string(kindInFEN)
 		}
@@ -122,13 +117,15 @@ func (board Board) String() string {
 		)
 	}
 
-	// reverse ranks
-	left, right := 0, len(ranksInFEN)-1
+	reverseStrings(ranksInFEN)
+	return strings.Join(ranksInFEN, "/"), nil
+}
+
+func reverseStrings(strings []string) {
+	left, right := 0, len(strings)-1
 	for left < right {
-		ranksInFEN[left], ranksInFEN[right] =
-			ranksInFEN[right], ranksInFEN[left]
+		strings[left], strings[right] =
+			strings[right], strings[left]
 		left, right = left+1, right-1
 	}
-
-	return strings.Join(ranksInFEN, "/")
 }
