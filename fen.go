@@ -79,19 +79,13 @@ func ParseRank(
 // ToFEN ...
 func (board Board) ToFEN() (string, error) {
 	var ranksInFEN []string
-	width := board.size.Width
-	height := board.size.Height
-	for rank := 0; rank < height; rank++ {
-		var rankInFEN string
-		var shift int
-		for file := 0; file < width; file++ {
-			position := Position{file, rank}
-			piece, ok := board.Piece(position)
-			if !ok {
-				shift++
-				continue
-			}
-
+	var rankInFEN string
+	var shift int
+	size := board.size
+	positions := size.Positions()
+	for _, position := range positions {
+		piece, ok := board.Piece(position)
+		if ok {
 			if shift != 0 {
 				rankInFEN += strconv.Itoa(shift)
 				shift = 0
@@ -104,16 +98,22 @@ func (board Board) ToFEN() (string, error) {
 			}
 
 			rankInFEN += string(kindInFEN)
+		} else {
+			shift++
 		}
 
-		if shift != 0 {
-			rankInFEN += strconv.Itoa(shift)
-		}
+		if position.File == size.Height-1 {
+			if shift != 0 {
+				rankInFEN += strconv.Itoa(shift)
+				shift = 0
+			}
 
-		ranksInFEN = append(
-			ranksInFEN,
-			rankInFEN,
-		)
+			ranksInFEN = append(
+				ranksInFEN,
+				rankInFEN,
+			)
+			rankInFEN = ""
+		}
 	}
 
 	reverse(ranksInFEN)

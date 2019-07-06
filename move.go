@@ -60,27 +60,23 @@ func (
 	position Position,
 ) ([]Move, error) {
 	var moves []Move
-	width := storage.Size().Width
-	height := storage.Size().Height
-	for rank := 0; rank < height; rank++ {
-		for file := 0; file < width; file++ {
-			finish := Position{file, rank}
-			move := Move{position, finish}
-			err := storage.CheckMove(move)
-			if err != nil {
-				// if the move captures a king,
-				// break a generating
-				if err == ErrKingCapture {
-					return nil, err
-				}
-
-				// on other errors
-				// just skip this move
-				continue
+	positions := storage.Size().Positions()
+	for _, finish := range positions {
+		move := Move{position, finish}
+		err := storage.CheckMove(move)
+		if err != nil {
+			// if the move captures a king,
+			// break a generating
+			if err == ErrKingCapture {
+				return nil, err
 			}
 
-			moves = append(moves, move)
+			// on other errors
+			// just skip this move
+			continue
 		}
+
+		moves = append(moves, move)
 	}
 
 	return moves, nil
