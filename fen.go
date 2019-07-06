@@ -18,7 +18,7 @@ func ParseBoard(
 	pieceFactory PieceFactory,
 ) (PieceStorage, error) {
 	ranks := strings.Split(boardInFEN, "/")
-	reverseStrings(ranks)
+	reverse(ranks)
 
 	var pieces []Piece
 	var width int
@@ -59,8 +59,7 @@ func ParseRank(
 			continue
 		}
 
-		position :=
-			Position{maxFile, rankIndex}
+		position := Position{maxFile, rankIndex}
 		piece, err := pieceFactory(
 			kind,
 			color,
@@ -117,11 +116,11 @@ func (board Board) ToFEN() (string, error) {
 		)
 	}
 
-	reverseStrings(ranksInFEN)
+	reverse(ranksInFEN)
 	return strings.Join(ranksInFEN, "/"), nil
 }
 
-func reverseStrings(strings []string) {
+func reverse(strings []string) {
 	left, right := 0, len(strings)-1
 	for left < right {
 		strings[left], strings[right] =

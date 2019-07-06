@@ -61,7 +61,9 @@ var (
 	}
 	kindsInFEN = map[Kind]rune{}
 
-	errUnknownKind = errors.New("unknown kind")
+	errUnknownKind = errors.New(
+		"unknown kind",
+	)
 )
 
 func init() {
