@@ -28,6 +28,7 @@ type PieceStorage interface {
 	Pieces() []Piece
 	ApplyMove(move Move) PieceStorage
 	CheckMove(move Move) error
+	ToFEN() (string, error)
 }
 
 // Board ...

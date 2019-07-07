@@ -472,8 +472,7 @@ func TestBoardToFEN(test *testing.T) {
 			data.fields.size,
 			data.fields.pieces,
 		)
-		gotFEN, gotErr :=
-			storage.(models.Board).ToFEN()
+		gotFEN, gotErr := storage.ToFEN()
 
 		if gotFEN != data.wantFEN {
 			test.Fail()

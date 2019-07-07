@@ -49,6 +49,12 @@ func (storage MockPieceStorage) CheckMove(
 	return storage.checkMove(move)
 }
 
+func (
+	storage MockPieceStorage,
+) ToFEN() (string, error) {
+	panic("not implemented")
+}
+
 func TestMoveCheckerMovesForColor(
 	test *testing.T,
 ) {
