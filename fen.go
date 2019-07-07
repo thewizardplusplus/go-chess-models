@@ -92,14 +92,13 @@ func (board Board) ToFEN() (string, error) {
 	for _, position := range positions {
 		piece, ok := board.Piece(position)
 		if ok {
-			resetShift()
-
 			kind, err := piece.Kind().
 				ToFEN(piece.Color())
 			if err != nil {
 				return "", err
 			}
 
+			resetShift()
 			rank += string(kind)
 		} else {
 			shift++
@@ -108,7 +107,6 @@ func (board Board) ToFEN() (string, error) {
 		lastFile := board.size.Height - 1
 		if position.File == lastFile {
 			resetShift()
-
 			ranks = append(ranks, rank)
 			rank = ""
 		}
