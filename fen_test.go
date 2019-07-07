@@ -9,6 +9,41 @@ import (
 	"github.com/thewizardplusplus/go-chess-models/pieces"
 )
 
+type MockPiece struct {
+	kind     models.Kind
+	color    models.Color
+	position models.Position
+}
+
+func (piece MockPiece) Kind() models.Kind {
+	return piece.kind
+}
+
+func (
+	piece MockPiece,
+) Color() models.Color {
+	return piece.color
+}
+
+func (
+	piece MockPiece,
+) Position() models.Position {
+	return piece.position
+}
+
+func (piece MockPiece) ApplyPosition(
+	position models.Position,
+) models.Piece {
+	panic("not implemented")
+}
+
+func (piece MockPiece) CheckMove(
+	move models.Move,
+	storage models.PieceStorage,
+) bool {
+	panic("not implemented")
+}
+
 func TestParseBoard(test *testing.T) {
 	type args struct {
 		boardInFEN   string
@@ -277,7 +312,7 @@ func TestParseRank(test *testing.T) {
 					position models.Position,
 				) (models.Piece, error) {
 					return nil,
-						errors.New("dummy error")
+						errors.New("dummy")
 				},
 			},
 			wantPieces:  nil,
@@ -299,6 +334,148 @@ func TestParseRank(test *testing.T) {
 			test.Fail()
 		}
 		if gotMaxFile != data.wantMaxFile {
+			test.Fail()
+		}
+
+		hasErr := gotErr != nil
+		if hasErr != data.wantErr {
+			test.Fail()
+		}
+	}
+}
+
+func TestBoardToFEN(test *testing.T) {
+	type fields struct {
+		size   models.Size
+		pieces []models.Piece
+	}
+	type data struct {
+		fields  fields
+		wantFEN string
+		wantErr bool
+	}
+
+	for _, data := range []data{
+		data{
+			fields: fields{
+				size:   models.Size{5, 5},
+				pieces: nil,
+			},
+			wantFEN: "5/5/5/5/5",
+			wantErr: false,
+		},
+		data{
+			fields: fields{
+				size: models.Size{5, 5},
+				pieces: []models.Piece{
+					pieces.NewKing(
+						models.White,
+						models.Position{0, 2},
+					),
+				},
+			},
+			wantFEN: "5/5/K4/5/5",
+			wantErr: false,
+		},
+		data{
+			fields: fields{
+				size: models.Size{5, 5},
+				pieces: []models.Piece{
+					pieces.NewKing(
+						models.White,
+						models.Position{1, 2},
+					),
+				},
+			},
+			wantFEN: "5/5/1K3/5/5",
+			wantErr: false,
+		},
+		data{
+			fields: fields{
+				size: models.Size{5, 5},
+				pieces: []models.Piece{
+					pieces.NewKing(
+						models.White,
+						models.Position{1, 2},
+					),
+					pieces.NewQueen(
+						models.Black,
+						models.Position{2, 2},
+					),
+				},
+			},
+			wantFEN: "5/5/1Kq2/5/5",
+			wantErr: false,
+		},
+		data{
+			fields: fields{
+				size: models.Size{5, 5},
+				pieces: []models.Piece{
+					pieces.NewKing(
+						models.White,
+						models.Position{1, 2},
+					),
+					pieces.NewQueen(
+						models.Black,
+						models.Position{4, 2},
+					),
+				},
+			},
+			wantFEN: "5/5/1K2q/5/5",
+			wantErr: false,
+		},
+		data{
+			fields: fields{
+				size: models.Size{5, 5},
+				pieces: []models.Piece{
+					pieces.NewKing(
+						models.White,
+						models.Position{0, 3},
+					),
+					pieces.NewQueen(
+						models.Black,
+						models.Position{1, 2},
+					),
+					pieces.NewQueen(
+						models.White,
+						models.Position{2, 2},
+					),
+					pieces.NewRook(
+						models.Black,
+						models.Position{1, 1},
+					),
+					pieces.NewRook(
+						models.White,
+						models.Position{4, 1},
+					),
+				},
+			},
+			wantFEN: "5/K4/1qQ2/1r2R/5",
+			wantErr: false,
+		},
+		data{
+			fields: fields{
+				size: models.Size{5, 5},
+				pieces: []models.Piece{
+					MockPiece{
+						kind:     1e6,
+						color:    models.White,
+						position: models.Position{1, 2},
+					},
+				},
+			},
+			wantFEN: "",
+			wantErr: true,
+		},
+	} {
+		storage := models.NewBoard(
+			data.fields.size,
+			data.fields.pieces,
+		)
+		gotFEN, gotErr :=
+			storage.(models.Board).ToFEN()
+
+		if gotFEN != data.wantFEN {
 			test.Fail()
 		}
 
