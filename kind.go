@@ -18,6 +18,57 @@ const (
 	Pawn
 )
 
+var (
+	kinds = map[rune]Kind{
+		// black
+		'k': King,
+		'q': Queen,
+		'r': Rook,
+		'b': Bishop,
+		'n': Knight,
+		'p': Pawn,
+
+		// white
+		'K': King,
+		'Q': Queen,
+		'R': Rook,
+		'B': Bishop,
+		'N': Knight,
+		'P': Pawn,
+	}
+	kindsInFEN = map[Kind]rune{
+		King:   'k',
+		Queen:  'q',
+		Rook:   'r',
+		Bishop: 'b',
+		Knight: 'n',
+		Pawn:   'p',
+	}
+
+	errUnknownKind = errors.New(
+		"unknown kind",
+	)
+)
+
+// ParsePiece ...
+func ParsePiece(
+	kindInFEN rune,
+) (Kind, Color, error) {
+	kind, ok := kinds[kindInFEN]
+	if !ok {
+		return 0, 0, errUnknownKind
+	}
+
+	var color Color
+	if unicode.IsLower(kindInFEN) {
+		color = Black
+	} else {
+		color = White
+	}
+
+	return kind, color, nil
+}
+
 // ToFEN ...
 func (kind Kind) ToFEN(
 	color Color,
@@ -37,66 +88,4 @@ func (kind Kind) ToFEN(
 		unicode.To(kindCase, kindInFEN)
 
 	return kindInFEN, nil
-}
-
-type kindGroup map[rune]Kind
-
-func (kinds kindGroup) Add(
-	fen rune,
-	fenCase int,
-	kind Kind,
-) {
-	casedFEN := unicode.To(fenCase, fen)
-	kinds[casedFEN] = kind
-}
-
-var (
-	kinds = kindGroup{
-		'k': King,
-		'q': Queen,
-		'r': Rook,
-		'b': Bishop,
-		'n': Knight,
-		'p': Pawn,
-	}
-	kindsInFEN = map[Kind]rune{}
-
-	errUnknownKind = errors.New(
-		"unknown kind",
-	)
-)
-
-func init() {
-	completedKinds := make(kindGroup)
-	lower, upper :=
-		unicode.LowerCase, unicode.UpperCase
-	for fen, kind := range kinds {
-		completedKinds.Add(fen, lower, kind)
-		completedKinds.Add(fen, upper, kind)
-
-		// force a lower case to be independent
-		// of a definition of the kinds variable
-		kindsInFEN[kind] = unicode.ToLower(fen)
-	}
-
-	kinds = completedKinds
-}
-
-// ParsePiece ...
-func ParsePiece(
-	kindInFEN rune,
-) (Kind, Color, error) {
-	kind, ok := kinds[kindInFEN]
-	if !ok {
-		return 0, 0, errUnknownKind
-	}
-
-	var color Color
-	if unicode.IsLower(kindInFEN) {
-		color = Black
-	} else {
-		color = White
-	}
-
-	return kind, color, nil
 }

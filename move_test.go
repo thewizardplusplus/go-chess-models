@@ -299,7 +299,6 @@ func TestMoveCheckerMovesForPosition(
 	type data struct {
 		fields    fields
 		args      args
-		checkMove func(move Move) error
 		wantMoves []Move
 		wantErr   error
 	}
