@@ -4,34 +4,33 @@ import (
 	models "github.com/thewizardplusplus/go-chess-models"
 )
 
-// Base ...
-type Base struct {
+type base struct {
 	kind     models.Kind
 	color    models.Color
 	position models.Position
 }
 
 // Kind ...
-func (piece Base) Kind() models.Kind {
+func (piece base) Kind() models.Kind {
 	return piece.kind
 }
 
 // Color ...
-func (piece Base) Color() models.Color {
+func (piece base) Color() models.Color {
 	return piece.color
 }
 
 // Position ...
 func (
-	piece Base,
+	piece base,
 ) Position() models.Position {
 	return piece.position
 }
 
 // ApplyPosition ...
-func (piece Base) ApplyPosition(
+func (piece base) ApplyPosition(
 	position models.Position,
-) Base {
+) base {
 	kind, color := piece.kind, piece.color
-	return Base{kind, color, position}
+	return base{kind, color, position}
 }

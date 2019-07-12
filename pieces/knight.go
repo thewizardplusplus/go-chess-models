@@ -5,7 +5,7 @@ import (
 )
 
 // Knight ...
-type Knight struct{ Base }
+type Knight struct{ base }
 
 // NewKnight ...
 func NewKnight(
@@ -13,7 +13,7 @@ func NewKnight(
 	position models.Position,
 ) models.Piece {
 	kind := models.Knight
-	base := Base{kind, color, position}
+	base := base{kind, color, position}
 	return Knight{base}
 }
 
@@ -21,7 +21,7 @@ func NewKnight(
 func (piece Knight) ApplyPosition(
 	position models.Position,
 ) models.Piece {
-	base := piece.Base.ApplyPosition(position)
+	base := piece.base.ApplyPosition(position)
 	return Knight{base}
 }
 

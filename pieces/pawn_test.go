@@ -14,7 +14,7 @@ func TestNewPawn(test *testing.T) {
 	)
 
 	expectedPiece := Pawn{
-		Base: Base{
+		base: base{
 			kind:  models.Pawn,
 			color: models.White,
 			position: models.Position{
@@ -46,7 +46,7 @@ func TestPawnApplyPosition(
 	)
 
 	expectedPiece := Pawn{
-		Base: Base{
+		base: base{
 			kind:  models.Pawn,
 			color: models.White,
 			position: models.Position{
@@ -63,7 +63,7 @@ func TestPawnApplyPosition(
 	}
 
 	expectedNextPiece := Pawn{
-		Base: Base{
+		base: base{
 			kind:  models.Pawn,
 			color: models.White,
 			position: models.Position{

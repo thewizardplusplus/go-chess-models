@@ -14,7 +14,7 @@ func TestNewKnight(test *testing.T) {
 	)
 
 	expectedPiece := Knight{
-		Base: Base{
+		base: base{
 			kind:  models.Knight,
 			color: models.White,
 			position: models.Position{
@@ -46,7 +46,7 @@ func TestKnightApplyPosition(
 	)
 
 	expectedPiece := Knight{
-		Base: Base{
+		base: base{
 			kind:  models.Knight,
 			color: models.White,
 			position: models.Position{
@@ -63,7 +63,7 @@ func TestKnightApplyPosition(
 	}
 
 	expectedNextPiece := Knight{
-		Base: Base{
+		base: base{
 			kind:  models.Knight,
 			color: models.White,
 			position: models.Position{

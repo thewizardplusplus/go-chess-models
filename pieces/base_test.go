@@ -7,8 +7,8 @@ import (
 	models "github.com/thewizardplusplus/go-chess-models"
 )
 
-func TestBaseKind(test *testing.T) {
-	piece := Base{kind: models.Pawn}
+func TestbaseKind(test *testing.T) {
+	piece := base{kind: models.Pawn}
 	kind := piece.Kind()
 
 	if kind != models.Pawn {
@@ -16,8 +16,8 @@ func TestBaseKind(test *testing.T) {
 	}
 }
 
-func TestBaseColor(test *testing.T) {
-	piece := Base{color: models.White}
+func TestbaseColor(test *testing.T) {
+	piece := base{color: models.White}
 	color := piece.Color()
 
 	if color != models.White {
@@ -25,8 +25,8 @@ func TestBaseColor(test *testing.T) {
 	}
 }
 
-func TestBasePosition(test *testing.T) {
-	piece := Base{
+func TestbasePosition(test *testing.T) {
+	piece := base{
 		position: models.Position{
 			File: 2,
 			Rank: 3,
@@ -46,8 +46,8 @@ func TestBasePosition(test *testing.T) {
 	}
 }
 
-func TestBaseApplyPosition(test *testing.T) {
-	piece := Base{
+func TestbaseApplyPosition(test *testing.T) {
+	piece := base{
 		kind:  models.Pawn,
 		color: models.White,
 		position: models.Position{
@@ -62,7 +62,7 @@ func TestBaseApplyPosition(test *testing.T) {
 		},
 	)
 
-	expectedPiece := Base{
+	expectedPiece := base{
 		kind:  models.Pawn,
 		color: models.White,
 		position: models.Position{
@@ -77,7 +77,7 @@ func TestBaseApplyPosition(test *testing.T) {
 		test.Fail()
 	}
 
-	expectedNextPiece := Base{
+	expectedNextPiece := base{
 		kind:  models.Pawn,
 		color: models.White,
 		position: models.Position{

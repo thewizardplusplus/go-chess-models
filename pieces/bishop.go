@@ -5,7 +5,7 @@ import (
 )
 
 // Bishop ...
-type Bishop struct{ Base }
+type Bishop struct{ base }
 
 // NewBishop ...
 func NewBishop(
@@ -13,7 +13,7 @@ func NewBishop(
 	position models.Position,
 ) models.Piece {
 	kind := models.Bishop
-	base := Base{kind, color, position}
+	base := base{kind, color, position}
 	return Bishop{base}
 }
 
@@ -21,7 +21,7 @@ func NewBishop(
 func (piece Bishop) ApplyPosition(
 	position models.Position,
 ) models.Piece {
-	base := piece.Base.ApplyPosition(position)
+	base := piece.base.ApplyPosition(position)
 	return Bishop{base}
 }
 

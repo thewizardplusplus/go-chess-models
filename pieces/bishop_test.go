@@ -14,7 +14,7 @@ func TestNewBishop(test *testing.T) {
 	)
 
 	expectedPiece := Bishop{
-		Base: Base{
+		base: base{
 			kind:  models.Bishop,
 			color: models.White,
 			position: models.Position{
@@ -46,7 +46,7 @@ func TestBishopApplyPosition(
 	)
 
 	expectedPiece := Bishop{
-		Base: Base{
+		base: base{
 			kind:  models.Bishop,
 			color: models.White,
 			position: models.Position{
@@ -63,7 +63,7 @@ func TestBishopApplyPosition(
 	}
 
 	expectedNextPiece := Bishop{
-		Base: Base{
+		base: base{
 			kind:  models.Bishop,
 			color: models.White,
 			position: models.Position{

@@ -5,7 +5,7 @@ import (
 )
 
 // Pawn ...
-type Pawn struct{ Base }
+type Pawn struct{ base }
 
 // NewPawn ...
 func NewPawn(
@@ -13,7 +13,7 @@ func NewPawn(
 	position models.Position,
 ) models.Piece {
 	kind := models.Pawn
-	base := Base{kind, color, position}
+	base := base{kind, color, position}
 	return Pawn{base}
 }
 
@@ -21,7 +21,7 @@ func NewPawn(
 func (piece Pawn) ApplyPosition(
 	position models.Position,
 ) models.Piece {
-	base := piece.Base.ApplyPosition(position)
+	base := piece.base.ApplyPosition(position)
 	return Pawn{base}
 }
 

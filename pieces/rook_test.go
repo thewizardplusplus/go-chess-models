@@ -14,7 +14,7 @@ func TestNewRook(test *testing.T) {
 	)
 
 	expectedPiece := Rook{
-		Base: Base{
+		base: base{
 			kind:  models.Rook,
 			color: models.White,
 			position: models.Position{
@@ -46,7 +46,7 @@ func TestRookApplyPosition(
 	)
 
 	expectedPiece := Rook{
-		Base: Base{
+		base: base{
 			kind:  models.Rook,
 			color: models.White,
 			position: models.Position{
@@ -63,7 +63,7 @@ func TestRookApplyPosition(
 	}
 
 	expectedNextPiece := Rook{
-		Base: Base{
+		base: base{
 			kind:  models.Rook,
 			color: models.White,
 			position: models.Position{
