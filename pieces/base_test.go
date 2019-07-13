@@ -7,7 +7,7 @@ import (
 	models "github.com/thewizardplusplus/go-chess-models"
 )
 
-func TestbaseKind(test *testing.T) {
+func TestBaseKind(test *testing.T) {
 	piece := base{kind: models.Pawn}
 	kind := piece.Kind()
 
@@ -16,7 +16,7 @@ func TestbaseKind(test *testing.T) {
 	}
 }
 
-func TestbaseColor(test *testing.T) {
+func TestBaseColor(test *testing.T) {
 	piece := base{color: models.White}
 	color := piece.Color()
 
@@ -25,7 +25,7 @@ func TestbaseColor(test *testing.T) {
 	}
 }
 
-func TestbasePosition(test *testing.T) {
+func TestBasePosition(test *testing.T) {
 	piece := base{
 		position: models.Position{
 			File: 2,
@@ -46,7 +46,7 @@ func TestbasePosition(test *testing.T) {
 	}
 }
 
-func TestbaseApplyPosition(test *testing.T) {
+func TestBaseApplyPosition(test *testing.T) {
 	piece := base{
 		kind:  models.Pawn,
 		color: models.White,
