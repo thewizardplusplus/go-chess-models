@@ -10,7 +10,7 @@ type PieceFactory func(
 	kind Kind,
 	color Color,
 	position Position,
-) (Piece, error)
+) Piece
 
 // ParseBoard ...
 func ParseBoard(
@@ -60,15 +60,8 @@ func ParseRank(
 		}
 
 		position := Position{maxFile, rankIndex}
-		piece, err := pieceFactory(
-			kind,
-			color,
-			position,
-		)
-		if err != nil {
-			return nil, 0, err
-		}
-
+		piece :=
+			pieceFactory(kind, color, position)
 		pieces = append(pieces, piece)
 		maxFile++
 	}

@@ -1,7 +1,6 @@
 package chessmodels_test
 
 import (
-	"errors"
 	"reflect"
 	"testing"
 
@@ -297,23 +296,6 @@ func TestParseRank(test *testing.T) {
 				rankIndex:    7,
 				rankInFEN:    "2K#q4",
 				pieceFactory: pieces.NewPiece,
-			},
-			wantPieces:  nil,
-			wantMaxFile: 0,
-			wantErr:     true,
-		},
-		data{
-			args: args{
-				rankIndex: 7,
-				rankInFEN: "2K3q4",
-				pieceFactory: func(
-					kind models.Kind,
-					color models.Color,
-					position models.Position,
-				) (models.Piece, error) {
-					return nil,
-						errors.New("dummy")
-				},
 			},
 			wantPieces:  nil,
 			wantMaxFile: 0,

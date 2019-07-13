@@ -15,7 +15,6 @@ func TestNewPiece(test *testing.T) {
 	type data struct {
 		args      args
 		wantPiece models.Piece
-		wantErr   bool
 	}
 
 	for _, data := range []data{
@@ -29,7 +28,6 @@ func TestNewPiece(test *testing.T) {
 				models.White,
 				models.Position{2, 3},
 			),
-			wantErr: false,
 		},
 		data{
 			args: args{
@@ -41,30 +39,15 @@ func TestNewPiece(test *testing.T) {
 				models.Black,
 				models.Position{4, 2},
 			),
-			wantErr: false,
-		},
-		data{
-			args: args{
-				kind:     1e6,
-				color:    models.Black,
-				position: models.Position{4, 2},
-			},
-			wantPiece: nil,
-			wantErr:   true,
 		},
 	} {
-		gotPiece, gotErr := NewPiece(
+		gotPiece := NewPiece(
 			data.args.kind,
 			data.args.color,
 			data.args.position,
 		)
 
 		if gotPiece != data.wantPiece {
-			test.Fail()
-		}
-
-		hasErr := gotErr != nil
-		if hasErr != data.wantErr {
 			test.Fail()
 		}
 	}

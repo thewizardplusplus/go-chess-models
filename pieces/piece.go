@@ -1,8 +1,6 @@
 package pieces
 
 import (
-	"errors"
-
 	models "github.com/thewizardplusplus/go-chess-models"
 )
 
@@ -27,12 +25,7 @@ func NewPiece(
 	kind models.Kind,
 	color models.Color,
 	position models.Position,
-) (models.Piece, error) {
-	factory, ok := factories[kind]
-	if !ok {
-		return nil, errors.New("unknown kind")
-	}
-
-	piece := factory(color, position)
-	return piece, nil
+) models.Piece {
+	factory := factories[kind]
+	return factory(color, position)
 }
