@@ -13,8 +13,8 @@ func TestNewPiece(test *testing.T) {
 		position models.Position
 	}
 	type data struct {
-		args      args
-		wantPiece models.Piece
+		args args
+		want models.Piece
 	}
 
 	for _, data := range []data{
@@ -24,7 +24,7 @@ func TestNewPiece(test *testing.T) {
 				color:    models.White,
 				position: models.Position{2, 3},
 			},
-			wantPiece: NewKing(
+			want: NewKing(
 				models.White,
 				models.Position{2, 3},
 			),
@@ -35,19 +35,19 @@ func TestNewPiece(test *testing.T) {
 				color:    models.Black,
 				position: models.Position{4, 2},
 			},
-			wantPiece: NewQueen(
+			want: NewQueen(
 				models.Black,
 				models.Position{4, 2},
 			),
 		},
 	} {
-		gotPiece := NewPiece(
+		got := NewPiece(
 			data.args.kind,
 			data.args.color,
 			data.args.position,
 		)
 
-		if gotPiece != data.wantPiece {
+		if got != data.want {
 			test.Fail()
 		}
 	}

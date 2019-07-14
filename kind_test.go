@@ -4,51 +4,6 @@ import (
 	"testing"
 )
 
-func TestKindToFEN(test *testing.T) {
-	type args struct {
-		color Color
-	}
-	type data struct {
-		kind    Kind
-		args    args
-		wantFEN rune
-		wantErr bool
-	}
-
-	for _, data := range []data{
-		data{
-			kind:    King,
-			args:    args{White},
-			wantFEN: 'K',
-			wantErr: false,
-		},
-		data{
-			kind:    Queen,
-			args:    args{Black},
-			wantFEN: 'q',
-			wantErr: false,
-		},
-		data{
-			kind:    'a',
-			args:    args{Black},
-			wantFEN: 0,
-			wantErr: true,
-		},
-	} {
-		gotFEN, gotErr :=
-			data.kind.ToFEN(data.args.color)
-
-		if gotFEN != data.wantFEN {
-			test.Fail()
-		}
-
-		hasErr := gotErr != nil
-		if hasErr != data.wantErr {
-			test.Fail()
-		}
-	}
-}
-
 func TestParsePiece(test *testing.T) {
 	type args struct {
 		kindInFEN rune
@@ -86,13 +41,42 @@ func TestParsePiece(test *testing.T) {
 		if gotKind != data.wantKind {
 			test.Fail()
 		}
-
 		if gotColor != data.wantColor {
 			test.Fail()
 		}
 
 		hasErr := gotErr != nil
 		if hasErr != data.wantErr {
+			test.Fail()
+		}
+	}
+}
+
+func TestKindToFEN(test *testing.T) {
+	type args struct {
+		color Color
+	}
+	type data struct {
+		kind Kind
+		args args
+		want rune
+	}
+
+	for _, data := range []data{
+		data{
+			kind: King,
+			args: args{White},
+			want: 'K',
+		},
+		data{
+			kind: Queen,
+			args: args{Black},
+			want: 'q',
+		},
+	} {
+		got := data.kind.ToFEN(data.args.color)
+
+		if got != data.want {
 			test.Fail()
 		}
 	}

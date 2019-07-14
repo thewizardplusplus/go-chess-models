@@ -44,10 +44,6 @@ var (
 		Knight: 'n',
 		Pawn:   'p',
 	}
-
-	errUnknownKind = errors.New(
-		"unknown kind",
-	)
 )
 
 // ParsePiece ...
@@ -56,7 +52,7 @@ func ParsePiece(
 ) (Kind, Color, error) {
 	kind, ok := kinds[kindInFEN]
 	if !ok {
-		return 0, 0, errUnknownKind
+		return 0, 0, errors.New("unknown kind")
 	}
 
 	var color Color
@@ -70,22 +66,17 @@ func ParsePiece(
 }
 
 // ToFEN ...
-func (kind Kind) ToFEN(
-	color Color,
-) (rune, error) {
-	kindInFEN, ok := kindsInFEN[kind]
-	if !ok {
-		return 0, errUnknownKind
-	}
-
+func (kind Kind) ToFEN(color Color) rune {
 	var kindCase int
 	if color == Black {
 		kindCase = unicode.LowerCase
 	} else {
 		kindCase = unicode.UpperCase
 	}
+
+	kindInFEN := kindsInFEN[kind]
 	kindInFEN =
 		unicode.To(kindCase, kindInFEN)
 
-	return kindInFEN, nil
+	return kindInFEN
 }

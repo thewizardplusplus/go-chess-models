@@ -70,7 +70,7 @@ func ParseRank(
 }
 
 // ToFEN ...
-func (board Board) ToFEN() (string, error) {
+func (board Board) ToFEN() string {
 	var rank string
 	var shift int
 	resetShift := func() {
@@ -85,13 +85,10 @@ func (board Board) ToFEN() (string, error) {
 	for _, position := range positions {
 		piece, ok := board.Piece(position)
 		if ok {
-			kind, err := piece.Kind().
-				ToFEN(piece.Color())
-			if err != nil {
-				return "", err
-			}
-
 			resetShift()
+
+			kind := piece.Kind().
+				ToFEN(piece.Color())
 			rank += string(kind)
 		} else {
 			shift++
@@ -100,13 +97,14 @@ func (board Board) ToFEN() (string, error) {
 		lastFile := board.size.Height - 1
 		if position.File == lastFile {
 			resetShift()
+
 			ranks = append(ranks, rank)
 			rank = ""
 		}
 	}
 
 	reverse(ranks)
-	return strings.Join(ranks, "/"), nil
+	return strings.Join(ranks, "/")
 }
 
 func reverse(strings []string) {
