@@ -121,7 +121,7 @@ func TestParseBoard(test *testing.T) {
 				boardInFEN:   "2K3q/#/pp1R",
 				pieceFactory: pieces.NewPiece,
 			},
-			wantStorage: nil,
+			wantStorage: models.Board{},
 			wantErr:     true,
 		},
 	} {

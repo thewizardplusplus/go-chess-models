@@ -41,7 +41,7 @@ type Board struct {
 func NewBoard(
 	size Size,
 	pieces []Piece,
-) PieceStorage {
+) Board {
 	pieceGroup := newPieceGroup(pieces)
 	return Board{size, pieceGroup}
 }

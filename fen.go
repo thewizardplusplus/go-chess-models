@@ -16,7 +16,7 @@ type PieceFactory func(
 func ParseBoard(
 	boardInFEN string,
 	pieceFactory PieceFactory,
-) (PieceStorage, error) {
+) (Board, error) {
 	ranks := strings.Split(boardInFEN, "/")
 	reverse(ranks)
 
@@ -26,7 +26,7 @@ func ParseBoard(
 		rankPieces, rankWidth, err :=
 			ParseRank(index, rank, pieceFactory)
 		if err != nil {
-			return nil, err
+			return Board{}, err
 		}
 
 		pieces = append(pieces, rankPieces...)
