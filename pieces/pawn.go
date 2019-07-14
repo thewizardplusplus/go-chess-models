@@ -11,7 +11,7 @@ type Pawn struct{ base }
 func NewPawn(
 	color models.Color,
 	position models.Position,
-) models.Piece {
+) Pawn {
 	kind := models.Pawn
 	base := base{kind, color, position}
 	return Pawn{base}

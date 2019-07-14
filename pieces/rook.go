@@ -11,7 +11,7 @@ type Rook struct{ base }
 func NewRook(
 	color models.Color,
 	position models.Position,
-) models.Piece {
+) Rook {
 	kind := models.Rook
 	base := base{kind, color, position}
 	return Rook{base}

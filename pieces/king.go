@@ -11,7 +11,7 @@ type King struct{ base }
 func NewKing(
 	color models.Color,
 	position models.Position,
-) models.Piece {
+) King {
 	kind := models.King
 	base := base{kind, color, position}
 	return King{base}

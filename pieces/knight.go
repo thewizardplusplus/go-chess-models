@@ -11,7 +11,7 @@ type Knight struct{ base }
 func NewKnight(
 	color models.Color,
 	position models.Position,
-) models.Piece {
+) Knight {
 	kind := models.Knight
 	base := base{kind, color, position}
 	return Knight{base}
