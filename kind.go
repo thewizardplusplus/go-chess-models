@@ -18,32 +18,25 @@ const (
 	Pawn
 )
 
-var (
-	kinds = map[rune]Kind{
-		// black
-		'k': King,
-		'q': Queen,
-		'r': Rook,
-		'b': Bishop,
-		'n': Knight,
-		'p': Pawn,
-
-		// white
-		'K': King,
-		'Q': Queen,
-		'R': Rook,
-		'B': Bishop,
-		'N': Knight,
-		'P': Pawn,
-	}
-)
-
 // ParsePiece ...
 func ParsePiece(
 	kindInFEN rune,
 ) (Kind, Color, error) {
-	kind, ok := kinds[kindInFEN]
-	if !ok {
+	var kind Kind
+	switch unicode.ToLower(kindInFEN) {
+	case 'k':
+		kind = King
+	case 'q':
+		kind = Queen
+	case 'r':
+		kind = Rook
+	case 'b':
+		kind = Bishop
+	case 'n':
+		kind = Knight
+	case 'p':
+		kind = Pawn
+	default:
 		return 0, 0, errors.New("unknown kind")
 	}
 
