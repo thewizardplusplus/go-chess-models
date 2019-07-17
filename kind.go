@@ -36,14 +36,6 @@ var (
 		'N': Knight,
 		'P': Pawn,
 	}
-	kindsInFEN = map[Kind]rune{
-		King:   'k',
-		Queen:  'q',
-		Rook:   'r',
-		Bishop: 'b',
-		Knight: 'n',
-		Pawn:   'p',
-	}
 )
 
 // ParsePiece ...
@@ -68,15 +60,28 @@ func ParsePiece(
 // ToFEN ...
 func (kind Kind) ToFEN(color Color) rune {
 	var kindCase int
-	if color == Black {
+	switch color {
+	case Black:
 		kindCase = unicode.LowerCase
-	} else {
+	case White:
 		kindCase = unicode.UpperCase
 	}
 
-	kindInFEN := kindsInFEN[kind]
-	kindInFEN =
-		unicode.To(kindCase, kindInFEN)
+	var kindInFEN rune
+	switch kind {
+	case King:
+		kindInFEN = 'k'
+	case Queen:
+		kindInFEN = 'q'
+	case Rook:
+		kindInFEN = 'r'
+	case Bishop:
+		kindInFEN = 'b'
+	case Knight:
+		kindInFEN = 'n'
+	case Pawn:
+		kindInFEN = 'p'
+	}
 
-	return kindInFEN
+	return unicode.To(kindCase, kindInFEN)
 }
