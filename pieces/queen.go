@@ -5,7 +5,7 @@ import (
 )
 
 // Queen ...
-type Queen struct{ base }
+type Queen struct{ Base }
 
 // NewQueen ...
 func NewQueen(
@@ -13,7 +13,7 @@ func NewQueen(
 	position models.Position,
 ) Queen {
 	kind := models.Queen
-	base := base{kind, color, position}
+	base := Base{kind, color, position}
 	return Queen{base}
 }
 
@@ -21,7 +21,7 @@ func NewQueen(
 func (piece Queen) ApplyPosition(
 	position models.Position,
 ) models.Piece {
-	base := piece.base.ApplyPosition(position)
+	base := piece.Base.ApplyPosition(position)
 	return Queen{base}
 }
 

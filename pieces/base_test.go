@@ -8,7 +8,7 @@ import (
 )
 
 func TestBaseKind(test *testing.T) {
-	piece := base{kind: models.Pawn}
+	piece := Base{kind: models.Pawn}
 	kind := piece.Kind()
 
 	if kind != models.Pawn {
@@ -17,7 +17,7 @@ func TestBaseKind(test *testing.T) {
 }
 
 func TestBaseColor(test *testing.T) {
-	piece := base{color: models.White}
+	piece := Base{color: models.White}
 	color := piece.Color()
 
 	if color != models.White {
@@ -26,7 +26,7 @@ func TestBaseColor(test *testing.T) {
 }
 
 func TestBasePosition(test *testing.T) {
-	piece := base{
+	piece := Base{
 		position: models.Position{
 			File: 2,
 			Rank: 3,
@@ -47,7 +47,7 @@ func TestBasePosition(test *testing.T) {
 }
 
 func TestBaseApplyPosition(test *testing.T) {
-	piece := base{
+	piece := Base{
 		kind:  models.Pawn,
 		color: models.White,
 		position: models.Position{
@@ -62,7 +62,7 @@ func TestBaseApplyPosition(test *testing.T) {
 		},
 	)
 
-	expectedPiece := base{
+	expectedPiece := Base{
 		kind:  models.Pawn,
 		color: models.White,
 		position: models.Position{
@@ -77,7 +77,7 @@ func TestBaseApplyPosition(test *testing.T) {
 		test.Fail()
 	}
 
-	expectedNextPiece := base{
+	expectedNextPiece := Base{
 		kind:  models.Pawn,
 		color: models.White,
 		position: models.Position{

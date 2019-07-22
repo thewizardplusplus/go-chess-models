@@ -5,7 +5,7 @@ import (
 )
 
 // Rook ...
-type Rook struct{ base }
+type Rook struct{ Base }
 
 // NewRook ...
 func NewRook(
@@ -13,7 +13,7 @@ func NewRook(
 	position models.Position,
 ) Rook {
 	kind := models.Rook
-	base := base{kind, color, position}
+	base := Base{kind, color, position}
 	return Rook{base}
 }
 
@@ -21,7 +21,7 @@ func NewRook(
 func (piece Rook) ApplyPosition(
 	position models.Position,
 ) models.Piece {
-	base := piece.base.ApplyPosition(position)
+	base := piece.Base.ApplyPosition(position)
 	return Rook{base}
 }
 
