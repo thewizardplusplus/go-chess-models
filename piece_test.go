@@ -50,6 +50,10 @@ func (piece MockPiece) CheckMove(
 	return piece.checkMove(move, storage)
 }
 
+func (piece MockPiece) String() string {
+	panic("not implemented")
+}
+
 func TestNewPieceGroup(test *testing.T) {
 	pieces := newPieceGroup([]Piece{
 		MockPiece{position: Position{2, 3}},

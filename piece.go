@@ -1,5 +1,9 @@
 package chessmodels
 
+import (
+	"fmt"
+)
+
 // Position ...
 type Position struct {
 	File int // column
@@ -8,6 +12,8 @@ type Position struct {
 
 // Piece ...
 type Piece interface {
+	fmt.Stringer
+
 	Kind() Kind
 	Color() Color
 	Position() Position

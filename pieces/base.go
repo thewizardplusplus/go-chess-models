@@ -35,3 +35,8 @@ func (piece Base) ApplyPosition(
 	kind, color := piece.kind, piece.color
 	return Base{kind, color, position}
 }
+
+// String ...
+func (piece Base) String() string {
+	panic("not implemented")
+}
