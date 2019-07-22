@@ -46,7 +46,9 @@ func TestBasePosition(test *testing.T) {
 	}
 }
 
-func TestBaseApplyPosition(test *testing.T) {
+func TestBaseApplyPosition(
+	test *testing.T,
+) {
 	piece := Base{
 		kind:  models.Pawn,
 		color: models.White,
@@ -90,5 +92,43 @@ func TestBaseApplyPosition(test *testing.T) {
 		expectedNextPiece,
 	) {
 		test.Fail()
+	}
+}
+
+func TestBaseString(test *testing.T) {
+	type fields struct {
+		kind  models.Kind
+		color models.Color
+	}
+	type data struct {
+		fields fields
+		want   string
+	}
+
+	for _, data := range []data{
+		data{
+			fields: fields{
+				kind:  models.King,
+				color: models.White,
+			},
+			want: "K",
+		},
+		data{
+			fields: fields{
+				kind:  models.Queen,
+				color: models.Black,
+			},
+			want: "q",
+		},
+	} {
+		piece := Base{
+			kind:  data.fields.kind,
+			color: data.fields.color,
+		}
+		got := piece.String()
+
+		if got != data.want {
+			test.Fail()
+		}
 	}
 }
