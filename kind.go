@@ -49,32 +49,3 @@ func ParsePiece(
 
 	return kind, color, nil
 }
-
-// ToFEN ...
-func (kind Kind) ToFEN(color Color) rune {
-	var kindCase int
-	switch color {
-	case Black:
-		kindCase = unicode.LowerCase
-	case White:
-		kindCase = unicode.UpperCase
-	}
-
-	var kindInFEN rune
-	switch kind {
-	case King:
-		kindInFEN = 'k'
-	case Queen:
-		kindInFEN = 'q'
-	case Rook:
-		kindInFEN = 'r'
-	case Bishop:
-		kindInFEN = 'b'
-	case Knight:
-		kindInFEN = 'n'
-	case Pawn:
-		kindInFEN = 'p'
-	}
-
-	return unicode.To(kindCase, kindInFEN)
-}

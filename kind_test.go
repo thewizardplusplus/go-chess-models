@@ -51,33 +51,3 @@ func TestParsePiece(test *testing.T) {
 		}
 	}
 }
-
-func TestKindToFEN(test *testing.T) {
-	type args struct {
-		color Color
-	}
-	type data struct {
-		kind Kind
-		args args
-		want rune
-	}
-
-	for _, data := range []data{
-		data{
-			kind: King,
-			args: args{White},
-			want: 'K',
-		},
-		data{
-			kind: Queen,
-			args: args{Black},
-			want: 'q',
-		},
-	} {
-		got := data.kind.ToFEN(data.args.color)
-
-		if got != data.want {
-			test.Fail()
-		}
-	}
-}

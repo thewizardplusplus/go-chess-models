@@ -87,9 +87,7 @@ func (board Board) ToFEN() string {
 		if ok {
 			resetShift()
 
-			kind := piece.Kind().
-				ToFEN(piece.Color())
-			rank += string(kind)
+			rank += piece.String()
 		} else {
 			shift++
 		}
