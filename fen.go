@@ -70,6 +70,8 @@ func ParseRank(
 }
 
 // String ...
+//
+// It converts the board to FEN.
 func (board Board) String() string {
 	var rank string
 	var shift int

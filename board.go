@@ -22,6 +22,8 @@ var (
 
 // PieceStorage ...
 type PieceStorage interface {
+	// String method should convert
+	// the storage to FEN.
 	fmt.Stringer
 
 	Size() Size
@@ -29,7 +31,16 @@ type PieceStorage interface {
 		position Position,
 	) (piece Piece, ok bool)
 	Pieces() []Piece
+
+	// It shouldn't check that the move
+	// is correct.
 	ApplyMove(move Move) PieceStorage
+
+	// It shouldn't check that move positions
+	// is inside the board.
+	//
+	// It shouldn't check for a check
+	// before or after the move.
 	CheckMove(move Move) error
 }
 
