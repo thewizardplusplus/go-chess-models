@@ -2,6 +2,7 @@ package chessmodels
 
 import (
 	"errors"
+	"fmt"
 )
 
 // ...
@@ -21,6 +22,8 @@ var (
 
 // PieceStorage ...
 type PieceStorage interface {
+	fmt.Stringer
+
 	Size() Size
 	Piece(
 		position Position,
@@ -28,7 +31,6 @@ type PieceStorage interface {
 	Pieces() []Piece
 	ApplyMove(move Move) PieceStorage
 	CheckMove(move Move) error
-	ToFEN() string
 }
 
 // Board ...

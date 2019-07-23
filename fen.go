@@ -69,8 +69,8 @@ func ParseRank(
 	return pieces, maxFile, nil
 }
 
-// ToFEN ...
-func (board Board) ToFEN() string {
+// String ...
+func (board Board) String() string {
 	var rank string
 	var shift int
 	resetShift := func() {

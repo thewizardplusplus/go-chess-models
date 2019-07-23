@@ -291,7 +291,7 @@ func TestParseRank(test *testing.T) {
 	}
 }
 
-func TestBoardToFEN(test *testing.T) {
+func TestBoardString(test *testing.T) {
 	type fields struct {
 		size   models.Size
 		pieces []models.Piece
@@ -398,7 +398,7 @@ func TestBoardToFEN(test *testing.T) {
 			data.fields.size,
 			data.fields.pieces,
 		)
-		got := storage.ToFEN()
+		got := storage.String()
 
 		if got != data.want {
 			test.Fail()
