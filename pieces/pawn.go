@@ -13,7 +13,7 @@ func NewPawn(
 	position models.Position,
 ) Pawn {
 	kind := models.Pawn
-	base := Base{kind, color, position}
+	base := NewBase(kind, color, position)
 	return Pawn{base}
 }
 

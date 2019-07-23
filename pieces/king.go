@@ -13,7 +13,7 @@ func NewKing(
 	position models.Position,
 ) King {
 	kind := models.King
-	base := Base{kind, color, position}
+	base := NewBase(kind, color, position)
 	return King{base}
 }
 

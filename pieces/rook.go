@@ -13,7 +13,7 @@ func NewRook(
 	position models.Position,
 ) Rook {
 	kind := models.Rook
-	base := Base{kind, color, position}
+	base := NewBase(kind, color, position)
 	return Rook{base}
 }
 

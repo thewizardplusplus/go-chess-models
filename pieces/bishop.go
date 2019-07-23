@@ -13,7 +13,7 @@ func NewBishop(
 	position models.Position,
 ) Bishop {
 	kind := models.Bishop
-	base := Base{kind, color, position}
+	base := NewBase(kind, color, position)
 	return Bishop{base}
 }
 

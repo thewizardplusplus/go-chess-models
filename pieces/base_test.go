@@ -7,6 +7,29 @@ import (
 	models "github.com/thewizardplusplus/go-chess-models"
 )
 
+func TestNewBase(test *testing.T) {
+	piece := NewBase(
+		models.Pawn,
+		models.White,
+		models.Position{File: 2, Rank: 3},
+	)
+
+	expectedPiece := Base{
+		kind:  models.Pawn,
+		color: models.White,
+		position: models.Position{
+			File: 2,
+			Rank: 3,
+		},
+	}
+	if !reflect.DeepEqual(
+		piece,
+		expectedPiece,
+	) {
+		test.Fail()
+	}
+}
+
 func TestBaseKind(test *testing.T) {
 	piece := Base{kind: models.Pawn}
 	kind := piece.Kind()

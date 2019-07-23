@@ -13,6 +13,15 @@ type Base struct {
 	position models.Position
 }
 
+// NewBase ...
+func NewBase(
+	kind models.Kind,
+	color models.Color,
+	position models.Position,
+) Base {
+	return Base{kind, color, position}
+}
+
 // Kind ...
 func (piece Base) Kind() models.Kind {
 	return piece.kind

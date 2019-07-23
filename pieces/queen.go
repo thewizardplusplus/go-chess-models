@@ -13,7 +13,7 @@ func NewQueen(
 	position models.Position,
 ) Queen {
 	kind := models.Queen
-	base := Base{kind, color, position}
+	base := NewBase(kind, color, position)
 	return Queen{base}
 }
 
