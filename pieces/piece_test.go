@@ -1,6 +1,7 @@
 package pieces
 
 import (
+	"reflect"
 	"testing"
 
 	models "github.com/thewizardplusplus/go-chess-models"
@@ -48,6 +49,67 @@ func TestNewPiece(test *testing.T) {
 		)
 
 		if got != data.want {
+			test.Fail()
+		}
+	}
+}
+
+func TestParsePiece(test *testing.T) {
+	type args struct {
+		fen rune
+	}
+	type data struct {
+		args      args
+		wantPiece models.Piece
+		wantErr   bool
+	}
+
+	for _, data := range []data{
+		data{
+			args: args{'K'},
+			wantPiece: NewKing(
+				models.White,
+				models.Position{},
+			),
+			wantErr: false,
+		},
+		data{
+			args: args{'q'},
+			wantPiece: NewQueen(
+				models.Black,
+				models.Position{},
+			),
+			wantErr: false,
+		},
+		data{
+			args:      args{'a'},
+			wantPiece: nil,
+			wantErr:   true,
+		},
+	} {
+		gotPiece, gotErr := ParsePiece(
+			data.args.fen,
+			func(
+				kind models.Kind,
+				color models.Color,
+			) models.Piece {
+				return NewPiece(
+					kind,
+					color,
+					models.Position{},
+				)
+			},
+		)
+
+		if !reflect.DeepEqual(
+			gotPiece,
+			data.wantPiece,
+		) {
+			test.Fail()
+		}
+
+		hasErr := gotErr != nil
+		if hasErr != data.wantErr {
 			test.Fail()
 		}
 	}
