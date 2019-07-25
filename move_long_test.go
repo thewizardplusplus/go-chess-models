@@ -362,7 +362,21 @@ func TestPerft(test *testing.T) {
 		)
 		storage, err := models.ParseBoard(
 			data.args.boardInFEN,
-			pieces.NewPiece,
+			func(fen rune) (models.Piece, error) {
+				return pieces.ParsePiece(
+					fen,
+					func(
+						kind models.Kind,
+						color models.Color,
+					) models.Piece {
+						return pieces.NewPiece(
+							kind,
+							color,
+							models.Position{},
+						)
+					},
+				)
+			},
 		)
 		if err != nil {
 			test.Logf("%s: %v", prefix, err)

@@ -203,7 +203,21 @@ func TestPawnCheckMove(test *testing.T) {
 	} {
 		storage, err := models.ParseBoard(
 			data.args.boardInFEN,
-			NewPiece,
+			func(fen rune) (models.Piece, error) {
+				return ParsePiece(
+					fen,
+					func(
+						kind models.Kind,
+						color models.Color,
+					) models.Piece {
+						return NewPiece(
+							kind,
+							color,
+							models.Position{},
+						)
+					},
+				)
+			},
 		)
 		if err != nil {
 			test.Fail()

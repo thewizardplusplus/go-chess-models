@@ -5,26 +5,24 @@ import (
 	"strings"
 )
 
-// PieceFactory ...
-type PieceFactory func(
-	kind Kind,
-	color Color,
-	position Position,
-) Piece
+// PieceParser ...
+type PieceParser func(
+	fen rune,
+) (Piece, error)
 
 // ParseBoard ...
 func ParseBoard(
-	boardInFEN string,
-	pieceFactory PieceFactory,
+	fen string,
+	pieceParser PieceParser,
 ) (Board, error) {
-	ranks := strings.Split(boardInFEN, "/")
+	ranks := strings.Split(fen, "/")
 	reverse(ranks)
 
 	var pieces []Piece
 	var width int
 	for index, rank := range ranks {
 		rankPieces, rankWidth, err :=
-			ParseRank(index, rank, pieceFactory)
+			parseRank(index, rank, pieceParser)
 		if err != nil {
 			return Board{}, err
 		}
@@ -38,35 +36,6 @@ func ParseBoard(
 	size := Size{width, len(ranks)}
 	board := NewBoard(size, pieces)
 	return board, nil
-}
-
-// ParseRank ...
-func ParseRank(
-	rankIndex int,
-	rankInFEN string,
-	pieceFactory PieceFactory,
-) (pieces []Piece, maxFile int, err error) {
-	for _, symbol := range rankInFEN {
-		kind, color, err := ParsePiece(symbol)
-		if err != nil {
-			shift, err :=
-				strconv.Atoi(string(symbol))
-			if err != nil {
-				return nil, 0, err
-			}
-
-			maxFile += shift
-			continue
-		}
-
-		position := Position{maxFile, rankIndex}
-		piece :=
-			pieceFactory(kind, color, position)
-		pieces = append(pieces, piece)
-		maxFile++
-	}
-
-	return pieces, maxFile, nil
 }
 
 // String ...
@@ -114,4 +83,32 @@ func reverse(strings []string) {
 			strings[right], strings[left]
 		left, right = left+1, right-1
 	}
+}
+
+func parseRank(
+	index int,
+	fen string,
+	pieceParser PieceParser,
+) (pieces []Piece, maxFile int, err error) {
+	for _, symbol := range fen {
+		piece, err := pieceParser(symbol)
+		if err != nil {
+			shift, err :=
+				strconv.Atoi(string(symbol))
+			if err != nil {
+				return nil, 0, err
+			}
+
+			maxFile += shift
+			continue
+		}
+
+		position := Position{maxFile, index}
+		piece = piece.ApplyPosition(position)
+		pieces = append(pieces, piece)
+
+		maxFile++
+	}
+
+	return pieces, maxFile, nil
 }
