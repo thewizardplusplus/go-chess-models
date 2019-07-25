@@ -87,19 +87,8 @@ func TestParsePiece(test *testing.T) {
 			wantErr:   true,
 		},
 	} {
-		gotPiece, gotErr := ParsePiece(
-			data.args.fen,
-			func(
-				kind models.Kind,
-				color models.Color,
-			) models.Piece {
-				return NewPiece(
-					kind,
-					color,
-					models.Position{},
-				)
-			},
-		)
+		gotPiece, gotErr :=
+			ParseDefaultPiece(data.args.fen)
 
 		if !reflect.DeepEqual(
 			gotPiece,

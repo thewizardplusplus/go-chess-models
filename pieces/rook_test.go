@@ -259,21 +259,7 @@ func TestRookCheckMove(test *testing.T) {
 	} {
 		storage, err := models.ParseBoard(
 			data.args.boardInFEN,
-			func(fen rune) (models.Piece, error) {
-				return ParsePiece(
-					fen,
-					func(
-						kind models.Kind,
-						color models.Color,
-					) models.Piece {
-						return NewPiece(
-							kind,
-							color,
-							models.Position{},
-						)
-					},
-				)
-			},
+			ParseDefaultPiece,
 		)
 		if err != nil {
 			test.Fail()

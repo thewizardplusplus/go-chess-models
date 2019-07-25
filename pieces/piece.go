@@ -71,3 +71,22 @@ func ParsePiece(
 	piece := pieceFactory(kind, color)
 	return piece, nil
 }
+
+// ParseDefaultPiece ...
+func ParseDefaultPiece(
+	fen rune,
+) (models.Piece, error) {
+	return ParsePiece(
+		fen,
+		func(
+			kind models.Kind,
+			color models.Color,
+		) models.Piece {
+			return NewPiece(
+				kind,
+				color,
+				models.Position{},
+			)
+		},
+	)
+}

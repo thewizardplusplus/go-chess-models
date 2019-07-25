@@ -83,21 +83,7 @@ func TestKingApplyPosition(
 func TestKingCheckMove(test *testing.T) {
 	storage, err := models.ParseBoard(
 		"5/5/2K2/5/5",
-		func(fen rune) (models.Piece, error) {
-			return ParsePiece(
-				fen,
-				func(
-					kind models.Kind,
-					color models.Color,
-				) models.Piece {
-					return NewPiece(
-						kind,
-						color,
-						models.Position{},
-					)
-				},
-			)
-		},
+		ParseDefaultPiece,
 	)
 	if err != nil {
 		test.Fail()
