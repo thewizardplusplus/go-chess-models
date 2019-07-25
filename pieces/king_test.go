@@ -81,7 +81,7 @@ func TestKingApplyPosition(
 }
 
 func TestKingCheckMove(test *testing.T) {
-	storage, err := models.ParseBoard(
+	storage, err := models.ParseDefaultBoard(
 		"5/5/2K2/5/5",
 		ParseDefaultPiece,
 	)

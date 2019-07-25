@@ -360,10 +360,11 @@ func TestPerft(test *testing.T) {
 			data.name,
 			index,
 		)
-		storage, err := models.ParseBoard(
-			data.args.boardInFEN,
-			pieces.ParseDefaultPiece,
-		)
+		storage, err :=
+			models.ParseDefaultBoard(
+				data.args.boardInFEN,
+				pieces.ParseDefaultPiece,
+			)
 		if err != nil {
 			test.Logf("%s: %v", prefix, err)
 			test.Fail()

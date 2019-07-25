@@ -321,10 +321,11 @@ func TestBishopCheckMove(test *testing.T) {
 			wantErr: nil,
 		},
 	} {
-		storage, err := models.ParseBoard(
-			data.args.boardInFEN,
-			ParseDefaultPiece,
-		)
+		storage, err :=
+			models.ParseDefaultBoard(
+				data.args.boardInFEN,
+				ParseDefaultPiece,
+			)
 		if err != nil {
 			test.Fail()
 			continue

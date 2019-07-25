@@ -10,11 +10,18 @@ type PieceParser func(
 	fen rune,
 ) (Piece, error)
 
+// PieceStorageFactory ...
+type PieceStorageFactory func(
+	size Size,
+	pieces []Piece,
+) PieceStorage
+
 // ParseBoard ...
 func ParseBoard(
 	fen string,
 	pieceParser PieceParser,
-) (Board, error) {
+	pieceStorageFactory PieceStorageFactory,
+) (PieceStorage, error) {
 	ranks := strings.Split(fen, "/")
 	reverse(ranks)
 
@@ -34,8 +41,26 @@ func ParseBoard(
 	}
 
 	size := Size{width, len(ranks)}
-	board := NewBoard(size, pieces)
-	return board, nil
+	storage :=
+		pieceStorageFactory(size, pieces)
+	return storage, nil
+}
+
+// ParseDefaultBoard ...
+func ParseDefaultBoard(
+	fen string,
+	pieceParser PieceParser,
+) (PieceStorage, error) {
+	return ParseBoard(
+		fen,
+		pieceParser,
+		func(
+			size Size,
+			pieces []Piece,
+		) PieceStorage {
+			return NewBoard(size, pieces)
+		},
+	)
 }
 
 // String ...
