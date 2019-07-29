@@ -1,6 +1,8 @@
 package uci
 
 import (
+	"strconv"
+	"strings"
 	"unicode"
 
 	models "github.com/thewizardplusplus/go-chess-models"
@@ -37,4 +39,53 @@ func EncodePiece(piece models.Piece) string {
 
 	fen := unicode.To(kindCase, kindInFEN)
 	return string(fen)
+}
+
+// EncodePieceStorage ...
+//
+// It converts the piece storage to FEN.
+func EncodePieceStorage(
+	storage models.PieceStorage,
+) string {
+	var rank string
+	var shift int
+	resetShift := func() {
+		if shift != 0 {
+			rank += strconv.Itoa(shift)
+			shift = 0
+		}
+	}
+
+	var ranks []string
+	positions := storage.Size().Positions()
+	for _, position := range positions {
+		piece, ok := storage.Piece(position)
+		if ok {
+			resetShift()
+
+			rank += EncodePiece(piece)
+		} else {
+			shift++
+		}
+
+		lastFile := storage.Size().Height - 1
+		if position.File == lastFile {
+			resetShift()
+
+			ranks = append(ranks, rank)
+			rank = ""
+		}
+	}
+
+	reverse(ranks)
+	return strings.Join(ranks, "/")
+}
+
+func reverse(strings []string) {
+	left, right := 0, len(strings)-1
+	for left < right {
+		strings[left], strings[right] =
+			strings[right], strings[left]
+		left, right = left+1, right-1
+	}
 }
