@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/pieces"
 )
 
 type MockPiece struct {
@@ -143,91 +144,153 @@ func TestEncodePieceStorage(
 	for _, data := range []data{
 		data{
 			args: args{
-				size:   models.Size{5, 5},
-				pieces: nil,
+				storage: MockPieceStorage{
+					size: models.Size{5, 5},
+					piece: func(
+						position models.Position,
+					) (piece models.Piece, ok bool) {
+						return nil, false
+					},
+				},
 			},
 			want: "5/5/5/5/5",
 		},
 		data{
 			args: args{
-				size: models.Size{5, 5},
-				pieces: []models.Piece{
-					pieces.NewKing(
-						models.White,
-						models.Position{0, 2},
-					),
+				storage: MockPieceStorage{
+					size: models.Size{5, 5},
+					piece: func(
+						position models.Position,
+					) (piece models.Piece, ok bool) {
+						switch position {
+						case models.Position{0, 2}:
+							piece = pieces.NewKing(
+								models.White,
+								models.Position{0, 2},
+							)
+						}
+
+						ok = piece != nil
+						return piece, ok
+					},
 				},
 			},
 			want: "5/5/K4/5/5",
 		},
 		data{
 			args: args{
-				size: models.Size{5, 5},
-				pieces: []models.Piece{
-					pieces.NewKing(
-						models.White,
-						models.Position{1, 2},
-					),
+				storage: MockPieceStorage{
+					size: models.Size{5, 5},
+					piece: func(
+						position models.Position,
+					) (piece models.Piece, ok bool) {
+						switch position {
+						case models.Position{1, 2}:
+							piece = pieces.NewKing(
+								models.White,
+								models.Position{1, 2},
+							)
+						}
+
+						ok = piece != nil
+						return piece, ok
+					},
 				},
 			},
 			want: "5/5/1K3/5/5",
 		},
 		data{
 			args: args{
-				size: models.Size{5, 5},
-				pieces: []models.Piece{
-					pieces.NewKing(
-						models.White,
-						models.Position{1, 2},
-					),
-					pieces.NewQueen(
-						models.Black,
-						models.Position{2, 2},
-					),
+				storage: MockPieceStorage{
+					size: models.Size{5, 5},
+					piece: func(
+						position models.Position,
+					) (piece models.Piece, ok bool) {
+						switch position {
+						case models.Position{1, 2}:
+							piece = pieces.NewKing(
+								models.White,
+								models.Position{1, 2},
+							)
+						case models.Position{2, 2}:
+							piece = pieces.NewQueen(
+								models.Black,
+								models.Position{2, 2},
+							)
+						}
+
+						ok = piece != nil
+						return piece, ok
+					},
 				},
 			},
 			want: "5/5/1Kq2/5/5",
 		},
 		data{
 			args: args{
-				size: models.Size{5, 5},
-				pieces: []models.Piece{
-					pieces.NewKing(
-						models.White,
-						models.Position{1, 2},
-					),
-					pieces.NewQueen(
-						models.Black,
-						models.Position{4, 2},
-					),
+				storage: MockPieceStorage{
+					size: models.Size{5, 5},
+					piece: func(
+						position models.Position,
+					) (piece models.Piece, ok bool) {
+						switch position {
+						case models.Position{1, 2}:
+							piece = pieces.NewKing(
+								models.White,
+								models.Position{1, 2},
+							)
+						case models.Position{4, 2}:
+							piece = pieces.NewQueen(
+								models.Black,
+								models.Position{4, 2},
+							)
+						}
+
+						ok = piece != nil
+						return piece, ok
+					},
 				},
 			},
 			want: "5/5/1K2q/5/5",
 		},
 		data{
 			args: args{
-				size: models.Size{5, 5},
-				pieces: []models.Piece{
-					pieces.NewKing(
-						models.White,
-						models.Position{0, 3},
-					),
-					pieces.NewQueen(
-						models.Black,
-						models.Position{1, 2},
-					),
-					pieces.NewQueen(
-						models.White,
-						models.Position{2, 2},
-					),
-					pieces.NewRook(
-						models.Black,
-						models.Position{1, 1},
-					),
-					pieces.NewRook(
-						models.White,
-						models.Position{4, 1},
-					),
+				storage: MockPieceStorage{
+					size: models.Size{5, 5},
+					piece: func(
+						position models.Position,
+					) (piece models.Piece, ok bool) {
+						switch position {
+						case models.Position{0, 3}:
+							piece = pieces.NewKing(
+								models.White,
+								models.Position{0, 3},
+							)
+						case models.Position{1, 2}:
+							piece = pieces.NewQueen(
+								models.Black,
+								models.Position{1, 2},
+							)
+						case models.Position{2, 2}:
+							piece = pieces.NewQueen(
+								models.White,
+								models.Position{2, 2},
+							)
+						case models.Position{1, 1}:
+							piece = pieces.NewRook(
+								models.Black,
+								models.Position{1, 1},
+							)
+						case models.Position{4, 1}:
+							piece = pieces.NewRook(
+								models.White,
+								models.Position{4, 1},
+							)
+						}
+
+						ok = piece != nil
+						return piece, ok
+					},
 				},
 			},
 			want: "5/K4/1qQ2/1r2R/5",
