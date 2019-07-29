@@ -63,44 +63,6 @@ func ParseDefaultBoard(
 	)
 }
 
-// String ...
-//
-// It converts the board to FEN.
-func (board Board) String() string {
-	var rank string
-	var shift int
-	resetShift := func() {
-		if shift != 0 {
-			rank += strconv.Itoa(shift)
-			shift = 0
-		}
-	}
-
-	var ranks []string
-	positions := board.size.Positions()
-	for _, position := range positions {
-		piece, ok := board.Piece(position)
-		if ok {
-			resetShift()
-
-			rank += piece.String()
-		} else {
-			shift++
-		}
-
-		lastFile := board.size.Height - 1
-		if position.File == lastFile {
-			resetShift()
-
-			ranks = append(ranks, rank)
-			rank = ""
-		}
-	}
-
-	reverse(ranks)
-	return strings.Join(ranks, "/")
-}
-
 func reverse(strings []string) {
 	left, right := 0, len(strings)-1
 	for left < right {

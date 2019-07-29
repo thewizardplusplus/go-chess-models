@@ -1,9 +1,5 @@
 package chessmodels
 
-import (
-	"fmt"
-)
-
 // Kind ...
 type Kind int
 
@@ -25,11 +21,6 @@ type Position struct {
 
 // Piece ...
 type Piece interface {
-	// String method should convert the piece
-	// to FEN (only a kind and a color,
-	// not a position).
-	fmt.Stringer
-
 	Kind() Kind
 	Color() Color
 	Position() Position

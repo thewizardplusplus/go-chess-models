@@ -1,13 +1,13 @@
 package chessmodels_test
 
-import (
-	"testing"
+/*import (
+  "testing"
 
-	models "github.com/thewizardplusplus/go-chess-models"
-	"github.com/thewizardplusplus/go-chess-models/pieces"
+  models "github.com/thewizardplusplus/go-chess-models"
+  "github.com/thewizardplusplus/go-chess-models/pieces"
 )
 
-/*func TestParseBoard(test *testing.T) {
+func TestParseBoard(test *testing.T) {
   type args struct {
     boardInFEN   string
     pieceFactory models.PieceFactory
@@ -289,118 +289,3 @@ func TestParseRank(test *testing.T) {
     }
   }
 }*/
-
-func TestBoardString(test *testing.T) {
-	type fields struct {
-		size   models.Size
-		pieces []models.Piece
-	}
-	type data struct {
-		fields fields
-		want   string
-	}
-
-	for _, data := range []data{
-		data{
-			fields: fields{
-				size:   models.Size{5, 5},
-				pieces: nil,
-			},
-			want: "5/5/5/5/5",
-		},
-		data{
-			fields: fields{
-				size: models.Size{5, 5},
-				pieces: []models.Piece{
-					pieces.NewKing(
-						models.White,
-						models.Position{0, 2},
-					),
-				},
-			},
-			want: "5/5/K4/5/5",
-		},
-		data{
-			fields: fields{
-				size: models.Size{5, 5},
-				pieces: []models.Piece{
-					pieces.NewKing(
-						models.White,
-						models.Position{1, 2},
-					),
-				},
-			},
-			want: "5/5/1K3/5/5",
-		},
-		data{
-			fields: fields{
-				size: models.Size{5, 5},
-				pieces: []models.Piece{
-					pieces.NewKing(
-						models.White,
-						models.Position{1, 2},
-					),
-					pieces.NewQueen(
-						models.Black,
-						models.Position{2, 2},
-					),
-				},
-			},
-			want: "5/5/1Kq2/5/5",
-		},
-		data{
-			fields: fields{
-				size: models.Size{5, 5},
-				pieces: []models.Piece{
-					pieces.NewKing(
-						models.White,
-						models.Position{1, 2},
-					),
-					pieces.NewQueen(
-						models.Black,
-						models.Position{4, 2},
-					),
-				},
-			},
-			want: "5/5/1K2q/5/5",
-		},
-		data{
-			fields: fields{
-				size: models.Size{5, 5},
-				pieces: []models.Piece{
-					pieces.NewKing(
-						models.White,
-						models.Position{0, 3},
-					),
-					pieces.NewQueen(
-						models.Black,
-						models.Position{1, 2},
-					),
-					pieces.NewQueen(
-						models.White,
-						models.Position{2, 2},
-					),
-					pieces.NewRook(
-						models.Black,
-						models.Position{1, 1},
-					),
-					pieces.NewRook(
-						models.White,
-						models.Position{4, 1},
-					),
-				},
-			},
-			want: "5/K4/1qQ2/1r2R/5",
-		},
-	} {
-		storage := models.NewBoard(
-			data.fields.size,
-			data.fields.pieces,
-		)
-		got := storage.String()
-
-		if got != data.want {
-			test.Fail()
-		}
-	}
-}

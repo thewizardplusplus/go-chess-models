@@ -2,7 +2,6 @@ package chessmodels
 
 import (
 	"errors"
-	"fmt"
 )
 
 // ...
@@ -22,10 +21,6 @@ var (
 
 // PieceStorage ...
 type PieceStorage interface {
-	// String method should convert
-	// the storage to FEN.
-	fmt.Stringer
-
 	Size() Size
 	Piece(
 		position Position,
