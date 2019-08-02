@@ -60,6 +60,141 @@ func TestDecodePiece(test *testing.T) {
 	}
 }
 
+func TestDecodePieceStorage(
+	test *testing.T,
+) {
+	type args struct {
+		fen string
+	}
+	type data struct {
+		args        args
+		wantStorage models.PieceStorage
+		wantErr     bool
+	}
+
+	for _, data := range []data{
+		data{
+			args: args{
+				fen: "2K3q/8/pp1R",
+			},
+			wantStorage: models.NewBoard(
+				models.Size{8, 3},
+				[]models.Piece{
+					pieces.NewPawn(
+						models.Black,
+						models.Position{0, 0},
+					),
+					pieces.NewPawn(
+						models.Black,
+						models.Position{1, 0},
+					),
+					pieces.NewRook(
+						models.White,
+						models.Position{3, 0},
+					),
+					pieces.NewKing(
+						models.White,
+						models.Position{2, 2},
+					),
+					pieces.NewQueen(
+						models.Black,
+						models.Position{6, 2},
+					),
+				},
+			),
+			wantErr: false,
+		},
+		data{
+			args: args{
+				fen: "1/2K3q/8/pp1R",
+			},
+			wantStorage: models.NewBoard(
+				models.Size{8, 4},
+				[]models.Piece{
+					pieces.NewPawn(
+						models.Black,
+						models.Position{0, 0},
+					),
+					pieces.NewPawn(
+						models.Black,
+						models.Position{1, 0},
+					),
+					pieces.NewRook(
+						models.White,
+						models.Position{3, 0},
+					),
+					pieces.NewKing(
+						models.White,
+						models.Position{2, 2},
+					),
+					pieces.NewQueen(
+						models.Black,
+						models.Position{6, 2},
+					),
+				},
+			),
+			wantErr: false,
+		},
+		data{
+			args: args{
+				fen: "2K3q/8/pp1R/1",
+			},
+			wantStorage: models.NewBoard(
+				models.Size{8, 4},
+				[]models.Piece{
+					pieces.NewPawn(
+						models.Black,
+						models.Position{0, 1},
+					),
+					pieces.NewPawn(
+						models.Black,
+						models.Position{1, 1},
+					),
+					pieces.NewRook(
+						models.White,
+						models.Position{3, 1},
+					),
+					pieces.NewKing(
+						models.White,
+						models.Position{2, 3},
+					),
+					pieces.NewQueen(
+						models.Black,
+						models.Position{6, 3},
+					),
+				},
+			),
+			wantErr: false,
+		},
+		data{
+			args: args{
+				fen: "2K3q/#/pp1R",
+			},
+			wantStorage: nil,
+			wantErr:     true,
+		},
+	} {
+		gotStorage, gotErr :=
+			DecodePieceStorage(
+				data.args.fen,
+				pieces.NewPiece,
+				models.NewBoard,
+			)
+
+		if !reflect.DeepEqual(
+			gotStorage,
+			data.wantStorage,
+		) {
+			test.Fail()
+		}
+
+		hasErr := gotErr != nil
+		if hasErr != data.wantErr {
+			test.Fail()
+		}
+	}
+}
+
 func TestDecodeRank(test *testing.T) {
 	type args struct {
 		index int
