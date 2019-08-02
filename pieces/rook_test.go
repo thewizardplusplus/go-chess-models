@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/uci"
 )
 
 func TestNewRook(test *testing.T) {
@@ -257,11 +258,11 @@ func TestRookCheckMove(test *testing.T) {
 			wantErr: nil,
 		},
 	} {
-		storage, err :=
-			models.ParseDefaultBoard(
-				data.args.boardInFEN,
-				ParseDefaultPiece,
-			)
+		storage, err := uci.DecodePieceStorage(
+			data.args.boardInFEN,
+			NewPiece,
+			models.NewBoard,
+		)
 		if err != nil {
 			test.Fail()
 			continue

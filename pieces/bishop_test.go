@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/uci"
 )
 
 func TestNewBishop(test *testing.T) {
@@ -321,11 +322,11 @@ func TestBishopCheckMove(test *testing.T) {
 			wantErr: nil,
 		},
 	} {
-		storage, err :=
-			models.ParseDefaultBoard(
-				data.args.boardInFEN,
-				ParseDefaultPiece,
-			)
+		storage, err := uci.DecodePieceStorage(
+			data.args.boardInFEN,
+			NewPiece,
+			models.NewBoard,
+		)
 		if err != nil {
 			test.Fail()
 			continue

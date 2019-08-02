@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/uci"
 )
 
 func TestNewKing(test *testing.T) {
@@ -81,9 +82,10 @@ func TestKingApplyPosition(
 }
 
 func TestKingCheckMove(test *testing.T) {
-	storage, err := models.ParseDefaultBoard(
+	storage, err := uci.DecodePieceStorage(
 		"5/5/2K2/5/5",
-		ParseDefaultPiece,
+		NewPiece,
+		models.NewBoard,
 	)
 	if err != nil {
 		test.Fail()
