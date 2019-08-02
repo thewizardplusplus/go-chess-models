@@ -2,6 +2,8 @@ package uci
 
 import (
 	"errors"
+	"strconv"
+	"strings"
 	"unicode"
 
 	models "github.com/thewizardplusplus/go-chess-models"
@@ -13,6 +15,12 @@ type PieceFactory func(
 	color models.Color,
 	position models.Position,
 ) models.Piece
+
+// PieceStorageFactory ...
+type PieceStorageFactory func(
+	size models.Size,
+	pieces []models.Piece,
+) models.PieceStorage
 
 // DecodePiece ...
 func DecodePiece(
@@ -47,4 +55,68 @@ func DecodePiece(
 	var position models.Position
 	piece := factory(kind, color, position)
 	return piece, nil
+}
+
+// DecodePieceStorage ...
+func DecodePieceStorage(
+	fen string,
+	pieceFactory PieceFactory,
+	pieceStorageFactory PieceStorageFactory,
+) (models.PieceStorage, error) {
+	ranks := strings.Split(fen, "/")
+	reverse(ranks)
+
+	var pieces []models.Piece
+	var width int
+	for index, rank := range ranks {
+		rankPieces, rankWidth, err :=
+			decodeRank(index, rank, pieceFactory)
+		if err != nil {
+			return nil, err
+		}
+
+		pieces = append(pieces, rankPieces...)
+		if width < rankWidth {
+			width = rankWidth
+		}
+	}
+
+	size := models.Size{width, len(ranks)}
+	storage :=
+		pieceStorageFactory(size, pieces)
+	return storage, nil
+}
+
+func decodeRank(
+	index int,
+	fen string,
+	pieceFactory PieceFactory,
+) (
+	pieces []models.Piece,
+	maxFile int,
+	err error,
+) {
+	for _, symbol := range fen {
+		piece, err :=
+			DecodePiece(symbol, pieceFactory)
+		if err != nil {
+			shift, err :=
+				strconv.Atoi(string(symbol))
+			if err != nil {
+				return nil, 0, err
+			}
+
+			maxFile += shift
+			continue
+		}
+
+		position :=
+			models.Position{maxFile, index}
+		piece = piece.ApplyPosition(position)
+		pieces = append(pieces, piece)
+
+		maxFile++
+	}
+
+	return pieces, maxFile, nil
 }
