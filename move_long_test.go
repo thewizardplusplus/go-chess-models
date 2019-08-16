@@ -10,6 +10,7 @@ import (
 
 	models "github.com/thewizardplusplus/go-chess-models"
 	"github.com/thewizardplusplus/go-chess-models/pieces"
+	"github.com/thewizardplusplus/go-chess-models/uci"
 )
 
 var (
@@ -360,11 +361,11 @@ func TestPerft(test *testing.T) {
 			data.name,
 			index,
 		)
-		storage, err :=
-			models.ParseDefaultBoard(
-				data.args.boardInFEN,
-				pieces.ParseDefaultPiece,
-			)
+		storage, err := uci.DecodePieceStorage(
+			data.args.boardInFEN,
+			pieces.NewPiece,
+			models.NewBoard,
+		)
 		if err != nil {
 			test.Logf("%s: %v", prefix, err)
 			test.Fail()
