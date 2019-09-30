@@ -93,6 +93,38 @@ func (
 	panic("not implemented")
 }
 
+func TestEncodePosition(test *testing.T) {
+	type args struct {
+		position models.Position
+	}
+	type data struct {
+		args args
+		want string
+	}
+
+	for _, data := range []data{
+		data{
+			args: args{
+				position: models.Position{2, 1},
+			},
+			want: "c2",
+		},
+		data{
+			args: args{
+				position: models.Position{5, 6},
+			},
+			want: "f7",
+		},
+	} {
+		got :=
+			EncodePosition(data.args.position)
+
+		if got != data.want {
+			test.Fail()
+		}
+	}
+}
+
 func TestEncodePiece(test *testing.T) {
 	type args struct {
 		piece models.Piece

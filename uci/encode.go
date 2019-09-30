@@ -8,6 +8,18 @@ import (
 	models "github.com/thewizardplusplus/go-chess-models"
 )
 
+// EncodePosition ...
+//
+// It converts the position
+// to pure algebraic coordinate notation.
+func EncodePosition(
+	position models.Position,
+) string {
+	file := string(position.File + 97)
+	rank := strconv.Itoa(position.Rank + 1)
+	return file + rank
+}
+
 // EncodePiece ...
 //
 // It converts the piece to FEN
