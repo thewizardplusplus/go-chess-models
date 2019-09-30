@@ -20,6 +20,16 @@ func EncodePosition(
 	return file + rank
 }
 
+// EncodeMove ...
+//
+// It converts the move
+// to pure algebraic coordinate notation.
+func EncodeMove(move models.Move) string {
+	start := EncodePosition(move.Start)
+	finish := EncodePosition(move.Finish)
+	return start + finish
+}
+
 // EncodePiece ...
 //
 // It converts the piece to FEN

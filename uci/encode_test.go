@@ -125,6 +125,43 @@ func TestEncodePosition(test *testing.T) {
 	}
 }
 
+func TestEncodeMove(test *testing.T) {
+	type args struct {
+		move models.Move
+	}
+	type data struct {
+		args args
+		want string
+	}
+
+	for _, data := range []data{
+		data{
+			args: args{
+				move: models.Move{
+					Start:  models.Position{2, 1},
+					Finish: models.Position{2, 3},
+				},
+			},
+			want: "c2c4",
+		},
+		data{
+			args: args{
+				move: models.Move{
+					Start:  models.Position{5, 6},
+					Finish: models.Position{5, 4},
+				},
+			},
+			want: "f7f5",
+		},
+	} {
+		got := EncodeMove(data.args.move)
+
+		if got != data.want {
+			test.Fail()
+		}
+	}
+}
+
 func TestEncodePiece(test *testing.T) {
 	type args struct {
 		piece models.Piece
