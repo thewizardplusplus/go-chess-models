@@ -103,7 +103,7 @@ func (board Board) ApplyMove(
 func (board Board) CheckMove(
 	move Move,
 ) error {
-	if move.Start == move.Finish {
+	if move.IsEmpty() {
 		return ErrNoMove
 	}
 
