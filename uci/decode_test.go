@@ -62,6 +62,63 @@ func TestDecodePosition(test *testing.T) {
 	}
 }
 
+func TestDecodeMove(test *testing.T) {
+	type args struct {
+		text string
+	}
+	type data struct {
+		args     args
+		wantMove models.Move
+		wantErr  bool
+	}
+
+	for _, data := range []data{
+		data{
+			args: args{"e2e4"},
+			wantMove: models.Move{
+				Start:  models.Position{4, 1},
+				Finish: models.Position{4, 3},
+			},
+			wantErr: false,
+		},
+		data{
+			args:     args{"e2e"},
+			wantMove: models.Move{},
+			wantErr:  true,
+		},
+		data{
+			args:     args{"e2e42"},
+			wantMove: models.Move{},
+			wantErr:  true,
+		},
+		data{
+			args:     args{"e\ne4"},
+			wantMove: models.Move{},
+			wantErr:  true,
+		},
+		data{
+			args:     args{"e2e\n"},
+			wantMove: models.Move{},
+			wantErr:  true,
+		},
+	} {
+		gotMove, gotErr :=
+			DecodeMove(data.args.text)
+
+		if !reflect.DeepEqual(
+			gotMove,
+			data.wantMove,
+		) {
+			test.Fail()
+		}
+
+		hasErr := gotErr != nil
+		if hasErr != data.wantErr {
+			test.Fail()
+		}
+	}
+}
+
 func TestDecodePiece(test *testing.T) {
 	type args struct {
 		fen rune
