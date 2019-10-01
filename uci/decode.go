@@ -2,6 +2,7 @@ package uci
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 	"unicode"
@@ -22,7 +23,39 @@ type PieceStorageFactory func(
 	pieces []models.Piece,
 ) models.PieceStorage
 
+// DecodePosition ...
+//
+// It decodes a position
+// from pure algebraic coordinate notation.
+func DecodePosition(text string) (
+	position models.Position,
+	err error,
+) {
+	if len(text) != 2 {
+		return models.Position{},
+			errors.New("incorrect length")
+	}
+
+	file := int(text[0]) - 97
+	if file < 0 {
+		return models.Position{},
+			errors.New("incorrect file")
+	}
+
+	rank, err := strconv.Atoi(text[1:])
+	if err != nil {
+		return models.Position{},
+			fmt.Errorf("incorrect rank: %s", err)
+	}
+
+	return models.Position{file, rank}, nil
+}
+
 // DecodePiece ...
+//
+// It decodes a piece from FEN
+// (only a kind and a color,
+// not a position).
 func DecodePiece(
 	fen rune,
 	factory PieceFactory,
@@ -58,6 +91,8 @@ func DecodePiece(
 }
 
 // DecodePieceStorage ...
+//
+// It decodes a piece storage from FEN.
 func DecodePieceStorage(
 	fen string,
 	pieceFactory PieceFactory,

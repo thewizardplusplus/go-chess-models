@@ -33,7 +33,8 @@ func EncodeMove(move models.Move) string {
 // EncodePiece ...
 //
 // It converts the piece to FEN
-// (only a kind and a color, not a position).
+// (only a kind and a color,
+// not a position).
 func EncodePiece(piece models.Piece) string {
 	var kindCase int
 	switch piece.Color() {
