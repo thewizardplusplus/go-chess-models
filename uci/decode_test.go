@@ -8,6 +8,60 @@ import (
 	"github.com/thewizardplusplus/go-chess-models/pieces"
 )
 
+func TestDecodePosition(test *testing.T) {
+	type args struct {
+		text string
+	}
+	type data struct {
+		args         args
+		wantPosition models.Position
+		wantErr      bool
+	}
+
+	for _, data := range []data{
+		data{
+			args:         args{"e2"},
+			wantPosition: models.Position{4, 1},
+			wantErr:      false,
+		},
+		data{
+			args:         args{"e"},
+			wantPosition: models.Position{},
+			wantErr:      true,
+		},
+		data{
+			args:         args{"e23"},
+			wantPosition: models.Position{},
+			wantErr:      true,
+		},
+		data{
+			args:         args{"\n2"},
+			wantPosition: models.Position{},
+			wantErr:      true,
+		},
+		data{
+			args:         args{"e\n"},
+			wantPosition: models.Position{},
+			wantErr:      true,
+		},
+	} {
+		gotPosition, gotErr :=
+			DecodePosition(data.args.text)
+
+		if !reflect.DeepEqual(
+			gotPosition,
+			data.wantPosition,
+		) {
+			test.Fail()
+		}
+
+		hasErr := gotErr != nil
+		if hasErr != data.wantErr {
+			test.Fail()
+		}
+	}
+}
+
 func TestDecodePiece(test *testing.T) {
 	type args struct {
 		fen rune

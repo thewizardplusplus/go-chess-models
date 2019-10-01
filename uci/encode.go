@@ -15,7 +15,8 @@ import (
 func EncodePosition(
 	position models.Position,
 ) string {
-	file := string(position.File + 97)
+	file :=
+		string(position.File + minFileCount)
 	rank := strconv.Itoa(position.Rank + 1)
 	return file + rank
 }

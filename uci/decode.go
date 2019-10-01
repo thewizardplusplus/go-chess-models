@@ -23,6 +23,10 @@ type PieceStorageFactory func(
 	pieces []models.Piece,
 ) models.PieceStorage
 
+const (
+	minFileCount = 97
+)
+
 // DecodePosition ...
 //
 // It decodes a position
@@ -36,7 +40,7 @@ func DecodePosition(text string) (
 			errors.New("incorrect length")
 	}
 
-	file := int(text[0]) - 97
+	file := int(text[0]) - minFileCount
 	if file < 0 {
 		return models.Position{},
 			errors.New("incorrect file")
@@ -47,8 +51,39 @@ func DecodePosition(text string) (
 		return models.Position{},
 			fmt.Errorf("incorrect rank: %s", err)
 	}
+	rank--
 
 	return models.Position{file, rank}, nil
+}
+
+// DecodeMove ...
+//
+// It decodes a move
+// from pure algebraic coordinate notation.
+func DecodeMove(text string) (
+	move models.Move,
+	err error,
+) {
+	if len(text) != 4 {
+		return models.Move{},
+			errors.New("incorrect length")
+	}
+
+	start, err := DecodePosition(text[:2])
+	if err != nil {
+		return models.Move{},
+			fmt.Errorf("incorrect start: %s", err)
+	}
+
+	finish, err := DecodePosition(text[2:])
+	if err != nil {
+		return models.Move{}, fmt.Errorf(
+			"incorrect finish: %s",
+			err,
+		)
+	}
+
+	return models.Move{start, finish}, nil
 }
 
 // DecodePiece ...
