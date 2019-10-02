@@ -10,8 +10,8 @@ type Size struct {
 func (size Size) HasPosition(
 	position Position,
 ) bool {
-	return isLess(position.File, size.Width) &&
-		isLess(position.Rank, size.Height)
+	return less(position.File, size.Width) &&
+		less(position.Rank, size.Height)
 }
 
 // HasMove ...
@@ -34,6 +34,6 @@ func (size Size) Positions() []Position {
 	return positions
 }
 
-func isLess(value int, limit int) bool {
-	return value >= 0 && value < limit
+func less(value int, limit int) bool {
+	return 0 <= value && value < limit
 }
