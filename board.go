@@ -6,7 +6,10 @@ import (
 
 // ...
 var (
-	ErrNoMove         = errors.New("no move")
+	ErrNoMove    = errors.New("no move")
+	ErrOutOfSize = errors.New(
+		"out of size",
+	)
 	ErrNoPiece        = errors.New("no piece")
 	ErrFriendlyTarget = errors.New(
 		"friendly target",
@@ -31,9 +34,6 @@ type PieceStorage interface {
 	// is correct.
 	ApplyMove(move Move) PieceStorage
 
-	// It shouldn't check that move positions
-	// is inside the board.
-	//
 	// It shouldn't check for a check
 	// before or after the move.
 	CheckMove(move Move) error
@@ -95,9 +95,6 @@ func (board Board) ApplyMove(
 
 // CheckMove ...
 //
-// It doesn't check that move positions
-// is inside the board.
-//
 // It doesn't check for a check
 // before or after the move.
 func (board Board) CheckMove(
@@ -105,6 +102,10 @@ func (board Board) CheckMove(
 ) error {
 	if move.IsEmpty() {
 		return ErrNoMove
+	}
+
+	if !board.size.HasMove(move) {
+		return ErrOutOfSize
 	}
 
 	piece, ok := board.pieces[move.Start]

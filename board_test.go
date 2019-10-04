@@ -235,6 +235,19 @@ func TestBoardCheckMove(test *testing.T) {
 			args: args{
 				move: Move{
 					Start:  Position{0, 0},
+					Finish: Position{-1, -1},
+				},
+			},
+			want: ErrOutOfSize,
+		},
+		data{
+			fields: fields{
+				size:   Size{2, 2},
+				pieces: nil,
+			},
+			args: args{
+				move: Move{
+					Start:  Position{0, 0},
 					Finish: Position{1, 1},
 				},
 			},
