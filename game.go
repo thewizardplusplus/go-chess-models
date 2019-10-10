@@ -4,6 +4,11 @@ import (
 	"errors"
 )
 
+// ...
+var (
+	ErrCheck = errors.New("check")
+)
+
 // MoveSearcher ...
 type MoveSearcher interface {
 	SearchMove(
@@ -26,8 +31,8 @@ func NewGame(
 	searcher MoveSearcher,
 	searcherColor Color,
 	checker MoveSearcher,
-) *Game {
-	return &Game{
+) Game {
+	return Game{
 		storage:       storage,
 		searcher:      searcher,
 		searcherColor: searcherColor,
@@ -61,10 +66,38 @@ func (game Game) ApplyMove(
 		storage,
 		game.searcherColor,
 	)
-	if err != nil {
-		return err // don't wrap
+	if err == ErrKingCapture {
+		return ErrCheck
 	}
 
 	game.storage = storage
-	return nil
+	// here error can be checkmate or draw
+	// only
+	return err
+}
+
+// SearchMove ...
+func (game Game) SearchMove() (
+	Move,
+	error,
+) {
+	move, err := game.searcher.SearchMove(
+		game.storage,
+		game.searcherColor,
+	)
+	if err != nil {
+		return Move{}, err // don't wrap
+	}
+
+	game.storage =
+		game.storage.ApplyMove(move)
+	userColor := game.searcherColor.Negative()
+	_, err = game.checker.SearchMove(
+		game.storage,
+		userColor,
+	)
+
+	// here error can be checkmate or draw
+	// only
+	return move, err
 }
