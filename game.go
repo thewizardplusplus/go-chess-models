@@ -57,16 +57,12 @@ func (game *Game) ApplyMove(
 		return err // don't wrap
 	}
 
-	// CheckMove call guarantees no error here
-	piece, _ := game.storage.Piece(move.Start)
-	if piece.Color() != game.userColor {
+	color := game.moveColor(move)
+	if color != game.userColor {
 		return errors.New("opponent piece")
 	}
 
-	return game.tryApplyMove(
-		move,
-		game.searcherColor,
-	)
+	return game.tryApplyMove(move)
 }
 
 // SearchMove ...
@@ -82,15 +78,21 @@ func (game *Game) SearchMove() (
 		return Move{}, err // don't wrap
 	}
 
-	err =
-		game.tryApplyMove(move, game.userColor)
+	err = game.tryApplyMove(move)
 	return move, err
+}
+
+func (game Game) moveColor(
+	move Move,
+) Color {
+	piece, _ := game.storage.Piece(move.Start)
+	return piece.Color()
 }
 
 func (game *Game) tryApplyMove(
 	move Move,
-	color Color,
 ) error {
+	color := game.moveColor(move)
 	storage := game.storage.ApplyMove(move)
 	_, err :=
 		game.checker.SearchMove(storage, color)
