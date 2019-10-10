@@ -63,19 +63,10 @@ func (game *Game) ApplyMove(
 		return errors.New("opponent piece")
 	}
 
-	storage := game.storage.ApplyMove(move)
-	_, err = game.checker.SearchMove(
-		storage,
+	return game.tryApplyMove(
+		move,
 		game.searcherColor,
 	)
-	if err == ErrKingCapture {
-		return ErrCheck
-	}
-
-	game.storage = storage
-	// here error can be checkmate or draw
-	// only
-	return err
 }
 
 // SearchMove ...
@@ -91,14 +82,24 @@ func (game *Game) SearchMove() (
 		return Move{}, err // don't wrap
 	}
 
-	game.storage =
-		game.storage.ApplyMove(move)
-	_, err = game.checker.SearchMove(
-		game.storage,
-		game.userColor,
-	)
+	err =
+		game.tryApplyMove(move, game.userColor)
+	return move, err
+}
 
+func (game *Game) tryApplyMove(
+	move Move,
+	color Color,
+) error {
+	storage := game.storage.ApplyMove(move)
+	_, err :=
+		game.checker.SearchMove(storage, color)
+	if err == ErrKingCapture {
+		return ErrCheck
+	}
+
+	game.storage = storage
 	// here error can be checkmate or draw
 	// only
-	return move, err
+	return err
 }
