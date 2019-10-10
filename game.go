@@ -22,6 +22,7 @@ type Game struct {
 	storage       PieceStorage
 	searcher      MoveSearcher
 	searcherColor Color
+	userColor     Color
 	checker       MoveSearcher
 }
 
@@ -31,11 +32,13 @@ func NewGame(
 	searcher MoveSearcher,
 	searcherColor Color,
 	checker MoveSearcher,
-) Game {
-	return Game{
+) *Game {
+	userColor := searcherColor.Negative()
+	return &Game{
 		storage:       storage,
 		searcher:      searcher,
 		searcherColor: searcherColor,
+		userColor:     userColor,
 		checker:       checker,
 	}
 }
@@ -46,7 +49,7 @@ func (game Game) Storage() PieceStorage {
 }
 
 // ApplyMove ...
-func (game Game) ApplyMove(
+func (game *Game) ApplyMove(
 	move Move,
 ) error {
 	err := game.storage.CheckMove(move)
@@ -56,8 +59,7 @@ func (game Game) ApplyMove(
 
 	// CheckMove call guarantees no error here
 	piece, _ := game.storage.Piece(move.Start)
-	userColor := game.searcherColor.Negative()
-	if piece.Color() != userColor {
+	if piece.Color() != game.userColor {
 		return errors.New("opponent piece")
 	}
 
@@ -77,7 +79,7 @@ func (game Game) ApplyMove(
 }
 
 // SearchMove ...
-func (game Game) SearchMove() (
+func (game *Game) SearchMove() (
 	Move,
 	error,
 ) {
@@ -91,10 +93,9 @@ func (game Game) SearchMove() (
 
 	game.storage =
 		game.storage.ApplyMove(move)
-	userColor := game.searcherColor.Negative()
 	_, err = game.checker.SearchMove(
 		game.storage,
-		userColor,
+		game.userColor,
 	)
 
 	// here error can be checkmate or draw
