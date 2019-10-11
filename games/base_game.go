@@ -33,11 +33,18 @@ type BaseGame struct {
 func NewBaseGame(
 	storage models.PieceStorage,
 	checker MoveSearcher,
-) *BaseGame {
-	return &BaseGame{
-		storage: storage,
-		checker: checker,
+	nextColor models.Color,
+) (*BaseGame, error) {
+	game := &BaseGame{checker: checker}
+	err := game.tryUpdateStorage(
+		storage,
+		nextColor,
+	)
+	if err != nil {
+		return nil, err // don't wrap
 	}
+
+	return game, nil
 }
 
 // Storage ...
@@ -69,23 +76,14 @@ func (game *BaseGame) ApplyMove(
 		return game.state // don't wrap
 	}
 
-	nextStorage := game.storage.ApplyMove(move)
+	nextStorage :=
+		game.storage.ApplyMove(move)
 	nextColor :=
 		game.moveColor(move).Negative()
-	_, err := game.checker.SearchMove(
+	return game.tryUpdateStorage(
 		nextStorage,
 		nextColor,
 	)
-	if err == models.ErrKingCapture {
-		return ErrCheck
-	}
-
-	game.storage = nextStorage
-	// here error can be only
-	// ErrCheckmate or ErrDraw
-	game.state = err
-
-	return nil
 }
 
 // caller code should guarantee
@@ -95,4 +93,25 @@ func (game BaseGame) moveColor(
 ) models.Color {
 	piece, _ := game.storage.Piece(move.Start)
 	return piece.Color()
+}
+
+// it checks storage state before update
+func (game *BaseGame) tryUpdateStorage(
+	nextStorage models.PieceStorage,
+	nextColor models.Color,
+) error {
+	_, err := game.checker.SearchMove(
+		nextStorage,
+		nextColor,
+	)
+	if err == models.ErrKingCapture {
+		return ErrCheck // don't wrap
+	}
+
+	game.storage = nextStorage
+	// here error can be only
+	// ErrCheckmate or ErrDraw
+	game.state = err
+
+	return nil
 }

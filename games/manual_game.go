@@ -20,14 +20,21 @@ func NewManualGame(
 	checker MoveSearcher,
 	searcher MoveSearcher,
 	searcherColor models.Color,
-) *ManualGame {
-	baseGame := NewBaseGame(storage, checker)
-	return &ManualGame{
+	nextColor models.Color,
+) (*ManualGame, error) {
+	baseGame, err :=
+		NewBaseGame(storage, checker, nextColor)
+	if err != nil {
+		return nil, err // don't wrap
+	}
+
+	game := &ManualGame{
 		BaseGame: baseGame,
 
 		searcher:      searcher,
 		searcherColor: searcherColor,
 	}
+	return game, nil
 }
 
 // ApplyMove ...
