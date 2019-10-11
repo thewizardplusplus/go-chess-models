@@ -6,30 +6,30 @@ import (
 	models "github.com/thewizardplusplus/go-chess-models"
 )
 
-// ManualGame ...
-type ManualGame struct {
-	*BaseGame
+// Manual ...
+type Manual struct {
+	*Base
 
 	searcher      MoveSearcher
 	searcherColor models.Color
 }
 
-// NewManualGame ...
-func NewManualGame(
+// NewManual ...
+func NewManual(
 	storage models.PieceStorage,
 	checker MoveSearcher,
 	searcher MoveSearcher,
 	searcherColor models.Color,
 	nextColor models.Color,
-) (*ManualGame, error) {
-	baseGame, err :=
-		NewBaseGame(storage, checker, nextColor)
+) (*Manual, error) {
+	base, err :=
+		NewBase(storage, checker, nextColor)
 	if err != nil {
 		return nil, err // don't wrap
 	}
 
-	game := &ManualGame{
-		BaseGame: baseGame,
+	game := &Manual{
+		Base: base,
 
 		searcher:      searcher,
 		searcherColor: searcherColor,
@@ -43,7 +43,7 @@ func NewManualGame(
 //
 // It DOES check of storage state
 // after the move.
-func (game *ManualGame) ApplyMove(
+func (game *Manual) ApplyMove(
 	move models.Move,
 ) error {
 	// disable move if the game already is
@@ -63,11 +63,11 @@ func (game *ManualGame) ApplyMove(
 		return errors.New("opponent piece")
 	}
 
-	return game.BaseGame.ApplyMove(move)
+	return game.Base.ApplyMove(move)
 }
 
 // SearchMove ...
-func (game *ManualGame) SearchMove() (
+func (game *Manual) SearchMove() (
 	models.Move,
 	error,
 ) {
@@ -86,7 +86,7 @@ func (game *ManualGame) SearchMove() (
 		return models.Move{}, err // don't wrap
 	}
 
-	err = game.BaseGame.ApplyMove(move)
+	err = game.Base.ApplyMove(move)
 	if err != nil {
 		return models.Move{}, err // don't wrap
 	}

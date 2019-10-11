@@ -21,21 +21,21 @@ type MoveSearcher interface {
 	) (models.Move, error)
 }
 
-// BaseGame ...
-type BaseGame struct {
+// Base ...
+type Base struct {
 	storage models.PieceStorage
 	checker MoveSearcher
 	// ErrCheckmate or ErrDraw
 	state error
 }
 
-// NewBaseGame ...
-func NewBaseGame(
+// NewBase ...
+func NewBase(
 	storage models.PieceStorage,
 	checker MoveSearcher,
 	nextColor models.Color,
-) (*BaseGame, error) {
-	game := &BaseGame{checker: checker}
+) (*Base, error) {
+	game := &Base{checker: checker}
 	err := game.tryUpdateStorage(
 		storage,
 		nextColor,
@@ -49,7 +49,7 @@ func NewBaseGame(
 
 // Storage ...
 func (
-	game BaseGame,
+	game Base,
 ) Storage() models.PieceStorage {
 	return game.storage
 }
@@ -57,7 +57,7 @@ func (
 // State ...
 //
 // ErrCheckmate or ErrDraw.
-func (game BaseGame) State() error {
+func (game Base) State() error {
 	return game.state
 }
 
@@ -67,7 +67,7 @@ func (game BaseGame) State() error {
 //
 // It DOES check of storage state
 // after the move.
-func (game *BaseGame) ApplyMove(
+func (game *Base) ApplyMove(
 	move models.Move,
 ) error {
 	// disable move if the game already is
@@ -88,7 +88,7 @@ func (game *BaseGame) ApplyMove(
 
 // caller code should guarantee
 // piece existence at the move start
-func (game BaseGame) moveColor(
+func (game Base) moveColor(
 	move models.Move,
 ) models.Color {
 	piece, _ := game.storage.Piece(move.Start)
@@ -96,7 +96,7 @@ func (game BaseGame) moveColor(
 }
 
 // it checks storage state before update
-func (game *BaseGame) tryUpdateStorage(
+func (game *Base) tryUpdateStorage(
 	nextStorage models.PieceStorage,
 	nextColor models.Color,
 ) error {
