@@ -21,14 +21,14 @@ func NewManual(
 	searcher MoveSearcher,
 	searcherColor models.Color,
 	nextColor models.Color,
-) (*Manual, error) {
+) (Manual, error) {
 	base, err :=
 		NewBase(storage, checker, nextColor)
 	if err != nil {
-		return nil, err // don't wrap
+		return Manual{}, err // don't wrap
 	}
 
-	game := &Manual{
+	game := Manual{
 		Base: base,
 
 		searcher:      searcher,
@@ -43,7 +43,7 @@ func NewManual(
 //
 // It DOES check of storage state
 // after the move.
-func (game *Manual) ApplyMove(
+func (game Manual) ApplyMove(
 	move models.Move,
 ) error {
 	// disable move if the game already is
@@ -67,7 +67,7 @@ func (game *Manual) ApplyMove(
 }
 
 // SearchMove ...
-func (game *Manual) SearchMove() (
+func (game Manual) SearchMove() (
 	models.Move,
 	error,
 ) {
