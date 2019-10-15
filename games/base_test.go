@@ -62,6 +62,88 @@ func (storage MockPieceStorage) CheckMove(
 	return storage.checkMove(move)
 }
 
+type MockMoveSearcher struct {
+	searchMove func(
+		storage models.PieceStorage,
+		color models.Color,
+	) (models.Move, error)
+}
+
+func (searcher MockMoveSearcher) SearchMove(
+	storage models.PieceStorage,
+	color models.Color,
+) (models.Move, error) {
+	if searcher.searchMove == nil {
+		panic("not implemented")
+	}
+
+	return searcher.searchMove(storage, color)
+}
+
+func TestNewBase(test *testing.T) {
+	type args struct {
+		storage   models.PieceStorage
+		checker   MoveSearcher
+		nextColor models.Color
+	}
+	type data struct {
+		args      args
+		wantState error
+		wantErr   error
+	}
+
+	for _, data := range []data{
+		data{
+			args: args{
+				storage: MockPieceStorage{},
+				checker: MockMoveSearcher{
+					searchMove: func(
+						storage models.PieceStorage,
+						color models.Color,
+					) (models.Move, error) {
+						_, ok :=
+							storage.(MockPieceStorage)
+						if !ok {
+							test.Fail()
+						}
+						if color != models.White {
+							test.Fail()
+						}
+
+						return models.Move{}, nil
+					},
+				},
+				nextColor: models.White,
+			},
+			wantState: nil,
+			wantErr:   nil,
+		},
+	} {
+		gotBase, gotErr := NewBase(
+			data.args.storage,
+			data.args.checker,
+			data.args.nextColor,
+		)
+
+		_, ok := gotBase.
+			storage.(MockPieceStorage)
+		if !ok {
+			test.Fail()
+		}
+		_, ok = gotBase.
+			checker.(MockMoveSearcher)
+		if !ok {
+			test.Fail()
+		}
+		if gotBase.state != data.wantState {
+			test.Fail()
+		}
+		if gotErr != data.wantErr {
+			test.Fail()
+		}
+	}
+}
+
 func TestBaseStorage(test *testing.T) {
 	var storage MockPieceStorage
 	base := Base{
