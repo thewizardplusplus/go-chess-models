@@ -118,6 +118,58 @@ func TestNewBase(test *testing.T) {
 			wantState: nil,
 			wantErr:   nil,
 		},
+		data{
+			args: args{
+				storage: MockPieceStorage{},
+				checker: MockMoveSearcher{
+					searchMove: func(
+						storage models.PieceStorage,
+						color models.Color,
+					) (models.Move, error) {
+						_, ok :=
+							storage.(MockPieceStorage)
+						if !ok {
+							test.Fail()
+						}
+						if color != models.White {
+							test.Fail()
+						}
+
+						return models.Move{},
+							errors.New("dummy")
+					},
+				},
+				nextColor: models.White,
+			},
+			wantState: errors.New("dummy"),
+			wantErr:   nil,
+		},
+		data{
+			args: args{
+				storage: MockPieceStorage{},
+				checker: MockMoveSearcher{
+					searchMove: func(
+						storage models.PieceStorage,
+						color models.Color,
+					) (models.Move, error) {
+						_, ok :=
+							storage.(MockPieceStorage)
+						if !ok {
+							test.Fail()
+						}
+						if color != models.White {
+							test.Fail()
+						}
+
+						return models.Move{},
+							models.ErrKingCapture
+					},
+				},
+				nextColor: models.White,
+			},
+			wantState: nil,
+			wantErr:   ErrCheck,
+		},
 	} {
 		gotBase, gotErr := NewBase(
 			data.args.storage,
@@ -125,20 +177,29 @@ func TestNewBase(test *testing.T) {
 			data.args.nextColor,
 		)
 
-		_, ok := gotBase.
-			storage.(MockPieceStorage)
-		if !ok {
+		if gotErr != data.wantErr {
 			test.Fail()
 		}
-		_, ok = gotBase.
+		if gotErr != nil {
+			continue
+		}
+
+		if !reflect.DeepEqual(
+			gotBase.storage,
+			data.args.storage,
+		) {
+			test.Fail()
+		}
+
+		_, ok := gotBase.
 			checker.(MockMoveSearcher)
 		if !ok {
 			test.Fail()
 		}
-		if gotBase.state != data.wantState {
-			test.Fail()
-		}
-		if gotErr != data.wantErr {
+		if !reflect.DeepEqual(
+			gotBase.state,
+			data.wantState,
+		) {
 			test.Fail()
 		}
 	}
