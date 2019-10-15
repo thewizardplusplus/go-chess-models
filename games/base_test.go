@@ -1,6 +1,7 @@
 package games
 
 import (
+	"errors"
 	"reflect"
 	"testing"
 
@@ -69,6 +70,18 @@ func TestBaseStorage(test *testing.T) {
 	got := base.Storage()
 
 	if !reflect.DeepEqual(got, storage) {
+		test.Fail()
+	}
+}
+
+func TestBaseState(test *testing.T) {
+	state := errors.New("dummy")
+	base := Base{
+		state: state,
+	}
+	got := base.State()
+
+	if got != state {
 		test.Fail()
 	}
 }
