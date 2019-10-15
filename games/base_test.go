@@ -228,3 +228,32 @@ func TestBaseState(test *testing.T) {
 		test.Fail()
 	}
 }
+
+func TestBaseApplyMove(test *testing.T) {
+	type fields struct {
+		storage models.PieceStorage
+		checker MoveSearcher
+		state   error
+	}
+	type args struct {
+		move models.Move
+	}
+	type data struct {
+		fields  fields
+		args    args
+		wantErr error
+	}
+
+	for _, data := range []data{} {
+		base := Base{
+			storage: data.fields.storage,
+			checker: data.fields.checker,
+			state:   data.fields.state,
+		}
+		gotErr := base.ApplyMove(data.args.move)
+
+		if gotErr != data.wantErr {
+			test.Fail()
+		}
+	}
+}
