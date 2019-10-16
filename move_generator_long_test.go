@@ -9,8 +9,8 @@ import (
 	"testing"
 
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/encoding/uci"
 	"github.com/thewizardplusplus/go-chess-models/pieces"
-	"github.com/thewizardplusplus/go-chess-models/uci"
 )
 
 var (

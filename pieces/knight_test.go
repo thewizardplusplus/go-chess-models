@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	models "github.com/thewizardplusplus/go-chess-models"
-	"github.com/thewizardplusplus/go-chess-models/uci"
+	"github.com/thewizardplusplus/go-chess-models/encoding/uci"
 )
 
 func TestNewKnight(test *testing.T) {
