@@ -80,6 +80,39 @@ func (searcher MockMoveSearcher) SearchMove(
 	return searcher.searchMove(storage, color)
 }
 
+type MockPiece struct {
+	color models.Color
+}
+
+func (piece MockPiece) Kind() models.Kind {
+	panic("not implemented")
+}
+
+func (
+	piece MockPiece,
+) Color() models.Color {
+	return piece.color
+}
+
+func (
+	piece MockPiece,
+) Position() models.Position {
+	panic("not implemented")
+}
+
+func (piece MockPiece) ApplyPosition(
+	position models.Position,
+) models.Piece {
+	panic("not implemented")
+}
+
+func (piece MockPiece) CheckMove(
+	move models.Move,
+	storage models.PieceStorage,
+) bool {
+	panic("not implemented")
+}
+
 func TestNewBase(test *testing.T) {
 	type args struct {
 		storage   models.PieceStorage
@@ -239,12 +272,262 @@ func TestBaseApplyMove(test *testing.T) {
 		move models.Move
 	}
 	type data struct {
-		fields  fields
-		args    args
-		wantErr error
+		fields    fields
+		args      args
+		wantState error
+		wantErr   error
 	}
 
-	for _, data := range []data{} {
+	for _, data := range []data{
+		data{
+			fields: fields{
+				storage: MockPieceStorage{
+					piece: func(
+						position models.Position,
+					) (piece models.Piece, ok bool) {
+						expectedPosition :=
+							models.Position{
+								File: 1,
+								Rank: 2,
+							}
+						if position !=
+							expectedPosition {
+							test.Fail()
+						}
+
+						piece = MockPiece{
+							color: models.White,
+						}
+						return piece, true
+					},
+					applyMove: func(
+						move models.Move,
+					) models.PieceStorage {
+						expectedMove := models.Move{
+							Start: models.Position{
+								File: 1,
+								Rank: 2,
+							},
+							Finish: models.Position{
+								File: 3,
+								Rank: 4,
+							},
+						}
+						if move != expectedMove {
+							test.Fail()
+						}
+
+						return MockPieceStorage{}
+					},
+				},
+				checker: MockMoveSearcher{
+					searchMove: func(
+						storage models.PieceStorage,
+						color models.Color,
+					) (models.Move, error) {
+						_, ok :=
+							storage.(MockPieceStorage)
+						if !ok {
+							test.Fail()
+						}
+						if color != models.Black {
+							test.Fail()
+						}
+
+						return models.Move{}, nil
+					},
+				},
+				state: nil,
+			},
+			args: args{
+				move: models.Move{
+					Start: models.Position{
+						File: 1,
+						Rank: 2,
+					},
+					Finish: models.Position{
+						File: 3,
+						Rank: 4,
+					},
+				},
+			},
+			wantState: nil,
+			wantErr:   nil,
+		},
+		data{
+			fields: fields{
+				storage: MockPieceStorage{},
+				checker: MockMoveSearcher{},
+				state:   errors.New("dummy"),
+			},
+			args: args{
+				move: models.Move{
+					Start: models.Position{
+						File: 1,
+						Rank: 2,
+					},
+					Finish: models.Position{
+						File: 3,
+						Rank: 4,
+					},
+				},
+			},
+			wantState: errors.New("dummy"),
+			wantErr:   errors.New("dummy"),
+		},
+		data{
+			fields: fields{
+				storage: MockPieceStorage{
+					piece: func(
+						position models.Position,
+					) (piece models.Piece, ok bool) {
+						expectedPosition :=
+							models.Position{
+								File: 1,
+								Rank: 2,
+							}
+						if position !=
+							expectedPosition {
+							test.Fail()
+						}
+
+						piece = MockPiece{
+							color: models.White,
+						}
+						return piece, true
+					},
+					applyMove: func(
+						move models.Move,
+					) models.PieceStorage {
+						expectedMove := models.Move{
+							Start: models.Position{
+								File: 1,
+								Rank: 2,
+							},
+							Finish: models.Position{
+								File: 3,
+								Rank: 4,
+							},
+						}
+						if move != expectedMove {
+							test.Fail()
+						}
+
+						return MockPieceStorage{}
+					},
+				},
+				checker: MockMoveSearcher{
+					searchMove: func(
+						storage models.PieceStorage,
+						color models.Color,
+					) (models.Move, error) {
+						_, ok :=
+							storage.(MockPieceStorage)
+						if !ok {
+							test.Fail()
+						}
+						if color != models.Black {
+							test.Fail()
+						}
+
+						return models.Move{},
+							errors.New("dummy")
+					},
+				},
+				state: nil,
+			},
+			args: args{
+				move: models.Move{
+					Start: models.Position{
+						File: 1,
+						Rank: 2,
+					},
+					Finish: models.Position{
+						File: 3,
+						Rank: 4,
+					},
+				},
+			},
+			wantState: errors.New("dummy"),
+			wantErr:   nil,
+		},
+		data{
+			fields: fields{
+				storage: MockPieceStorage{
+					piece: func(
+						position models.Position,
+					) (piece models.Piece, ok bool) {
+						expectedPosition :=
+							models.Position{
+								File: 1,
+								Rank: 2,
+							}
+						if position !=
+							expectedPosition {
+							test.Fail()
+						}
+
+						piece = MockPiece{
+							color: models.White,
+						}
+						return piece, true
+					},
+					applyMove: func(
+						move models.Move,
+					) models.PieceStorage {
+						expectedMove := models.Move{
+							Start: models.Position{
+								File: 1,
+								Rank: 2,
+							},
+							Finish: models.Position{
+								File: 3,
+								Rank: 4,
+							},
+						}
+						if move != expectedMove {
+							test.Fail()
+						}
+
+						return MockPieceStorage{}
+					},
+				},
+				checker: MockMoveSearcher{
+					searchMove: func(
+						storage models.PieceStorage,
+						color models.Color,
+					) (models.Move, error) {
+						_, ok :=
+							storage.(MockPieceStorage)
+						if !ok {
+							test.Fail()
+						}
+						if color != models.Black {
+							test.Fail()
+						}
+
+						return models.Move{},
+							models.ErrKingCapture
+					},
+				},
+				state: nil,
+			},
+			args: args{
+				move: models.Move{
+					Start: models.Position{
+						File: 1,
+						Rank: 2,
+					},
+					Finish: models.Position{
+						File: 3,
+						Rank: 4,
+					},
+				},
+			},
+			wantState: nil,
+			wantErr:   ErrCheck,
+		},
+	} {
 		base := Base{
 			storage: data.fields.storage,
 			checker: data.fields.checker,
@@ -252,7 +535,21 @@ func TestBaseApplyMove(test *testing.T) {
 		}
 		gotErr := base.ApplyMove(data.args.move)
 
-		if gotErr != data.wantErr {
+		_, ok := base.
+			storage.(MockPieceStorage)
+		if !ok {
+			test.Fail()
+		}
+		if !reflect.DeepEqual(
+			base.state,
+			data.wantState,
+		) {
+			test.Fail()
+		}
+		if !reflect.DeepEqual(
+			gotErr,
+			data.wantErr,
+		) {
 			test.Fail()
 		}
 	}
