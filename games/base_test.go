@@ -121,6 +121,7 @@ func TestNewBase(test *testing.T) {
 	}
 	type data struct {
 		args      args
+		wantBase  bool
 		wantState error
 		wantErr   error
 	}
@@ -148,6 +149,7 @@ func TestNewBase(test *testing.T) {
 				},
 				nextColor: models.White,
 			},
+			wantBase:  true,
 			wantState: nil,
 			wantErr:   nil,
 		},
@@ -174,6 +176,7 @@ func TestNewBase(test *testing.T) {
 				},
 				nextColor: models.White,
 			},
+			wantBase:  true,
 			wantState: errors.New("dummy"),
 			wantErr:   nil,
 		},
@@ -200,6 +203,7 @@ func TestNewBase(test *testing.T) {
 				},
 				nextColor: models.White,
 			},
+			wantBase:  false,
 			wantState: nil,
 			wantErr:   ErrCheck,
 		},
@@ -210,10 +214,14 @@ func TestNewBase(test *testing.T) {
 			data.args.nextColor,
 		)
 
+		hasBase := gotBase != nil
+		if hasBase != data.wantBase {
+			test.Fail()
+		}
 		if gotErr != data.wantErr {
 			test.Fail()
 		}
-		if gotErr != nil {
+		if data.wantBase == false {
 			continue
 		}
 
