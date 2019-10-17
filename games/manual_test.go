@@ -1,6 +1,7 @@
 package games
 
 import (
+	"errors"
 	"reflect"
 	"testing"
 
@@ -113,7 +114,323 @@ func TestManualApplyMove(test *testing.T) {
 		wantErr error
 	}
 
-	for _, data := range []data{} {
+	for _, data := range []data{
+		data{
+			fields: fields{
+				storage: MockPieceStorage{
+					piece: func(
+						position models.Position,
+					) (piece models.Piece, ok bool) {
+						expectedPosition :=
+							models.Position{
+								File: 1,
+								Rank: 2,
+							}
+						if position !=
+							expectedPosition {
+							test.Fail()
+						}
+
+						piece = MockPiece{
+							color: models.White,
+						}
+						return piece, true
+					},
+					applyMove: func(
+						move models.Move,
+					) models.PieceStorage {
+						expectedMove := models.Move{
+							Start: models.Position{
+								File: 1,
+								Rank: 2,
+							},
+							Finish: models.Position{
+								File: 3,
+								Rank: 4,
+							},
+						}
+						if move != expectedMove {
+							test.Fail()
+						}
+
+						return MockPieceStorage{}
+					},
+					checkMove: func(
+						move models.Move,
+					) error {
+						expectedMove := models.Move{
+							Start: models.Position{
+								File: 1,
+								Rank: 2,
+							},
+							Finish: models.Position{
+								File: 3,
+								Rank: 4,
+							},
+						}
+						if move != expectedMove {
+							test.Fail()
+						}
+
+						return nil
+					},
+				},
+				checker: MockMoveSearcher{
+					searchMove: func(
+						storage models.PieceStorage,
+						color models.Color,
+					) (models.Move, error) {
+						_, ok :=
+							storage.(MockPieceStorage)
+						if !ok {
+							test.Fail()
+						}
+						if color != models.Black {
+							test.Fail()
+						}
+
+						return models.Move{}, nil
+					},
+				},
+				searcher:      MockMoveSearcher{},
+				searcherColor: models.Black,
+				state:         nil,
+			},
+			args: args{
+				move: models.Move{
+					Start: models.Position{
+						File: 1,
+						Rank: 2,
+					},
+					Finish: models.Position{
+						File: 3,
+						Rank: 4,
+					},
+				},
+			},
+			wantErr: nil,
+		},
+		data{
+			fields: fields{
+				storage:       MockPieceStorage{},
+				checker:       MockMoveSearcher{},
+				searcher:      MockMoveSearcher{},
+				searcherColor: models.Black,
+				state:         errors.New("dummy"),
+			},
+			args: args{
+				move: models.Move{
+					Start: models.Position{
+						File: 1,
+						Rank: 2,
+					},
+					Finish: models.Position{
+						File: 3,
+						Rank: 4,
+					},
+				},
+			},
+			wantErr: errors.New("dummy"),
+		},
+		data{
+			fields: fields{
+				storage: MockPieceStorage{
+					checkMove: func(
+						move models.Move,
+					) error {
+						expectedMove := models.Move{
+							Start: models.Position{
+								File: 1,
+								Rank: 2,
+							},
+							Finish: models.Position{
+								File: 3,
+								Rank: 4,
+							},
+						}
+						if move != expectedMove {
+							test.Fail()
+						}
+
+						return errors.New("dummy")
+					},
+				},
+				checker:       MockMoveSearcher{},
+				searcher:      MockMoveSearcher{},
+				searcherColor: models.Black,
+				state:         nil,
+			},
+			args: args{
+				move: models.Move{
+					Start: models.Position{
+						File: 1,
+						Rank: 2,
+					},
+					Finish: models.Position{
+						File: 3,
+						Rank: 4,
+					},
+				},
+			},
+			wantErr: errors.New("dummy"),
+		},
+		data{
+			fields: fields{
+				storage: MockPieceStorage{
+					piece: func(
+						position models.Position,
+					) (piece models.Piece, ok bool) {
+						expectedPosition :=
+							models.Position{
+								File: 1,
+								Rank: 2,
+							}
+						if position !=
+							expectedPosition {
+							test.Fail()
+						}
+
+						piece = MockPiece{
+							color: models.White,
+						}
+						return piece, true
+					},
+					checkMove: func(
+						move models.Move,
+					) error {
+						expectedMove := models.Move{
+							Start: models.Position{
+								File: 1,
+								Rank: 2,
+							},
+							Finish: models.Position{
+								File: 3,
+								Rank: 4,
+							},
+						}
+						if move != expectedMove {
+							test.Fail()
+						}
+
+						return nil
+					},
+				},
+				checker:       MockMoveSearcher{},
+				searcher:      MockMoveSearcher{},
+				searcherColor: models.White,
+				state:         nil,
+			},
+			args: args{
+				move: models.Move{
+					Start: models.Position{
+						File: 1,
+						Rank: 2,
+					},
+					Finish: models.Position{
+						File: 3,
+						Rank: 4,
+					},
+				},
+			},
+			wantErr: errors.New("opponent piece"),
+		},
+		data{
+			fields: fields{
+				storage: MockPieceStorage{
+					piece: func(
+						position models.Position,
+					) (piece models.Piece, ok bool) {
+						expectedPosition :=
+							models.Position{
+								File: 1,
+								Rank: 2,
+							}
+						if position !=
+							expectedPosition {
+							test.Fail()
+						}
+
+						piece = MockPiece{
+							color: models.White,
+						}
+						return piece, true
+					},
+					applyMove: func(
+						move models.Move,
+					) models.PieceStorage {
+						expectedMove := models.Move{
+							Start: models.Position{
+								File: 1,
+								Rank: 2,
+							},
+							Finish: models.Position{
+								File: 3,
+								Rank: 4,
+							},
+						}
+						if move != expectedMove {
+							test.Fail()
+						}
+
+						return MockPieceStorage{}
+					},
+					checkMove: func(
+						move models.Move,
+					) error {
+						expectedMove := models.Move{
+							Start: models.Position{
+								File: 1,
+								Rank: 2,
+							},
+							Finish: models.Position{
+								File: 3,
+								Rank: 4,
+							},
+						}
+						if move != expectedMove {
+							test.Fail()
+						}
+
+						return nil
+					},
+				},
+				checker: MockMoveSearcher{
+					searchMove: func(
+						storage models.PieceStorage,
+						color models.Color,
+					) (models.Move, error) {
+						_, ok :=
+							storage.(MockPieceStorage)
+						if !ok {
+							test.Fail()
+						}
+						if color != models.Black {
+							test.Fail()
+						}
+
+						return models.Move{},
+							models.ErrKingCapture
+					},
+				},
+				searcher:      MockMoveSearcher{},
+				searcherColor: models.Black,
+				state:         nil,
+			},
+			args: args{
+				move: models.Move{
+					Start: models.Position{
+						File: 1,
+						Rank: 2,
+					},
+					Finish: models.Position{
+						File: 3,
+						Rank: 4,
+					},
+				},
+			},
+			wantErr: ErrCheck,
+		},
+	} {
 		manual := Manual{
 			Base: &Base{
 				storage: data.fields.storage,
