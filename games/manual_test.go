@@ -1,6 +1,7 @@
 package games
 
 import (
+	"reflect"
 	"testing"
 
 	models "github.com/thewizardplusplus/go-chess-models"
@@ -90,6 +91,47 @@ func TestNewManual(test *testing.T) {
 			test.Fail()
 		}
 		if gotErr != data.wantErr {
+			test.Fail()
+		}
+	}
+}
+
+func TestManualApplyMove(test *testing.T) {
+	type fields struct {
+		storage       models.PieceStorage
+		checker       MoveSearcher
+		searcher      MoveSearcher
+		searcherColor models.Color
+		state         error
+	}
+	type args struct {
+		move models.Move
+	}
+	type data struct {
+		fields  fields
+		args    args
+		wantErr error
+	}
+
+	for _, data := range []data{} {
+		manual := Manual{
+			Base: &Base{
+				storage: data.fields.storage,
+				checker: data.fields.checker,
+				state:   data.fields.state,
+			},
+
+			searcher: data.fields.searcher,
+			searcherColor: data.fields.
+				searcherColor,
+		}
+		gotErr :=
+			manual.ApplyMove(data.args.move)
+
+		if !reflect.DeepEqual(
+			gotErr,
+			data.wantErr,
+		) {
 			test.Fail()
 		}
 	}
