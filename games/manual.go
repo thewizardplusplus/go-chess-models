@@ -74,15 +74,14 @@ func (game Manual) SearchMove() (
 	models.Move,
 	error,
 ) {
-	move, err := game.searcher.SearchMove(
+	// thanks to the rest code
+	// this call can't return any error
+	move, _ := game.searcher.SearchMove(
 		game.storage,
 		game.searcherColor,
 	)
-	if err != nil {
-		return models.Move{}, err // don't wrap
-	}
 
-	err = game.Base.ApplyMove(move)
+	err := game.Base.ApplyMove(move)
 	if err != nil {
 		return models.Move{}, err // don't wrap
 	}

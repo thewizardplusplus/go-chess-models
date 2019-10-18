@@ -15,6 +15,10 @@ var (
 
 // MoveSearcher ...
 type MoveSearcher interface {
+	// It should return only following errors:
+	// * models.ErrKingCapture;
+	// * ErrCheckmate;
+	// * ErrDraw.
 	SearchMove(
 		storage models.PieceStorage,
 		color models.Color,

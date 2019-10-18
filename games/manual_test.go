@@ -549,34 +549,6 @@ func TestManualSearchMove(test *testing.T) {
 		},
 		data{
 			fields: fields{
-				storage: MockPieceStorage{},
-				checker: MockMoveSearcher{},
-				searcher: MockMoveSearcher{
-					searchMove: func(
-						storage models.PieceStorage,
-						color models.Color,
-					) (models.Move, error) {
-						_, ok :=
-							storage.(MockPieceStorage)
-						if !ok {
-							test.Fail()
-						}
-						if color != models.Black {
-							test.Fail()
-						}
-
-						return models.Move{},
-							errors.New("dummy")
-					},
-				},
-				searcherColor: models.Black,
-				state:         nil,
-			},
-			wantMove: models.Move{},
-			wantErr:  errors.New("dummy"),
-		},
-		data{
-			fields: fields{
 				storage: MockPieceStorage{
 					piece: func(
 						position models.Position,
