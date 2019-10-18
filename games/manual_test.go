@@ -212,28 +212,6 @@ func TestManualApplyMove(test *testing.T) {
 		},
 		data{
 			fields: fields{
-				storage:       MockPieceStorage{},
-				checker:       MockMoveSearcher{},
-				searcher:      MockMoveSearcher{},
-				searcherColor: models.Black,
-				state:         errors.New("dummy"),
-			},
-			args: args{
-				move: models.Move{
-					Start: models.Position{
-						File: 1,
-						Rank: 2,
-					},
-					Finish: models.Position{
-						File: 3,
-						Rank: 4,
-					},
-				},
-			},
-			wantErr: errors.New("dummy"),
-		},
-		data{
-			fields: fields{
 				storage: MockPieceStorage{
 					checkMove: func(
 						move models.Move,
@@ -568,17 +546,6 @@ func TestManualSearchMove(test *testing.T) {
 				},
 			},
 			wantErr: nil,
-		},
-		data{
-			fields: fields{
-				storage:       MockPieceStorage{},
-				checker:       MockMoveSearcher{},
-				searcher:      MockMoveSearcher{},
-				searcherColor: models.Black,
-				state:         errors.New("dummy"),
-			},
-			wantMove: models.Move{},
-			wantErr:  errors.New("dummy"),
 		},
 		data{
 			fields: fields{

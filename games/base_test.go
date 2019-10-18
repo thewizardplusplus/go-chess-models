@@ -364,27 +364,6 @@ func TestBaseApplyMove(test *testing.T) {
 		},
 		data{
 			fields: fields{
-				storage: MockPieceStorage{},
-				checker: MockMoveSearcher{},
-				state:   errors.New("dummy"),
-			},
-			args: args{
-				move: models.Move{
-					Start: models.Position{
-						File: 1,
-						Rank: 2,
-					},
-					Finish: models.Position{
-						File: 3,
-						Rank: 4,
-					},
-				},
-			},
-			wantState: errors.New("dummy"),
-			wantErr:   errors.New("dummy"),
-		},
-		data{
-			fields: fields{
 				storage: MockPieceStorage{
 					piece: func(
 						position models.Position,

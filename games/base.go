@@ -30,6 +30,9 @@ type Base struct {
 }
 
 // NewBase ...
+//
+// After this call you should check
+// a state of the game.
 func NewBase(
 	storage models.PieceStorage,
 	checker MoveSearcher,
@@ -67,15 +70,12 @@ func (game Base) State() error {
 //
 // It DOES check of storage state
 // after the move.
+//
+// After this call you should check
+// a state of the game.
 func (game *Base) ApplyMove(
 	move models.Move,
 ) error {
-	// disable move if the game already is
-	// in ErrCheckmate or ErrDraw states
-	if game.state != nil {
-		return game.state // don't wrap
-	}
-
 	nextStorage :=
 		game.storage.ApplyMove(move)
 	nextColor :=

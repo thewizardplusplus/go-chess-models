@@ -15,6 +15,9 @@ type Manual struct {
 }
 
 // NewManual ...
+//
+// After this call you should check
+// a state of the game.
 func NewManual(
 	storage models.PieceStorage,
 	checker MoveSearcher,
@@ -43,15 +46,12 @@ func NewManual(
 //
 // It DOES check of storage state
 // after the move.
+//
+// After this call you should check
+// a state of the game.
 func (game Manual) ApplyMove(
 	move models.Move,
 ) error {
-	// disable move if the game already is
-	// in ErrCheckmate or ErrDraw states
-	if game.state != nil {
-		return game.state // don't wrap
-	}
-
 	err := game.storage.CheckMove(move)
 	if err != nil {
 		return err // don't wrap
@@ -67,17 +67,13 @@ func (game Manual) ApplyMove(
 }
 
 // SearchMove ...
+//
+// After this call you should check
+// a state of the game.
 func (game Manual) SearchMove() (
 	models.Move,
 	error,
 ) {
-	// disable move if the game already is
-	// in ErrCheckmate or ErrDraw states
-	if game.state != nil {
-		return models.Move{},
-			game.state // don't wrap
-	}
-
 	move, err := game.searcher.SearchMove(
 		game.storage,
 		game.searcherColor,
