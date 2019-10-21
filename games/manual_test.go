@@ -443,7 +443,6 @@ func TestManualSearchMove(test *testing.T) {
 	type data struct {
 		fields   fields
 		wantMove models.Move
-		wantErr  error
 	}
 
 	for _, data := range []data{
@@ -545,99 +544,6 @@ func TestManualSearchMove(test *testing.T) {
 					Rank: 4,
 				},
 			},
-			wantErr: nil,
-		},
-		data{
-			fields: fields{
-				storage: MockPieceStorage{
-					piece: func(
-						position models.Position,
-					) (piece models.Piece, ok bool) {
-						expectedPosition :=
-							models.Position{
-								File: 1,
-								Rank: 2,
-							}
-						if position !=
-							expectedPosition {
-							test.Fail()
-						}
-
-						piece = MockPiece{
-							color: models.White,
-						}
-						return piece, true
-					},
-					applyMove: func(
-						move models.Move,
-					) models.PieceStorage {
-						expectedMove := models.Move{
-							Start: models.Position{
-								File: 1,
-								Rank: 2,
-							},
-							Finish: models.Position{
-								File: 3,
-								Rank: 4,
-							},
-						}
-						if move != expectedMove {
-							test.Fail()
-						}
-
-						return MockPieceStorage{}
-					},
-				},
-				checker: MockMoveSearcher{
-					searchMove: func(
-						storage models.PieceStorage,
-						color models.Color,
-					) (models.Move, error) {
-						_, ok :=
-							storage.(MockPieceStorage)
-						if !ok {
-							test.Fail()
-						}
-						if color != models.Black {
-							test.Fail()
-						}
-
-						return models.Move{},
-							models.ErrKingCapture
-					},
-				},
-				searcher: MockMoveSearcher{
-					searchMove: func(
-						storage models.PieceStorage,
-						color models.Color,
-					) (models.Move, error) {
-						_, ok :=
-							storage.(MockPieceStorage)
-						if !ok {
-							test.Fail()
-						}
-						if color != models.Black {
-							test.Fail()
-						}
-
-						move := models.Move{
-							Start: models.Position{
-								File: 1,
-								Rank: 2,
-							},
-							Finish: models.Position{
-								File: 3,
-								Rank: 4,
-							},
-						}
-						return move, nil
-					},
-				},
-				searcherColor: models.Black,
-				state:         nil,
-			},
-			wantMove: models.Move{},
-			wantErr:  ErrCheck,
 		},
 	} {
 		manual := Manual{
@@ -651,17 +557,11 @@ func TestManualSearchMove(test *testing.T) {
 			searcherColor: data.fields.
 				searcherColor,
 		}
-		gotMove, gotErr := manual.SearchMove()
+		gotMove := manual.SearchMove()
 
 		if !reflect.DeepEqual(
 			gotMove,
 			data.wantMove,
-		) {
-			test.Fail()
-		}
-		if !reflect.DeepEqual(
-			gotErr,
-			data.wantErr,
 		) {
 			test.Fail()
 		}

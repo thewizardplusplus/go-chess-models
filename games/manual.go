@@ -70,10 +70,7 @@ func (game Manual) ApplyMove(
 //
 // After this call you should check
 // a state of the game.
-func (game Manual) SearchMove() (
-	models.Move,
-	error,
-) {
+func (game Manual) SearchMove() models.Move {
 	// thanks to the rest code
 	// this call can't return any error
 	move, _ := game.searcher.SearchMove(
@@ -81,10 +78,9 @@ func (game Manual) SearchMove() (
 		game.searcherColor,
 	)
 
-	err := game.Base.ApplyMove(move)
-	if err != nil {
-		return models.Move{}, err // don't wrap
-	}
+	// thanks to the rest code
+	// this call can't return any error
+	game.Base.ApplyMove(move)
 
-	return move, nil
+	return move
 }
