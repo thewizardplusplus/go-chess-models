@@ -10,21 +10,16 @@ import (
 
 // EncodePosition ...
 //
-// It converts the position
-// to pure algebraic coordinate notation.
-func EncodePosition(
-	position models.Position,
-) string {
-	file :=
-		string(position.File + minFileCount)
+// It converts the position to pure algebraic coordinate notation.
+func EncodePosition(position models.Position) string {
+	file := string(position.File + minFileCount)
 	rank := strconv.Itoa(position.Rank + 1)
 	return file + rank
 }
 
 // EncodeMove ...
 //
-// It converts the move
-// to pure algebraic coordinate notation.
+// It converts the move to pure algebraic coordinate notation.
 func EncodeMove(move models.Move) string {
 	start := EncodePosition(move.Start)
 	finish := EncodePosition(move.Finish)
@@ -33,9 +28,7 @@ func EncodeMove(move models.Move) string {
 
 // EncodePiece ...
 //
-// It converts the piece to FEN
-// (only a kind and a color,
-// not a position).
+// It converts the piece to FEN (only a kind and a color, not a position).
 func EncodePiece(piece models.Piece) string {
 	var kindCase int
 	switch piece.Color() {
@@ -68,9 +61,7 @@ func EncodePiece(piece models.Piece) string {
 // EncodePieceStorage ...
 //
 // It converts the piece storage to FEN.
-func EncodePieceStorage(
-	storage models.PieceStorage,
-) string {
+func EncodePieceStorage(storage models.PieceStorage) string {
 	var rank string
 	var shift int
 	resetShift := func() {
@@ -81,8 +72,7 @@ func EncodePieceStorage(
 	}
 
 	var ranks []string
-	positions := storage.Size().Positions()
-	for _, position := range positions {
+	for _, position := range storage.Size().Positions() {
 		piece, ok := storage.Piece(position)
 		if ok {
 			resetShift()

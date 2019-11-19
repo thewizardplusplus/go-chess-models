@@ -20,15 +20,11 @@ func (piece MockPiece) Color() models.Color {
 	return piece.color
 }
 
-func (
-	piece MockPiece,
-) Position() models.Position {
+func (piece MockPiece) Position() models.Position {
 	panic("not implemented")
 }
 
-func (piece MockPiece) ApplyPosition(
-	position models.Position,
-) models.Piece {
+func (piece MockPiece) ApplyPosition(position models.Position) models.Piece {
 	panic("not implemented")
 }
 
@@ -39,27 +35,17 @@ func (piece MockPiece) CheckMove(
 	panic("not implemented")
 }
 
-func (piece MockPiece) String() string {
-	panic("not implemented")
-}
-
 type MockPieceStorage struct {
 	size models.Size
 
-	piece func(
-		position models.Position,
-	) (piece models.Piece, ok bool)
+	piece func(position models.Position) (piece models.Piece, ok bool)
 }
 
-func (
-	storage MockPieceStorage,
-) Size() models.Size {
+func (storage MockPieceStorage) Size() models.Size {
 	return storage.size
 }
 
-func (
-	storage MockPieceStorage,
-) Piece(
+func (storage MockPieceStorage) Piece(
 	position models.Position,
 ) (piece models.Piece, ok bool) {
 	if storage.piece == nil {
@@ -69,9 +55,7 @@ func (
 	return storage.piece(position)
 }
 
-func (
-	storage MockPieceStorage,
-) Pieces() []models.Piece {
+func (storage MockPieceStorage) Pieces() []models.Piece {
 	panic("not implemented")
 }
 
@@ -81,15 +65,7 @@ func (storage MockPieceStorage) ApplyMove(
 	panic("not implemented")
 }
 
-func (storage MockPieceStorage) CheckMove(
-	move models.Move,
-) error {
-	panic("not implemented")
-}
-
-func (
-	storage MockPieceStorage,
-) String() string {
+func (storage MockPieceStorage) CheckMove(move models.Move) error {
 	panic("not implemented")
 }
 
@@ -103,21 +79,26 @@ func TestEncodePosition(test *testing.T) {
 	}
 
 	for _, data := range []data{
-		data{
+		{
 			args: args{
-				position: models.Position{2, 1},
+				position: models.Position{
+					File: 2,
+					Rank: 1,
+				},
 			},
 			want: "c2",
 		},
-		data{
+		{
 			args: args{
-				position: models.Position{5, 6},
+				position: models.Position{
+					File: 5,
+					Rank: 6,
+				},
 			},
 			want: "f7",
 		},
 	} {
-		got :=
-			EncodePosition(data.args.position)
+		got := EncodePosition(data.args.position)
 
 		if got != data.want {
 			test.Fail()
@@ -135,20 +116,32 @@ func TestEncodeMove(test *testing.T) {
 	}
 
 	for _, data := range []data{
-		data{
+		{
 			args: args{
 				move: models.Move{
-					Start:  models.Position{2, 1},
-					Finish: models.Position{2, 3},
+					Start: models.Position{
+						File: 2,
+						Rank: 1,
+					},
+					Finish: models.Position{
+						File: 2,
+						Rank: 3,
+					},
 				},
 			},
 			want: "c2c4",
 		},
-		data{
+		{
 			args: args{
 				move: models.Move{
-					Start:  models.Position{5, 6},
-					Finish: models.Position{5, 4},
+					Start: models.Position{
+						File: 5,
+						Rank: 6,
+					},
+					Finish: models.Position{
+						File: 5,
+						Rank: 4,
+					},
 				},
 			},
 			want: "f7f5",
@@ -172,7 +165,7 @@ func TestEncodePiece(test *testing.T) {
 	}
 
 	for _, data := range []data{
-		data{
+		{
 			args: args{
 				piece: MockPiece{
 					kind:  models.King,
@@ -181,7 +174,7 @@ func TestEncodePiece(test *testing.T) {
 			},
 			want: "K",
 		},
-		data{
+		{
 			args: args{
 				piece: MockPiece{
 					kind:  models.Queen,
@@ -199,9 +192,7 @@ func TestEncodePiece(test *testing.T) {
 	}
 }
 
-func TestEncodePieceStorage(
-	test *testing.T,
-) {
+func TestEncodePieceStorage(test *testing.T) {
 	type args struct {
 		storage models.PieceStorage
 	}
@@ -211,32 +202,34 @@ func TestEncodePieceStorage(
 	}
 
 	for _, data := range []data{
-		data{
+		{
 			args: args{
 				storage: MockPieceStorage{
-					size: models.Size{5, 5},
-					piece: func(
-						position models.Position,
-					) (piece models.Piece, ok bool) {
+					size: models.Size{
+						Width:  5,
+						Height: 5,
+					},
+					piece: func(position models.Position) (piece models.Piece, ok bool) {
 						return nil, false
 					},
 				},
 			},
 			want: "5/5/5/5/5",
 		},
-		data{
+		{
 			args: args{
 				storage: MockPieceStorage{
-					size: models.Size{5, 5},
-					piece: func(
-						position models.Position,
-					) (piece models.Piece, ok bool) {
+					size: models.Size{
+						Width:  5,
+						Height: 5,
+					},
+					piece: func(position models.Position) (piece models.Piece, ok bool) {
 						switch position {
-						case models.Position{0, 2}:
-							piece = pieces.NewKing(
-								models.White,
-								models.Position{0, 2},
-							)
+						case models.Position{File: 0, Rank: 2}:
+							piece = pieces.NewKing(models.White, models.Position{
+								File: 0,
+								Rank: 2,
+							})
 						}
 
 						ok = piece != nil
@@ -246,19 +239,20 @@ func TestEncodePieceStorage(
 			},
 			want: "5/5/K4/5/5",
 		},
-		data{
+		{
 			args: args{
 				storage: MockPieceStorage{
-					size: models.Size{5, 5},
-					piece: func(
-						position models.Position,
-					) (piece models.Piece, ok bool) {
+					size: models.Size{
+						Width:  5,
+						Height: 5,
+					},
+					piece: func(position models.Position) (piece models.Piece, ok bool) {
 						switch position {
-						case models.Position{1, 2}:
-							piece = pieces.NewKing(
-								models.White,
-								models.Position{1, 2},
-							)
+						case models.Position{File: 1, Rank: 2}:
+							piece = pieces.NewKing(models.White, models.Position{
+								File: 1,
+								Rank: 2,
+							})
 						}
 
 						ok = piece != nil
@@ -268,24 +262,25 @@ func TestEncodePieceStorage(
 			},
 			want: "5/5/1K3/5/5",
 		},
-		data{
+		{
 			args: args{
 				storage: MockPieceStorage{
-					size: models.Size{5, 5},
-					piece: func(
-						position models.Position,
-					) (piece models.Piece, ok bool) {
+					size: models.Size{
+						Width:  5,
+						Height: 5,
+					},
+					piece: func(position models.Position) (piece models.Piece, ok bool) {
 						switch position {
-						case models.Position{1, 2}:
-							piece = pieces.NewKing(
-								models.White,
-								models.Position{1, 2},
-							)
-						case models.Position{2, 2}:
-							piece = pieces.NewQueen(
-								models.Black,
-								models.Position{2, 2},
-							)
+						case models.Position{File: 1, Rank: 2}:
+							piece = pieces.NewKing(models.White, models.Position{
+								File: 1,
+								Rank: 2,
+							})
+						case models.Position{File: 2, Rank: 2}:
+							piece = pieces.NewQueen(models.Black, models.Position{
+								File: 2,
+								Rank: 2,
+							})
 						}
 
 						ok = piece != nil
@@ -295,24 +290,25 @@ func TestEncodePieceStorage(
 			},
 			want: "5/5/1Kq2/5/5",
 		},
-		data{
+		{
 			args: args{
 				storage: MockPieceStorage{
-					size: models.Size{5, 5},
-					piece: func(
-						position models.Position,
-					) (piece models.Piece, ok bool) {
+					size: models.Size{
+						Width:  5,
+						Height: 5,
+					},
+					piece: func(position models.Position) (piece models.Piece, ok bool) {
 						switch position {
-						case models.Position{1, 2}:
-							piece = pieces.NewKing(
-								models.White,
-								models.Position{1, 2},
-							)
-						case models.Position{4, 2}:
-							piece = pieces.NewQueen(
-								models.Black,
-								models.Position{4, 2},
-							)
+						case models.Position{File: 1, Rank: 2}:
+							piece = pieces.NewKing(models.White, models.Position{
+								File: 1,
+								Rank: 2,
+							})
+						case models.Position{File: 4, Rank: 2}:
+							piece = pieces.NewQueen(models.Black, models.Position{
+								File: 4,
+								Rank: 2,
+							})
 						}
 
 						ok = piece != nil
@@ -322,39 +318,40 @@ func TestEncodePieceStorage(
 			},
 			want: "5/5/1K2q/5/5",
 		},
-		data{
+		{
 			args: args{
 				storage: MockPieceStorage{
-					size: models.Size{5, 5},
-					piece: func(
-						position models.Position,
-					) (piece models.Piece, ok bool) {
+					size: models.Size{
+						Width:  5,
+						Height: 5,
+					},
+					piece: func(position models.Position) (piece models.Piece, ok bool) {
 						switch position {
-						case models.Position{0, 3}:
-							piece = pieces.NewKing(
-								models.White,
-								models.Position{0, 3},
-							)
-						case models.Position{1, 2}:
-							piece = pieces.NewQueen(
-								models.Black,
-								models.Position{1, 2},
-							)
-						case models.Position{2, 2}:
-							piece = pieces.NewQueen(
-								models.White,
-								models.Position{2, 2},
-							)
-						case models.Position{1, 1}:
-							piece = pieces.NewRook(
-								models.Black,
-								models.Position{1, 1},
-							)
-						case models.Position{4, 1}:
-							piece = pieces.NewRook(
-								models.White,
-								models.Position{4, 1},
-							)
+						case models.Position{File: 0, Rank: 3}:
+							piece = pieces.NewKing(models.White, models.Position{
+								File: 0,
+								Rank: 3,
+							})
+						case models.Position{File: 1, Rank: 2}:
+							piece = pieces.NewQueen(models.Black, models.Position{
+								File: 1,
+								Rank: 2,
+							})
+						case models.Position{File: 2, Rank: 2}:
+							piece = pieces.NewQueen(models.White, models.Position{
+								File: 2,
+								Rank: 2,
+							})
+						case models.Position{File: 1, Rank: 1}:
+							piece = pieces.NewRook(models.Black, models.Position{
+								File: 1,
+								Rank: 1,
+							})
+						case models.Position{File: 4, Rank: 1}:
+							piece = pieces.NewRook(models.White, models.Position{
+								File: 4,
+								Rank: 1,
+							})
 						}
 
 						ok = piece != nil
@@ -365,9 +362,7 @@ func TestEncodePieceStorage(
 			want: "5/K4/1qQ2/1r2R/5",
 		},
 	} {
-		got := EncodePieceStorage(
-			data.args.storage,
-		)
+		got := EncodePieceStorage(data.args.storage)
 
 		if got != data.want {
 			test.Fail()

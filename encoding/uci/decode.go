@@ -29,72 +29,51 @@ const (
 
 // DecodePosition ...
 //
-// It decodes a position
-// from pure algebraic coordinate notation.
-func DecodePosition(text string) (
-	position models.Position,
-	err error,
-) {
+// It decodes a position from pure algebraic coordinate notation.
+func DecodePosition(text string) (position models.Position, err error) {
 	if len(text) != 2 {
-		return models.Position{},
-			errors.New("incorrect length")
+		return models.Position{}, errors.New("incorrect length")
 	}
 
 	file := int(text[0]) - minFileCount
 	if file < 0 {
-		return models.Position{},
-			errors.New("incorrect file")
+		return models.Position{}, errors.New("incorrect file")
 	}
 
 	rank, err := strconv.Atoi(text[1:])
 	if err != nil {
-		return models.Position{},
-			fmt.Errorf("incorrect rank: %s", err)
+		return models.Position{}, fmt.Errorf("incorrect rank: %s", err)
 	}
 	rank--
 
-	return models.Position{file, rank}, nil
+	return models.Position{File: file, Rank: rank}, nil
 }
 
 // DecodeMove ...
 //
-// It decodes a move
-// from pure algebraic coordinate notation.
-func DecodeMove(text string) (
-	move models.Move,
-	err error,
-) {
+// It decodes a move from pure algebraic coordinate notation.
+func DecodeMove(text string) (move models.Move, err error) {
 	if len(text) != 4 {
-		return models.Move{},
-			errors.New("incorrect length")
+		return models.Move{}, errors.New("incorrect length")
 	}
 
 	start, err := DecodePosition(text[:2])
 	if err != nil {
-		return models.Move{},
-			fmt.Errorf("incorrect start: %s", err)
+		return models.Move{}, fmt.Errorf("incorrect start: %s", err)
 	}
 
 	finish, err := DecodePosition(text[2:])
 	if err != nil {
-		return models.Move{}, fmt.Errorf(
-			"incorrect finish: %s",
-			err,
-		)
+		return models.Move{}, fmt.Errorf("incorrect finish: %s", err)
 	}
 
-	return models.Move{start, finish}, nil
+	return models.Move{Start: start, Finish: finish}, nil
 }
 
 // DecodePiece ...
 //
-// It decodes a piece from FEN
-// (only a kind and a color,
-// not a position).
-func DecodePiece(
-	fen rune,
-	factory PieceFactory,
-) (models.Piece, error) {
+// It decodes a piece from FEN (only a kind and a color, not a position).
+func DecodePiece(fen rune, factory PieceFactory) (models.Piece, error) {
 	var kind models.Kind
 	switch unicode.ToLower(fen) {
 	case 'k':
@@ -120,8 +99,7 @@ func DecodePiece(
 		color = models.White
 	}
 
-	var position models.Position
-	piece := factory(kind, color, position)
+	piece := factory(kind, color, models.Position{})
 	return piece, nil
 }
 
@@ -139,8 +117,7 @@ func DecodePieceStorage(
 	var pieces []models.Piece
 	var width int
 	for index, rank := range ranks {
-		rankPieces, rankWidth, err :=
-			decodeRank(index, rank, pieceFactory)
+		rankPieces, rankWidth, err := decodeRank(index, rank, pieceFactory)
 		if err != nil {
 			return nil, err
 		}
@@ -151,9 +128,8 @@ func DecodePieceStorage(
 		}
 	}
 
-	size := models.Size{width, len(ranks)}
-	storage :=
-		pieceStorageFactory(size, pieces)
+	size := models.Size{Width: width, Height: len(ranks)}
+	storage := pieceStorageFactory(size, pieces)
 	return storage, nil
 }
 
@@ -161,17 +137,11 @@ func decodeRank(
 	index int,
 	fen string,
 	pieceFactory PieceFactory,
-) (
-	pieces []models.Piece,
-	maxFile int,
-	err error,
-) {
+) (pieces []models.Piece, maxFile int, err error) {
 	for _, symbol := range fen {
-		piece, err :=
-			DecodePiece(symbol, pieceFactory)
+		piece, err := DecodePiece(symbol, pieceFactory)
 		if err != nil {
-			shift, err :=
-				strconv.Atoi(string(symbol))
+			shift, err := strconv.Atoi(string(symbol))
 			if err != nil {
 				return nil, 0, err
 			}
@@ -180,10 +150,9 @@ func decodeRank(
 			continue
 		}
 
-		position :=
-			models.Position{maxFile, index}
-		piece = piece.ApplyPosition(position)
-		pieces = append(pieces, piece)
+		placedPiece :=
+			piece.ApplyPosition(models.Position{File: maxFile, Rank: index})
+		pieces = append(pieces, placedPiece)
 
 		maxFile++
 	}

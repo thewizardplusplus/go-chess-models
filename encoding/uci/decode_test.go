@@ -19,39 +19,38 @@ func TestDecodePosition(test *testing.T) {
 	}
 
 	for _, data := range []data{
-		data{
-			args:         args{"e2"},
-			wantPosition: models.Position{4, 1},
-			wantErr:      false,
+		{
+			args: args{"e2"},
+			wantPosition: models.Position{
+				File: 4,
+				Rank: 1,
+			},
+			wantErr: false,
 		},
-		data{
+		{
 			args:         args{"e"},
 			wantPosition: models.Position{},
 			wantErr:      true,
 		},
-		data{
+		{
 			args:         args{"e23"},
 			wantPosition: models.Position{},
 			wantErr:      true,
 		},
-		data{
+		{
 			args:         args{"\n2"},
 			wantPosition: models.Position{},
 			wantErr:      true,
 		},
-		data{
+		{
 			args:         args{"e\n"},
 			wantPosition: models.Position{},
 			wantErr:      true,
 		},
 	} {
-		gotPosition, gotErr :=
-			DecodePosition(data.args.text)
+		gotPosition, gotErr := DecodePosition(data.args.text)
 
-		if !reflect.DeepEqual(
-			gotPosition,
-			data.wantPosition,
-		) {
+		if !reflect.DeepEqual(gotPosition, data.wantPosition) {
 			test.Fail()
 		}
 
@@ -73,42 +72,44 @@ func TestDecodeMove(test *testing.T) {
 	}
 
 	for _, data := range []data{
-		data{
+		{
 			args: args{"e2e4"},
 			wantMove: models.Move{
-				Start:  models.Position{4, 1},
-				Finish: models.Position{4, 3},
+				Start: models.Position{
+					File: 4,
+					Rank: 1,
+				},
+				Finish: models.Position{
+					File: 4,
+					Rank: 3,
+				},
 			},
 			wantErr: false,
 		},
-		data{
+		{
 			args:     args{"e2e"},
 			wantMove: models.Move{},
 			wantErr:  true,
 		},
-		data{
+		{
 			args:     args{"e2e42"},
 			wantMove: models.Move{},
 			wantErr:  true,
 		},
-		data{
+		{
 			args:     args{"e\ne4"},
 			wantMove: models.Move{},
 			wantErr:  true,
 		},
-		data{
+		{
 			args:     args{"e2e\n"},
 			wantMove: models.Move{},
 			wantErr:  true,
 		},
 	} {
-		gotMove, gotErr :=
-			DecodeMove(data.args.text)
+		gotMove, gotErr := DecodeMove(data.args.text)
 
-		if !reflect.DeepEqual(
-			gotMove,
-			data.wantMove,
-		) {
+		if !reflect.DeepEqual(gotMove, data.wantMove) {
 			test.Fail()
 		}
 
@@ -130,7 +131,7 @@ func TestDecodePiece(test *testing.T) {
 	}
 
 	for _, data := range []data{
-		data{
+		{
 			args: args{'K'},
 			wantPiece: pieces.NewKing(
 				models.White,
@@ -138,7 +139,7 @@ func TestDecodePiece(test *testing.T) {
 			),
 			wantErr: false,
 		},
-		data{
+		{
 			args: args{'q'},
 			wantPiece: pieces.NewQueen(
 				models.Black,
@@ -146,21 +147,15 @@ func TestDecodePiece(test *testing.T) {
 			),
 			wantErr: false,
 		},
-		data{
+		{
 			args:      args{'a'},
 			wantPiece: nil,
 			wantErr:   true,
 		},
 	} {
-		gotPiece, gotErr := DecodePiece(
-			data.args.fen,
-			pieces.NewPiece,
-		)
+		gotPiece, gotErr := DecodePiece(data.args.fen, pieces.NewPiece)
 
-		if !reflect.DeepEqual(
-			gotPiece,
-			data.wantPiece,
-		) {
+		if !reflect.DeepEqual(gotPiece, data.wantPiece) {
 			test.Fail()
 		}
 
@@ -171,9 +166,7 @@ func TestDecodePiece(test *testing.T) {
 	}
 }
 
-func TestDecodePieceStorage(
-	test *testing.T,
-) {
+func TestDecodePieceStorage(test *testing.T) {
 	type args struct {
 		fen string
 	}
@@ -184,100 +177,109 @@ func TestDecodePieceStorage(
 	}
 
 	for _, data := range []data{
-		data{
+		{
 			args: args{
 				fen: "2K3q/8/pp1R",
 			},
 			wantStorage: models.NewBoard(
-				models.Size{8, 3},
+				models.Size{
+					Width:  8,
+					Height: 3,
+				},
 				[]models.Piece{
-					pieces.NewPawn(
-						models.Black,
-						models.Position{0, 0},
-					),
-					pieces.NewPawn(
-						models.Black,
-						models.Position{1, 0},
-					),
-					pieces.NewRook(
-						models.White,
-						models.Position{3, 0},
-					),
-					pieces.NewKing(
-						models.White,
-						models.Position{2, 2},
-					),
-					pieces.NewQueen(
-						models.Black,
-						models.Position{6, 2},
-					),
+					pieces.NewPawn(models.Black, models.Position{
+						File: 0,
+						Rank: 0,
+					}),
+					pieces.NewPawn(models.Black, models.Position{
+						File: 1,
+						Rank: 0,
+					}),
+					pieces.NewRook(models.White, models.Position{
+						File: 3,
+						Rank: 0,
+					}),
+					pieces.NewKing(models.White, models.Position{
+						File: 2,
+						Rank: 2,
+					}),
+					pieces.NewQueen(models.Black, models.Position{
+						File: 6,
+						Rank: 2,
+					}),
 				},
 			),
 			wantErr: false,
 		},
-		data{
+		{
 			args: args{
 				fen: "1/2K3q/8/pp1R",
 			},
 			wantStorage: models.NewBoard(
-				models.Size{8, 4},
+				models.Size{
+					Width:  8,
+					Height: 4,
+				},
 				[]models.Piece{
-					pieces.NewPawn(
-						models.Black,
-						models.Position{0, 0},
-					),
-					pieces.NewPawn(
-						models.Black,
-						models.Position{1, 0},
-					),
-					pieces.NewRook(
-						models.White,
-						models.Position{3, 0},
-					),
-					pieces.NewKing(
-						models.White,
-						models.Position{2, 2},
-					),
-					pieces.NewQueen(
-						models.Black,
-						models.Position{6, 2},
-					),
+					pieces.NewPawn(models.Black, models.Position{
+						File: 0,
+						Rank: 0,
+					}),
+					pieces.NewPawn(models.Black, models.Position{
+						File: 1,
+						Rank: 0,
+					}),
+					pieces.NewRook(models.White, models.Position{
+						File: 3,
+						Rank: 0,
+					}),
+					pieces.NewKing(models.White, models.Position{
+						File: 2,
+						Rank: 2,
+					}),
+					pieces.NewQueen(models.Black, models.Position{
+						File: 6,
+						Rank: 2,
+					}),
 				},
 			),
 			wantErr: false,
 		},
-		data{
+		{
 			args: args{
 				fen: "2K3q/8/pp1R/1",
 			},
 			wantStorage: models.NewBoard(
-				models.Size{8, 4},
+				models.Size{
+					Width:  8,
+					Height: 4,
+				},
 				[]models.Piece{
-					pieces.NewPawn(
-						models.Black,
-						models.Position{0, 1},
-					),
-					pieces.NewPawn(
-						models.Black,
-						models.Position{1, 1},
-					),
-					pieces.NewRook(
-						models.White,
-						models.Position{3, 1},
-					),
-					pieces.NewKing(
-						models.White,
-						models.Position{2, 3},
-					),
-					pieces.NewQueen(
-						models.Black,
-						models.Position{6, 3},
-					),
+					pieces.NewPawn(models.Black, models.Position{
+						File: 0,
+						Rank: 1,
+					}),
+					pieces.NewPawn(models.Black, models.Position{
+						File: 1,
+						Rank: 1,
+					}),
+					pieces.NewRook(models.White, models.Position{
+						File: 3,
+						Rank: 1,
+					}),
+					pieces.NewKing(models.White, models.Position{
+						File: 2,
+						Rank: 3,
+					}),
+					pieces.NewQueen(models.Black, models.Position{
+						File: 6,
+						Rank: 3,
+					}),
 				},
 			),
 			wantErr: false,
 		},
-		data{
+		{
 			args: args{
 				fen: "2K3q/#/pp1R",
 			},
@@ -286,16 +288,9 @@ func TestDecodePieceStorage(
 		},
 	} {
 		gotStorage, gotErr :=
-			DecodePieceStorage(
-				data.args.fen,
-				pieces.NewPiece,
-				models.NewBoard,
-			)
+			DecodePieceStorage(data.args.fen, pieces.NewPiece, models.NewBoard)
 
-		if !reflect.DeepEqual(
-			gotStorage,
-			data.wantStorage,
-		) {
+		if !reflect.DeepEqual(gotStorage, data.wantStorage) {
 			test.Fail()
 		}
 
@@ -319,7 +314,7 @@ func TestDecodeRank(test *testing.T) {
 	}
 
 	for _, data := range []data{
-		data{
+		{
 			args: args{
 				index: 7,
 				fen:   "2",
@@ -328,89 +323,89 @@ func TestDecodeRank(test *testing.T) {
 			wantMaxFile: 2,
 			wantErr:     false,
 		},
-		data{
+		{
 			args: args{
 				index: 7,
 				fen:   "K",
 			},
 			wantPieces: []models.Piece{
-				pieces.NewKing(
-					models.White,
-					models.Position{0, 7},
-				),
+				pieces.NewKing(models.White, models.Position{
+					File: 0,
+					Rank: 7,
+				}),
 			},
 			wantMaxFile: 1,
 			wantErr:     false,
 		},
-		data{
+		{
 			args: args{
 				index: 7,
 				fen:   "2K",
 			},
 			wantPieces: []models.Piece{
-				pieces.NewKing(
-					models.White,
-					models.Position{2, 7},
-				),
+				pieces.NewKing(models.White, models.Position{
+					File: 2,
+					Rank: 7,
+				}),
 			},
 			wantMaxFile: 3,
 			wantErr:     false,
 		},
-		data{
+		{
 			args: args{
 				index: 7,
 				fen:   "2Kq",
 			},
 			wantPieces: []models.Piece{
-				pieces.NewKing(
-					models.White,
-					models.Position{2, 7},
-				),
-				pieces.NewQueen(
-					models.Black,
-					models.Position{3, 7},
-				),
+				pieces.NewKing(models.White, models.Position{
+					File: 2,
+					Rank: 7,
+				}),
+				pieces.NewQueen(models.Black, models.Position{
+					File: 3,
+					Rank: 7,
+				}),
 			},
 			wantMaxFile: 4,
 			wantErr:     false,
 		},
-		data{
+		{
 			args: args{
 				index: 7,
 				fen:   "2K3q",
 			},
 			wantPieces: []models.Piece{
-				pieces.NewKing(
-					models.White,
-					models.Position{2, 7},
-				),
-				pieces.NewQueen(
-					models.Black,
-					models.Position{6, 7},
-				),
+				pieces.NewKing(models.White, models.Position{
+					File: 2,
+					Rank: 7,
+				}),
+				pieces.NewQueen(models.Black, models.Position{
+					File: 6,
+					Rank: 7,
+				}),
 			},
 			wantMaxFile: 7,
 			wantErr:     false,
 		},
-		data{
+		{
 			args: args{
 				index: 7,
 				fen:   "2K3q4",
 			},
 			wantPieces: []models.Piece{
-				pieces.NewKing(
-					models.White,
-					models.Position{2, 7},
-				),
-				pieces.NewQueen(
-					models.Black,
-					models.Position{6, 7},
-				),
+				pieces.NewKing(models.White, models.Position{
+					File: 2,
+					Rank: 7,
+				}),
+				pieces.NewQueen(models.Black, models.Position{
+					File: 6,
+					Rank: 7,
+				}),
 			},
 			wantMaxFile: 11,
 			wantErr:     false,
 		},
-		data{
+		{
 			args: args{
 				index: 7,
 				fen:   "2K#q4",
@@ -421,16 +416,9 @@ func TestDecodeRank(test *testing.T) {
 		},
 	} {
 		gotPieces, gotMaxFile, gotErr :=
-			decodeRank(
-				data.args.index,
-				data.args.fen,
-				pieces.NewPiece,
-			)
+			decodeRank(data.args.index, data.args.fen, pieces.NewPiece)
 
-		if !reflect.DeepEqual(
-			gotPieces,
-			data.wantPieces,
-		) {
+		if !reflect.DeepEqual(gotPieces, data.wantPieces) {
 			test.Fail()
 		}
 
