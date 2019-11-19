@@ -5,18 +5,12 @@ type MoveGenerator struct{}
 
 // MovesForColor ...
 //
-// It doesn't guarantee an order
-// of returned moves.
+// It doesn't guarantee an order of returned moves.
 //
-// It doesn't take into account
-// possible checks and can generate
-// such moves.
+// It doesn't take into account possible checks and can generate such moves.
 //
-// It returns an error
-// only on a king capture.
-func (
-	generator MoveGenerator,
-) MovesForColor(
+// It returns an error only on a king capture.
+func (generator MoveGenerator) MovesForColor(
 	storage PieceStorage,
 	color Color,
 ) ([]Move, error) {
@@ -26,9 +20,8 @@ func (
 			continue
 		}
 
-		position := piece.Position()
-		positionMoves, err := generator.
-			MovesForPosition(storage, position)
+		positionMoves, err :=
+			generator.MovesForPosition(storage, piece.Position())
 		if err != nil {
 			return nil, err
 		}
@@ -41,32 +34,23 @@ func (
 
 // MovesForPosition ...
 //
-// It doesn't take into account
-// possible checks and can generate
-// such moves.
+// It doesn't take into account possible checks and can generate such moves.
 //
-// It returns an error
-// only on a king capture.
-func (
-	generator MoveGenerator,
-) MovesForPosition(
+// It returns an error only on a king capture.
+func (generator MoveGenerator) MovesForPosition(
 	storage PieceStorage,
 	position Position,
 ) ([]Move, error) {
 	var moves []Move
-	positions := storage.Size().Positions()
-	for _, finish := range positions {
+	for _, finish := range storage.Size().Positions() {
 		move := Move{position, finish}
-		err := storage.CheckMove(move)
-		if err != nil {
-			// if the move captures a king,
-			// break a generating
+		if err := storage.CheckMove(move); err != nil {
+			// if the move captures a king, break a generating
 			if err == ErrKingCapture {
 				return nil, err
 			}
 
-			// on other errors
-			// just skip this move
+			// on other errors just skip this move
 			continue
 		}
 

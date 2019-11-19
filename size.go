@@ -7,27 +7,21 @@ type Size struct {
 }
 
 // HasPosition ...
-func (size Size) HasPosition(
-	position Position,
-) bool {
-	return less(position.File, size.Width) &&
-		less(position.Rank, size.Height)
+func (size Size) HasPosition(position Position) bool {
+	return less(position.File, size.Width) && less(position.Rank, size.Height)
 }
 
 // HasMove ...
 func (size Size) HasMove(move Move) bool {
-	return size.HasPosition(move.Start) &&
-		size.HasPosition(move.Finish)
+	return size.HasPosition(move.Start) && size.HasPosition(move.Finish)
 }
 
 // Positions ...
 func (size Size) Positions() []Position {
 	var positions []Position
-	width, height := size.Width, size.Height
-	for rank := 0; rank < height; rank++ {
-		for file := 0; file < width; file++ {
-			position := Position{file, rank}
-			positions = append(positions, position)
+	for rank := 0; rank < size.Height; rank++ {
+		for file := 0; file < size.Width; file++ {
+			positions = append(positions, Position{file, rank})
 		}
 	}
 

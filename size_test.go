@@ -20,7 +20,7 @@ func TestSizeHasPosition(test *testing.T) {
 	}
 
 	for _, data := range []data{
-		data{
+		{
 			fields: fields{
 				Width:  8,
 				Height: 8,
@@ -30,7 +30,7 @@ func TestSizeHasPosition(test *testing.T) {
 			},
 			want: true,
 		},
-		data{
+		{
 			fields: fields{
 				Width:  8,
 				Height: 8,
@@ -40,7 +40,7 @@ func TestSizeHasPosition(test *testing.T) {
 			},
 			want: false,
 		},
-		data{
+		{
 			fields: fields{
 				Width:  8,
 				Height: 8,
@@ -50,7 +50,7 @@ func TestSizeHasPosition(test *testing.T) {
 			},
 			want: false,
 		},
-		data{
+		{
 			fields: fields{
 				Width:  8,
 				Height: 8,
@@ -60,7 +60,7 @@ func TestSizeHasPosition(test *testing.T) {
 			},
 			want: false,
 		},
-		data{
+		{
 			fields: fields{
 				Width:  8,
 				Height: 8,
@@ -70,7 +70,7 @@ func TestSizeHasPosition(test *testing.T) {
 			},
 			want: false,
 		},
-		data{
+		{
 			fields: fields{
 				Width:  8,
 				Height: 8,
@@ -80,7 +80,7 @@ func TestSizeHasPosition(test *testing.T) {
 			},
 			want: false,
 		},
-		data{
+		{
 			fields: fields{
 				Width:  8,
 				Height: 8,
@@ -95,8 +95,7 @@ func TestSizeHasPosition(test *testing.T) {
 			Width:  data.fields.Width,
 			Height: data.fields.Height,
 		}
-		got :=
-			size.HasPosition(data.args.position)
+		got := size.HasPosition(data.args.position)
 
 		if got != data.want {
 			test.Fail()
@@ -119,7 +118,7 @@ func TestSizeHasMove(test *testing.T) {
 	}
 
 	for _, data := range []data{
-		data{
+		{
 			fields: fields{
 				Width:  8,
 				Height: 8,
@@ -132,7 +131,7 @@ func TestSizeHasMove(test *testing.T) {
 			},
 			want: true,
 		},
-		data{
+		{
 			fields: fields{
 				Width:  8,
 				Height: 8,
@@ -145,7 +144,7 @@ func TestSizeHasMove(test *testing.T) {
 			},
 			want: false,
 		},
-		data{
+		{
 			fields: fields{
 				Width:  8,
 				Height: 8,
@@ -158,7 +157,7 @@ func TestSizeHasMove(test *testing.T) {
 			},
 			want: false,
 		},
-		data{
+		{
 			fields: fields{
 				Width:  8,
 				Height: 8,
@@ -188,20 +187,17 @@ func TestSizePositions(test *testing.T) {
 	positions := Size{3, 3}.Positions()
 
 	expectedPositions := []Position{
-		Position{0, 0},
-		Position{1, 0},
-		Position{2, 0},
-		Position{0, 1},
-		Position{1, 1},
-		Position{2, 1},
-		Position{0, 2},
-		Position{1, 2},
-		Position{2, 2},
+		{0, 0},
+		{1, 0},
+		{2, 0},
+		{0, 1},
+		{1, 1},
+		{2, 1},
+		{0, 2},
+		{1, 2},
+		{2, 2},
 	}
-	if !reflect.DeepEqual(
-		positions,
-		expectedPositions,
-	) {
+	if !reflect.DeepEqual(positions, expectedPositions) {
 		test.Fail()
 	}
 }

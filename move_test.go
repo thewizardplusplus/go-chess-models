@@ -15,28 +15,28 @@ func TestMoveIsZero(test *testing.T) {
 	}
 
 	for _, data := range []data{
-		data{
+		{
 			fields: fields{
 				start:  Position{1, 2},
 				finish: Position{3, 4},
 			},
 			want: false,
 		},
-		data{
+		{
 			fields: fields{
 				start:  Position{1, 0},
 				finish: Position{3, 0},
 			},
 			want: false,
 		},
-		data{
+		{
 			fields: fields{
 				start:  Position{1, 2},
 				finish: Position{0, 0},
 			},
 			want: false,
 		},
-		data{
+		{
 			fields: fields{
 				start:  Position{0, 0},
 				finish: Position{0, 0},
@@ -67,28 +67,28 @@ func TestMoveIsEmpty(test *testing.T) {
 	}
 
 	for _, data := range []data{
-		data{
+		{
 			fields: fields{
 				start:  Position{1, 2},
 				finish: Position{3, 4},
 			},
 			want: false,
 		},
-		data{
+		{
 			fields: fields{
 				start:  Position{1, 2},
 				finish: Position{1, 4},
 			},
 			want: false,
 		},
-		data{
+		{
 			fields: fields{
 				start:  Position{1, 2},
 				finish: Position{3, 2},
 			},
 			want: false,
 		},
-		data{
+		{
 			fields: fields{
 				start:  Position{1, 2},
 				finish: Position{1, 2},

@@ -13,35 +13,25 @@ type MockPieceStorage struct {
 	checkMove func(move Move) error
 }
 
-func (
-	storage MockPieceStorage,
-) Size() Size {
+func (storage MockPieceStorage) Size() Size {
 	return storage.size
 }
 
-func (
-	storage MockPieceStorage,
-) Piece(
+func (storage MockPieceStorage) Piece(
 	position Position,
 ) (piece Piece, ok bool) {
 	panic("not implemented")
 }
 
-func (
-	storage MockPieceStorage,
-) Pieces() []Piece {
+func (storage MockPieceStorage) Pieces() []Piece {
 	return storage.pieces
 }
 
-func (storage MockPieceStorage) ApplyMove(
-	move Move,
-) PieceStorage {
+func (storage MockPieceStorage) ApplyMove(move Move) PieceStorage {
 	panic("not implemented")
 }
 
-func (storage MockPieceStorage) CheckMove(
-	move Move,
-) error {
+func (storage MockPieceStorage) CheckMove(move Move) error {
 	if storage.checkMove == nil {
 		panic("not implemented")
 	}
@@ -49,9 +39,7 @@ func (storage MockPieceStorage) CheckMove(
 	return storage.checkMove(move)
 }
 
-func TestMoveCheckerMovesForColor(
-	test *testing.T,
-) {
+func TestMoveCheckerMovesForColor(test *testing.T) {
 	type fields struct {
 		size      Size
 		pieces    []Piece
@@ -68,7 +56,7 @@ func TestMoveCheckerMovesForColor(
 	}
 
 	for _, data := range []data{
-		data{
+		{
 			fields: fields{
 				size: Size{2, 2},
 				pieces: []Piece{
@@ -95,43 +83,43 @@ func TestMoveCheckerMovesForColor(
 			},
 			args: args{Black},
 			wantMoves: []Move{
-				Move{
+				{
 					Start:  Position{0, 0},
 					Finish: Position{0, 0},
 				},
-				Move{
+				{
 					Start:  Position{0, 0},
 					Finish: Position{1, 0},
 				},
-				Move{
+				{
 					Start:  Position{0, 0},
 					Finish: Position{0, 1},
 				},
-				Move{
+				{
 					Start:  Position{0, 0},
 					Finish: Position{1, 1},
 				},
 
-				Move{
+				{
 					Start:  Position{0, 1},
 					Finish: Position{0, 0},
 				},
-				Move{
+				{
 					Start:  Position{0, 1},
 					Finish: Position{1, 0},
 				},
-				Move{
+				{
 					Start:  Position{0, 1},
 					Finish: Position{0, 1},
 				},
-				Move{
+				{
 					Start:  Position{0, 1},
 					Finish: Position{1, 1},
 				},
 			},
 			wantErr: nil,
 		},
-		data{
+		{
 			fields: fields{
 				size: Size{2, 2},
 				pieces: []Piece{
@@ -158,43 +146,43 @@ func TestMoveCheckerMovesForColor(
 			},
 			args: args{White},
 			wantMoves: []Move{
-				Move{
+				{
 					Start:  Position{1, 0},
 					Finish: Position{0, 0},
 				},
-				Move{
+				{
 					Start:  Position{1, 0},
 					Finish: Position{1, 0},
 				},
-				Move{
+				{
 					Start:  Position{1, 0},
 					Finish: Position{0, 1},
 				},
-				Move{
+				{
 					Start:  Position{1, 0},
 					Finish: Position{1, 1},
 				},
 
-				Move{
+				{
 					Start:  Position{1, 1},
 					Finish: Position{0, 0},
 				},
-				Move{
+				{
 					Start:  Position{1, 1},
 					Finish: Position{1, 0},
 				},
-				Move{
+				{
 					Start:  Position{1, 1},
 					Finish: Position{0, 1},
 				},
-				Move{
+				{
 					Start:  Position{1, 1},
 					Finish: Position{1, 1},
 				},
 			},
 			wantErr: nil,
 		},
-		data{
+		{
 			fields: fields{
 				size: Size{2, 2},
 				pieces: []Piece{
@@ -223,7 +211,7 @@ func TestMoveCheckerMovesForColor(
 			wantMoves: nil,
 			wantErr:   nil,
 		},
-		data{
+		{
 			fields: fields{
 				size: Size{2, 2},
 				pieces: []Piece{
@@ -258,31 +246,19 @@ func TestMoveCheckerMovesForColor(
 			pieces:    data.fields.pieces,
 			checkMove: data.fields.checkMove,
 		}
-		generator := MoveGenerator{}
-		gotMoves, gotErr :=
-			generator.MovesForColor(
-				storage,
-				data.args.color,
-			)
+		var generator MoveGenerator
+		gotMoves, gotErr := generator.MovesForColor(storage, data.args.color)
 
-		if !reflect.DeepEqual(
-			gotMoves,
-			data.wantMoves,
-		) {
+		if !reflect.DeepEqual(gotMoves, data.wantMoves) {
 			test.Fail()
 		}
-		if !reflect.DeepEqual(
-			gotErr,
-			data.wantErr,
-		) {
+		if !reflect.DeepEqual(gotErr, data.wantErr) {
 			test.Fail()
 		}
 	}
 }
 
-func TestMoveCheckerMovesForPosition(
-	test *testing.T,
-) {
+func TestMoveCheckerMovesForPosition(test *testing.T) {
 	type fields struct {
 		size      Size
 		checkMove func(move Move) error
@@ -298,7 +274,7 @@ func TestMoveCheckerMovesForPosition(
 	}
 
 	for _, data := range []data{
-		data{
+		{
 			fields: fields{
 				size: Size{2, 2},
 				checkMove: func(move Move) error {
@@ -309,7 +285,7 @@ func TestMoveCheckerMovesForPosition(
 			wantMoves: nil,
 			wantErr:   nil,
 		},
-		data{
+		{
 			fields: fields{
 				size: Size{2, 2},
 				checkMove: func(move Move) error {
@@ -320,7 +296,7 @@ func TestMoveCheckerMovesForPosition(
 			wantMoves: nil,
 			wantErr:   ErrKingCapture,
 		},
-		data{
+		{
 			fields: fields{
 				size: Size{2, 2},
 				checkMove: func(move Move) error {
@@ -329,26 +305,26 @@ func TestMoveCheckerMovesForPosition(
 			},
 			args: args{Position{1, 1}},
 			wantMoves: []Move{
-				Move{
+				{
 					Start:  Position{1, 1},
 					Finish: Position{0, 0},
 				},
-				Move{
+				{
 					Start:  Position{1, 1},
 					Finish: Position{1, 0},
 				},
-				Move{
+				{
 					Start:  Position{1, 1},
 					Finish: Position{0, 1},
 				},
-				Move{
+				{
 					Start:  Position{1, 1},
 					Finish: Position{1, 1},
 				},
 			},
 			wantErr: nil,
 		},
-		data{
+		{
 			fields: fields{
 				size: Size{2, 2},
 				checkMove: func(move Move) error {
@@ -361,11 +337,11 @@ func TestMoveCheckerMovesForPosition(
 			},
 			args: args{Position{1, 1}},
 			wantMoves: []Move{
-				Move{
+				{
 					Start:  Position{1, 1},
 					Finish: Position{0, 0},
 				},
-				Move{
+				{
 					Start:  Position{1, 1},
 					Finish: Position{1, 0},
 				},
@@ -377,23 +353,13 @@ func TestMoveCheckerMovesForPosition(
 			size:      data.fields.size,
 			checkMove: data.fields.checkMove,
 		}
-		generator := MoveGenerator{}
-		gotMoves, gotErr :=
-			generator.MovesForPosition(
-				storage,
-				data.args.position,
-			)
+		var generator MoveGenerator
+		gotMoves, gotErr := generator.MovesForPosition(storage, data.args.position)
 
-		if !reflect.DeepEqual(
-			gotMoves,
-			data.wantMoves,
-		) {
+		if !reflect.DeepEqual(gotMoves, data.wantMoves) {
 			test.Fail()
 		}
-		if !reflect.DeepEqual(
-			gotErr,
-			data.wantErr,
-		) {
+		if !reflect.DeepEqual(gotErr, data.wantErr) {
 			test.Fail()
 		}
 	}

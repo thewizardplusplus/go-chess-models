@@ -10,10 +10,7 @@ type MockPiece struct {
 	color    Color
 	position Position
 
-	checkMove func(
-		move Move,
-		storage PieceStorage,
-	) bool
+	checkMove func(move Move, storage PieceStorage) bool
 }
 
 func (piece MockPiece) Kind() Kind {
@@ -28,9 +25,7 @@ func (piece MockPiece) Position() Position {
 	return piece.position
 }
 
-func (piece MockPiece) ApplyPosition(
-	position Position,
-) Piece {
+func (piece MockPiece) ApplyPosition(position Position) Piece {
 	return MockPiece{
 		kind:      piece.kind,
 		color:     piece.color,
@@ -39,10 +34,7 @@ func (piece MockPiece) ApplyPosition(
 	}
 }
 
-func (piece MockPiece) CheckMove(
-	move Move,
-	storage PieceStorage,
-) bool {
+func (piece MockPiece) CheckMove(move Move, storage PieceStorage) bool {
 	if piece.checkMove == nil {
 		panic("not implemented")
 	}
@@ -64,10 +56,7 @@ func TestNewPieceGroup(test *testing.T) {
 			position: Position{4, 2},
 		},
 	}
-	if !reflect.DeepEqual(
-		pieces,
-		expectedPieces,
-	) {
+	if !reflect.DeepEqual(pieces, expectedPieces) {
 		test.Fail()
 	}
 }
@@ -89,10 +78,7 @@ func TestPieceGroupAdd(test *testing.T) {
 			position: Position{4, 2},
 		},
 	}
-	if !reflect.DeepEqual(
-		pieces,
-		expectedPieces,
-	) {
+	if !reflect.DeepEqual(pieces, expectedPieces) {
 		test.Fail()
 	}
 }
@@ -118,10 +104,7 @@ func TestPieceGroupMove(test *testing.T) {
 			position: Position{6, 5},
 		},
 	}
-	if !reflect.DeepEqual(
-		pieces,
-		expectedPieces,
-	) {
+	if !reflect.DeepEqual(pieces, expectedPieces) {
 		test.Fail()
 	}
 }
@@ -142,10 +125,7 @@ func TestPieceGroupCopy(test *testing.T) {
 			position: Position{2, 3},
 		},
 	}
-	if !reflect.DeepEqual(
-		piecesCopy,
-		expectedPiecesCopy,
-	) {
+	if !reflect.DeepEqual(piecesCopy, expectedPiecesCopy) {
 		test.Fail()
 	}
 }

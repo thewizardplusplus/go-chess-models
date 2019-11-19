@@ -14,17 +14,14 @@ import (
 )
 
 var (
-	kings   = "4k3/8/8/8/8/8/8/4K3"
-	queens  = "3qk3/8/8/8/8/8/8/3QK3"
-	rooks   = "r3k2r/8/8/8/8/8/8/R3K2R"
-	bishops = "2b1kb2/8/8/8/8/8/8/2B1KB2"
-	knights = "1n2k1n1/8/8/8/8/8/8/1N2K1N1"
-	pawns   = "4k3/pppppppp/8/8" +
-		"/8/8/PPPPPPPP/4K3"
-	initial = "rnbqkbnr/pppppppp/8/8" +
-		"/8/8/PPPPPPPP/RNBQKBNR"
-	kiwipete = "r3k2r/p1ppqpb1/bn2pnp1/3PN3" +
-		"/1p2P3/2N2Q1p/PPPBBPPP/R3K2R"
+	kings    = "4k3/8/8/8/8/8/8/4K3"
+	queens   = "3qk3/8/8/8/8/8/8/3QK3"
+	rooks    = "r3k2r/8/8/8/8/8/8/R3K2R"
+	bishops  = "2b1kb2/8/8/8/8/8/8/2B1KB2"
+	knights  = "1n2k1n1/8/8/8/8/8/8/1N2K1N1"
+	pawns    = "4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3"
+	initial  = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
+	kiwipete = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R"
 )
 
 func TestPerft(test *testing.T) {
@@ -40,7 +37,7 @@ func TestPerft(test *testing.T) {
 	}
 
 	for index, data := range []data{
-		data{
+		{
 			name: "kings",
 			args: args{
 				boardInFEN: kings,
@@ -49,7 +46,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 1,
 		},
-		data{
+		{
 			name: "kings",
 			args: args{
 				boardInFEN: kings,
@@ -58,7 +55,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 5,
 		},
-		data{
+		{
 			name: "kings",
 			args: args{
 				boardInFEN: kings,
@@ -67,7 +64,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 25,
 		},
-		data{
+		{
 			name: "kings",
 			args: args{
 				boardInFEN: kings,
@@ -76,7 +73,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 170,
 		},
-		data{
+		{
 			name: "kings",
 			args: args{
 				boardInFEN: kings,
@@ -85,7 +82,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 1156,
 		},
-		data{
+		{
 			name: "kings",
 			args: args{
 				boardInFEN: kings,
@@ -94,7 +91,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 7922,
 		},
-		data{
+		{
 			name: "queens",
 			args: args{
 				boardInFEN: queens,
@@ -103,7 +100,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 1,
 		},
-		data{
+		{
 			name: "queens",
 			args: args{
 				boardInFEN: queens,
@@ -112,7 +109,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 20,
 		},
-		data{
+		{
 			name: "queens",
 			args: args{
 				boardInFEN: queens,
@@ -121,7 +118,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 301,
 		},
-		data{
+		{
 			name: "queens",
 			args: args{
 				boardInFEN: queens,
@@ -130,7 +127,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 6063,
 		},
-		data{
+		{
 			name: "rooks",
 			args: args{
 				boardInFEN: rooks,
@@ -139,7 +136,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 1,
 		},
-		data{
+		{
 			name: "rooks",
 			args: args{
 				boardInFEN: rooks,
@@ -148,7 +145,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 24,
 		},
-		data{
+		{
 			name: "rooks",
 			args: args{
 				boardInFEN: rooks,
@@ -157,7 +154,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 482,
 		},
-		data{
+		{
 			name: "rooks",
 			args: args{
 				boardInFEN: rooks,
@@ -166,7 +163,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 11522,
 		},
-		data{
+		{
 			name: "bishops",
 			args: args{
 				boardInFEN: bishops,
@@ -175,7 +172,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 1,
 		},
-		data{
+		{
 			name: "bishops",
 			args: args{
 				boardInFEN: bishops,
@@ -184,7 +181,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 18,
 		},
-		data{
+		{
 			name: "bishops",
 			args: args{
 				boardInFEN: bishops,
@@ -193,7 +190,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 305,
 		},
-		data{
+		{
 			name: "bishops",
 			args: args{
 				boardInFEN: bishops,
@@ -202,7 +199,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 5575,
 		},
-		data{
+		{
 			name: "knights",
 			args: args{
 				boardInFEN: knights,
@@ -211,7 +208,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 1,
 		},
-		data{
+		{
 			name: "knights",
 			args: args{
 				boardInFEN: knights,
@@ -220,7 +217,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 11,
 		},
-		data{
+		{
 			name: "knights",
 			args: args{
 				boardInFEN: knights,
@@ -229,7 +226,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 121,
 		},
-		data{
+		{
 			name: "knights",
 			args: args{
 				boardInFEN: knights,
@@ -238,7 +235,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 1551,
 		},
-		data{
+		{
 			name: "knights",
 			args: args{
 				boardInFEN: knights,
@@ -247,7 +244,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 19764,
 		},
-		data{
+		{
 			name: "pawns",
 			args: args{
 				boardInFEN: pawns,
@@ -256,7 +253,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 1,
 		},
-		data{
+		{
 			name: "pawns",
 			args: args{
 				boardInFEN: pawns,
@@ -265,7 +262,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 10,
 		},
-		data{
+		{
 			name: "pawns",
 			args: args{
 				boardInFEN: pawns,
@@ -274,7 +271,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 100,
 		},
-		data{
+		{
 			name: "pawns",
 			args: args{
 				boardInFEN: pawns,
@@ -283,7 +280,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 1030,
 		},
-		data{
+		{
 			name: "pawns",
 			args: args{
 				boardInFEN: pawns,
@@ -292,7 +289,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 10609,
 		},
-		data{
+		{
 			name: "initial",
 			args: args{
 				boardInFEN: initial,
@@ -301,7 +298,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 1,
 		},
-		data{
+		{
 			name: "initial",
 			args: args{
 				boardInFEN: initial,
@@ -310,7 +307,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 12,
 		},
-		data{
+		{
 			name: "initial",
 			args: args{
 				boardInFEN: initial,
@@ -319,7 +316,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 144,
 		},
-		data{
+		{
 			name: "initial",
 			args: args{
 				boardInFEN: initial,
@@ -328,7 +325,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 2124,
 		},
-		data{
+		{
 			name: "kiwipete",
 			args: args{
 				boardInFEN: kiwipete,
@@ -337,7 +334,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 1,
 		},
-		data{
+		{
 			name: "kiwipete",
 			args: args{
 				boardInFEN: kiwipete,
@@ -346,7 +343,7 @@ func TestPerft(test *testing.T) {
 			},
 			want: 44,
 		},
-		data{
+		{
 			name: "kiwipete",
 			args: args{
 				boardInFEN: kiwipete,
@@ -356,48 +353,30 @@ func TestPerft(test *testing.T) {
 			want: 1740,
 		},
 	} {
-		prefix := fmt.Sprintf(
-			"%s/#%d",
-			data.name,
-			index,
-		)
+		prefix := fmt.Sprintf("%s/#%d", data.name, index)
 		storage, err := uci.DecodePieceStorage(
 			data.args.boardInFEN,
 			pieces.NewPiece,
 			models.NewBoard,
 		)
 		if err != nil {
-			test.Logf("%s: %v", prefix, err)
-			test.Fail()
-
+			test.Errorf("%s: %v", prefix, err)
 			continue
 		}
 
 		var moves []string
-		got := perft(
-			storage,
-			data.args.color,
-			data.args.deep,
-			func(
-				move models.Move,
-				count int,
-			) {
-				moves = append(moves, fmt.Sprintf(
-					"%v: %d",
-					move,
-					count,
-				))
-			},
-		)
+		got := perft(storage, data.args.color, data.args.deep, func(
+			move models.Move,
+			count int,
+		) {
+			moves = append(moves, fmt.Sprintf("%v: %d", move, count))
+		})
 
 		if got != data.want {
 			sort.Strings(moves)
 
-			msg := "%s: %d/%d\n" +
-				strings.Join(moves, "\n")
-			test.Logf(msg, prefix, got, data.want)
-
-			test.Fail()
+			message := "%s: %d/%d\n" + strings.Join(moves, "\n")
+			test.Errorf(message, prefix, got, data.want)
 		}
 	}
 }
@@ -408,12 +387,10 @@ func perft(
 	deep int,
 	logger func(move models.Move, count int),
 ) int {
-	// check for a check should be first,
-	// including before a termination check,
-	// because a terminated evaluation
-	// doesn't make sense for a check position
-	moves, err := models.MoveGenerator{}.
-		MovesForColor(storage, color)
+	// check for a check should be first, including before a termination check,
+	// because a terminated evaluation doesn't make sense for a check position
+	var generator models.MoveGenerator
+	moves, err := generator.MovesForColor(storage, color)
 	if err != nil {
 		return 0
 	}

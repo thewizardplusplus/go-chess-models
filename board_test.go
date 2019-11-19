@@ -16,9 +16,7 @@ func (group ByPosition) Swap(i, j int) {
 	group[i], group[j] = group[j], group[i]
 }
 
-func (group ByPosition) Less(
-	i, j int,
-) bool {
+func (group ByPosition) Less(i int, j int) bool {
 	a := group[i].Position()
 	b := group[j].Position()
 	if a.File == b.File {
@@ -45,10 +43,7 @@ func TestNewBoard(test *testing.T) {
 			},
 		},
 	}
-	if !reflect.DeepEqual(
-		board,
-		expectedBoard,
-	) {
+	if !reflect.DeepEqual(board, expectedBoard) {
 		test.Fail()
 	}
 }
@@ -78,7 +73,7 @@ func TestBoardPiece(test *testing.T) {
 	}
 
 	for _, data := range []data{
-		data{
+		{
 			fields: fields{
 				size: Size{2, 2},
 				pieces: pieceGroup{
@@ -96,7 +91,7 @@ func TestBoardPiece(test *testing.T) {
 			},
 			wantOk: true,
 		},
-		data{
+		{
 			fields: fields{
 				size: Size{2, 2},
 				pieces: pieceGroup{
@@ -117,13 +112,9 @@ func TestBoardPiece(test *testing.T) {
 			size:   data.fields.size,
 			pieces: data.fields.pieces,
 		}
-		gotPiece, gotOk := board.
-			Piece(data.args.position)
+		gotPiece, gotOk := board.Piece(data.args.position)
 
-		if !reflect.DeepEqual(
-			gotPiece,
-			data.wantPiece,
-		) {
+		if !reflect.DeepEqual(gotPiece, data.wantPiece) {
 			test.Fail()
 		}
 		if gotOk != data.wantOk {
@@ -144,10 +135,7 @@ func TestBoardPieces(test *testing.T) {
 		MockPiece{position: Position{2, 3}},
 		MockPiece{position: Position{4, 2}},
 	}
-	if !reflect.DeepEqual(
-		pieces,
-		expectedPieces,
-	) {
+	if !reflect.DeepEqual(pieces, expectedPieces) {
 		test.Fail()
 	}
 }
@@ -173,10 +161,7 @@ func TestBoardApplyMove(test *testing.T) {
 			},
 		},
 	}
-	if !reflect.DeepEqual(
-		board,
-		expectedBoard,
-	) {
+	if !reflect.DeepEqual(board, expectedBoard) {
 		test.Fail()
 	}
 
@@ -191,10 +176,7 @@ func TestBoardApplyMove(test *testing.T) {
 			},
 		},
 	}
-	if !reflect.DeepEqual(
-		nextBoard,
-		expectedNextBoard,
-	) {
+	if !reflect.DeepEqual(nextBoard, expectedNextBoard) {
 		test.Fail()
 	}
 }
@@ -214,7 +196,7 @@ func TestBoardCheckMove(test *testing.T) {
 	}
 
 	for _, data := range []data{
-		data{
+		{
 			fields: fields{
 				size:   Size{2, 2},
 				pieces: nil,
@@ -227,7 +209,7 @@ func TestBoardCheckMove(test *testing.T) {
 			},
 			want: ErrNoMove,
 		},
-		data{
+		{
 			fields: fields{
 				size:   Size{2, 2},
 				pieces: nil,
@@ -240,7 +222,7 @@ func TestBoardCheckMove(test *testing.T) {
 			},
 			want: ErrOutOfSize,
 		},
-		data{
+		{
 			fields: fields{
 				size:   Size{2, 2},
 				pieces: nil,
@@ -253,7 +235,7 @@ func TestBoardCheckMove(test *testing.T) {
 			},
 			want: ErrNoPiece,
 		},
-		data{
+		{
 			fields: fields{
 				size: Size{2, 2},
 				pieces: pieceGroup{
@@ -275,16 +257,13 @@ func TestBoardCheckMove(test *testing.T) {
 			},
 			want: ErrFriendlyTarget,
 		},
-		data{
+		{
 			fields: fields{
 				size: Size{2, 2},
 				pieces: pieceGroup{
 					Position{0, 0}: MockPiece{
 						position: Position{0, 0},
-						checkMove: func(
-							move Move,
-							storage PieceStorage,
-						) bool {
+						checkMove: func(move Move, storage PieceStorage) bool {
 							return false
 						},
 					},
@@ -298,17 +277,14 @@ func TestBoardCheckMove(test *testing.T) {
 			},
 			want: ErrIllegalMove,
 		},
-		data{
+		{
 			fields: fields{
 				size: Size{2, 2},
 				pieces: pieceGroup{
 					Position{0, 0}: MockPiece{
 						color:    Black,
 						position: Position{0, 0},
-						checkMove: func(
-							move Move,
-							storage PieceStorage,
-						) bool {
+						checkMove: func(move Move, storage PieceStorage) bool {
 							return true
 						},
 					},
@@ -327,16 +303,13 @@ func TestBoardCheckMove(test *testing.T) {
 			},
 			want: ErrKingCapture,
 		},
-		data{
+		{
 			fields: fields{
 				size: Size{2, 2},
 				pieces: pieceGroup{
 					Position{0, 0}: MockPiece{
 						position: Position{0, 0},
-						checkMove: func(
-							move Move,
-							storage PieceStorage,
-						) bool {
+						checkMove: func(move Move, storage PieceStorage) bool {
 							return true
 						},
 					},
