@@ -9,10 +9,10 @@ import (
 )
 
 func TestNewPawn(test *testing.T) {
-	piece := NewPawn(
-		models.White,
-		models.Position{File: 2, Rank: 3},
-	)
+	piece := NewPawn(models.White, models.Position{
+		File: 2,
+		Rank: 3,
+	})
 
 	expectedPiece := Pawn{
 		Base: Base{
@@ -24,27 +24,20 @@ func TestNewPawn(test *testing.T) {
 			},
 		},
 	}
-	if !reflect.DeepEqual(
-		piece,
-		expectedPiece,
-	) {
+	if !reflect.DeepEqual(piece, expectedPiece) {
 		test.Fail()
 	}
 }
 
-func TestPawnApplyPosition(
-	test *testing.T,
-) {
-	piece := NewPawn(
-		models.White,
-		models.Position{File: 2, Rank: 3},
-	)
-	nextPiece := piece.ApplyPosition(
-		models.Position{
-			File: 4,
-			Rank: 2,
-		},
-	)
+func TestPawnApplyPosition(test *testing.T) {
+	piece := NewPawn(models.White, models.Position{
+		File: 2,
+		Rank: 3,
+	})
+	nextPiece := piece.ApplyPosition(models.Position{
+		File: 4,
+		Rank: 2,
+	})
 
 	expectedPiece := Pawn{
 		Base: Base{
@@ -56,10 +49,7 @@ func TestPawnApplyPosition(
 			},
 		},
 	}
-	if !reflect.DeepEqual(
-		piece,
-		expectedPiece,
-	) {
+	if !reflect.DeepEqual(piece, expectedPiece) {
 		test.Fail()
 	}
 
@@ -73,10 +63,7 @@ func TestPawnApplyPosition(
 			},
 		},
 	}
-	if !reflect.DeepEqual(
-		nextPiece,
-		expectedNextPiece,
-	) {
+	if !reflect.DeepEqual(nextPiece, expectedNextPiece) {
 		test.Fail()
 	}
 }
@@ -93,7 +80,7 @@ func TestPawnCheckMove(test *testing.T) {
 	}
 
 	for _, data := range []data{
-		data{
+		{
 			args: args{
 				boardInFEN: "5/5/2p2/5/5",
 				position: models.Position{
@@ -102,7 +89,7 @@ func TestPawnCheckMove(test *testing.T) {
 				},
 			},
 			wantMoves: []models.Move{
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -115,7 +102,7 @@ func TestPawnCheckMove(test *testing.T) {
 			},
 			wantErr: nil,
 		},
-		data{
+		{
 			args: args{
 				boardInFEN: "5/5/2p2/1PPP1/5",
 				position: models.Position{
@@ -124,7 +111,7 @@ func TestPawnCheckMove(test *testing.T) {
 				},
 			},
 			wantMoves: []models.Move{
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -134,7 +121,7 @@ func TestPawnCheckMove(test *testing.T) {
 						Rank: 1,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -147,7 +134,7 @@ func TestPawnCheckMove(test *testing.T) {
 			},
 			wantErr: nil,
 		},
-		data{
+		{
 			args: args{
 				boardInFEN: "5/5/2P2/5/5",
 				position: models.Position{
@@ -156,7 +143,7 @@ func TestPawnCheckMove(test *testing.T) {
 				},
 			},
 			wantMoves: []models.Move{
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -169,7 +156,7 @@ func TestPawnCheckMove(test *testing.T) {
 			},
 			wantErr: nil,
 		},
-		data{
+		{
 			args: args{
 				boardInFEN: "5/1ppp1/2P2/5/5",
 				position: models.Position{
@@ -178,7 +165,7 @@ func TestPawnCheckMove(test *testing.T) {
 				},
 			},
 			wantMoves: []models.Move{
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -188,7 +175,7 @@ func TestPawnCheckMove(test *testing.T) {
 						Rank: 3,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -202,33 +189,20 @@ func TestPawnCheckMove(test *testing.T) {
 			wantErr: nil,
 		},
 	} {
-		storage, err := uci.DecodePieceStorage(
-			data.args.boardInFEN,
-			NewPiece,
-			models.NewBoard,
-		)
+		storage, err :=
+			uci.DecodePieceStorage(data.args.boardInFEN, NewPiece, models.NewBoard)
 		if err != nil {
 			test.Fail()
 			continue
 		}
 
-		generator := models.MoveGenerator{}
-		gotMoves, gotErr :=
-			generator.MovesForPosition(
-				storage,
-				data.args.position,
-			)
+		var generator models.MoveGenerator
+		gotMoves, gotErr := generator.MovesForPosition(storage, data.args.position)
 
-		if !reflect.DeepEqual(
-			gotMoves,
-			data.wantMoves,
-		) {
+		if !reflect.DeepEqual(gotMoves, data.wantMoves) {
 			test.Fail()
 		}
-		if !reflect.DeepEqual(
-			gotErr,
-			data.wantErr,
-		) {
+		if !reflect.DeepEqual(gotErr, data.wantErr) {
 			test.Fail()
 		}
 	}

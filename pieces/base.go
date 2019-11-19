@@ -31,16 +31,12 @@ func (piece Base) Color() models.Color {
 }
 
 // Position ...
-func (
-	piece Base,
-) Position() models.Position {
+func (piece Base) Position() models.Position {
 	return piece.position
 }
 
 // ApplyPosition ...
-func (piece Base) ApplyPosition(
-	position models.Position,
-) Base {
+func (piece Base) ApplyPosition(position models.Position) Base {
 	kind, color := piece.kind, piece.color
 	return Base{kind, color, position}
 }

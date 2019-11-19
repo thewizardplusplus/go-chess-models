@@ -8,11 +8,10 @@ import (
 )
 
 func TestNewBase(test *testing.T) {
-	piece := NewBase(
-		models.Pawn,
-		models.White,
-		models.Position{File: 2, Rank: 3},
-	)
+	piece := NewBase(models.Pawn, models.White, models.Position{
+		File: 2,
+		Rank: 3,
+	})
 
 	expectedPiece := Base{
 		kind:  models.Pawn,
@@ -22,10 +21,7 @@ func TestNewBase(test *testing.T) {
 			Rank: 3,
 		},
 	}
-	if !reflect.DeepEqual(
-		piece,
-		expectedPiece,
-	) {
+	if !reflect.DeepEqual(piece, expectedPiece) {
 		test.Fail()
 	}
 }
@@ -61,17 +57,12 @@ func TestBasePosition(test *testing.T) {
 		File: 2,
 		Rank: 3,
 	}
-	if !reflect.DeepEqual(
-		position,
-		expectedPosition,
-	) {
+	if !reflect.DeepEqual(position, expectedPosition) {
 		test.Fail()
 	}
 }
 
-func TestBaseApplyPosition(
-	test *testing.T,
-) {
+func TestBaseApplyPosition(test *testing.T) {
 	piece := Base{
 		kind:  models.Pawn,
 		color: models.White,
@@ -80,12 +71,10 @@ func TestBaseApplyPosition(
 			Rank: 3,
 		},
 	}
-	nextPiece := piece.ApplyPosition(
-		models.Position{
-			File: 4,
-			Rank: 2,
-		},
-	)
+	nextPiece := piece.ApplyPosition(models.Position{
+		File: 4,
+		Rank: 2,
+	})
 
 	expectedPiece := Base{
 		kind:  models.Pawn,
@@ -95,10 +84,7 @@ func TestBaseApplyPosition(
 			Rank: 3,
 		},
 	}
-	if !reflect.DeepEqual(
-		piece,
-		expectedPiece,
-	) {
+	if !reflect.DeepEqual(piece, expectedPiece) {
 		test.Fail()
 	}
 
@@ -110,10 +96,7 @@ func TestBaseApplyPosition(
 			Rank: 2,
 		},
 	}
-	if !reflect.DeepEqual(
-		nextPiece,
-		expectedNextPiece,
-	) {
+	if !reflect.DeepEqual(nextPiece, expectedNextPiece) {
 		test.Fail()
 	}
 }

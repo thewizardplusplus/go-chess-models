@@ -8,19 +8,13 @@ import (
 type King struct{ Base }
 
 // NewKing ...
-func NewKing(
-	color models.Color,
-	position models.Position,
-) King {
-	kind := models.King
-	base := NewBase(kind, color, position)
+func NewKing(color models.Color, position models.Position) King {
+	base := NewBase(models.King, color, position)
 	return King{base}
 }
 
 // ApplyPosition ...
-func (piece King) ApplyPosition(
-	position models.Position,
-) models.Piece {
+func (piece King) ApplyPosition(position models.Position) models.Piece {
 	base := piece.Base.ApplyPosition(position)
 	return King{base}
 }

@@ -9,10 +9,10 @@ import (
 )
 
 func TestNewQueen(test *testing.T) {
-	piece := NewQueen(
-		models.White,
-		models.Position{File: 2, Rank: 3},
-	)
+	piece := NewQueen(models.White, models.Position{
+		File: 2,
+		Rank: 3,
+	})
 
 	expectedPiece := Queen{
 		Base: Base{
@@ -24,27 +24,20 @@ func TestNewQueen(test *testing.T) {
 			},
 		},
 	}
-	if !reflect.DeepEqual(
-		piece,
-		expectedPiece,
-	) {
+	if !reflect.DeepEqual(piece, expectedPiece) {
 		test.Fail()
 	}
 }
 
-func TestQueenApplyPosition(
-	test *testing.T,
-) {
-	piece := NewQueen(
-		models.White,
-		models.Position{File: 2, Rank: 3},
-	)
-	nextPiece := piece.ApplyPosition(
-		models.Position{
-			File: 4,
-			Rank: 2,
-		},
-	)
+func TestQueenApplyPosition(test *testing.T) {
+	piece := NewQueen(models.White, models.Position{
+		File: 2,
+		Rank: 3,
+	})
+	nextPiece := piece.ApplyPosition(models.Position{
+		File: 4,
+		Rank: 2,
+	})
 
 	expectedPiece := Queen{
 		Base: Base{
@@ -56,10 +49,7 @@ func TestQueenApplyPosition(
 			},
 		},
 	}
-	if !reflect.DeepEqual(
-		piece,
-		expectedPiece,
-	) {
+	if !reflect.DeepEqual(piece, expectedPiece) {
 		test.Fail()
 	}
 
@@ -73,10 +63,7 @@ func TestQueenApplyPosition(
 			},
 		},
 	}
-	if !reflect.DeepEqual(
-		nextPiece,
-		expectedNextPiece,
-	) {
+	if !reflect.DeepEqual(nextPiece, expectedNextPiece) {
 		test.Fail()
 	}
 }
@@ -93,7 +80,7 @@ func TestQueenCheckMove(test *testing.T) {
 	}
 
 	for _, data := range []data{
-		data{
+		{
 			args: args{
 				boardInFEN: "5/5/2Q2/5/5",
 				position: models.Position{
@@ -102,7 +89,7 @@ func TestQueenCheckMove(test *testing.T) {
 				},
 			},
 			wantMoves: []models.Move{
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -112,7 +99,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 0,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -122,7 +109,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 0,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -132,7 +119,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 0,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -142,7 +129,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 1,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -152,7 +139,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 1,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -162,7 +149,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 1,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -172,7 +159,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 2,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -182,7 +169,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 2,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -192,7 +179,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 2,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -202,7 +189,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 2,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -212,7 +199,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 3,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -222,7 +209,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 3,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -232,7 +219,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 3,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -242,7 +229,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 4,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -252,7 +239,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 4,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -265,7 +252,7 @@ func TestQueenCheckMove(test *testing.T) {
 			},
 			wantErr: nil,
 		},
-		data{
+		{
 			args: args{
 				boardInFEN: "5/5/1pQ2/1pp2/5",
 				position: models.Position{
@@ -274,7 +261,7 @@ func TestQueenCheckMove(test *testing.T) {
 				},
 			},
 			wantMoves: []models.Move{
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -284,7 +271,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 0,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -294,7 +281,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 1,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -304,7 +291,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 1,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -314,7 +301,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 1,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -324,7 +311,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 2,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -334,7 +321,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 2,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -344,7 +331,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 2,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -354,7 +341,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 3,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -364,7 +351,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 3,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -374,7 +361,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 3,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -384,7 +371,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 4,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -394,7 +381,7 @@ func TestQueenCheckMove(test *testing.T) {
 						Rank: 4,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -408,33 +395,20 @@ func TestQueenCheckMove(test *testing.T) {
 			wantErr: nil,
 		},
 	} {
-		storage, err := uci.DecodePieceStorage(
-			data.args.boardInFEN,
-			NewPiece,
-			models.NewBoard,
-		)
+		storage, err :=
+			uci.DecodePieceStorage(data.args.boardInFEN, NewPiece, models.NewBoard)
 		if err != nil {
 			test.Fail()
 			continue
 		}
 
-		generator := models.MoveGenerator{}
-		gotMoves, gotErr :=
-			generator.MovesForPosition(
-				storage,
-				data.args.position,
-			)
+		var generator models.MoveGenerator
+		gotMoves, gotErr := generator.MovesForPosition(storage, data.args.position)
 
-		if !reflect.DeepEqual(
-			gotMoves,
-			data.wantMoves,
-		) {
+		if !reflect.DeepEqual(gotMoves, data.wantMoves) {
 			test.Fail()
 		}
-		if !reflect.DeepEqual(
-			gotErr,
-			data.wantErr,
-		) {
+		if !reflect.DeepEqual(gotErr, data.wantErr) {
 			test.Fail()
 		}
 	}

@@ -8,19 +8,13 @@ import (
 type Bishop struct{ Base }
 
 // NewBishop ...
-func NewBishop(
-	color models.Color,
-	position models.Position,
-) Bishop {
-	kind := models.Bishop
-	base := NewBase(kind, color, position)
+func NewBishop(color models.Color, position models.Position) Bishop {
+	base := NewBase(models.Bishop, color, position)
 	return Bishop{base}
 }
 
 // ApplyPosition ...
-func (piece Bishop) ApplyPosition(
-	position models.Position,
-) models.Piece {
+func (piece Bishop) ApplyPosition(position models.Position) models.Piece {
 	base := piece.Base.ApplyPosition(position)
 	return Bishop{base}
 }
@@ -37,17 +31,13 @@ func (piece Bishop) CheckMove(
 		return false
 	}
 
-	// if file in the move are descending,
-	// these will be scanned from a finish
+	// if file in the move are descending, these will be scanned from a finish
 	// to a start (see the search() function)
 	//
-	// scanning direction of ranks
-	// should correspond to it
-	rankStart, rankFinish :=
-		start.Rank, finish.Rank
+	// scanning direction of ranks should correspond to it
+	rankStart, rankFinish := start.Rank, finish.Rank
 	if start.File > finish.File {
-		rankStart, rankFinish =
-			rankFinish, rankStart
+		rankStart, rankFinish = rankFinish, rankStart
 	}
 
 	rankSign := 1
@@ -56,17 +46,12 @@ func (piece Bishop) CheckMove(
 	}
 
 	fileMin := min(start.File, finish.File)
-	ok := search(
-		storage,
-		start.File,
-		finish.File,
-		func(i int) models.Position {
-			step := i - fileMin
-			return models.Position{
-				File: i,
-				Rank: rankStart + step*rankSign,
-			}
-		},
-	)
+	ok := search(storage, start.File, finish.File, func(i int) models.Position {
+		step := i - fileMin
+		return models.Position{
+			File: i,
+			Rank: rankStart + step*rankSign,
+		}
+	})
 	return !ok
 }

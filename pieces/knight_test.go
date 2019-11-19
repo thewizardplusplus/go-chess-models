@@ -9,10 +9,10 @@ import (
 )
 
 func TestNewKnight(test *testing.T) {
-	piece := NewKnight(
-		models.White,
-		models.Position{File: 2, Rank: 3},
-	)
+	piece := NewKnight(models.White, models.Position{
+		File: 2,
+		Rank: 3,
+	})
 
 	expectedPiece := Knight{
 		Base: Base{
@@ -24,27 +24,20 @@ func TestNewKnight(test *testing.T) {
 			},
 		},
 	}
-	if !reflect.DeepEqual(
-		piece,
-		expectedPiece,
-	) {
+	if !reflect.DeepEqual(piece, expectedPiece) {
 		test.Fail()
 	}
 }
 
-func TestKnightApplyPosition(
-	test *testing.T,
-) {
-	piece := NewKnight(
-		models.White,
-		models.Position{File: 2, Rank: 3},
-	)
-	nextPiece := piece.ApplyPosition(
-		models.Position{
-			File: 4,
-			Rank: 2,
-		},
-	)
+func TestKnightApplyPosition(test *testing.T) {
+	piece := NewKnight(models.White, models.Position{
+		File: 2,
+		Rank: 3,
+	})
+	nextPiece := piece.ApplyPosition(models.Position{
+		File: 4,
+		Rank: 2,
+	})
 
 	expectedPiece := Knight{
 		Base: Base{
@@ -56,10 +49,7 @@ func TestKnightApplyPosition(
 			},
 		},
 	}
-	if !reflect.DeepEqual(
-		piece,
-		expectedPiece,
-	) {
+	if !reflect.DeepEqual(piece, expectedPiece) {
 		test.Fail()
 	}
 
@@ -73,33 +63,27 @@ func TestKnightApplyPosition(
 			},
 		},
 	}
-	if !reflect.DeepEqual(
-		nextPiece,
-		expectedNextPiece,
-	) {
+	if !reflect.DeepEqual(nextPiece, expectedNextPiece) {
 		test.Fail()
 	}
 }
 
 func TestKnightCheckMove(test *testing.T) {
-	storage, err := uci.DecodePieceStorage(
-		"5/5/2N2/5/5",
-		NewPiece,
-		models.NewBoard,
-	)
+	storage, err :=
+		uci.DecodePieceStorage("5/5/2N2/5/5", NewPiece, models.NewBoard)
 	if err != nil {
 		test.Fail()
 		return
 	}
 
-	generator := models.MoveGenerator{}
-	moves, err := generator.MovesForPosition(
-		storage,
-		models.Position{File: 2, Rank: 2},
-	)
+	var generator models.MoveGenerator
+	moves, err := generator.MovesForPosition(storage, models.Position{
+		File: 2,
+		Rank: 2,
+	})
 
 	expectedMoves := []models.Move{
-		models.Move{
+		{
 			Start: models.Position{
 				File: 2,
 				Rank: 2,
@@ -109,7 +93,7 @@ func TestKnightCheckMove(test *testing.T) {
 				Rank: 0,
 			},
 		},
-		models.Move{
+		{
 			Start: models.Position{
 				File: 2,
 				Rank: 2,
@@ -119,7 +103,7 @@ func TestKnightCheckMove(test *testing.T) {
 				Rank: 0,
 			},
 		},
-		models.Move{
+		{
 			Start: models.Position{
 				File: 2,
 				Rank: 2,
@@ -129,7 +113,7 @@ func TestKnightCheckMove(test *testing.T) {
 				Rank: 1,
 			},
 		},
-		models.Move{
+		{
 			Start: models.Position{
 				File: 2,
 				Rank: 2,
@@ -139,7 +123,7 @@ func TestKnightCheckMove(test *testing.T) {
 				Rank: 1,
 			},
 		},
-		models.Move{
+		{
 			Start: models.Position{
 				File: 2,
 				Rank: 2,
@@ -149,7 +133,7 @@ func TestKnightCheckMove(test *testing.T) {
 				Rank: 3,
 			},
 		},
-		models.Move{
+		{
 			Start: models.Position{
 				File: 2,
 				Rank: 2,
@@ -159,7 +143,7 @@ func TestKnightCheckMove(test *testing.T) {
 				Rank: 3,
 			},
 		},
-		models.Move{
+		{
 			Start: models.Position{
 				File: 2,
 				Rank: 2,
@@ -169,7 +153,7 @@ func TestKnightCheckMove(test *testing.T) {
 				Rank: 4,
 			},
 		},
-		models.Move{
+		{
 			Start: models.Position{
 				File: 2,
 				Rank: 2,
@@ -180,10 +164,7 @@ func TestKnightCheckMove(test *testing.T) {
 			},
 		},
 	}
-	if !reflect.DeepEqual(
-		moves,
-		expectedMoves,
-	) {
+	if !reflect.DeepEqual(moves, expectedMoves) {
 		test.Fail()
 	}
 	if err != nil {

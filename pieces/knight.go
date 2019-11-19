@@ -8,19 +8,13 @@ import (
 type Knight struct{ Base }
 
 // NewKnight ...
-func NewKnight(
-	color models.Color,
-	position models.Position,
-) Knight {
-	kind := models.Knight
-	base := NewBase(kind, color, position)
+func NewKnight(color models.Color, position models.Position) Knight {
+	base := NewBase(models.Knight, color, position)
 	return Knight{base}
 }
 
 // ApplyPosition ...
-func (piece Knight) ApplyPosition(
-	position models.Position,
-) models.Piece {
+func (piece Knight) ApplyPosition(position models.Position) models.Piece {
 	base := piece.Base.ApplyPosition(position)
 	return Knight{base}
 }
@@ -33,6 +27,5 @@ func (piece Knight) CheckMove(
 	start, finish := move.Start, move.Finish
 	fileSteps := steps(start.File, finish.File)
 	rankSteps := steps(start.Rank, finish.Rank)
-	return fileSteps == 1 && rankSteps == 2 ||
-		fileSteps == 2 && rankSteps == 1
+	return fileSteps == 1 && rankSteps == 2 || fileSteps == 2 && rankSteps == 1
 }

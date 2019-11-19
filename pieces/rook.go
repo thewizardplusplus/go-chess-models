@@ -8,19 +8,13 @@ import (
 type Rook struct{ Base }
 
 // NewRook ...
-func NewRook(
-	color models.Color,
-	position models.Position,
-) Rook {
-	kind := models.Rook
-	base := NewBase(kind, color, position)
+func NewRook(color models.Color, position models.Position) Rook {
+	base := NewBase(models.Rook, color, position)
 	return Rook{base}
 }
 
 // ApplyPosition ...
-func (piece Rook) ApplyPosition(
-	position models.Position,
-) models.Piece {
+func (piece Rook) ApplyPosition(position models.Position) models.Piece {
 	base := piece.Base.ApplyPosition(position)
 	return Rook{base}
 }
@@ -40,29 +34,19 @@ func (piece Rook) CheckMove(
 	var ok bool
 	switch 0 {
 	case fileSteps:
-		ok = search(
-			storage,
-			start.Rank,
-			finish.Rank,
-			func(i int) models.Position {
-				return models.Position{
-					File: start.File,
-					Rank: i,
-				}
-			},
-		)
+		ok = search(storage, start.Rank, finish.Rank, func(i int) models.Position {
+			return models.Position{
+				File: start.File,
+				Rank: i,
+			}
+		})
 	case rankSteps:
-		ok = search(
-			storage,
-			start.File,
-			finish.File,
-			func(i int) models.Position {
-				return models.Position{
-					File: i,
-					Rank: start.Rank,
-				}
-			},
-		)
+		ok = search(storage, start.File, finish.File, func(i int) models.Position {
+			return models.Position{
+				File: i,
+				Rank: start.Rank,
+			}
+		})
 	}
 
 	return !ok

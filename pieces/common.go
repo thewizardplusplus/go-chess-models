@@ -25,13 +25,12 @@ func search(
 	a int,
 	b int,
 	makePosition func(i int) models.Position,
-) bool {
+) (ok bool) {
 	start := min(a, b)
 	finish := max(a, b)
 	for i := start + 1; i < finish; i++ {
 		position := makePosition(i)
-		_, ok := storage.Piece(position)
-		if ok {
+		if _, ok := storage.Piece(position); ok {
 			return true
 		}
 	}

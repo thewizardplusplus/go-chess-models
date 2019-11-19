@@ -19,34 +19,36 @@ func TestNewPiece(test *testing.T) {
 	}
 
 	for _, data := range []data{
-		data{
+		{
 			args: args{
-				kind:     models.King,
-				color:    models.White,
-				position: models.Position{2, 3},
+				kind:  models.King,
+				color: models.White,
+				position: models.Position{
+					File: 2,
+					Rank: 3,
+				},
 			},
-			want: NewKing(
-				models.White,
-				models.Position{2, 3},
-			),
+			want: NewKing(models.White, models.Position{
+				File: 2,
+				Rank: 3,
+			}),
 		},
-		data{
+		{
 			args: args{
-				kind:     models.Queen,
-				color:    models.Black,
-				position: models.Position{4, 2},
+				kind:  models.Queen,
+				color: models.Black,
+				position: models.Position{
+					File: 4,
+					Rank: 2,
+				},
 			},
-			want: NewQueen(
-				models.Black,
-				models.Position{4, 2},
-			),
+			want: NewQueen(models.Black, models.Position{
+				File: 4,
+				Rank: 2,
+			}),
 		},
 	} {
-		got := NewPiece(
-			data.args.kind,
-			data.args.color,
-			data.args.position,
-		)
+		got := NewPiece(data.args.kind, data.args.color, data.args.position)
 
 		if !reflect.DeepEqual(got, data.want) {
 			test.Fail()

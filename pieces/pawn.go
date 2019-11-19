@@ -8,19 +8,13 @@ import (
 type Pawn struct{ Base }
 
 // NewPawn ...
-func NewPawn(
-	color models.Color,
-	position models.Position,
-) Pawn {
-	kind := models.Pawn
-	base := NewBase(kind, color, position)
+func NewPawn(color models.Color, position models.Position) Pawn {
+	base := NewBase(models.Pawn, color, position)
 	return Pawn{base}
 }
 
 // ApplyPosition ...
-func (piece Pawn) ApplyPosition(
-	position models.Position,
-) models.Piece {
+func (piece Pawn) ApplyPosition(position models.Position) models.Piece {
 	base := piece.Base.ApplyPosition(position)
 	return Pawn{base}
 }
@@ -31,10 +25,8 @@ func (piece Pawn) CheckMove(
 	storage models.PieceStorage,
 ) bool {
 	start, finish := move.Start, move.Finish
-
-	_, ok := storage.Piece(finish)
 	fileSteps := steps(start.File, finish.File)
-	switch ok {
+	switch _, ok := storage.Piece(finish); ok {
 	case false:
 		if fileSteps != 0 {
 			return false

@@ -9,10 +9,10 @@ import (
 )
 
 func TestNewRook(test *testing.T) {
-	piece := NewRook(
-		models.White,
-		models.Position{File: 2, Rank: 3},
-	)
+	piece := NewRook(models.White, models.Position{
+		File: 2,
+		Rank: 3,
+	})
 
 	expectedPiece := Rook{
 		Base: Base{
@@ -24,27 +24,20 @@ func TestNewRook(test *testing.T) {
 			},
 		},
 	}
-	if !reflect.DeepEqual(
-		piece,
-		expectedPiece,
-	) {
+	if !reflect.DeepEqual(piece, expectedPiece) {
 		test.Fail()
 	}
 }
 
-func TestRookApplyPosition(
-	test *testing.T,
-) {
-	piece := NewRook(
-		models.White,
-		models.Position{File: 2, Rank: 3},
-	)
-	nextPiece := piece.ApplyPosition(
-		models.Position{
-			File: 4,
-			Rank: 2,
-		},
-	)
+func TestRookApplyPosition(test *testing.T) {
+	piece := NewRook(models.White, models.Position{
+		File: 2,
+		Rank: 3,
+	})
+	nextPiece := piece.ApplyPosition(models.Position{
+		File: 4,
+		Rank: 2,
+	})
 
 	expectedPiece := Rook{
 		Base: Base{
@@ -56,10 +49,7 @@ func TestRookApplyPosition(
 			},
 		},
 	}
-	if !reflect.DeepEqual(
-		piece,
-		expectedPiece,
-	) {
+	if !reflect.DeepEqual(piece, expectedPiece) {
 		test.Fail()
 	}
 
@@ -73,10 +63,7 @@ func TestRookApplyPosition(
 			},
 		},
 	}
-	if !reflect.DeepEqual(
-		nextPiece,
-		expectedNextPiece,
-	) {
+	if !reflect.DeepEqual(nextPiece, expectedNextPiece) {
 		test.Fail()
 	}
 }
@@ -93,7 +80,7 @@ func TestRookCheckMove(test *testing.T) {
 	}
 
 	for _, data := range []data{
-		data{
+		{
 			args: args{
 				boardInFEN: "5/5/2R2/5/5",
 				position: models.Position{
@@ -102,7 +89,7 @@ func TestRookCheckMove(test *testing.T) {
 				},
 			},
 			wantMoves: []models.Move{
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -112,7 +99,7 @@ func TestRookCheckMove(test *testing.T) {
 						Rank: 0,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -122,7 +109,7 @@ func TestRookCheckMove(test *testing.T) {
 						Rank: 1,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -132,7 +119,7 @@ func TestRookCheckMove(test *testing.T) {
 						Rank: 2,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -142,7 +129,7 @@ func TestRookCheckMove(test *testing.T) {
 						Rank: 2,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -152,7 +139,7 @@ func TestRookCheckMove(test *testing.T) {
 						Rank: 2,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -162,7 +149,7 @@ func TestRookCheckMove(test *testing.T) {
 						Rank: 2,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -172,7 +159,7 @@ func TestRookCheckMove(test *testing.T) {
 						Rank: 3,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -185,7 +172,7 @@ func TestRookCheckMove(test *testing.T) {
 			},
 			wantErr: nil,
 		},
-		data{
+		{
 			args: args{
 				boardInFEN: "5/5/1pR2/2p2/5",
 				position: models.Position{
@@ -194,7 +181,7 @@ func TestRookCheckMove(test *testing.T) {
 				},
 			},
 			wantMoves: []models.Move{
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -204,7 +191,7 @@ func TestRookCheckMove(test *testing.T) {
 						Rank: 1,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -214,7 +201,7 @@ func TestRookCheckMove(test *testing.T) {
 						Rank: 2,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -224,7 +211,7 @@ func TestRookCheckMove(test *testing.T) {
 						Rank: 2,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -234,7 +221,7 @@ func TestRookCheckMove(test *testing.T) {
 						Rank: 2,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -244,7 +231,7 @@ func TestRookCheckMove(test *testing.T) {
 						Rank: 3,
 					},
 				},
-				models.Move{
+				{
 					Start: models.Position{
 						File: 2,
 						Rank: 2,
@@ -258,33 +245,20 @@ func TestRookCheckMove(test *testing.T) {
 			wantErr: nil,
 		},
 	} {
-		storage, err := uci.DecodePieceStorage(
-			data.args.boardInFEN,
-			NewPiece,
-			models.NewBoard,
-		)
+		storage, err :=
+			uci.DecodePieceStorage(data.args.boardInFEN, NewPiece, models.NewBoard)
 		if err != nil {
 			test.Fail()
 			continue
 		}
 
-		generator := models.MoveGenerator{}
-		gotMoves, gotErr :=
-			generator.MovesForPosition(
-				storage,
-				data.args.position,
-			)
+		var generator models.MoveGenerator
+		gotMoves, gotErr := generator.MovesForPosition(storage, data.args.position)
 
-		if !reflect.DeepEqual(
-			gotMoves,
-			data.wantMoves,
-		) {
+		if !reflect.DeepEqual(gotMoves, data.wantMoves) {
 			test.Fail()
 		}
-		if !reflect.DeepEqual(
-			gotErr,
-			data.wantErr,
-		) {
+		if !reflect.DeepEqual(gotErr, data.wantErr) {
 			test.Fail()
 		}
 	}
