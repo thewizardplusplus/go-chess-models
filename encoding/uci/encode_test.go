@@ -183,6 +183,42 @@ func TestEncodePiece(test *testing.T) {
 			},
 			want: "q",
 		},
+		{
+			args: args{
+				piece: MockPiece{
+					kind:  models.Rook,
+					color: models.White,
+				},
+			},
+			want: "R",
+		},
+		{
+			args: args{
+				piece: MockPiece{
+					kind:  models.Bishop,
+					color: models.Black,
+				},
+			},
+			want: "b",
+		},
+		{
+			args: args{
+				piece: MockPiece{
+					kind:  models.Knight,
+					color: models.White,
+				},
+			},
+			want: "N",
+		},
+		{
+			args: args{
+				piece: MockPiece{
+					kind:  models.Pawn,
+					color: models.Black,
+				},
+			},
+			want: "p",
+		},
 	} {
 		got := EncodePiece(data.args.piece)
 
