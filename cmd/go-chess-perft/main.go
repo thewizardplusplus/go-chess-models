@@ -4,6 +4,9 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"os"
+	"runtime"
+	"runtime/pprof"
 
 	"github.com/thewizardplusplus/go-chess-cli/encoding/ascii"
 	models "github.com/thewizardplusplus/go-chess-models"
@@ -17,7 +20,27 @@ func main() {
 	color := flag.String("color", "white",
 		"color that moves first (allowed: black, white)")
 	deep := flag.Int("deep", 5, "analysis deep")
+	cpuProfile := flag.String("cpuProfile", "", "file for CPU profile writing")
+	memoryProfile := flag.String("memoryProfile", "",
+		"file for memory profile writing")
 	flag.Parse()
+
+	if *cpuProfile != "" {
+		cpuProfileFile, err := os.Create(*cpuProfile)
+		if err != nil {
+			log.Fatalf("unable to create CPU profile: %s", err)
+		}
+		defer func() {
+			if err := cpuProfileFile.Close(); err != nil {
+				log.Fatalf("unable to close the CPU profile: %s", err)
+			}
+		}()
+
+		if err := pprof.StartCPUProfile(cpuProfileFile); err != nil {
+			log.Fatalf("unable to start CPU profiling: %s", err)
+		}
+		defer pprof.StopCPUProfile()
+	}
 
 	storage, err := uci.DecodePieceStorage(*fen, pieces.NewPiece, models.NewBoard)
 	if err != nil {
@@ -31,4 +54,22 @@ func main() {
 
 	moveCount := models.Perft(storage, parsedColor, *deep, nil)
 	fmt.Printf("%d moves\n", moveCount)
+
+	if *memoryProfile != "" {
+		memoryProfileFile, err := os.Create(*memoryProfile)
+		if err != nil {
+			log.Fatalf("unable to create memory profile: %s", err)
+		}
+		defer func() {
+			if err := memoryProfileFile.Close(); err != nil {
+				log.Fatalf("unable to close the memory profile: %s", err)
+			}
+		}()
+
+		runtime.GC() // get up-to-date statistics
+
+		if err := pprof.WriteHeapProfile(memoryProfileFile); err != nil {
+			log.Fatalf("unable to write memory profile: %s", err)
+		}
+	}
 }
