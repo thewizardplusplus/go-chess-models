@@ -1,19 +1,5 @@
 package chessmodels
 
-import (
-	"errors"
-)
-
-// ...
-var (
-	ErrNoMove         = errors.New("no move")
-	ErrOutOfSize      = errors.New("out of size")
-	ErrNoPiece        = errors.New("no piece")
-	ErrFriendlyTarget = errors.New("friendly target")
-	ErrIllegalMove    = errors.New("illegal move")
-	ErrKingCapture    = errors.New("king capture")
-)
-
 // PieceStorage ...
 type PieceStorage interface {
 	Size() Size
@@ -76,36 +62,5 @@ func (board Board) ApplyMove(move Move) PieceStorage {
 //
 // It doesn't check for a check before or after the move.
 func (board Board) CheckMove(move Move) error {
-	if move.IsEmpty() {
-		return ErrNoMove
-	}
-
-	if !board.size.HasMove(move) {
-		return ErrOutOfSize
-	}
-
-	piece, ok := board.pieces[move.Start]
-	if !ok {
-		return ErrNoPiece
-	}
-
-	target, hasTarget := board.pieces[move.Finish]
-	if hasTarget && target.Color() == piece.Color() {
-		return ErrFriendlyTarget
-	}
-
-	if !piece.CheckMove(move, board) {
-		return ErrIllegalMove
-	}
-
-	// this check should be occurred only for legal moves
-	// (i.e. after all rest checks)
-	//
-	// it's necessary because of a wider area of ​​influence of this error
-	// compared to rest ones
-	if hasTarget && target.Kind() == King {
-		return ErrKingCapture
-	}
-
-	return nil
+	return CheckMove(board, move)
 }
