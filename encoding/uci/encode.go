@@ -12,7 +12,7 @@ import (
 //
 // It converts the position to pure algebraic coordinate notation.
 func EncodePosition(position models.Position) string {
-	file := string(position.File + minFileCount)
+	file := string(rune(position.File + minFileCount))
 	rank := strconv.Itoa(position.Rank + 1)
 	return file + rank
 }
