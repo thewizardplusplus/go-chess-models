@@ -248,6 +248,10 @@ func main() {
 }
 ```
 
+## Utilities
+
+- [go-chess-perft](cmd/go-chess-perft) &mdash; utility for counting all possible moves (based on the [perft](https://www.chessprogramming.org/Perft) function)
+
 ## License
 
 The MIT License (MIT)
