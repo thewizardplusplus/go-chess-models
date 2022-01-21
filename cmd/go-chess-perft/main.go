@@ -53,7 +53,11 @@ func main() {
 	}
 
 	moveCount := models.Perft(storage, parsedColor, *deep, nil)
-	fmt.Printf("%d moves\n", moveCount)
+	var unitEnding string
+	if moveCount != 1 {
+		unitEnding = "s"
+	}
+	fmt.Printf("%d move%s\n", moveCount, unitEnding)
 
 	if *memoryProfile != "" {
 		memoryProfileFile, err := os.Create(*memoryProfile)
