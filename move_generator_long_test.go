@@ -368,8 +368,12 @@ func TestPerft(test *testing.T) {
 		got := models.Perft(storage, data.args.color, data.args.deep, func(
 			move models.Move,
 			count int,
+			deep int,
 		) {
-			moves = append(moves, fmt.Sprintf("%v: %d", move, count))
+			// log only the top-level moves
+			if deep == data.args.deep {
+				moves = append(moves, fmt.Sprintf("%v: %d", move, count))
+			}
 		})
 
 		if got != data.want {

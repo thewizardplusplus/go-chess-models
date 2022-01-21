@@ -61,7 +61,7 @@ func (generator MoveGenerator) MovesForPosition(
 }
 
 // PerftHandler ...
-type PerftHandler func(move Move, count int)
+type PerftHandler func(move Move, count int, deep int)
 
 // Perft ...
 func Perft(
@@ -90,10 +90,10 @@ func Perft(
 			nextStorage,
 			nextColor,
 			deep-1,
-			nil, // handle only the top-level moves
+			handler,
 		)
 		if handler != nil {
-			handler(move, moveCount)
+			handler(move, moveCount, deep)
 		}
 
 		count += moveCount
