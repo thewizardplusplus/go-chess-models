@@ -148,6 +148,38 @@ func TestDecodePiece(test *testing.T) {
 			wantErr: false,
 		},
 		{
+			args: args{'R'},
+			wantPiece: pieces.NewRook(
+				models.White,
+				models.Position{},
+			),
+			wantErr: false,
+		},
+		{
+			args: args{'b'},
+			wantPiece: pieces.NewBishop(
+				models.Black,
+				models.Position{},
+			),
+			wantErr: false,
+		},
+		{
+			args: args{'N'},
+			wantPiece: pieces.NewKnight(
+				models.White,
+				models.Position{},
+			),
+			wantErr: false,
+		},
+		{
+			args: args{'p'},
+			wantPiece: pieces.NewPawn(
+				models.Black,
+				models.Position{},
+			),
+			wantErr: false,
+		},
+		{
 			args:      args{'a'},
 			wantPiece: nil,
 			wantErr:   true,
