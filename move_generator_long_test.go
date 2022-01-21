@@ -365,7 +365,7 @@ func TestPerft(test *testing.T) {
 		}
 
 		var moves []string
-		got := perft(storage, data.args.color, data.args.deep, func(
+		got := models.Perft(storage, data.args.color, data.args.deep, func(
 			move models.Move,
 			count int,
 		) {
@@ -379,42 +379,4 @@ func TestPerft(test *testing.T) {
 			test.Errorf(message, prefix, got, data.want)
 		}
 	}
-}
-
-func perft(
-	storage models.PieceStorage,
-	color models.Color,
-	deep int,
-	logger func(move models.Move, count int),
-) int {
-	// check for a check should be first, including before a termination check,
-	// because a terminated evaluation doesn't make sense for a check position
-	var generator models.MoveGenerator
-	moves, err := generator.MovesForColor(storage, color)
-	if err != nil {
-		return 0
-	}
-
-	if deep == 0 {
-		return 1
-	}
-
-	var count int
-	for _, move := range moves {
-		nextStorage := storage.ApplyMove(move)
-		nextColor := color.Negative()
-		moveCount := perft(
-			nextStorage,
-			nextColor,
-			deep-1,
-			nil, // log only a top level
-		)
-		if logger != nil {
-			logger(move, moveCount)
-		}
-
-		count += moveCount
-	}
-
-	return count
 }
