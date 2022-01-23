@@ -31,20 +31,6 @@ func (group ByPosition) Less(
 	return a.File < b.File
 }
 
-func ExampleDecodePosition() {
-	position, _ := uci.DecodePosition("c3")
-	fmt.Printf("%+v\n", position)
-
-	// Output: {File:2 Rank:2}
-}
-
-func ExampleEncodePosition() {
-	position := uci.EncodePosition(models.Position{File: 2, Rank: 2})
-	fmt.Printf("%v\n", position)
-
-	// Output: c3
-}
-
 func ExampleDecodeMove() {
 	move, _ := uci.DecodeMove("d4c3")
 	fmt.Printf("%+v\n", move)
@@ -60,20 +46,6 @@ func ExampleEncodeMove() {
 	fmt.Printf("%v\n", move)
 
 	// Output: d4c3
-}
-
-func ExampleDecodePiece() {
-	piece, _ := uci.DecodePiece('B', pieces.NewPiece)
-	fmt.Printf("%+v\n", piece)
-
-	// Output: {Base:{kind:3 color:1 position:{File:0 Rank:0}}}
-}
-
-func ExampleEncodePiece() {
-	fen := uci.EncodePiece(pieces.NewBishop(models.White, models.Position{}))
-	fmt.Printf("%v\n", fen)
-
-	// Output: B
 }
 
 func ExampleDecodePieceStorage() {
