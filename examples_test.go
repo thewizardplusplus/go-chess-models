@@ -74,3 +74,36 @@ func ExampleBoard_ApplyMove() {
 	// [{Base:{kind:2 color:0 position:{File:2 Rank:2}}} {Base:{kind:3 color:1 position:{File:3 Rank:3}}}]
 	// [{Base:{kind:3 color:1 position:{File:2 Rank:2}}}]
 }
+
+func ExampleMoveGenerator_MovesForColor() {
+	board := models.NewBoard(models.Size{Width: 5, Height: 5}, []models.Piece{
+		pieces.NewRook(models.Black, models.Position{File: 2, Rank: 2}),
+		pieces.NewKnight(models.White, models.Position{File: 3, Rank: 3}),
+		pieces.NewPawn(models.White, models.Position{File: 4, Rank: 3}),
+	})
+
+	var generator models.MoveGenerator
+	moves, _ := generator.MovesForColor(board, models.White)
+
+	// sorting only by the final point will be sufficient for the reproducibility
+	// of this example
+	sort.Slice(moves, func(i int, j int) bool {
+		a, b := moves[i].Finish, moves[j].Finish
+		if a.File == b.File {
+			return a.Rank < b.Rank
+		}
+
+		return a.File < b.File
+	})
+
+	for _, move := range moves {
+		fmt.Printf("%+v\n", move)
+	}
+
+	// Output:
+	// {Start:{File:3 Rank:3} Finish:{File:1 Rank:2}}
+	// {Start:{File:3 Rank:3} Finish:{File:1 Rank:4}}
+	// {Start:{File:3 Rank:3} Finish:{File:2 Rank:1}}
+	// {Start:{File:3 Rank:3} Finish:{File:4 Rank:1}}
+	// {Start:{File:4 Rank:3} Finish:{File:4 Rank:4}}
+}
