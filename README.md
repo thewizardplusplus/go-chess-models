@@ -303,4 +303,4 @@ func main() {
 
 The MIT License (MIT)
 
-Copyright &copy; 2019 thewizardplusplus
+Copyright &copy; 2019, 2022 thewizardplusplus
