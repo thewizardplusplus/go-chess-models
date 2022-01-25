@@ -1,5 +1,34 @@
 # Change Log
 
+## [v1.7.1](https://github.com/thewizardplusplus/go-chess-models/tree/v1.7.1) (2022-01-25)
+
+Moving the `chessmodels.perft()` function from the tests to the main code; adding the `go-chess-perft` tool and the example for the `chessmodels.MoveGenerator.MovesForColor()` method; bug fixing.
+
+- new features:
+  - transform the `chessmodels.Board.CheckMove()` method to an independent function;
+  - the `chessmodels.Perft()` function:
+    - move the `chessmodels.perft()` function from the tests to the main code;
+    - pass a handler to all levels in the `chessmodels.Perft()` function;
+    - pass a move generator to the `chessmodels.Perft()` function via an interface;
+  - add the `go-chess-perft` tool;
+- bug fixing:
+  - fix rune conversion from an integer to a string in the `uci.EncodePosition()` function;
+  - fix incorrect calculation of the last file in the `uci.EncodePieceStorage()` function;
+- refactoring:
+  - simplify the utility functions in the `pieces` package;
+  - merge the `chessmodels.pieceGroup` type with the `chessmodels.Board` structure;
+- unit testing:
+  - complete the tests:
+    - of the `pieces.NewPiece()` function;
+    - of the `uci.DecodePiece()` function;
+    - of the `uci.EncodePiece()` function;
+  - add the long-playing tests to the Travis CI configuration;
+- examples:
+  - remove the examples:
+    - remove the examples with a mock piece;
+    - remove the redundant examples;
+  - add the example for the `chessmodels.MoveGenerator.MovesForColor()` method.
+
 ## [v1.7](https://github.com/thewizardplusplus/go-chess-models/tree/v1.7) (2019-11-19)
 
 Improving repository decor.
