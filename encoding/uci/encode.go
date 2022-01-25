@@ -82,7 +82,7 @@ func EncodePieceStorage(storage models.PieceStorage) string {
 		}
 
 		// last file
-		if position.File == storage.Size().Height-1 {
+		if position.File == storage.Size().Width-1 {
 			resetShift()
 
 			ranks = append(ranks, rank)

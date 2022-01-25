@@ -397,6 +397,50 @@ func TestEncodePieceStorage(test *testing.T) {
 			},
 			want: "5/K4/1qQ2/1r2R/5",
 		},
+		// specific test for the bug with calculation of the last file
+		{
+			args: args{
+				storage: MockPieceStorage{
+					size: models.Size{
+						Width:  5,
+						Height: 3,
+					},
+					piece: func(position models.Position) (piece models.Piece, ok bool) {
+						switch position {
+						case models.Position{File: 0, Rank: 2}:
+							piece = pieces.NewKing(models.White, models.Position{
+								File: 0,
+								Rank: 2,
+							})
+						case models.Position{File: 1, Rank: 1}:
+							piece = pieces.NewQueen(models.Black, models.Position{
+								File: 1,
+								Rank: 1,
+							})
+						case models.Position{File: 2, Rank: 1}:
+							piece = pieces.NewQueen(models.White, models.Position{
+								File: 2,
+								Rank: 1,
+							})
+						case models.Position{File: 1, Rank: 0}:
+							piece = pieces.NewRook(models.Black, models.Position{
+								File: 1,
+								Rank: 0,
+							})
+						case models.Position{File: 4, Rank: 0}:
+							piece = pieces.NewRook(models.White, models.Position{
+								File: 4,
+								Rank: 0,
+							})
+						}
+
+						ok = piece != nil
+						return piece, ok
+					},
+				},
+			},
+			want: "K4/1qQ2/1r2R",
+		},
 	} {
 		got := EncodePieceStorage(data.args.storage)
 
