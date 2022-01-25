@@ -47,6 +47,62 @@ func TestNewPiece(test *testing.T) {
 				Rank: 2,
 			}),
 		},
+		{
+			args: args{
+				kind:  models.Rook,
+				color: models.White,
+				position: models.Position{
+					File: 2,
+					Rank: 3,
+				},
+			},
+			want: NewRook(models.White, models.Position{
+				File: 2,
+				Rank: 3,
+			}),
+		},
+		{
+			args: args{
+				kind:  models.Bishop,
+				color: models.Black,
+				position: models.Position{
+					File: 4,
+					Rank: 2,
+				},
+			},
+			want: NewBishop(models.Black, models.Position{
+				File: 4,
+				Rank: 2,
+			}),
+		},
+		{
+			args: args{
+				kind:  models.Knight,
+				color: models.White,
+				position: models.Position{
+					File: 2,
+					Rank: 3,
+				},
+			},
+			want: NewKnight(models.White, models.Position{
+				File: 2,
+				Rank: 3,
+			}),
+		},
+		{
+			args: args{
+				kind:  models.Pawn,
+				color: models.Black,
+				position: models.Position{
+					File: 4,
+					Rank: 2,
+				},
+			},
+			want: NewPawn(models.Black, models.Position{
+				File: 4,
+				Rank: 2,
+			}),
+		},
 	} {
 		got := NewPiece(data.args.kind, data.args.color, data.args.position)
 
