@@ -52,7 +52,8 @@ func main() {
 		log.Fatalf("unable to decode the color: %s", err)
 	}
 
-	moveCount := models.Perft(storage, parsedColor, *deep, nil)
+	var generator models.MoveGenerator
+	moveCount := models.Perft(generator, storage, parsedColor, *deep, nil)
 	var unitEnding string
 	if moveCount != 1 {
 		unitEnding = "s"

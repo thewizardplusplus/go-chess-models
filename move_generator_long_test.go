@@ -365,7 +365,8 @@ func TestPerft(test *testing.T) {
 		}
 
 		var moves []string
-		got := models.Perft(storage, data.args.color, data.args.deep, func(
+		var generator models.MoveGenerator
+		got := models.Perft(generator, storage, data.args.color, data.args.deep, func(
 			move models.Move,
 			count int,
 			deep int,

@@ -60,11 +60,17 @@ func (generator MoveGenerator) MovesForPosition(
 	return moves, nil
 }
 
+// PerftMoveGenerator ...
+type PerftMoveGenerator interface {
+	MovesForColor(storage PieceStorage, color Color) ([]Move, error)
+}
+
 // PerftHandler ...
 type PerftHandler func(move Move, count int, deep int)
 
 // Perft ...
 func Perft(
+	generator PerftMoveGenerator,
 	storage PieceStorage,
 	color Color,
 	deep int,
@@ -72,7 +78,6 @@ func Perft(
 ) int {
 	// check for a check should be first, including before a termination check,
 	// because a terminated evaluation doesn't make sense for a check position
-	var generator MoveGenerator
 	moves, err := generator.MovesForColor(storage, color)
 	if err != nil {
 		return 0
@@ -87,6 +92,7 @@ func Perft(
 		nextStorage := storage.ApplyMove(move)
 		nextColor := color.Negative()
 		moveCount := Perft(
+			generator,
 			nextStorage,
 			nextColor,
 			deep-1,
