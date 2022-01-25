@@ -13,6 +13,8 @@ type PieceStorage interface {
 	CheckMove(move Move) error
 }
 
+type pieceGroup map[Position]Piece
+
 // Board ...
 type Board struct {
 	size   Size
@@ -21,8 +23,12 @@ type Board struct {
 
 // NewBoard ...
 func NewBoard(size Size, pieces []Piece) PieceStorage {
-	group := newPieceGroup(pieces)
-	return Board{size, group}
+	pieceGroup := make(pieceGroup)
+	for _, piece := range pieces {
+		pieceGroup[piece.Position()] = piece
+	}
+
+	return Board{size, pieceGroup}
 }
 
 // Size ...
@@ -52,10 +58,17 @@ func (board Board) Pieces() []Piece {
 //
 // It doesn't check that the move is correct.
 func (board Board) ApplyMove(move Move) PieceStorage {
-	pieces := board.pieces.Copy()
-	pieces.Move(move)
+	piece := board.pieces[move.Start]
+	movedPiece := piece.ApplyPosition(move.Finish)
 
-	return Board{board.size, pieces}
+	pieceGroupCopy := pieceGroup{move.Finish: movedPiece}
+	for position, piece := range board.pieces {
+		if position != move.Start && position != move.Finish {
+			pieceGroupCopy[position] = piece
+		}
+	}
+
+	return Board{board.size, pieceGroupCopy}
 }
 
 // CheckMove ...

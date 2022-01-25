@@ -6,6 +6,43 @@ import (
 	"testing"
 )
 
+type MockPiece struct {
+	kind     Kind
+	color    Color
+	position Position
+
+	checkMove func(move Move, storage PieceStorage) bool
+}
+
+func (piece MockPiece) Kind() Kind {
+	return piece.kind
+}
+
+func (piece MockPiece) Color() Color {
+	return piece.color
+}
+
+func (piece MockPiece) Position() Position {
+	return piece.position
+}
+
+func (piece MockPiece) ApplyPosition(position Position) Piece {
+	return MockPiece{
+		kind:      piece.kind,
+		color:     piece.color,
+		position:  position,
+		checkMove: piece.checkMove,
+	}
+}
+
+func (piece MockPiece) CheckMove(move Move, storage PieceStorage) bool {
+	if piece.checkMove == nil {
+		panic("not implemented")
+	}
+
+	return piece.checkMove(move, storage)
+}
+
 type ByPosition []Piece
 
 func (group ByPosition) Len() int {
