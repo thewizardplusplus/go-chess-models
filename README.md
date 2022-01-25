@@ -17,6 +17,7 @@ _**Disclaimer:** this library was written directly on an Android smartphone with
   - universal;
   - individual for all types of pieces;
 - generating moves via filtering from all possible ones;
+- [perft](https://www.chessprogramming.org/Perft) function;
 - using an abstraction of a piece;
 - [Forsyth–Edwards Notation](https://en.wikipedia.org/wiki/Forsyth–Edwards_Notation):
   - parsing:
@@ -30,7 +31,9 @@ _**Disclaimer:** this library was written directly on an Android smartphone with
     - of a move;
     - of a piece kind;
     - of a piece color;
-    - of a board.
+    - of a board;
+- utilities:
+  - utility for counting all possible moves (based on the [perft](https://www.chessprogramming.org/Perft) function).
 
 ## Installation
 
