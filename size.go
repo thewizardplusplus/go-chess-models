@@ -29,5 +29,5 @@ func (size Size) Positions() []Position {
 }
 
 func less(value int, limit int) bool {
-	return 0 <= value && value < limit
+	return value >= 0 && value < limit
 }

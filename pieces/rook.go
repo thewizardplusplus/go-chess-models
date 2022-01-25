@@ -31,23 +31,25 @@ func (piece Rook) CheckMove(
 		return false
 	}
 
-	var ok bool
-	switch 0 {
-	case fileSteps:
-		ok = search(storage, start.Rank, finish.Rank, func(i int) models.Position {
+	var a, b int
+	var makePosition func(i int) models.Position
+	if fileSteps == 0 {
+		a, b = start.Rank, finish.Rank
+		makePosition = func(i int) models.Position {
 			return models.Position{
 				File: start.File,
 				Rank: i,
 			}
-		})
-	case rankSteps:
-		ok = search(storage, start.File, finish.File, func(i int) models.Position {
+		}
+	} else {
+		a, b = start.File, finish.File
+		makePosition = func(i int) models.Position {
 			return models.Position{
 				File: i,
 				Rank: start.Rank,
 			}
-		})
+		}
 	}
 
-	return !ok
+	return !search(storage, a, b, makePosition)
 }

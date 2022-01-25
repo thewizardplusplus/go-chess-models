@@ -87,7 +87,7 @@ func Perft(
 		return 1
 	}
 
-	var count int
+	var totalMoveCount int
 	for _, move := range moves {
 		nextStorage := storage.ApplyMove(move)
 		nextColor := color.Negative()
@@ -102,8 +102,8 @@ func Perft(
 			handler(move, moveCount, deep)
 		}
 
-		count += moveCount
+		totalMoveCount += moveCount
 	}
 
-	return count
+	return totalMoveCount
 }

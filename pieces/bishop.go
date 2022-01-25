@@ -46,12 +46,11 @@ func (piece Bishop) CheckMove(
 	}
 
 	fileMin := min(start.File, finish.File)
-	ok := search(storage, start.File, finish.File, func(i int) models.Position {
+	return !search(storage, start.File, finish.File, func(i int) models.Position {
 		step := i - fileMin
 		return models.Position{
 			File: i,
 			Rank: rankStart + step*rankSign,
 		}
 	})
-	return !ok
 }

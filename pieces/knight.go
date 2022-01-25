@@ -27,5 +27,5 @@ func (piece Knight) CheckMove(
 	start, finish := move.Start, move.Finish
 	fileSteps := steps(start.File, finish.File)
 	rankSteps := steps(start.Rank, finish.Rank)
-	return fileSteps == 1 && rankSteps == 2 || fileSteps == 2 && rankSteps == 1
+	return (fileSteps == 1 && rankSteps == 2) || (fileSteps == 2 && rankSteps == 1)
 }

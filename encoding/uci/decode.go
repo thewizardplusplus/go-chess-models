@@ -24,7 +24,7 @@ type PieceStorageFactory func(
 ) models.PieceStorage
 
 const (
-	minFileCount = 97
+	minFileSymbol = 'a'
 )
 
 // DecodePosition ...
@@ -35,7 +35,7 @@ func DecodePosition(text string) (position models.Position, err error) {
 		return models.Position{}, errors.New("incorrect length")
 	}
 
-	file := int(text[0]) - minFileCount
+	file := int(text[0]) - minFileSymbol
 	if file < 0 {
 		return models.Position{}, errors.New("incorrect file")
 	}

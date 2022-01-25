@@ -26,12 +26,11 @@ func (piece Pawn) CheckMove(
 ) bool {
 	start, finish := move.Start, move.Finish
 	fileSteps := steps(start.File, finish.File)
-	switch _, ok := storage.Piece(finish); ok {
-	case false:
+	if _, ok := storage.Piece(finish); !ok {
 		if fileSteps != 0 {
 			return false
 		}
-	case true:
+	} else {
 		if fileSteps != 1 {
 			return false
 		}

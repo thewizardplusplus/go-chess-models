@@ -364,7 +364,7 @@ func TestPerft(test *testing.T) {
 			continue
 		}
 
-		var moves []string
+		var topLevelMoves []string
 		var generator models.MoveGenerator
 		got := models.Perft(generator, storage, data.args.color, data.args.deep, func(
 			move models.Move,
@@ -373,14 +373,14 @@ func TestPerft(test *testing.T) {
 		) {
 			// log only the top-level moves
 			if deep == data.args.deep {
-				moves = append(moves, fmt.Sprintf("%v: %d", move, count))
+				topLevelMoves = append(topLevelMoves, fmt.Sprintf("%v: %d", move, count))
 			}
 		})
 
 		if got != data.want {
-			sort.Strings(moves)
+			sort.Strings(topLevelMoves)
 
-			message := "%s: %d/%d\n" + strings.Join(moves, "\n")
+			message := "%s: %d/%d\n" + strings.Join(topLevelMoves, "\n")
 			test.Errorf(message, prefix, got, data.want)
 		}
 	}
