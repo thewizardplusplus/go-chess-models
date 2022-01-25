@@ -1,23 +1,32 @@
 package pieces
 
 import (
-	"math"
-
 	models "github.com/thewizardplusplus/go-chess-models"
 )
 
 func min(a int, b int) int {
-	fa, fb := float64(a), float64(b)
-	return int(math.Min(fa, fb))
+	if a < b {
+		return a
+	}
+
+	return b
 }
 
 func max(a int, b int) int {
-	fa, fb := float64(a), float64(b)
-	return int(math.Max(fa, fb))
+	if a > b {
+		return a
+	}
+
+	return b
 }
 
 func steps(a int, b int) int {
-	return int(math.Abs(float64(a - b)))
+	steps := a - b
+	if steps < 0 {
+		steps = -steps
+	}
+
+	return steps
 }
 
 func search(
