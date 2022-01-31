@@ -14,14 +14,12 @@ import (
 )
 
 var (
-	kings    = "4k3/8/8/8/8/8/8/4K3"
-	queens   = "3qk3/8/8/8/8/8/8/3QK3"
-	rooks    = "r3k2r/8/8/8/8/8/8/R3K2R"
-	bishops  = "2b1kb2/8/8/8/8/8/8/2B1KB2"
-	knights  = "1n2k1n1/8/8/8/8/8/8/1N2K1N1"
-	pawns    = "4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3"
-	initial  = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
-	kiwipete = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R"
+	kings   = "4k3/8/8/8/8/8/8/4K3"
+	queens  = "3qk3/8/8/8/8/8/8/3QK3"
+	rooks   = "r3k2r/8/8/8/8/8/8/R3K2R"
+	bishops = "2b1kb2/8/8/8/8/8/8/2B1KB2"
+	knights = "1n2k1n1/8/8/8/8/8/8/1N2K1N1"
+	pawns   = "4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3"
 )
 
 func TestPerft(test *testing.T) {
@@ -50,7 +48,7 @@ func TestPerft(test *testing.T) {
 			factory: models.NewSliceBoard,
 		},
 	} {
-		for index, data := range []data{
+		for _, data := range []data{
 			{
 				name: "kings",
 				args: args{
@@ -367,7 +365,7 @@ func TestPerft(test *testing.T) {
 				want: 1740,
 			},
 		} {
-			prefix := fmt.Sprintf("%s/%s/#%d", storage.name, data.name, index)
+			prefix := fmt.Sprintf("%s/%s/%dPly", storage.name, data.name, data.args.deep)
 			storage, err := uci.DecodePieceStorage(
 				data.args.boardInFEN,
 				pieces.NewPiece,
