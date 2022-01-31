@@ -30,358 +30,375 @@ func TestPerft(test *testing.T) {
 		color      models.Color
 		deep       int
 	}
+	type storage struct {
+		name    string
+		factory uci.PieceStorageFactory
+	}
 	type data struct {
 		name string
 		args args
 		want int
 	}
 
-	for index, data := range []data{
+	for _, storage := range []storage{
 		{
-			name: "kings",
-			args: args{
-				boardInFEN: kings,
-				color:      models.White,
-				deep:       0,
-			},
-			want: 1,
+			name:    "MapBoard",
+			factory: models.NewMapBoard,
 		},
 		{
-			name: "kings",
-			args: args{
-				boardInFEN: kings,
-				color:      models.White,
-				deep:       1,
-			},
-			want: 5,
-		},
-		{
-			name: "kings",
-			args: args{
-				boardInFEN: kings,
-				color:      models.White,
-				deep:       2,
-			},
-			want: 25,
-		},
-		{
-			name: "kings",
-			args: args{
-				boardInFEN: kings,
-				color:      models.White,
-				deep:       3,
-			},
-			want: 170,
-		},
-		{
-			name: "kings",
-			args: args{
-				boardInFEN: kings,
-				color:      models.White,
-				deep:       4,
-			},
-			want: 1156,
-		},
-		{
-			name: "kings",
-			args: args{
-				boardInFEN: kings,
-				color:      models.White,
-				deep:       5,
-			},
-			want: 7922,
-		},
-		{
-			name: "queens",
-			args: args{
-				boardInFEN: queens,
-				color:      models.White,
-				deep:       0,
-			},
-			want: 1,
-		},
-		{
-			name: "queens",
-			args: args{
-				boardInFEN: queens,
-				color:      models.White,
-				deep:       1,
-			},
-			want: 20,
-		},
-		{
-			name: "queens",
-			args: args{
-				boardInFEN: queens,
-				color:      models.White,
-				deep:       2,
-			},
-			want: 301,
-		},
-		{
-			name: "queens",
-			args: args{
-				boardInFEN: queens,
-				color:      models.White,
-				deep:       3,
-			},
-			want: 6063,
-		},
-		{
-			name: "rooks",
-			args: args{
-				boardInFEN: rooks,
-				color:      models.White,
-				deep:       0,
-			},
-			want: 1,
-		},
-		{
-			name: "rooks",
-			args: args{
-				boardInFEN: rooks,
-				color:      models.White,
-				deep:       1,
-			},
-			want: 24,
-		},
-		{
-			name: "rooks",
-			args: args{
-				boardInFEN: rooks,
-				color:      models.White,
-				deep:       2,
-			},
-			want: 482,
-		},
-		{
-			name: "rooks",
-			args: args{
-				boardInFEN: rooks,
-				color:      models.White,
-				deep:       3,
-			},
-			want: 11522,
-		},
-		{
-			name: "bishops",
-			args: args{
-				boardInFEN: bishops,
-				color:      models.White,
-				deep:       0,
-			},
-			want: 1,
-		},
-		{
-			name: "bishops",
-			args: args{
-				boardInFEN: bishops,
-				color:      models.White,
-				deep:       1,
-			},
-			want: 18,
-		},
-		{
-			name: "bishops",
-			args: args{
-				boardInFEN: bishops,
-				color:      models.White,
-				deep:       2,
-			},
-			want: 305,
-		},
-		{
-			name: "bishops",
-			args: args{
-				boardInFEN: bishops,
-				color:      models.White,
-				deep:       3,
-			},
-			want: 5575,
-		},
-		{
-			name: "knights",
-			args: args{
-				boardInFEN: knights,
-				color:      models.White,
-				deep:       0,
-			},
-			want: 1,
-		},
-		{
-			name: "knights",
-			args: args{
-				boardInFEN: knights,
-				color:      models.White,
-				deep:       1,
-			},
-			want: 11,
-		},
-		{
-			name: "knights",
-			args: args{
-				boardInFEN: knights,
-				color:      models.White,
-				deep:       2,
-			},
-			want: 121,
-		},
-		{
-			name: "knights",
-			args: args{
-				boardInFEN: knights,
-				color:      models.White,
-				deep:       3,
-			},
-			want: 1551,
-		},
-		{
-			name: "knights",
-			args: args{
-				boardInFEN: knights,
-				color:      models.White,
-				deep:       4,
-			},
-			want: 19764,
-		},
-		{
-			name: "pawns",
-			args: args{
-				boardInFEN: pawns,
-				color:      models.White,
-				deep:       0,
-			},
-			want: 1,
-		},
-		{
-			name: "pawns",
-			args: args{
-				boardInFEN: pawns,
-				color:      models.White,
-				deep:       1,
-			},
-			want: 10,
-		},
-		{
-			name: "pawns",
-			args: args{
-				boardInFEN: pawns,
-				color:      models.White,
-				deep:       2,
-			},
-			want: 100,
-		},
-		{
-			name: "pawns",
-			args: args{
-				boardInFEN: pawns,
-				color:      models.White,
-				deep:       3,
-			},
-			want: 1030,
-		},
-		{
-			name: "pawns",
-			args: args{
-				boardInFEN: pawns,
-				color:      models.White,
-				deep:       4,
-			},
-			want: 10609,
-		},
-		{
-			name: "initial",
-			args: args{
-				boardInFEN: initial,
-				color:      models.White,
-				deep:       0,
-			},
-			want: 1,
-		},
-		{
-			name: "initial",
-			args: args{
-				boardInFEN: initial,
-				color:      models.White,
-				deep:       1,
-			},
-			want: 12,
-		},
-		{
-			name: "initial",
-			args: args{
-				boardInFEN: initial,
-				color:      models.White,
-				deep:       2,
-			},
-			want: 144,
-		},
-		{
-			name: "initial",
-			args: args{
-				boardInFEN: initial,
-				color:      models.White,
-				deep:       3,
-			},
-			want: 2124,
-		},
-		{
-			name: "kiwipete",
-			args: args{
-				boardInFEN: kiwipete,
-				color:      models.White,
-				deep:       0,
-			},
-			want: 1,
-		},
-		{
-			name: "kiwipete",
-			args: args{
-				boardInFEN: kiwipete,
-				color:      models.White,
-				deep:       1,
-			},
-			want: 44,
-		},
-		{
-			name: "kiwipete",
-			args: args{
-				boardInFEN: kiwipete,
-				color:      models.White,
-				deep:       2,
-			},
-			want: 1740,
+			name:    "SliceBoard",
+			factory: models.NewSliceBoard,
 		},
 	} {
-		prefix := fmt.Sprintf("%s/#%d", data.name, index)
-		storage, err := uci.DecodePieceStorage(
-			data.args.boardInFEN,
-			pieces.NewPiece,
-			models.NewBoard,
-		)
-		if err != nil {
-			test.Errorf("%s: %v", prefix, err)
-			continue
-		}
-
-		var topLevelMoves []string
-		var generator models.MoveGenerator
-		got := models.Perft(generator, storage, data.args.color, data.args.deep, func(
-			move models.Move,
-			count int,
-			deep int,
-		) {
-			// log only the top-level moves
-			if deep == data.args.deep {
-				topLevelMoves = append(topLevelMoves, fmt.Sprintf("%v: %d", move, count))
+		for index, data := range []data{
+			{
+				name: "kings",
+				args: args{
+					boardInFEN: kings,
+					color:      models.White,
+					deep:       0,
+				},
+				want: 1,
+			},
+			{
+				name: "kings",
+				args: args{
+					boardInFEN: kings,
+					color:      models.White,
+					deep:       1,
+				},
+				want: 5,
+			},
+			{
+				name: "kings",
+				args: args{
+					boardInFEN: kings,
+					color:      models.White,
+					deep:       2,
+				},
+				want: 25,
+			},
+			{
+				name: "kings",
+				args: args{
+					boardInFEN: kings,
+					color:      models.White,
+					deep:       3,
+				},
+				want: 170,
+			},
+			{
+				name: "kings",
+				args: args{
+					boardInFEN: kings,
+					color:      models.White,
+					deep:       4,
+				},
+				want: 1156,
+			},
+			{
+				name: "kings",
+				args: args{
+					boardInFEN: kings,
+					color:      models.White,
+					deep:       5,
+				},
+				want: 7922,
+			},
+			{
+				name: "queens",
+				args: args{
+					boardInFEN: queens,
+					color:      models.White,
+					deep:       0,
+				},
+				want: 1,
+			},
+			{
+				name: "queens",
+				args: args{
+					boardInFEN: queens,
+					color:      models.White,
+					deep:       1,
+				},
+				want: 20,
+			},
+			{
+				name: "queens",
+				args: args{
+					boardInFEN: queens,
+					color:      models.White,
+					deep:       2,
+				},
+				want: 301,
+			},
+			{
+				name: "queens",
+				args: args{
+					boardInFEN: queens,
+					color:      models.White,
+					deep:       3,
+				},
+				want: 6063,
+			},
+			{
+				name: "rooks",
+				args: args{
+					boardInFEN: rooks,
+					color:      models.White,
+					deep:       0,
+				},
+				want: 1,
+			},
+			{
+				name: "rooks",
+				args: args{
+					boardInFEN: rooks,
+					color:      models.White,
+					deep:       1,
+				},
+				want: 24,
+			},
+			{
+				name: "rooks",
+				args: args{
+					boardInFEN: rooks,
+					color:      models.White,
+					deep:       2,
+				},
+				want: 482,
+			},
+			{
+				name: "rooks",
+				args: args{
+					boardInFEN: rooks,
+					color:      models.White,
+					deep:       3,
+				},
+				want: 11522,
+			},
+			{
+				name: "bishops",
+				args: args{
+					boardInFEN: bishops,
+					color:      models.White,
+					deep:       0,
+				},
+				want: 1,
+			},
+			{
+				name: "bishops",
+				args: args{
+					boardInFEN: bishops,
+					color:      models.White,
+					deep:       1,
+				},
+				want: 18,
+			},
+			{
+				name: "bishops",
+				args: args{
+					boardInFEN: bishops,
+					color:      models.White,
+					deep:       2,
+				},
+				want: 305,
+			},
+			{
+				name: "bishops",
+				args: args{
+					boardInFEN: bishops,
+					color:      models.White,
+					deep:       3,
+				},
+				want: 5575,
+			},
+			{
+				name: "knights",
+				args: args{
+					boardInFEN: knights,
+					color:      models.White,
+					deep:       0,
+				},
+				want: 1,
+			},
+			{
+				name: "knights",
+				args: args{
+					boardInFEN: knights,
+					color:      models.White,
+					deep:       1,
+				},
+				want: 11,
+			},
+			{
+				name: "knights",
+				args: args{
+					boardInFEN: knights,
+					color:      models.White,
+					deep:       2,
+				},
+				want: 121,
+			},
+			{
+				name: "knights",
+				args: args{
+					boardInFEN: knights,
+					color:      models.White,
+					deep:       3,
+				},
+				want: 1551,
+			},
+			{
+				name: "knights",
+				args: args{
+					boardInFEN: knights,
+					color:      models.White,
+					deep:       4,
+				},
+				want: 19764,
+			},
+			{
+				name: "pawns",
+				args: args{
+					boardInFEN: pawns,
+					color:      models.White,
+					deep:       0,
+				},
+				want: 1,
+			},
+			{
+				name: "pawns",
+				args: args{
+					boardInFEN: pawns,
+					color:      models.White,
+					deep:       1,
+				},
+				want: 10,
+			},
+			{
+				name: "pawns",
+				args: args{
+					boardInFEN: pawns,
+					color:      models.White,
+					deep:       2,
+				},
+				want: 100,
+			},
+			{
+				name: "pawns",
+				args: args{
+					boardInFEN: pawns,
+					color:      models.White,
+					deep:       3,
+				},
+				want: 1030,
+			},
+			{
+				name: "pawns",
+				args: args{
+					boardInFEN: pawns,
+					color:      models.White,
+					deep:       4,
+				},
+				want: 10609,
+			},
+			{
+				name: "initial",
+				args: args{
+					boardInFEN: initial,
+					color:      models.White,
+					deep:       0,
+				},
+				want: 1,
+			},
+			{
+				name: "initial",
+				args: args{
+					boardInFEN: initial,
+					color:      models.White,
+					deep:       1,
+				},
+				want: 12,
+			},
+			{
+				name: "initial",
+				args: args{
+					boardInFEN: initial,
+					color:      models.White,
+					deep:       2,
+				},
+				want: 144,
+			},
+			{
+				name: "initial",
+				args: args{
+					boardInFEN: initial,
+					color:      models.White,
+					deep:       3,
+				},
+				want: 2124,
+			},
+			{
+				name: "kiwipete",
+				args: args{
+					boardInFEN: kiwipete,
+					color:      models.White,
+					deep:       0,
+				},
+				want: 1,
+			},
+			{
+				name: "kiwipete",
+				args: args{
+					boardInFEN: kiwipete,
+					color:      models.White,
+					deep:       1,
+				},
+				want: 44,
+			},
+			{
+				name: "kiwipete",
+				args: args{
+					boardInFEN: kiwipete,
+					color:      models.White,
+					deep:       2,
+				},
+				want: 1740,
+			},
+		} {
+			prefix := fmt.Sprintf("%s/%s/#%d", storage.name, data.name, index)
+			storage, err := uci.DecodePieceStorage(
+				data.args.boardInFEN,
+				pieces.NewPiece,
+				storage.factory,
+			)
+			if err != nil {
+				test.Errorf("%s: %v", prefix, err)
+				continue
 			}
-		})
 
-		if got != data.want {
-			sort.Strings(topLevelMoves)
+			var topLevelMoves []string
+			var generator models.MoveGenerator
+			got := models.Perft(
+				generator,
+				storage,
+				data.args.color,
+				data.args.deep,
+				func(move models.Move, count int, deep int) {
+					// log only the top-level moves
+					if deep == data.args.deep {
+						topLevelMoves = append(topLevelMoves, fmt.Sprintf("%v: %d", move, count))
+					}
+				},
+			)
 
-			message := "%s: %d/%d\n" + strings.Join(topLevelMoves, "\n")
-			test.Errorf(message, prefix, got, data.want)
+			if got != data.want {
+				sort.Strings(topLevelMoves)
+
+				message := "%s: %d/%d\n" + strings.Join(topLevelMoves, "\n")
+				test.Errorf(message, prefix, got, data.want)
+			}
 		}
 	}
 }
