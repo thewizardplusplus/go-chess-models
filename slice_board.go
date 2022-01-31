@@ -6,6 +6,18 @@ type SliceBoard struct {
 	pieces []Piece
 }
 
+// NewSliceBoard ...
+func NewSliceBoard(size Size, pieces []Piece) PieceStorage {
+	var extendedPieces []Piece
+	pieceGroup := newPieceGroup(pieces)
+	for _, position := range size.Positions() {
+		piece := pieceGroup[position] // if the position is empty, the piece is nil
+		extendedPieces = append(extendedPieces, piece)
+	}
+
+	return SliceBoard{size, extendedPieces}
+}
+
 // Size ...
 func (board SliceBoard) Size() Size {
 	panic("not implemented")
