@@ -43,3 +43,16 @@ type Piece interface {
 	// It shouldn't check for a check before or after the move.
 	CheckMove(move Move, storage PieceStorage) bool
 }
+
+// PieceStorage ...
+type PieceStorage interface {
+	Size() Size
+	Piece(position Position) (piece Piece, ok bool)
+	Pieces() []Piece
+
+	// It shouldn't check that the move is correct.
+	ApplyMove(move Move) PieceStorage
+
+	// It shouldn't check for a check before or after the move.
+	CheckMove(move Move) error
+}
