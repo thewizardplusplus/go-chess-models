@@ -31,6 +31,7 @@ $ go-chess-perft [options]
 Options:
 
 - `-h`, `-help`, `--help` &mdash; show the help message and exit;
+- `-storage {map|slice}` &mdash; piece storage kind (default: `slice`);
 - `-fen STRING` &mdash; board in [Forsyth–Edwards Notation](https://en.wikipedia.org/wiki/Forsyth–Edwards_Notation) (default: `rnbqk/ppppp/5/PPPPP/RNBQK`, i.e., [Gardner's minichess](https://en.wikipedia.org/wiki/Minichess#5%C3%975_chess));
 - `-color {black|white}` &mdash; color that moves first (default: `white`);
 - `-deep INTEGER` &mdash; analysis deep (default: `5`);

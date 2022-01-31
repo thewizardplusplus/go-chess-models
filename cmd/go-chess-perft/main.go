@@ -15,6 +15,8 @@ import (
 )
 
 func main() {
+	storageKind := flag.String("storage", "slice",
+		"piece storage kind (allowed: map, slice; default: slice)")
 	fen := flag.String("fen", "rnbqk/ppppp/5/PPPPP/RNBQK",
 		"board in Forsyth–Edwards Notation (default: Gardner's minichess)")
 	color := flag.String("color", "white",
@@ -42,8 +44,18 @@ func main() {
 		defer pprof.StopCPUProfile()
 	}
 
+	var pieceStorageFactory uci.PieceStorageFactory
+	switch *storageKind {
+	case "map":
+		pieceStorageFactory = models.NewMapBoard
+	case "slice":
+		pieceStorageFactory = models.NewSliceBoard
+	default:
+		log.Fatal("incorrect piece storage kind")
+	}
+
 	storage, err :=
-		uci.DecodePieceStorage(*fen, pieces.NewPiece, models.NewMapBoard)
+		uci.DecodePieceStorage(*fen, pieces.NewPiece, pieceStorageFactory)
 	if err != nil {
 		log.Fatalf("unable to decode the board: %s", err)
 	}
