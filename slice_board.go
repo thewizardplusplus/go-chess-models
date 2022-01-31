@@ -25,7 +25,8 @@ func (board SliceBoard) Size() Size {
 
 // Piece ...
 func (board SliceBoard) Piece(position Position) (piece Piece, ok bool) {
-	panic("not implemented")
+	piece = board.pieces[board.index(position)]
+	return piece, piece != nil
 }
 
 // Pieces ...
@@ -45,4 +46,8 @@ func (board SliceBoard) ApplyMove(move Move) PieceStorage {
 // It doesn't check for a check before or after the move.
 func (board SliceBoard) CheckMove(move Move) error {
 	panic("not implemented")
+}
+
+func (board SliceBoard) index(position Position) int {
+	return board.size.Width*position.Rank + position.File
 }
