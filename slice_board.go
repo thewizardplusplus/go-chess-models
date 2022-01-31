@@ -62,7 +62,7 @@ func (board SliceBoard) ApplyMove(move Move) PieceStorage {
 //
 // It doesn't check for a check before or after the move.
 func (board SliceBoard) CheckMove(move Move) error {
-	panic("not implemented")
+	return CheckMove(board, move)
 }
 
 func (board SliceBoard) index(position Position) int {

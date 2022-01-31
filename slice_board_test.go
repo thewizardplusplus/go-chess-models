@@ -143,3 +143,166 @@ func TestSliceBoardApplyMove(test *testing.T) {
 		test.Fail()
 	}
 }
+
+func TestSliceBoardCheckMove(test *testing.T) {
+	type fields struct {
+		size   Size
+		pieces []Piece
+	}
+	type args struct {
+		move Move
+	}
+	type data struct {
+		fields fields
+		args   args
+		want   error
+	}
+
+	for _, data := range []data{
+		{
+			fields: fields{
+				size: Size{2, 2},
+				pieces: []Piece{
+					3: nil,
+				},
+			},
+			args: args{
+				move: Move{
+					Start:  Position{0, 0},
+					Finish: Position{0, 0},
+				},
+			},
+			want: ErrNoMove,
+		},
+		{
+			fields: fields{
+				size: Size{2, 2},
+				pieces: []Piece{
+					3: nil,
+				},
+			},
+			args: args{
+				move: Move{
+					Start:  Position{0, 0},
+					Finish: Position{-1, -1},
+				},
+			},
+			want: ErrOutOfSize,
+		},
+		{
+			fields: fields{
+				size: Size{2, 2},
+				pieces: []Piece{
+					3: nil,
+				},
+			},
+			args: args{
+				move: Move{
+					Start:  Position{0, 0},
+					Finish: Position{1, 1},
+				},
+			},
+			want: ErrNoPiece,
+		},
+		{
+			fields: fields{
+				size: Size{2, 2},
+				pieces: []Piece{
+					0: MockPiece{
+						color:    Black,
+						position: Position{0, 0},
+					},
+					3: MockPiece{
+						color:    Black,
+						position: Position{1, 1},
+					},
+				},
+			},
+			args: args{
+				move: Move{
+					Start:  Position{0, 0},
+					Finish: Position{1, 1},
+				},
+			},
+			want: ErrFriendlyTarget,
+		},
+		{
+			fields: fields{
+				size: Size{2, 2},
+				pieces: []Piece{
+					0: MockPiece{
+						position: Position{0, 0},
+						checkMove: func(move Move, storage PieceStorage) bool {
+							return false
+						},
+					},
+					3: nil,
+				},
+			},
+			args: args{
+				move: Move{
+					Start:  Position{0, 0},
+					Finish: Position{1, 1},
+				},
+			},
+			want: ErrIllegalMove,
+		},
+		{
+			fields: fields{
+				size: Size{2, 2},
+				pieces: []Piece{
+					0: MockPiece{
+						color:    Black,
+						position: Position{0, 0},
+						checkMove: func(move Move, storage PieceStorage) bool {
+							return true
+						},
+					},
+					3: MockPiece{
+						kind:     King,
+						color:    White,
+						position: Position{1, 1},
+					},
+				},
+			},
+			args: args{
+				move: Move{
+					Start:  Position{0, 0},
+					Finish: Position{1, 1},
+				},
+			},
+			want: ErrKingCapture,
+		},
+		{
+			fields: fields{
+				size: Size{2, 2},
+				pieces: []Piece{
+					0: MockPiece{
+						position: Position{0, 0},
+						checkMove: func(move Move, storage PieceStorage) bool {
+							return true
+						},
+					},
+					3: nil,
+				},
+			},
+			args: args{
+				move: Move{
+					Start:  Position{0, 0},
+					Finish: Position{1, 1},
+				},
+			},
+			want: nil,
+		},
+	} {
+		board := SliceBoard{
+			size:   data.fields.size,
+			pieces: data.fields.pieces,
+		}
+		got := board.CheckMove(data.args.move)
+
+		if got != data.want {
+			test.Fail()
+		}
+	}
+}
