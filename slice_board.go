@@ -45,7 +45,17 @@ func (board SliceBoard) Pieces() []Piece {
 //
 // It doesn't check that the move is correct.
 func (board SliceBoard) ApplyMove(move Move) PieceStorage {
-	panic("not implemented")
+	pieceGroupCopy := make([]Piece, len(board.pieces))
+	copy(pieceGroupCopy, board.pieces)
+
+	startIndex, finishIndex := board.index(move.Start), board.index(move.Finish)
+	piece := pieceGroupCopy[startIndex]
+	pieceGroupCopy[startIndex] = nil
+
+	movedPiece := piece.ApplyPosition(move.Finish)
+	pieceGroupCopy[finishIndex] = movedPiece
+
+	return SliceBoard{board.size, pieceGroupCopy}
 }
 
 // CheckMove ...

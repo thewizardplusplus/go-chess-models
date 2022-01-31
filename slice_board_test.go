@@ -108,3 +108,38 @@ func TestSliceBoardPieces(test *testing.T) {
 		test.Fail()
 	}
 }
+
+func TestSliceBoardApplyMove(test *testing.T) {
+	board := NewSliceBoard(Size{5, 5}, []Piece{
+		MockPiece{position: Position{2, 3}},
+		MockPiece{position: Position{4, 2}},
+	})
+	nextBoard := board.ApplyMove(Move{
+		Start:  Position{4, 2},
+		Finish: Position{1, 2},
+	})
+
+	expectedBoard := SliceBoard{
+		size: Size{5, 5},
+		pieces: []Piece{
+			14: MockPiece{position: Position{4, 2}},
+			17: MockPiece{position: Position{2, 3}},
+			24: nil,
+		},
+	}
+	if !reflect.DeepEqual(board, expectedBoard) {
+		test.Fail()
+	}
+
+	expectedNextBoard := SliceBoard{
+		size: Size{5, 5},
+		pieces: []Piece{
+			11: MockPiece{position: Position{1, 2}},
+			17: MockPiece{position: Position{2, 3}},
+			24: nil,
+		},
+	}
+	if !reflect.DeepEqual(nextBoard, expectedNextBoard) {
+		test.Fail()
+	}
+}
