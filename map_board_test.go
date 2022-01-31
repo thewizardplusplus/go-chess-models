@@ -62,13 +62,13 @@ func (group ByPosition) Less(i int, j int) bool {
 	return a.File < b.File
 }
 
-func TestNewBoard(test *testing.T) {
-	board := NewBoard(Size{5, 5}, []Piece{
+func TestNewMapBoard(test *testing.T) {
+	board := NewMapBoard(Size{5, 5}, []Piece{
 		MockPiece{position: Position{2, 3}},
 		MockPiece{position: Position{4, 2}},
 	})
 
-	expectedBoard := Board{
+	expectedBoard := MapBoard{
 		size: Size{5, 5},
 		pieces: pieceGroup{
 			Position{2, 3}: MockPiece{
@@ -84,8 +84,8 @@ func TestNewBoard(test *testing.T) {
 	}
 }
 
-func TestBoardSize(test *testing.T) {
-	board := NewBoard(Size{5, 5}, nil)
+func TestMapBoardSize(test *testing.T) {
+	board := NewMapBoard(Size{5, 5}, nil)
 	size := board.Size()
 
 	if !reflect.DeepEqual(size, Size{5, 5}) {
@@ -93,7 +93,7 @@ func TestBoardSize(test *testing.T) {
 	}
 }
 
-func TestBoardPiece(test *testing.T) {
+func TestMapBoardPiece(test *testing.T) {
 	type fields struct {
 		size   Size
 		pieces pieceGroup
@@ -144,7 +144,7 @@ func TestBoardPiece(test *testing.T) {
 			wantOk:    false,
 		},
 	} {
-		board := Board{
+		board := MapBoard{
 			size:   data.fields.size,
 			pieces: data.fields.pieces,
 		}
@@ -159,8 +159,8 @@ func TestBoardPiece(test *testing.T) {
 	}
 }
 
-func TestBoardPieces(test *testing.T) {
-	board := NewBoard(Size{5, 5}, []Piece{
+func TestMapBoardPieces(test *testing.T) {
+	board := NewMapBoard(Size{5, 5}, []Piece{
 		MockPiece{position: Position{2, 3}},
 		MockPiece{position: Position{4, 2}},
 	})
@@ -176,8 +176,8 @@ func TestBoardPieces(test *testing.T) {
 	}
 }
 
-func TestBoardApplyMove(test *testing.T) {
-	board := NewBoard(Size{5, 5}, []Piece{
+func TestMapBoardApplyMove(test *testing.T) {
+	board := NewMapBoard(Size{5, 5}, []Piece{
 		MockPiece{position: Position{2, 3}},
 		MockPiece{position: Position{4, 2}},
 	})
@@ -186,7 +186,7 @@ func TestBoardApplyMove(test *testing.T) {
 		Finish: Position{6, 5},
 	})
 
-	expectedBoard := Board{
+	expectedBoard := MapBoard{
 		size: Size{5, 5},
 		pieces: pieceGroup{
 			Position{2, 3}: MockPiece{
@@ -201,7 +201,7 @@ func TestBoardApplyMove(test *testing.T) {
 		test.Fail()
 	}
 
-	expectedNextBoard := Board{
+	expectedNextBoard := MapBoard{
 		size: Size{5, 5},
 		pieces: pieceGroup{
 			Position{2, 3}: MockPiece{
@@ -217,7 +217,7 @@ func TestBoardApplyMove(test *testing.T) {
 	}
 }
 
-func TestBoardCheckMove(test *testing.T) {
+func TestMapBoardCheckMove(test *testing.T) {
 	type fields struct {
 		size   Size
 		pieces pieceGroup
@@ -360,7 +360,7 @@ func TestBoardCheckMove(test *testing.T) {
 			want: nil,
 		},
 	} {
-		board := Board{
+		board := MapBoard{
 			size:   data.fields.size,
 			pieces: data.fields.pieces,
 		}

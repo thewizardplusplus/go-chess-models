@@ -42,7 +42,8 @@ func main() {
 		defer pprof.StopCPUProfile()
 	}
 
-	storage, err := uci.DecodePieceStorage(*fen, pieces.NewPiece, models.NewBoard)
+	storage, err :=
+		uci.DecodePieceStorage(*fen, pieces.NewPiece, models.NewMapBoard)
 	if err != nil {
 		log.Fatalf("unable to decode the board: %s", err)
 	}

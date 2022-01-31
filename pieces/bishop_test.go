@@ -309,7 +309,7 @@ func TestBishopCheckMove(test *testing.T) {
 		},
 	} {
 		storage, err :=
-			uci.DecodePieceStorage(data.args.boardInFEN, NewPiece, models.NewBoard)
+			uci.DecodePieceStorage(data.args.boardInFEN, NewPiece, models.NewMapBoard)
 		if err != nil {
 			test.Fail()
 			continue

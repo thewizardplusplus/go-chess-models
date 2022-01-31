@@ -251,7 +251,7 @@ func TestCheckMove(test *testing.T) {
 			want: nil,
 		},
 	} {
-		board := Board{
+		board := MapBoard{
 			size:   data.fields.size,
 			pieces: data.fields.pieces,
 		}

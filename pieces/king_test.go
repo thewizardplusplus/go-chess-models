@@ -70,7 +70,7 @@ func TestKingApplyPosition(test *testing.T) {
 
 func TestKingCheckMove(test *testing.T) {
 	storage, err :=
-		uci.DecodePieceStorage("5/5/2K2/5/5", NewPiece, models.NewBoard)
+		uci.DecodePieceStorage("5/5/2K2/5/5", NewPiece, models.NewMapBoard)
 	if err != nil {
 		test.Fail()
 		return
