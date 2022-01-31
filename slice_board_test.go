@@ -23,3 +23,12 @@ func TestNewSliceBoard(test *testing.T) {
 		test.Fail()
 	}
 }
+
+func TestSliceBoardSize(test *testing.T) {
+	board := NewSliceBoard(Size{5, 5}, nil)
+	size := board.Size()
+
+	if !reflect.DeepEqual(size, Size{5, 5}) {
+		test.Fail()
+	}
+}

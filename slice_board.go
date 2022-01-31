@@ -20,7 +20,7 @@ func NewSliceBoard(size Size, pieces []Piece) PieceStorage {
 
 // Size ...
 func (board SliceBoard) Size() Size {
-	panic("not implemented")
+	return board.size
 }
 
 // Piece ...
