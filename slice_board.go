@@ -31,7 +31,14 @@ func (board SliceBoard) Piece(position Position) (piece Piece, ok bool) {
 
 // Pieces ...
 func (board SliceBoard) Pieces() []Piece {
-	panic("not implemented")
+	var pieces []Piece
+	for _, piece := range board.pieces {
+		if piece != nil {
+			pieces = append(pieces, piece)
+		}
+	}
+
+	return pieces
 }
 
 // ApplyMove ...

@@ -92,3 +92,19 @@ func TestSliceBoardPiece(test *testing.T) {
 		}
 	}
 }
+
+func TestSliceBoardPieces(test *testing.T) {
+	board := NewSliceBoard(Size{5, 5}, []Piece{
+		MockPiece{position: Position{2, 3}},
+		MockPiece{position: Position{4, 2}},
+	})
+	pieces := board.Pieces()
+
+	expectedPieces := []Piece{
+		MockPiece{position: Position{4, 2}},
+		MockPiece{position: Position{2, 3}},
+	}
+	if !reflect.DeepEqual(pieces, expectedPieces) {
+		test.Fail()
+	}
+}
