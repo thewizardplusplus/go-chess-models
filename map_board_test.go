@@ -183,7 +183,7 @@ func TestMapBoardApplyMove(test *testing.T) {
 	})
 	nextBoard := board.ApplyMove(Move{
 		Start:  Position{4, 2},
-		Finish: Position{6, 5},
+		Finish: Position{1, 2},
 	})
 
 	expectedBoard := MapBoard{
@@ -204,11 +204,11 @@ func TestMapBoardApplyMove(test *testing.T) {
 	expectedNextBoard := MapBoard{
 		size: Size{5, 5},
 		pieces: pieceGroup{
+			Position{1, 2}: MockPiece{
+				position: Position{1, 2},
+			},
 			Position{2, 3}: MockPiece{
 				position: Position{2, 3},
-			},
-			Position{6, 5}: MockPiece{
-				position: Position{6, 5},
 			},
 		},
 	}
