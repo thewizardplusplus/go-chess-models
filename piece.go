@@ -56,3 +56,14 @@ type PieceStorage interface {
 	// It shouldn't check for a check before or after the move.
 	CheckMove(move Move) error
 }
+
+type pieceGroup map[Position]Piece
+
+func newPieceGroup(pieces []Piece) pieceGroup {
+	pieceGroup := make(pieceGroup)
+	for _, piece := range pieces {
+		pieceGroup[piece.Position()] = piece
+	}
+
+	return pieceGroup
+}
