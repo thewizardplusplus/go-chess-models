@@ -111,7 +111,7 @@ func TestMapBoardPiece(test *testing.T) {
 	for _, data := range []data{
 		{
 			fields: fields{
-				size: Size{2, 2},
+				size: Size{5, 5},
 				pieces: pieceGroup{
 					Position{2, 3}: MockPiece{
 						position: Position{2, 3},
@@ -129,7 +129,7 @@ func TestMapBoardPiece(test *testing.T) {
 		},
 		{
 			fields: fields{
-				size: Size{2, 2},
+				size: Size{5, 5},
 				pieces: pieceGroup{
 					Position{2, 3}: MockPiece{
 						position: Position{2, 3},
