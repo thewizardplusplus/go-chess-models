@@ -23,7 +23,7 @@ func (size Size) PositionCount() int {
 
 // Positions ...
 func (size Size) Positions() []Position {
-	var positions []Position
+	positions := make([]Position, 0, size.PositionCount())
 	for rank := 0; rank < size.Height; rank++ {
 		for file := 0; file < size.Width; file++ {
 			positions = append(positions, Position{file, rank})

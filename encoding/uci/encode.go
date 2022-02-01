@@ -71,7 +71,7 @@ func EncodePieceStorage(storage models.PieceStorage) string {
 		}
 	}
 
-	var ranks []string
+	ranks := make([]string, 0, storage.Size().Height)
 	for _, position := range storage.Size().Positions() {
 		if piece, ok := storage.Piece(position); ok {
 			resetShift()
