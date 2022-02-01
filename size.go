@@ -16,6 +16,11 @@ func (size Size) HasMove(move Move) bool {
 	return size.HasPosition(move.Start) && size.HasPosition(move.Finish)
 }
 
+// PositionCount ...
+func (size Size) PositionCount() int {
+	return size.Width * size.Height
+}
+
 // Positions ...
 func (size Size) Positions() []Position {
 	var positions []Position

@@ -183,6 +183,14 @@ func TestSizeHasMove(test *testing.T) {
 	}
 }
 
+func TestSizePositionCount(test *testing.T) {
+	positionCount := Size{3, 3}.PositionCount()
+
+	if positionCount != 9 {
+		test.Fail()
+	}
+}
+
 func TestSizePositions(test *testing.T) {
 	positions := Size{3, 3}.Positions()
 
