@@ -1,6 +1,7 @@
 package chessmodels
 
 import (
+	"errors"
 	"reflect"
 	"testing"
 )
@@ -207,5 +208,92 @@ func TestSizePositions(test *testing.T) {
 	}
 	if !reflect.DeepEqual(positions, expectedPositions) {
 		test.Fail()
+	}
+}
+
+func TestSizeIteratePositions(test *testing.T) {
+	type fields struct {
+		Width  int
+		Height int
+	}
+	type args struct {
+		makeHandler func(positions *[]Position) PositionHandler
+	}
+	type data struct {
+		fields        fields
+		args          args
+		wantPositions []Position
+		wantErr       error
+	}
+
+	for _, data := range []data{
+		{
+			fields: fields{
+				Width:  3,
+				Height: 3,
+			},
+			args: args{
+				makeHandler: func(positions *[]Position) PositionHandler {
+					return func(position Position) error {
+						*positions = append(*positions, position)
+						return nil
+					}
+				},
+			},
+			wantPositions: []Position{
+				{0, 0},
+				{1, 0},
+				{2, 0},
+				{0, 1},
+				{1, 1},
+				{2, 1},
+				{0, 2},
+				{1, 2},
+				{2, 2},
+			},
+			wantErr: nil,
+		},
+		{
+			fields: fields{
+				Width:  3,
+				Height: 3,
+			},
+			args: args{
+				makeHandler: func(positions *[]Position) PositionHandler {
+					return func(position Position) error {
+						if position.Rank > 1 {
+							return errors.New("dummy")
+						}
+
+						*positions = append(*positions, position)
+						return nil
+					}
+				},
+			},
+			wantPositions: []Position{
+				{0, 0},
+				{1, 0},
+				{2, 0},
+				{0, 1},
+				{1, 1},
+				{2, 1},
+			},
+			wantErr: errors.New("dummy"),
+		},
+	} {
+		size := Size{
+			Width:  data.fields.Width,
+			Height: data.fields.Height,
+		}
+
+		var gotPositions []Position
+		gotErr := size.IteratePositions(data.args.makeHandler(&gotPositions))
+
+		if !reflect.DeepEqual(gotPositions, data.wantPositions) {
+			test.Fail()
+		}
+		if !reflect.DeepEqual(gotErr, data.wantErr) {
+			test.Fail()
+		}
 	}
 }

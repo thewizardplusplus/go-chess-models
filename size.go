@@ -1,5 +1,8 @@
 package chessmodels
 
+// PositionHandler ...
+type PositionHandler func(position Position) error
+
 // Size ...
 type Size struct {
 	Width  int
@@ -31,6 +34,20 @@ func (size Size) Positions() []Position {
 	}
 
 	return positions
+}
+
+// IteratePositions ...
+func (size Size) IteratePositions(handler PositionHandler) error {
+	for rank := 0; rank < size.Height; rank++ {
+		for file := 0; file < size.Width; file++ {
+			position := Position{file, rank}
+			if err := handler(position); err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
 }
 
 func less(value int, limit int) bool {
