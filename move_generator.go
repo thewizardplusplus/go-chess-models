@@ -42,19 +42,22 @@ func (generator MoveGenerator) MovesForPosition(
 	position Position,
 ) ([]Move, error) {
 	var moves []Move
-	for _, finish := range storage.Size().Positions() {
+	if err := storage.Size().IteratePositions(func(finish Position) error {
 		move := Move{position, finish}
 		if err := storage.CheckMove(move); err != nil {
 			// if the move captures a king, break a generating
 			if err == ErrKingCapture {
-				return nil, err
+				return err
 			}
 
 			// on other errors just skip this move
-			continue
+			return nil
 		}
 
 		moves = append(moves, move)
+		return nil
+	}); err != nil {
+		return nil, err
 	}
 
 	return moves, nil

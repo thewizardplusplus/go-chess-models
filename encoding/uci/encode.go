@@ -72,7 +72,7 @@ func EncodePieceStorage(storage models.PieceStorage) string {
 	}
 
 	ranks := make([]string, 0, storage.Size().Height)
-	for _, position := range storage.Size().Positions() {
+	storage.Size().IteratePositions(func(position models.Position) error { // nolint: errcheck, gosec, lll
 		if piece, ok := storage.Piece(position); ok {
 			resetShift()
 
@@ -88,7 +88,9 @@ func EncodePieceStorage(storage models.PieceStorage) string {
 			ranks = append(ranks, rank)
 			rank = ""
 		}
-	}
+
+		return nil
+	})
 
 	reverse(ranks)
 	return strings.Join(ranks, "/")

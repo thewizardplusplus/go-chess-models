@@ -10,10 +10,12 @@ type SliceBoard struct {
 func NewSliceBoard(size Size, pieces []Piece) PieceStorage {
 	extendedPieces := make([]Piece, 0, size.PositionCount())
 	pieceGroup := newPieceGroup(pieces)
-	for _, position := range size.Positions() {
+	size.IteratePositions(func(position Position) error { // nolint: errcheck, gosec, lll
 		piece := pieceGroup[position] // if the position is empty, the piece is nil
 		extendedPieces = append(extendedPieces, piece)
-	}
+
+		return nil
+	})
 
 	return SliceBoard{size, extendedPieces}
 }

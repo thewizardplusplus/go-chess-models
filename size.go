@@ -27,11 +27,10 @@ func (size Size) PositionCount() int {
 // Positions ...
 func (size Size) Positions() []Position {
 	positions := make([]Position, 0, size.PositionCount())
-	for rank := 0; rank < size.Height; rank++ {
-		for file := 0; file < size.Width; file++ {
-			positions = append(positions, Position{file, rank})
-		}
-	}
+	size.IteratePositions(func(position Position) error { // nolint: errcheck, gosec, lll
+		positions = append(positions, position)
+		return nil
+	})
 
 	return positions
 }
