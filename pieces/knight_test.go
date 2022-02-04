@@ -70,7 +70,7 @@ func TestKnightApplyPosition(test *testing.T) {
 
 func TestKnightCheckMove(test *testing.T) {
 	storage, err :=
-		uci.DecodePieceStorage("5/5/2N2/5/5", NewPiece, models.NewMapBoard)
+		uci.DecodePieceStorage("5/5/2N2/5/5", NewPiece, models.NewBoard)
 	if err != nil {
 		test.Fail()
 		return

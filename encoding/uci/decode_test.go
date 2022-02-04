@@ -213,7 +213,7 @@ func TestDecodePieceStorage(test *testing.T) {
 			args: args{
 				fen: "2K3q/8/pp1R",
 			},
-			wantStorage: models.NewMapBoard(
+			wantStorage: models.NewBoard(
 				models.Size{
 					Width:  8,
 					Height: 3,
@@ -247,7 +247,7 @@ func TestDecodePieceStorage(test *testing.T) {
 			args: args{
 				fen: "1/2K3q/8/pp1R",
 			},
-			wantStorage: models.NewMapBoard(
+			wantStorage: models.NewBoard(
 				models.Size{
 					Width:  8,
 					Height: 4,
@@ -281,7 +281,7 @@ func TestDecodePieceStorage(test *testing.T) {
 			args: args{
 				fen: "2K3q/8/pp1R/1",
 			},
-			wantStorage: models.NewMapBoard(
+			wantStorage: models.NewBoard(
 				models.Size{
 					Width:  8,
 					Height: 4,
@@ -320,7 +320,7 @@ func TestDecodePieceStorage(test *testing.T) {
 		},
 	} {
 		gotStorage, gotErr :=
-			DecodePieceStorage(data.args.fen, pieces.NewPiece, models.NewMapBoard)
+			DecodePieceStorage(data.args.fen, pieces.NewPiece, models.NewBoard)
 
 		if !reflect.DeepEqual(gotStorage, data.wantStorage) {
 			test.Fail()

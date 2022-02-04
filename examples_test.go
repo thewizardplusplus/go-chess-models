@@ -29,8 +29,8 @@ func (group ByPosition) Less(
 	return a.File < b.File
 }
 
-func ExampleMapBoard_CheckMove() {
-	board := models.NewMapBoard(models.Size{Width: 5, Height: 5}, []models.Piece{
+func ExampleBoard_CheckMove() {
+	board := models.NewBoard(models.Size{Width: 5, Height: 5}, []models.Piece{
 		pieces.NewRook(models.Black, models.Position{File: 2, Rank: 2}),
 		pieces.NewBishop(models.White, models.Position{File: 3, Rank: 3}),
 	})
@@ -52,8 +52,8 @@ func ExampleMapBoard_CheckMove() {
 	// {Start:{File:3 Rank:3} Finish:{File:2 Rank:2}}: <nil>
 }
 
-func ExampleMapBoard_ApplyMove() {
-	board := models.NewMapBoard(models.Size{Width: 5, Height: 5}, []models.Piece{
+func ExampleBoard_ApplyMove() {
+	board := models.NewBoard(models.Size{Width: 5, Height: 5}, []models.Piece{
 		pieces.NewRook(models.Black, models.Position{File: 2, Rank: 2}),
 		pieces.NewBishop(models.White, models.Position{File: 3, Rank: 3}),
 	})
@@ -75,7 +75,7 @@ func ExampleMapBoard_ApplyMove() {
 }
 
 func ExampleMoveGenerator_MovesForColor() {
-	board := models.NewMapBoard(models.Size{Width: 5, Height: 5}, []models.Piece{
+	board := models.NewBoard(models.Size{Width: 5, Height: 5}, []models.Piece{
 		pieces.NewRook(models.Black, models.Position{File: 2, Rank: 2}),
 		pieces.NewKnight(models.White, models.Position{File: 3, Rank: 3}),
 		pieces.NewPawn(models.White, models.Position{File: 4, Rank: 3}),

@@ -49,7 +49,7 @@ func ExampleEncodeMove() {
 
 func ExampleDecodePieceStorage() {
 	const fen = "8/8/8/8/3B4/2r5/8/8"
-	storage, _ := uci.DecodePieceStorage(fen, pieces.NewPiece, models.NewMapBoard)
+	storage, _ := uci.DecodePieceStorage(fen, pieces.NewPiece, models.NewBoard)
 	pieces := storage.Pieces()
 	sort.Sort(ByPosition(pieces))
 	fmt.Printf("%+v\n", pieces)
@@ -58,7 +58,7 @@ func ExampleDecodePieceStorage() {
 }
 
 func ExampleEncodePieceStorage() {
-	board := models.NewMapBoard(models.Size{Width: 5, Height: 5}, []models.Piece{
+	board := models.NewBoard(models.Size{Width: 5, Height: 5}, []models.Piece{
 		pieces.NewRook(models.Black, models.Position{File: 2, Rank: 2}),
 		pieces.NewBishop(models.White, models.Position{File: 3, Rank: 3}),
 	})
