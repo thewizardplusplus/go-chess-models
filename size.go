@@ -19,6 +19,11 @@ func (size Size) HasMove(move Move) bool {
 	return size.HasPosition(move.Start) && size.HasPosition(move.Finish)
 }
 
+// PositionIndex ...
+func (size Size) PositionIndex(position Position) int {
+	return size.Width*position.Rank + position.File
+}
+
 // PositionCount ...
 func (size Size) PositionCount() int {
 	return size.Width * size.Height
