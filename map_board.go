@@ -1,5 +1,7 @@
 package chessmodels
 
+type pieceGroup map[Position]Piece
+
 // MapBoard ...
 type MapBoard struct {
 	size   Size
@@ -8,7 +10,11 @@ type MapBoard struct {
 
 // NewMapBoard ...
 func NewMapBoard(size Size, pieces []Piece) PieceStorage {
-	pieceGroup := newPieceGroup(pieces)
+	pieceGroup := make(pieceGroup)
+	for _, piece := range pieces {
+		pieceGroup[piece.Position()] = piece
+	}
+
 	return MapBoard{size, pieceGroup}
 }
 
