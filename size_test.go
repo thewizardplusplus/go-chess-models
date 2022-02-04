@@ -184,6 +184,64 @@ func TestSizeHasMove(test *testing.T) {
 	}
 }
 
+func TestSizePositionIndex(test *testing.T) {
+	type fields struct {
+		Width  int
+		Height int
+	}
+	type args struct {
+		position Position
+	}
+	type data struct {
+		fields fields
+		args   args
+		want   int
+	}
+
+	for _, data := range []data{
+		{
+			fields: fields{
+				Width:  8,
+				Height: 8,
+			},
+			args: args{
+				position: Position{0, 0},
+			},
+			want: 0,
+		},
+		{
+			fields: fields{
+				Width:  8,
+				Height: 8,
+			},
+			args: args{
+				position: Position{2, 3},
+			},
+			want: 26,
+		},
+		{
+			fields: fields{
+				Width:  8,
+				Height: 8,
+			},
+			args: args{
+				position: Position{7, 7},
+			},
+			want: 63,
+		},
+	} {
+		size := Size{
+			Width:  data.fields.Width,
+			Height: data.fields.Height,
+		}
+		got := size.PositionIndex(data.args.position)
+
+		if got != data.want {
+			test.Fail()
+		}
+	}
+}
+
 func TestSizePositionCount(test *testing.T) {
 	positionCount := Size{3, 3}.PositionCount()
 
