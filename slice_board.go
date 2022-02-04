@@ -27,7 +27,7 @@ func (board SliceBoard) Size() Size {
 
 // Piece ...
 func (board SliceBoard) Piece(position Position) (piece Piece, ok bool) {
-	piece = board.pieces[board.index(position)]
+	piece = board.pieces[board.size.PositionIndex(position)]
 	return piece, piece != nil
 }
 
@@ -50,7 +50,8 @@ func (board SliceBoard) ApplyMove(move Move) PieceStorage {
 	pieceGroupCopy := make([]Piece, len(board.pieces))
 	copy(pieceGroupCopy, board.pieces)
 
-	startIndex, finishIndex := board.index(move.Start), board.index(move.Finish)
+	startIndex, finishIndex :=
+		board.size.PositionIndex(move.Start), board.size.PositionIndex(move.Finish)
 	piece := pieceGroupCopy[startIndex]
 	pieceGroupCopy[startIndex] = nil
 
@@ -65,8 +66,4 @@ func (board SliceBoard) ApplyMove(move Move) PieceStorage {
 // It doesn't check for a check before or after the move.
 func (board SliceBoard) CheckMove(move Move) error {
 	return CheckMove(board, move)
-}
-
-func (board SliceBoard) index(position Position) int {
-	return board.size.Width*position.Rank + position.File
 }
