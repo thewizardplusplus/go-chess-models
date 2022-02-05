@@ -1,5 +1,31 @@
 # Change Log
 
+## [v1.8](https://github.com/thewizardplusplus/go-chess-models/tree/v1.8) (2022-02-05)
+
+Adding the `chessmodels.SliceBoard` structure; optimization.
+
+- new features:
+  - the `chessmodels.BaseBoard` structure that stores a board size;
+  - the `chessmodels.SliceBoard` structure:
+    - rename the `chessmodels.Board` structure to `chessmodels.MapBoard`;
+    - add the `chessmodels.SliceBoard` structure;
+    - add the `chessmodels.SliceBoard` structure to the `go-chess-perft` tool;
+    - make the `chessmodels.Board` type redirect to the `chessmodels.SliceBoard` structure;
+  - transform the `Pieces()` methods of the `chessmodels.MapBoard` and `chessmodels.SliceBoard` structures to an independent function;
+  - the `chessmodels.Size` structure:
+    - add the `PositionIndex()` method;
+    - add the `PositionCount()` method;
+    - add the `IteratePositions()` method;
+- refactoring:
+  - optimize memory allocations;
+- unit testing:
+  - slightly improve the tests of the `chessmodels.MapBoard` structure:
+    - of the `Piece()` method;
+    - of the `ApplyMove()` method;
+  - add the benchmarks based on the `chessmodels.Perft()` function:
+    - for the `chessmodels.MapBoard` structure;
+    - for the `chessmodels.SliceBoard` structure.
+
 ## [v1.7.1](https://github.com/thewizardplusplus/go-chess-models/tree/v1.7.1) (2022-01-25)
 
 Moving the `chessmodels.perft()` function from the tests to the main code; adding the `go-chess-perft` tool and the example for the `chessmodels.MoveGenerator.MovesForColor()` method; bug fixing.
