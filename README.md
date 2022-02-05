@@ -296,6 +296,28 @@ func main() {
 }
 ```
 
+## Benchmarks
+
+The `chessmodels.Perft()` function using the `chessmodels.MapBoard` structure:
+
+```
+BenchmarkPerft/MapBoard/initial/1Ply-8         	     486	   2239365 ns/op	  507723 B/op	   13638 allocs/op
+BenchmarkPerft/MapBoard/initial/2Ply-8         	      38	  27071904 ns/op	 6253672 B/op	  165159 allocs/op
+BenchmarkPerft/MapBoard/initial/3Ply-8         	       3	 394039297 ns/op	91006645 B/op	 2399815 allocs/op
+BenchmarkPerft/MapBoard/kiwipete/1Ply-8        	     150	   7844416 ns/op	 1959120 B/op	   47637 allocs/op
+BenchmarkPerft/MapBoard/kiwipete/2Ply-8        	       4	 311539966 ns/op	80169034 B/op	 1892731 allocs/op
+```
+
+The `chessmodels.Perft()` function used the `chessmodels.SliceBoard` structure:
+
+```
+BenchmarkPerft/SliceBoard/initial/1Ply-8       	     810	   1419572 ns/op	   684016 B/op	   13646 allocs/op
+BenchmarkPerft/SliceBoard/initial/2Ply-8       	      68	  17883575 ns/op	  8331384 B/op	  165074 allocs/op
+BenchmarkPerft/SliceBoard/initial/3Ply-8       	       4	 253594389 ns/op	121325578 B/op	 2399248 allocs/op
+BenchmarkPerft/SliceBoard/kiwipete/1Ply-8      	     220	   5340912 ns/op	  2583824 B/op	   47672 allocs/op
+BenchmarkPerft/SliceBoard/kiwipete/2Ply-8      	       5	 208109435 ns/op	103011680 B/op	 1895999 allocs/op
+```
+
 ## Utilities
 
 - [go-chess-perft](cmd/go-chess-perft) &mdash; utility for counting all possible moves (based on the [perft](https://www.chessprogramming.org/Perft) function)
