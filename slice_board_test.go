@@ -12,7 +12,10 @@ func TestNewSliceBoard(test *testing.T) {
 	})
 
 	expectedBoard := SliceBoard{
-		size: Size{5, 5},
+		BaseBoard: BaseBoard{
+			size: Size{5, 5},
+		},
+
 		pieces: []Piece{
 			14: MockPiece{position: Position{4, 2}},
 			17: MockPiece{position: Position{2, 3}},
@@ -20,15 +23,6 @@ func TestNewSliceBoard(test *testing.T) {
 		},
 	}
 	if !reflect.DeepEqual(board, expectedBoard) {
-		test.Fail()
-	}
-}
-
-func TestSliceBoardSize(test *testing.T) {
-	board := NewSliceBoard(Size{5, 5}, nil)
-	size := board.Size()
-
-	if !reflect.DeepEqual(size, Size{5, 5}) {
 		test.Fail()
 	}
 }
@@ -79,7 +73,10 @@ func TestSliceBoardPiece(test *testing.T) {
 		},
 	} {
 		board := SliceBoard{
-			size:   data.fields.size,
+			BaseBoard: BaseBoard{
+				size: data.fields.size,
+			},
+
 			pieces: data.fields.pieces,
 		}
 		gotPiece, gotOk := board.Piece(data.args.position)
@@ -120,7 +117,10 @@ func TestSliceBoardApplyMove(test *testing.T) {
 	})
 
 	expectedBoard := SliceBoard{
-		size: Size{5, 5},
+		BaseBoard: BaseBoard{
+			size: Size{5, 5},
+		},
+
 		pieces: []Piece{
 			14: MockPiece{position: Position{4, 2}},
 			17: MockPiece{position: Position{2, 3}},
@@ -132,7 +132,10 @@ func TestSliceBoardApplyMove(test *testing.T) {
 	}
 
 	expectedNextBoard := SliceBoard{
-		size: Size{5, 5},
+		BaseBoard: BaseBoard{
+			size: Size{5, 5},
+		},
+
 		pieces: []Piece{
 			11: MockPiece{position: Position{1, 2}},
 			17: MockPiece{position: Position{2, 3}},
@@ -296,7 +299,10 @@ func TestSliceBoardCheckMove(test *testing.T) {
 		},
 	} {
 		board := SliceBoard{
-			size:   data.fields.size,
+			BaseBoard: BaseBoard{
+				size: data.fields.size,
+			},
+
 			pieces: data.fields.pieces,
 		}
 		got := board.CheckMove(data.args.move)

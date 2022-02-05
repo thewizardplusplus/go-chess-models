@@ -4,7 +4,8 @@ type pieceGroup map[Position]Piece
 
 // MapBoard ...
 type MapBoard struct {
-	size   Size
+	BaseBoard
+
 	pieces pieceGroup
 }
 
@@ -15,12 +16,8 @@ func NewMapBoard(size Size, pieces []Piece) PieceStorage {
 		pieceGroup[piece.Position()] = piece
 	}
 
-	return MapBoard{size, pieceGroup}
-}
-
-// Size ...
-func (board MapBoard) Size() Size {
-	return board.size
+	baseBoard := NewBaseBoard(size)
+	return MapBoard{baseBoard, pieceGroup}
 }
 
 // Piece ...
@@ -55,7 +52,7 @@ func (board MapBoard) ApplyMove(move Move) PieceStorage {
 		}
 	}
 
-	return MapBoard{board.size, pieceGroupCopy}
+	return MapBoard{board.BaseBoard, pieceGroupCopy}
 }
 
 // CheckMove ...

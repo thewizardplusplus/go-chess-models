@@ -69,7 +69,10 @@ func TestNewMapBoard(test *testing.T) {
 	})
 
 	expectedBoard := MapBoard{
-		size: Size{5, 5},
+		BaseBoard: BaseBoard{
+			size: Size{5, 5},
+		},
+
 		pieces: pieceGroup{
 			Position{2, 3}: MockPiece{
 				position: Position{2, 3},
@@ -80,15 +83,6 @@ func TestNewMapBoard(test *testing.T) {
 		},
 	}
 	if !reflect.DeepEqual(board, expectedBoard) {
-		test.Fail()
-	}
-}
-
-func TestMapBoardSize(test *testing.T) {
-	board := NewMapBoard(Size{5, 5}, nil)
-	size := board.Size()
-
-	if !reflect.DeepEqual(size, Size{5, 5}) {
 		test.Fail()
 	}
 }
@@ -145,7 +139,10 @@ func TestMapBoardPiece(test *testing.T) {
 		},
 	} {
 		board := MapBoard{
-			size:   data.fields.size,
+			BaseBoard: BaseBoard{
+				size: data.fields.size,
+			},
+
 			pieces: data.fields.pieces,
 		}
 		gotPiece, gotOk := board.Piece(data.args.position)
@@ -187,7 +184,10 @@ func TestMapBoardApplyMove(test *testing.T) {
 	})
 
 	expectedBoard := MapBoard{
-		size: Size{5, 5},
+		BaseBoard: BaseBoard{
+			size: Size{5, 5},
+		},
+
 		pieces: pieceGroup{
 			Position{2, 3}: MockPiece{
 				position: Position{2, 3},
@@ -202,7 +202,10 @@ func TestMapBoardApplyMove(test *testing.T) {
 	}
 
 	expectedNextBoard := MapBoard{
-		size: Size{5, 5},
+		BaseBoard: BaseBoard{
+			size: Size{5, 5},
+		},
+
 		pieces: pieceGroup{
 			Position{1, 2}: MockPiece{
 				position: Position{1, 2},
@@ -361,7 +364,10 @@ func TestMapBoardCheckMove(test *testing.T) {
 		},
 	} {
 		board := MapBoard{
-			size:   data.fields.size,
+			BaseBoard: BaseBoard{
+				size: data.fields.size,
+			},
+
 			pieces: data.fields.pieces,
 		}
 		got := board.CheckMove(data.args.move)

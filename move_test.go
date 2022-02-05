@@ -252,7 +252,10 @@ func TestCheckMove(test *testing.T) {
 		},
 	} {
 		board := MapBoard{
-			size:   data.fields.size,
+			BaseBoard: BaseBoard{
+				size: data.fields.size,
+			},
+
 			pieces: data.fields.pieces,
 		}
 		got := CheckMove(board, data.args.move)

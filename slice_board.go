@@ -2,7 +2,8 @@ package chessmodels
 
 // SliceBoard ...
 type SliceBoard struct {
-	size   Size
+	BaseBoard
+
 	pieces []Piece
 }
 
@@ -13,12 +14,8 @@ func NewSliceBoard(size Size, pieces []Piece) PieceStorage {
 		extendedPieces[size.PositionIndex(piece.Position())] = piece
 	}
 
-	return SliceBoard{size, extendedPieces}
-}
-
-// Size ...
-func (board SliceBoard) Size() Size {
-	return board.size
+	baseBoard := NewBaseBoard(size)
+	return SliceBoard{baseBoard, extendedPieces}
 }
 
 // Piece ...
@@ -54,7 +51,7 @@ func (board SliceBoard) ApplyMove(move Move) PieceStorage {
 	movedPiece := piece.ApplyPosition(move.Finish)
 	pieceGroupCopy[finishIndex] = movedPiece
 
-	return SliceBoard{board.size, pieceGroupCopy}
+	return SliceBoard{board.BaseBoard, pieceGroupCopy}
 }
 
 // CheckMove ...
