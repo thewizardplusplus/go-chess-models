@@ -11,7 +11,9 @@ _**Disclaimer:** this library was written directly on an Android smartphone with
 
 ## Features
 
-- representing the board as an associative array of pieces with their positions as keys;
+- representing the board:
+  - as an associative array of pieces with their positions as keys;
+  - as a plain array of pieces with exact correspondence array indices to piece positions;
 - immutable applicating moves to the board via copying the latter;
 - checkings of moves:
   - universal;
