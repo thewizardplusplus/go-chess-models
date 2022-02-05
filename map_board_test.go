@@ -2,7 +2,6 @@ package chessmodels
 
 import (
 	"reflect"
-	"sort"
 	"testing"
 )
 
@@ -41,25 +40,6 @@ func (piece MockPiece) CheckMove(move Move, storage PieceStorage) bool {
 	}
 
 	return piece.checkMove(move, storage)
-}
-
-type ByPosition []Piece
-
-func (group ByPosition) Len() int {
-	return len(group)
-}
-
-func (group ByPosition) Swap(i, j int) {
-	group[i], group[j] = group[j], group[i]
-}
-
-func (group ByPosition) Less(i int, j int) bool {
-	a, b := group[i].Position(), group[j].Position()
-	if a.File == b.File {
-		return a.Rank < b.Rank
-	}
-
-	return a.File < b.File
 }
 
 func TestNewMapBoard(test *testing.T) {
@@ -162,11 +142,10 @@ func TestMapBoardPieces(test *testing.T) {
 		MockPiece{position: Position{4, 2}},
 	})
 	pieces := board.Pieces()
-	sort.Sort(ByPosition(pieces))
 
 	expectedPieces := []Piece{
-		MockPiece{position: Position{2, 3}},
 		MockPiece{position: Position{4, 2}},
+		MockPiece{position: Position{2, 3}},
 	}
 	if !reflect.DeepEqual(pieces, expectedPieces) {
 		test.Fail()

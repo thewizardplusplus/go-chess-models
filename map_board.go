@@ -27,15 +27,8 @@ func (board MapBoard) Piece(position Position) (piece Piece, ok bool) {
 }
 
 // Pieces ...
-//
-// It doesn't guarantee an order of returned pieces.
 func (board MapBoard) Pieces() []Piece {
-	pieces := make([]Piece, 0, len(board.pieces))
-	for _, piece := range board.pieces {
-		pieces = append(pieces, piece)
-	}
-
-	return pieces
+	return Pieces(board)
 }
 
 // ApplyMove ...
