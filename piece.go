@@ -56,3 +56,17 @@ type PieceStorage interface {
 	// It shouldn't check for a check before or after the move.
 	CheckMove(move Move) error
 }
+
+// Pieces ...
+func Pieces(storage PieceStorage) []Piece {
+	var pieces []Piece
+	storage.Size().IteratePositions(func(position Position) error { // nolint: errcheck, gosec, lll
+		if piece, ok := storage.Piece(position); ok {
+			pieces = append(pieces, piece)
+		}
+
+		return nil
+	})
+
+	return pieces
+}

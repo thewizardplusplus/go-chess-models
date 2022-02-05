@@ -10,6 +10,7 @@ type MockPieceStorage struct {
 	size   Size
 	pieces []Piece
 
+	piece     func(position Position) (piece Piece, ok bool)
 	checkMove func(move Move) error
 }
 
@@ -20,7 +21,11 @@ func (storage MockPieceStorage) Size() Size {
 func (storage MockPieceStorage) Piece(
 	position Position,
 ) (piece Piece, ok bool) {
-	panic("not implemented")
+	if storage.piece == nil {
+		panic("not implemented")
+	}
+
+	return storage.piece(position)
 }
 
 func (storage MockPieceStorage) Pieces() []Piece {
