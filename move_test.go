@@ -110,8 +110,8 @@ func TestMoveIsEmpty(test *testing.T) {
 
 func TestCheckMove(test *testing.T) {
 	type fields struct {
-		size   Size
-		pieces pieceGroup
+		size  Size
+		piece func(position Position) (piece Piece, ok bool)
 	}
 	type args struct {
 		move Move
@@ -125,8 +125,10 @@ func TestCheckMove(test *testing.T) {
 	for _, data := range []data{
 		{
 			fields: fields{
-				size:   Size{2, 2},
-				pieces: nil,
+				size: Size{2, 2},
+				piece: func(position Position) (piece Piece, ok bool) {
+					return nil, false
+				},
 			},
 			args: args{
 				move: Move{
@@ -138,8 +140,10 @@ func TestCheckMove(test *testing.T) {
 		},
 		{
 			fields: fields{
-				size:   Size{2, 2},
-				pieces: nil,
+				size: Size{2, 2},
+				piece: func(position Position) (piece Piece, ok bool) {
+					return nil, false
+				},
 			},
 			args: args{
 				move: Move{
@@ -151,8 +155,10 @@ func TestCheckMove(test *testing.T) {
 		},
 		{
 			fields: fields{
-				size:   Size{2, 2},
-				pieces: nil,
+				size: Size{2, 2},
+				piece: func(position Position) (piece Piece, ok bool) {
+					return nil, false
+				},
 			},
 			args: args{
 				move: Move{
@@ -165,15 +171,13 @@ func TestCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: Size{2, 2},
-				pieces: pieceGroup{
-					Position{0, 0}: MockPiece{
-						color:    Black,
-						position: Position{0, 0},
-					},
-					Position{1, 1}: MockPiece{
-						color:    Black,
-						position: Position{1, 1},
-					},
+				piece: func(position Position) (piece Piece, ok bool) {
+					if position != (Position{0, 0}) && position != (Position{1, 1}) {
+						return nil, false
+					}
+
+					piece = MockPiece{color: Black, position: position}
+					return piece, true
 				},
 			},
 			args: args{
@@ -187,13 +191,18 @@ func TestCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: Size{2, 2},
-				pieces: pieceGroup{
-					Position{0, 0}: MockPiece{
-						position: Position{0, 0},
+				piece: func(position Position) (piece Piece, ok bool) {
+					if position != (Position{0, 0}) {
+						return nil, false
+					}
+
+					piece = MockPiece{
+						position: position,
 						checkMove: func(move Move, storage PieceStorage) bool {
 							return false
 						},
-					},
+					}
+					return piece, true
 				},
 			},
 			args: args{
@@ -207,19 +216,26 @@ func TestCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: Size{2, 2},
-				pieces: pieceGroup{
-					Position{0, 0}: MockPiece{
-						color:    Black,
-						position: Position{0, 0},
-						checkMove: func(move Move, storage PieceStorage) bool {
-							return true
-						},
-					},
-					Position{1, 1}: MockPiece{
-						kind:     King,
-						color:    White,
-						position: Position{1, 1},
-					},
+				piece: func(position Position) (piece Piece, ok bool) {
+					switch position {
+					case Position{0, 0}:
+						piece = MockPiece{
+							color:    Black,
+							position: Position{0, 0},
+							checkMove: func(move Move, storage PieceStorage) bool {
+								return true
+							},
+						}
+					case Position{1, 1}:
+						piece = MockPiece{
+							kind:     King,
+							color:    White,
+							position: Position{1, 1},
+						}
+					}
+
+					ok = piece != nil
+					return piece, ok
 				},
 			},
 			args: args{
@@ -233,13 +249,18 @@ func TestCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: Size{2, 2},
-				pieces: pieceGroup{
-					Position{0, 0}: MockPiece{
-						position: Position{0, 0},
+				piece: func(position Position) (piece Piece, ok bool) {
+					if position != (Position{0, 0}) {
+						return nil, false
+					}
+
+					piece = MockPiece{
+						position: position,
 						checkMove: func(move Move, storage PieceStorage) bool {
 							return true
 						},
-					},
+					}
+					return piece, true
 				},
 			},
 			args: args{
@@ -251,14 +272,13 @@ func TestCheckMove(test *testing.T) {
 			want: nil,
 		},
 	} {
-		board := MapBoard{
-			BaseBoard: BaseBoard{
-				size: data.fields.size,
+		storage := MockPieceStorage{
+			MockBasePieceStorage: MockBasePieceStorage{
+				size:  data.fields.size,
+				piece: data.fields.piece,
 			},
-
-			pieces: data.fields.pieces,
 		}
-		got := CheckMove(board, data.args.move)
+		got := CheckMove(storage, data.args.move)
 
 		if got != data.want {
 			test.Fail()
