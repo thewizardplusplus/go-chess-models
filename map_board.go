@@ -11,7 +11,7 @@ type MapBoard struct {
 
 // NewMapBoard ...
 func NewMapBoard(size Size, pieces []Piece) PieceStorage {
-	pieceGroup := make(pieceGroup)
+	pieceGroup := make(pieceGroup) // nolint: vetshadow
 	for _, piece := range pieces {
 		pieceGroup[piece.Position()] = piece
 	}

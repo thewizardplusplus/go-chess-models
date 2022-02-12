@@ -29,7 +29,7 @@ func (group ByPosition) Less(
 	return a.File < b.File
 }
 
-func ExampleBoard_CheckMove() {
+func ExampleBoard_CheckMove() { // nolint: vet
 	board := models.NewBoard(models.Size{Width: 5, Height: 5}, []models.Piece{
 		pieces.NewRook(models.Black, models.Position{File: 2, Rank: 2}),
 		pieces.NewBishop(models.White, models.Position{File: 3, Rank: 3}),
