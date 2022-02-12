@@ -16,7 +16,7 @@ func NewSliceBoard(size Size, pieces []Piece) PieceStorage {
 
 	baseBoard := NewBaseBoard(size)
 	sliceBoard := SliceBoard{baseBoard, extendedPieces}
-	return defaultBoardWrapper{sliceBoard}
+	return DefaultBoardWrapper{sliceBoard}
 }
 
 // Piece ...
@@ -41,5 +41,5 @@ func (board SliceBoard) ApplyMove(move Move) PieceStorage {
 	pieceGroupCopy[finishIndex] = movedPiece
 
 	sliceBoard := SliceBoard{board.BaseBoard, pieceGroupCopy}
-	return defaultBoardWrapper{sliceBoard}
+	return DefaultBoardWrapper{sliceBoard}
 }

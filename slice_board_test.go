@@ -11,7 +11,7 @@ func TestNewSliceBoard(test *testing.T) {
 		MockPiece{position: Position{4, 2}},
 	})
 
-	expectedBoard := defaultBoardWrapper{
+	expectedBoard := DefaultBoardWrapper{
 		BasePieceStorage: SliceBoard{
 			BaseBoard: BaseBoard{
 				size: Size{5, 5},
@@ -102,7 +102,7 @@ func TestSliceBoardApplyMove(test *testing.T) {
 		Finish: Position{1, 2},
 	})
 
-	expectedBoard := defaultBoardWrapper{
+	expectedBoard := DefaultBoardWrapper{
 		BasePieceStorage: SliceBoard{
 			BaseBoard: BaseBoard{
 				size: Size{5, 5},
@@ -119,7 +119,7 @@ func TestSliceBoardApplyMove(test *testing.T) {
 		test.Fail()
 	}
 
-	expectedNextBoard := defaultBoardWrapper{
+	expectedNextBoard := DefaultBoardWrapper{
 		BasePieceStorage: SliceBoard{
 			BaseBoard: BaseBoard{
 				size: Size{5, 5},

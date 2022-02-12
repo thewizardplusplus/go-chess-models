@@ -1,14 +1,18 @@
 package chessmodels
 
-type defaultBoardWrapper struct {
+// DefaultBoardWrapper ...
+type DefaultBoardWrapper struct {
 	BasePieceStorage
 }
 
-func (board defaultBoardWrapper) Pieces() []Piece {
+// Pieces ...
+func (board DefaultBoardWrapper) Pieces() []Piece {
 	return Pieces(board)
 }
 
+// CheckMove ...
+//
 // It doesn't check for a check before or after the move.
-func (board defaultBoardWrapper) CheckMove(move Move) error {
+func (board DefaultBoardWrapper) CheckMove(move Move) error {
 	return CheckMove(board, move)
 }

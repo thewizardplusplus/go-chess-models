@@ -18,7 +18,7 @@ func NewMapBoard(size Size, pieces []Piece) PieceStorage {
 
 	baseBoard := NewBaseBoard(size)
 	mapBoard := MapBoard{baseBoard, pieceGroup}
-	return defaultBoardWrapper{mapBoard}
+	return DefaultBoardWrapper{mapBoard}
 }
 
 // Piece ...
@@ -42,5 +42,5 @@ func (board MapBoard) ApplyMove(move Move) PieceStorage {
 	}
 
 	mapBoard := MapBoard{board.BaseBoard, pieceGroupCopy}
-	return defaultBoardWrapper{mapBoard}
+	return DefaultBoardWrapper{mapBoard}
 }

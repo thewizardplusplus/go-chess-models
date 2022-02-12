@@ -41,7 +41,7 @@ func TestDefaultBoardWrapperPieces(test *testing.T) {
 			return piece, true
 		},
 	}
-	board := defaultBoardWrapper{baseStorage}
+	board := DefaultBoardWrapper{baseStorage}
 	pieces := board.Pieces()
 
 	expectedPieces := []Piece{
@@ -221,7 +221,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 			size:  data.fields.size,
 			piece: data.fields.piece,
 		}
-		board := defaultBoardWrapper{baseStorage}
+		board := DefaultBoardWrapper{baseStorage}
 		got := board.CheckMove(data.args.move)
 
 		if got != data.want {
