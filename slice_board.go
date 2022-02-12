@@ -15,18 +15,14 @@ func NewSliceBoard(size Size, pieces []Piece) PieceStorage {
 	}
 
 	baseBoard := NewBaseBoard(size)
-	return SliceBoard{baseBoard, extendedPieces}
+	sliceBoard := SliceBoard{baseBoard, extendedPieces}
+	return defaultBoardWrapper{sliceBoard}
 }
 
 // Piece ...
 func (board SliceBoard) Piece(position Position) (piece Piece, ok bool) {
 	piece = board.pieces[board.size.PositionIndex(position)]
 	return piece, piece != nil
-}
-
-// Pieces ...
-func (board SliceBoard) Pieces() []Piece {
-	return Pieces(board)
 }
 
 // ApplyMove ...
@@ -44,12 +40,6 @@ func (board SliceBoard) ApplyMove(move Move) PieceStorage {
 	movedPiece := piece.ApplyPosition(move.Finish)
 	pieceGroupCopy[finishIndex] = movedPiece
 
-	return SliceBoard{board.BaseBoard, pieceGroupCopy}
-}
-
-// CheckMove ...
-//
-// It doesn't check for a check before or after the move.
-func (board SliceBoard) CheckMove(move Move) error {
-	return CheckMove(board, move)
+	sliceBoard := SliceBoard{board.BaseBoard, pieceGroupCopy}
+	return defaultBoardWrapper{sliceBoard}
 }
