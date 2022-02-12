@@ -17,18 +17,14 @@ func NewMapBoard(size Size, pieces []Piece) PieceStorage {
 	}
 
 	baseBoard := NewBaseBoard(size)
-	return MapBoard{baseBoard, pieceGroup}
+	mapBoard := MapBoard{baseBoard, pieceGroup}
+	return defaultBoardWrapper{mapBoard}
 }
 
 // Piece ...
 func (board MapBoard) Piece(position Position) (piece Piece, ok bool) {
 	piece, ok = board.pieces[position]
 	return piece, ok
-}
-
-// Pieces ...
-func (board MapBoard) Pieces() []Piece {
-	return Pieces(board)
 }
 
 // ApplyMove ...
@@ -45,12 +41,6 @@ func (board MapBoard) ApplyMove(move Move) PieceStorage {
 		}
 	}
 
-	return MapBoard{board.BaseBoard, pieceGroupCopy}
-}
-
-// CheckMove ...
-//
-// It doesn't check for a check before or after the move.
-func (board MapBoard) CheckMove(move Move) error {
-	return CheckMove(board, move)
+	mapBoard := MapBoard{board.BaseBoard, pieceGroupCopy}
+	return defaultBoardWrapper{mapBoard}
 }
