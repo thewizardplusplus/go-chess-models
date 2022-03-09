@@ -1,4 +1,4 @@
-package chessmodels
+package common
 
 // Color ...
 type Color int

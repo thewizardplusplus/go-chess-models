@@ -1,5 +1,9 @@
 package chessmodels
 
+import (
+	"github.com/thewizardplusplus/go-chess-models/common"
+)
+
 // MoveGenerator ...
 type MoveGenerator struct{}
 
@@ -12,7 +16,7 @@ type MoveGenerator struct{}
 // It returns an error only on a king capture.
 func (generator MoveGenerator) MovesForColor(
 	storage PieceStorage,
-	color Color,
+	color common.Color,
 ) ([]Move, error) {
 	var moves []Move
 	for _, piece := range storage.Pieces() {
@@ -65,7 +69,7 @@ func (generator MoveGenerator) MovesForPosition(
 
 // PerftMoveGenerator ...
 type PerftMoveGenerator interface {
-	MovesForColor(storage PieceStorage, color Color) ([]Move, error)
+	MovesForColor(storage PieceStorage, color common.Color) ([]Move, error)
 }
 
 // PerftHandler ...
@@ -75,7 +79,7 @@ type PerftHandler func(move Move, count int, deep int)
 func Perft(
 	generator PerftMoveGenerator,
 	storage PieceStorage,
-	color Color,
+	color common.Color,
 	deep int,
 	handler PerftHandler,
 ) int {

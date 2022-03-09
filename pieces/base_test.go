@@ -5,17 +5,18 @@ import (
 	"testing"
 
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
 func TestNewBase(test *testing.T) {
-	piece := NewBase(models.Pawn, models.White, models.Position{
+	piece := NewBase(models.Pawn, common.White, models.Position{
 		File: 2,
 		Rank: 3,
 	})
 
 	expectedPiece := Base{
 		kind:  models.Pawn,
-		color: models.White,
+		color: common.White,
 		position: models.Position{
 			File: 2,
 			Rank: 3,
@@ -36,10 +37,10 @@ func TestBaseKind(test *testing.T) {
 }
 
 func TestBaseColor(test *testing.T) {
-	piece := Base{color: models.White}
+	piece := Base{color: common.White}
 	color := piece.Color()
 
-	if color != models.White {
+	if color != common.White {
 		test.Fail()
 	}
 }
@@ -65,7 +66,7 @@ func TestBasePosition(test *testing.T) {
 func TestBaseApplyPosition(test *testing.T) {
 	piece := Base{
 		kind:  models.Pawn,
-		color: models.White,
+		color: common.White,
 		position: models.Position{
 			File: 2,
 			Rank: 3,
@@ -78,7 +79,7 @@ func TestBaseApplyPosition(test *testing.T) {
 
 	expectedPiece := Base{
 		kind:  models.Pawn,
-		color: models.White,
+		color: common.White,
 		position: models.Position{
 			File: 2,
 			Rank: 3,
@@ -90,7 +91,7 @@ func TestBaseApplyPosition(test *testing.T) {
 
 	expectedNextPiece := Base{
 		kind:  models.Pawn,
-		color: models.White,
+		color: common.White,
 		position: models.Position{
 			File: 4,
 			Rank: 2,

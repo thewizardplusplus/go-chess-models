@@ -5,12 +5,13 @@ import (
 	"testing"
 
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
 func TestNewPiece(test *testing.T) {
 	type args struct {
 		kind     models.Kind
-		color    models.Color
+		color    common.Color
 		position models.Position
 	}
 	type data struct {
@@ -22,13 +23,13 @@ func TestNewPiece(test *testing.T) {
 		{
 			args: args{
 				kind:  models.King,
-				color: models.White,
+				color: common.White,
 				position: models.Position{
 					File: 2,
 					Rank: 3,
 				},
 			},
-			want: NewKing(models.White, models.Position{
+			want: NewKing(common.White, models.Position{
 				File: 2,
 				Rank: 3,
 			}),
@@ -36,13 +37,13 @@ func TestNewPiece(test *testing.T) {
 		{
 			args: args{
 				kind:  models.Queen,
-				color: models.Black,
+				color: common.Black,
 				position: models.Position{
 					File: 4,
 					Rank: 2,
 				},
 			},
-			want: NewQueen(models.Black, models.Position{
+			want: NewQueen(common.Black, models.Position{
 				File: 4,
 				Rank: 2,
 			}),
@@ -50,13 +51,13 @@ func TestNewPiece(test *testing.T) {
 		{
 			args: args{
 				kind:  models.Rook,
-				color: models.White,
+				color: common.White,
 				position: models.Position{
 					File: 2,
 					Rank: 3,
 				},
 			},
-			want: NewRook(models.White, models.Position{
+			want: NewRook(common.White, models.Position{
 				File: 2,
 				Rank: 3,
 			}),
@@ -64,13 +65,13 @@ func TestNewPiece(test *testing.T) {
 		{
 			args: args{
 				kind:  models.Bishop,
-				color: models.Black,
+				color: common.Black,
 				position: models.Position{
 					File: 4,
 					Rank: 2,
 				},
 			},
-			want: NewBishop(models.Black, models.Position{
+			want: NewBishop(common.Black, models.Position{
 				File: 4,
 				Rank: 2,
 			}),
@@ -78,13 +79,13 @@ func TestNewPiece(test *testing.T) {
 		{
 			args: args{
 				kind:  models.Knight,
-				color: models.White,
+				color: common.White,
 				position: models.Position{
 					File: 2,
 					Rank: 3,
 				},
 			},
-			want: NewKnight(models.White, models.Position{
+			want: NewKnight(common.White, models.Position{
 				File: 2,
 				Rank: 3,
 			}),
@@ -92,13 +93,13 @@ func TestNewPiece(test *testing.T) {
 		{
 			args: args{
 				kind:  models.Pawn,
-				color: models.Black,
+				color: common.Black,
 				position: models.Position{
 					File: 4,
 					Rank: 2,
 				},
 			},
-			want: NewPawn(models.Black, models.Position{
+			want: NewPawn(common.Black, models.Position{
 				File: 4,
 				Rank: 2,
 			}),

@@ -5,6 +5,7 @@ import (
 	"sort"
 
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/common"
 	"github.com/thewizardplusplus/go-chess-models/pieces"
 )
 
@@ -31,8 +32,8 @@ func (group ByPosition) Less(
 
 func ExampleBoard_CheckMove() { // nolint: vet
 	board := models.NewBoard(models.Size{Width: 5, Height: 5}, []models.Piece{
-		pieces.NewRook(models.Black, models.Position{File: 2, Rank: 2}),
-		pieces.NewBishop(models.White, models.Position{File: 3, Rank: 3}),
+		pieces.NewRook(common.Black, models.Position{File: 2, Rank: 2}),
+		pieces.NewBishop(common.White, models.Position{File: 3, Rank: 3}),
 	})
 
 	moveOne := models.Move{
@@ -54,8 +55,8 @@ func ExampleBoard_CheckMove() { // nolint: vet
 
 func ExampleBoard_ApplyMove() {
 	board := models.NewBoard(models.Size{Width: 5, Height: 5}, []models.Piece{
-		pieces.NewRook(models.Black, models.Position{File: 2, Rank: 2}),
-		pieces.NewBishop(models.White, models.Position{File: 3, Rank: 3}),
+		pieces.NewRook(common.Black, models.Position{File: 2, Rank: 2}),
+		pieces.NewBishop(common.White, models.Position{File: 3, Rank: 3}),
 	})
 	pieces := board.Pieces()
 	sort.Sort(ByPosition(pieces))
@@ -76,13 +77,13 @@ func ExampleBoard_ApplyMove() {
 
 func ExampleMoveGenerator_MovesForColor() {
 	board := models.NewBoard(models.Size{Width: 5, Height: 5}, []models.Piece{
-		pieces.NewRook(models.Black, models.Position{File: 2, Rank: 2}),
-		pieces.NewKnight(models.White, models.Position{File: 3, Rank: 3}),
-		pieces.NewPawn(models.White, models.Position{File: 4, Rank: 3}),
+		pieces.NewRook(common.Black, models.Position{File: 2, Rank: 2}),
+		pieces.NewKnight(common.White, models.Position{File: 3, Rank: 3}),
+		pieces.NewPawn(common.White, models.Position{File: 4, Rank: 3}),
 	})
 
 	var generator models.MoveGenerator
-	moves, _ := generator.MovesForColor(board, models.White)
+	moves, _ := generator.MovesForColor(board, common.White)
 
 	// sorting only by the final point will be sufficient for the reproducibility
 	// of this example

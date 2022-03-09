@@ -4,6 +4,8 @@ import (
 	"errors"
 	"reflect"
 	"testing"
+
+	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
 type MockPieceStorage struct {
@@ -19,7 +21,7 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 		checkMove func(move Move) error
 	}
 	type args struct {
-		color Color
+		color common.Color
 	}
 	type data struct {
 		fields    fields
@@ -34,19 +36,19 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 				size: Size{2, 2},
 				pieces: []Piece{
 					MockPiece{
-						color:    Black,
+						color:    common.Black,
 						position: Position{0, 0},
 					},
 					MockPiece{
-						color:    Black,
+						color:    common.Black,
 						position: Position{0, 1},
 					},
 					MockPiece{
-						color:    White,
+						color:    common.White,
 						position: Position{1, 0},
 					},
 					MockPiece{
-						color:    White,
+						color:    common.White,
 						position: Position{1, 1},
 					},
 				},
@@ -54,7 +56,7 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 					return nil
 				},
 			},
-			args: args{Black},
+			args: args{common.Black},
 			wantMoves: []Move{
 				{
 					Start:  Position{0, 0},
@@ -97,19 +99,19 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 				size: Size{2, 2},
 				pieces: []Piece{
 					MockPiece{
-						color:    Black,
+						color:    common.Black,
 						position: Position{0, 0},
 					},
 					MockPiece{
-						color:    Black,
+						color:    common.Black,
 						position: Position{0, 1},
 					},
 					MockPiece{
-						color:    White,
+						color:    common.White,
 						position: Position{1, 0},
 					},
 					MockPiece{
-						color:    White,
+						color:    common.White,
 						position: Position{1, 1},
 					},
 				},
@@ -117,7 +119,7 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 					return nil
 				},
 			},
-			args: args{White},
+			args: args{common.White},
 			wantMoves: []Move{
 				{
 					Start:  Position{1, 0},
@@ -160,19 +162,19 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 				size: Size{2, 2},
 				pieces: []Piece{
 					MockPiece{
-						color:    Black,
+						color:    common.Black,
 						position: Position{0, 0},
 					},
 					MockPiece{
-						color:    Black,
+						color:    common.Black,
 						position: Position{0, 1},
 					},
 					MockPiece{
-						color:    White,
+						color:    common.White,
 						position: Position{1, 0},
 					},
 					MockPiece{
-						color:    White,
+						color:    common.White,
 						position: Position{1, 1},
 					},
 				},
@@ -180,7 +182,7 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 					return errors.New("dummy")
 				},
 			},
-			args:      args{Black},
+			args:      args{common.Black},
 			wantMoves: nil,
 			wantErr:   nil,
 		},
@@ -189,19 +191,19 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 				size: Size{2, 2},
 				pieces: []Piece{
 					MockPiece{
-						color:    Black,
+						color:    common.Black,
 						position: Position{0, 0},
 					},
 					MockPiece{
-						color:    Black,
+						color:    common.Black,
 						position: Position{0, 1},
 					},
 					MockPiece{
-						color:    White,
+						color:    common.White,
 						position: Position{1, 0},
 					},
 					MockPiece{
-						color:    White,
+						color:    common.White,
 						position: Position{1, 1},
 					},
 				},
@@ -209,7 +211,7 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 					return ErrKingCapture
 				},
 			},
-			args:      args{Black},
+			args:      args{common.Black},
 			wantMoves: nil,
 			wantErr:   ErrKingCapture,
 		},

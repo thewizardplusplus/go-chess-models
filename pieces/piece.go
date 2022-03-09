@@ -2,12 +2,13 @@ package pieces
 
 import (
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
 // NewPiece ...
 func NewPiece(
 	kind models.Kind,
-	color models.Color,
+	color common.Color,
 	position models.Position,
 ) models.Piece {
 	var piece models.Piece

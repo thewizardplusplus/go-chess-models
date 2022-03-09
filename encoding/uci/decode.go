@@ -8,12 +8,13 @@ import (
 	"unicode"
 
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
 // PieceFactory ...
 type PieceFactory func(
 	kind models.Kind,
-	color models.Color,
+	color common.Color,
 	position models.Position,
 ) models.Piece
 
@@ -92,11 +93,11 @@ func DecodePiece(fen rune, factory PieceFactory) (models.Piece, error) {
 		return nil, errors.New("unknown kind")
 	}
 
-	var color models.Color
+	var color common.Color
 	if unicode.IsLower(fen) {
-		color = models.Black
+		color = common.Black
 	} else {
-		color = models.White
+		color = common.White
 	}
 
 	piece := factory(kind, color, models.Position{})

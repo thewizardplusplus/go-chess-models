@@ -5,11 +5,12 @@ import (
 	"testing"
 
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/common"
 	"github.com/thewizardplusplus/go-chess-models/encoding/uci"
 )
 
 func TestNewPawn(test *testing.T) {
-	piece := NewPawn(models.White, models.Position{
+	piece := NewPawn(common.White, models.Position{
 		File: 2,
 		Rank: 3,
 	})
@@ -17,7 +18,7 @@ func TestNewPawn(test *testing.T) {
 	expectedPiece := Pawn{
 		Base: Base{
 			kind:  models.Pawn,
-			color: models.White,
+			color: common.White,
 			position: models.Position{
 				File: 2,
 				Rank: 3,
@@ -30,7 +31,7 @@ func TestNewPawn(test *testing.T) {
 }
 
 func TestPawnApplyPosition(test *testing.T) {
-	piece := NewPawn(models.White, models.Position{
+	piece := NewPawn(common.White, models.Position{
 		File: 2,
 		Rank: 3,
 	})
@@ -42,7 +43,7 @@ func TestPawnApplyPosition(test *testing.T) {
 	expectedPiece := Pawn{
 		Base: Base{
 			kind:  models.Pawn,
-			color: models.White,
+			color: common.White,
 			position: models.Position{
 				File: 2,
 				Rank: 3,
@@ -56,7 +57,7 @@ func TestPawnApplyPosition(test *testing.T) {
 	expectedNextPiece := Pawn{
 		Base: Base{
 			kind:  models.Pawn,
-			color: models.White,
+			color: common.White,
 			position: models.Position{
 				File: 4,
 				Rank: 2,

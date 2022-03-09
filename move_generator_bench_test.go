@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/common"
 	"github.com/thewizardplusplus/go-chess-models/encoding/uci"
 	"github.com/thewizardplusplus/go-chess-models/pieces"
 )
@@ -17,7 +18,7 @@ var (
 func BenchmarkPerft(benchmark *testing.B) {
 	type args struct {
 		boardInFEN string
-		color      models.Color
+		color      common.Color
 		deep       int
 	}
 	type storage struct {
@@ -44,7 +45,7 @@ func BenchmarkPerft(benchmark *testing.B) {
 				name: "initial",
 				args: args{
 					boardInFEN: initial,
-					color:      models.White,
+					color:      common.White,
 					deep:       1,
 				},
 			},
@@ -52,7 +53,7 @@ func BenchmarkPerft(benchmark *testing.B) {
 				name: "initial",
 				args: args{
 					boardInFEN: initial,
-					color:      models.White,
+					color:      common.White,
 					deep:       2,
 				},
 			},
@@ -60,7 +61,7 @@ func BenchmarkPerft(benchmark *testing.B) {
 				name: "initial",
 				args: args{
 					boardInFEN: initial,
-					color:      models.White,
+					color:      common.White,
 					deep:       3,
 				},
 			},
@@ -68,7 +69,7 @@ func BenchmarkPerft(benchmark *testing.B) {
 				name: "kiwipete",
 				args: args{
 					boardInFEN: kiwipete,
-					color:      models.White,
+					color:      common.White,
 					deep:       1,
 				},
 			},
@@ -76,7 +77,7 @@ func BenchmarkPerft(benchmark *testing.B) {
 				name: "kiwipete",
 				args: args{
 					boardInFEN: kiwipete,
-					color:      models.White,
+					color:      common.White,
 					deep:       2,
 				},
 			},

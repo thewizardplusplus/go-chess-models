@@ -1,5 +1,9 @@
 package chessmodels
 
+import (
+	"github.com/thewizardplusplus/go-chess-models/common"
+)
+
 // Kind ...
 type Kind int
 
@@ -22,7 +26,7 @@ type Position struct {
 // Piece ...
 type Piece interface {
 	Kind() Kind
-	Color() Color
+	Color() common.Color
 	Position() Position
 	ApplyPosition(position Position) Piece
 

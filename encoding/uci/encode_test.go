@@ -4,19 +4,20 @@ import (
 	"testing"
 
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/common"
 	"github.com/thewizardplusplus/go-chess-models/pieces"
 )
 
 type MockPiece struct {
 	kind  models.Kind
-	color models.Color
+	color common.Color
 }
 
 func (piece MockPiece) Kind() models.Kind {
 	return piece.kind
 }
 
-func (piece MockPiece) Color() models.Color {
+func (piece MockPiece) Color() common.Color {
 	return piece.color
 }
 
@@ -169,7 +170,7 @@ func TestEncodePiece(test *testing.T) {
 			args: args{
 				piece: MockPiece{
 					kind:  models.King,
-					color: models.White,
+					color: common.White,
 				},
 			},
 			want: "K",
@@ -178,7 +179,7 @@ func TestEncodePiece(test *testing.T) {
 			args: args{
 				piece: MockPiece{
 					kind:  models.Queen,
-					color: models.Black,
+					color: common.Black,
 				},
 			},
 			want: "q",
@@ -187,7 +188,7 @@ func TestEncodePiece(test *testing.T) {
 			args: args{
 				piece: MockPiece{
 					kind:  models.Rook,
-					color: models.White,
+					color: common.White,
 				},
 			},
 			want: "R",
@@ -196,7 +197,7 @@ func TestEncodePiece(test *testing.T) {
 			args: args{
 				piece: MockPiece{
 					kind:  models.Bishop,
-					color: models.Black,
+					color: common.Black,
 				},
 			},
 			want: "b",
@@ -205,7 +206,7 @@ func TestEncodePiece(test *testing.T) {
 			args: args{
 				piece: MockPiece{
 					kind:  models.Knight,
-					color: models.White,
+					color: common.White,
 				},
 			},
 			want: "N",
@@ -214,7 +215,7 @@ func TestEncodePiece(test *testing.T) {
 			args: args{
 				piece: MockPiece{
 					kind:  models.Pawn,
-					color: models.Black,
+					color: common.Black,
 				},
 			},
 			want: "p",
@@ -262,7 +263,7 @@ func TestEncodePieceStorage(test *testing.T) {
 					piece: func(position models.Position) (piece models.Piece, ok bool) {
 						switch position {
 						case models.Position{File: 0, Rank: 2}:
-							piece = pieces.NewKing(models.White, models.Position{
+							piece = pieces.NewKing(common.White, models.Position{
 								File: 0,
 								Rank: 2,
 							})
@@ -285,7 +286,7 @@ func TestEncodePieceStorage(test *testing.T) {
 					piece: func(position models.Position) (piece models.Piece, ok bool) {
 						switch position {
 						case models.Position{File: 1, Rank: 2}:
-							piece = pieces.NewKing(models.White, models.Position{
+							piece = pieces.NewKing(common.White, models.Position{
 								File: 1,
 								Rank: 2,
 							})
@@ -308,12 +309,12 @@ func TestEncodePieceStorage(test *testing.T) {
 					piece: func(position models.Position) (piece models.Piece, ok bool) {
 						switch position {
 						case models.Position{File: 1, Rank: 2}:
-							piece = pieces.NewKing(models.White, models.Position{
+							piece = pieces.NewKing(common.White, models.Position{
 								File: 1,
 								Rank: 2,
 							})
 						case models.Position{File: 2, Rank: 2}:
-							piece = pieces.NewQueen(models.Black, models.Position{
+							piece = pieces.NewQueen(common.Black, models.Position{
 								File: 2,
 								Rank: 2,
 							})
@@ -336,12 +337,12 @@ func TestEncodePieceStorage(test *testing.T) {
 					piece: func(position models.Position) (piece models.Piece, ok bool) {
 						switch position {
 						case models.Position{File: 1, Rank: 2}:
-							piece = pieces.NewKing(models.White, models.Position{
+							piece = pieces.NewKing(common.White, models.Position{
 								File: 1,
 								Rank: 2,
 							})
 						case models.Position{File: 4, Rank: 2}:
-							piece = pieces.NewQueen(models.Black, models.Position{
+							piece = pieces.NewQueen(common.Black, models.Position{
 								File: 4,
 								Rank: 2,
 							})
@@ -364,27 +365,27 @@ func TestEncodePieceStorage(test *testing.T) {
 					piece: func(position models.Position) (piece models.Piece, ok bool) {
 						switch position {
 						case models.Position{File: 0, Rank: 3}:
-							piece = pieces.NewKing(models.White, models.Position{
+							piece = pieces.NewKing(common.White, models.Position{
 								File: 0,
 								Rank: 3,
 							})
 						case models.Position{File: 1, Rank: 2}:
-							piece = pieces.NewQueen(models.Black, models.Position{
+							piece = pieces.NewQueen(common.Black, models.Position{
 								File: 1,
 								Rank: 2,
 							})
 						case models.Position{File: 2, Rank: 2}:
-							piece = pieces.NewQueen(models.White, models.Position{
+							piece = pieces.NewQueen(common.White, models.Position{
 								File: 2,
 								Rank: 2,
 							})
 						case models.Position{File: 1, Rank: 1}:
-							piece = pieces.NewRook(models.Black, models.Position{
+							piece = pieces.NewRook(common.Black, models.Position{
 								File: 1,
 								Rank: 1,
 							})
 						case models.Position{File: 4, Rank: 1}:
-							piece = pieces.NewRook(models.White, models.Position{
+							piece = pieces.NewRook(common.White, models.Position{
 								File: 4,
 								Rank: 1,
 							})
@@ -408,27 +409,27 @@ func TestEncodePieceStorage(test *testing.T) {
 					piece: func(position models.Position) (piece models.Piece, ok bool) {
 						switch position {
 						case models.Position{File: 0, Rank: 2}:
-							piece = pieces.NewKing(models.White, models.Position{
+							piece = pieces.NewKing(common.White, models.Position{
 								File: 0,
 								Rank: 2,
 							})
 						case models.Position{File: 1, Rank: 1}:
-							piece = pieces.NewQueen(models.Black, models.Position{
+							piece = pieces.NewQueen(common.Black, models.Position{
 								File: 1,
 								Rank: 1,
 							})
 						case models.Position{File: 2, Rank: 1}:
-							piece = pieces.NewQueen(models.White, models.Position{
+							piece = pieces.NewQueen(common.White, models.Position{
 								File: 2,
 								Rank: 1,
 							})
 						case models.Position{File: 1, Rank: 0}:
-							piece = pieces.NewRook(models.Black, models.Position{
+							piece = pieces.NewRook(common.Black, models.Position{
 								File: 1,
 								Rank: 0,
 							})
 						case models.Position{File: 4, Rank: 0}:
-							piece = pieces.NewRook(models.White, models.Position{
+							piece = pieces.NewRook(common.White, models.Position{
 								File: 4,
 								Rank: 0,
 							})

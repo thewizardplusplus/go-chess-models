@@ -2,13 +2,14 @@ package pieces
 
 import (
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
 // Knight ...
 type Knight struct{ Base }
 
 // NewKnight ...
-func NewKnight(color models.Color, position models.Position) Knight {
+func NewKnight(color common.Color, position models.Position) Knight {
 	base := NewBase(models.Knight, color, position)
 	return Knight{base}
 }

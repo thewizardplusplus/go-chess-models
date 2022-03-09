@@ -6,6 +6,7 @@ import (
 	"unicode"
 
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
 // EncodePosition ...
@@ -32,9 +33,9 @@ func EncodeMove(move models.Move) string {
 func EncodePiece(piece models.Piece) string {
 	var kindCase int
 	switch piece.Color() {
-	case models.Black:
+	case common.Black:
 		kindCase = unicode.LowerCase
-	case models.White:
+	case common.White:
 		kindCase = unicode.UpperCase
 	}
 

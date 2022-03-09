@@ -2,13 +2,14 @@ package pieces
 
 import (
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
 // Pawn ...
 type Pawn struct{ Base }
 
 // NewPawn ...
-func NewPawn(color models.Color, position models.Position) Pawn {
+func NewPawn(color common.Color, position models.Position) Pawn {
 	base := NewBase(models.Pawn, color, position)
 	return Pawn{base}
 }
@@ -38,11 +39,11 @@ func (piece Pawn) CheckMove(
 
 	rankSteps := finish.Rank - start.Rank
 	switch piece.color {
-	case models.Black:
+	case common.Black:
 		if rankSteps != -1 {
 			return false
 		}
-	case models.White:
+	case common.White:
 		if rankSteps != 1 {
 			return false
 		}

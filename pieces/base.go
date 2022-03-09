@@ -2,19 +2,20 @@ package pieces
 
 import (
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
 // Base ...
 type Base struct {
 	kind     models.Kind
-	color    models.Color
+	color    common.Color
 	position models.Position
 }
 
 // NewBase ...
 func NewBase(
 	kind models.Kind,
-	color models.Color,
+	color common.Color,
 	position models.Position,
 ) Base {
 	return Base{kind, color, position}
@@ -26,7 +27,7 @@ func (piece Base) Kind() models.Kind {
 }
 
 // Color ...
-func (piece Base) Color() models.Color {
+func (piece Base) Color() common.Color {
 	return piece.color
 }
 

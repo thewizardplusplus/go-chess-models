@@ -5,11 +5,12 @@ import (
 	"testing"
 
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/common"
 	"github.com/thewizardplusplus/go-chess-models/encoding/uci"
 )
 
 func TestNewRook(test *testing.T) {
-	piece := NewRook(models.White, models.Position{
+	piece := NewRook(common.White, models.Position{
 		File: 2,
 		Rank: 3,
 	})
@@ -17,7 +18,7 @@ func TestNewRook(test *testing.T) {
 	expectedPiece := Rook{
 		Base: Base{
 			kind:  models.Rook,
-			color: models.White,
+			color: common.White,
 			position: models.Position{
 				File: 2,
 				Rank: 3,
@@ -30,7 +31,7 @@ func TestNewRook(test *testing.T) {
 }
 
 func TestRookApplyPosition(test *testing.T) {
-	piece := NewRook(models.White, models.Position{
+	piece := NewRook(common.White, models.Position{
 		File: 2,
 		Rank: 3,
 	})
@@ -42,7 +43,7 @@ func TestRookApplyPosition(test *testing.T) {
 	expectedPiece := Rook{
 		Base: Base{
 			kind:  models.Rook,
-			color: models.White,
+			color: common.White,
 			position: models.Position{
 				File: 2,
 				Rank: 3,
@@ -56,7 +57,7 @@ func TestRookApplyPosition(test *testing.T) {
 	expectedNextPiece := Rook{
 		Base: Base{
 			kind:  models.Rook,
-			color: models.White,
+			color: common.White,
 			position: models.Position{
 				File: 4,
 				Rank: 2,

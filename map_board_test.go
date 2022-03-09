@@ -3,11 +3,13 @@ package chessmodels
 import (
 	"reflect"
 	"testing"
+
+	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
 type MockPiece struct {
 	kind     Kind
-	color    Color
+	color    common.Color
 	position Position
 
 	checkMove func(move Move, storage PieceStorage) bool
@@ -17,7 +19,7 @@ func (piece MockPiece) Kind() Kind {
 	return piece.kind
 }
 
-func (piece MockPiece) Color() Color {
+func (piece MockPiece) Color() common.Color {
 	return piece.color
 }
 

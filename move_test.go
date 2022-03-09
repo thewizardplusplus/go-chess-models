@@ -2,6 +2,8 @@ package chessmodels
 
 import (
 	"testing"
+
+	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
 func TestMoveIsZero(test *testing.T) {
@@ -176,7 +178,7 @@ func TestCheckMove(test *testing.T) {
 						return nil, false
 					}
 
-					piece = MockPiece{color: Black, position: position}
+					piece = MockPiece{color: common.Black, position: position}
 					return piece, true
 				},
 			},
@@ -220,7 +222,7 @@ func TestCheckMove(test *testing.T) {
 					switch position {
 					case Position{0, 0}:
 						piece = MockPiece{
-							color:    Black,
+							color:    common.Black,
 							position: Position{0, 0},
 							checkMove: func(move Move, storage PieceStorage) bool {
 								return true
@@ -229,7 +231,7 @@ func TestCheckMove(test *testing.T) {
 					case Position{1, 1}:
 						piece = MockPiece{
 							kind:     King,
-							color:    White,
+							color:    common.White,
 							position: Position{1, 1},
 						}
 					}

@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/common"
 	"github.com/thewizardplusplus/go-chess-models/pieces"
 )
 
@@ -134,7 +135,7 @@ func TestDecodePiece(test *testing.T) {
 		{
 			args: args{'K'},
 			wantPiece: pieces.NewKing(
-				models.White,
+				common.White,
 				models.Position{},
 			),
 			wantErr: false,
@@ -142,7 +143,7 @@ func TestDecodePiece(test *testing.T) {
 		{
 			args: args{'q'},
 			wantPiece: pieces.NewQueen(
-				models.Black,
+				common.Black,
 				models.Position{},
 			),
 			wantErr: false,
@@ -150,7 +151,7 @@ func TestDecodePiece(test *testing.T) {
 		{
 			args: args{'R'},
 			wantPiece: pieces.NewRook(
-				models.White,
+				common.White,
 				models.Position{},
 			),
 			wantErr: false,
@@ -158,7 +159,7 @@ func TestDecodePiece(test *testing.T) {
 		{
 			args: args{'b'},
 			wantPiece: pieces.NewBishop(
-				models.Black,
+				common.Black,
 				models.Position{},
 			),
 			wantErr: false,
@@ -166,7 +167,7 @@ func TestDecodePiece(test *testing.T) {
 		{
 			args: args{'N'},
 			wantPiece: pieces.NewKnight(
-				models.White,
+				common.White,
 				models.Position{},
 			),
 			wantErr: false,
@@ -174,7 +175,7 @@ func TestDecodePiece(test *testing.T) {
 		{
 			args: args{'p'},
 			wantPiece: pieces.NewPawn(
-				models.Black,
+				common.Black,
 				models.Position{},
 			),
 			wantErr: false,
@@ -219,23 +220,23 @@ func TestDecodePieceStorage(test *testing.T) {
 					Height: 3,
 				},
 				[]models.Piece{
-					pieces.NewPawn(models.Black, models.Position{
+					pieces.NewPawn(common.Black, models.Position{
 						File: 0,
 						Rank: 0,
 					}),
-					pieces.NewPawn(models.Black, models.Position{
+					pieces.NewPawn(common.Black, models.Position{
 						File: 1,
 						Rank: 0,
 					}),
-					pieces.NewRook(models.White, models.Position{
+					pieces.NewRook(common.White, models.Position{
 						File: 3,
 						Rank: 0,
 					}),
-					pieces.NewKing(models.White, models.Position{
+					pieces.NewKing(common.White, models.Position{
 						File: 2,
 						Rank: 2,
 					}),
-					pieces.NewQueen(models.Black, models.Position{
+					pieces.NewQueen(common.Black, models.Position{
 						File: 6,
 						Rank: 2,
 					}),
@@ -253,23 +254,23 @@ func TestDecodePieceStorage(test *testing.T) {
 					Height: 4,
 				},
 				[]models.Piece{
-					pieces.NewPawn(models.Black, models.Position{
+					pieces.NewPawn(common.Black, models.Position{
 						File: 0,
 						Rank: 0,
 					}),
-					pieces.NewPawn(models.Black, models.Position{
+					pieces.NewPawn(common.Black, models.Position{
 						File: 1,
 						Rank: 0,
 					}),
-					pieces.NewRook(models.White, models.Position{
+					pieces.NewRook(common.White, models.Position{
 						File: 3,
 						Rank: 0,
 					}),
-					pieces.NewKing(models.White, models.Position{
+					pieces.NewKing(common.White, models.Position{
 						File: 2,
 						Rank: 2,
 					}),
-					pieces.NewQueen(models.Black, models.Position{
+					pieces.NewQueen(common.Black, models.Position{
 						File: 6,
 						Rank: 2,
 					}),
@@ -287,23 +288,23 @@ func TestDecodePieceStorage(test *testing.T) {
 					Height: 4,
 				},
 				[]models.Piece{
-					pieces.NewPawn(models.Black, models.Position{
+					pieces.NewPawn(common.Black, models.Position{
 						File: 0,
 						Rank: 1,
 					}),
-					pieces.NewPawn(models.Black, models.Position{
+					pieces.NewPawn(common.Black, models.Position{
 						File: 1,
 						Rank: 1,
 					}),
-					pieces.NewRook(models.White, models.Position{
+					pieces.NewRook(common.White, models.Position{
 						File: 3,
 						Rank: 1,
 					}),
-					pieces.NewKing(models.White, models.Position{
+					pieces.NewKing(common.White, models.Position{
 						File: 2,
 						Rank: 3,
 					}),
-					pieces.NewQueen(models.Black, models.Position{
+					pieces.NewQueen(common.Black, models.Position{
 						File: 6,
 						Rank: 3,
 					}),
@@ -361,7 +362,7 @@ func TestDecodeRank(test *testing.T) {
 				fen:   "K",
 			},
 			wantPieces: []models.Piece{
-				pieces.NewKing(models.White, models.Position{
+				pieces.NewKing(common.White, models.Position{
 					File: 0,
 					Rank: 7,
 				}),
@@ -375,7 +376,7 @@ func TestDecodeRank(test *testing.T) {
 				fen:   "2K",
 			},
 			wantPieces: []models.Piece{
-				pieces.NewKing(models.White, models.Position{
+				pieces.NewKing(common.White, models.Position{
 					File: 2,
 					Rank: 7,
 				}),
@@ -389,11 +390,11 @@ func TestDecodeRank(test *testing.T) {
 				fen:   "2Kq",
 			},
 			wantPieces: []models.Piece{
-				pieces.NewKing(models.White, models.Position{
+				pieces.NewKing(common.White, models.Position{
 					File: 2,
 					Rank: 7,
 				}),
-				pieces.NewQueen(models.Black, models.Position{
+				pieces.NewQueen(common.Black, models.Position{
 					File: 3,
 					Rank: 7,
 				}),
@@ -407,11 +408,11 @@ func TestDecodeRank(test *testing.T) {
 				fen:   "2K3q",
 			},
 			wantPieces: []models.Piece{
-				pieces.NewKing(models.White, models.Position{
+				pieces.NewKing(common.White, models.Position{
 					File: 2,
 					Rank: 7,
 				}),
-				pieces.NewQueen(models.Black, models.Position{
+				pieces.NewQueen(common.Black, models.Position{
 					File: 6,
 					Rank: 7,
 				}),
@@ -425,11 +426,11 @@ func TestDecodeRank(test *testing.T) {
 				fen:   "2K3q4",
 			},
 			wantPieces: []models.Piece{
-				pieces.NewKing(models.White, models.Position{
+				pieces.NewKing(common.White, models.Position{
 					File: 2,
 					Rank: 7,
 				}),
-				pieces.NewQueen(models.Black, models.Position{
+				pieces.NewQueen(common.Black, models.Position{
 					File: 6,
 					Rank: 7,
 				}),

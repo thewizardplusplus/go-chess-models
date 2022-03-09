@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/common"
 	"github.com/thewizardplusplus/go-chess-models/encoding/uci"
 	"github.com/thewizardplusplus/go-chess-models/pieces"
 )
@@ -25,7 +26,7 @@ var (
 func TestPerft(test *testing.T) {
 	type args struct {
 		boardInFEN string
-		color      models.Color
+		color      common.Color
 		deep       int
 	}
 	type storage struct {
@@ -53,7 +54,7 @@ func TestPerft(test *testing.T) {
 				name: "kings",
 				args: args{
 					boardInFEN: kings,
-					color:      models.White,
+					color:      common.White,
 					deep:       0,
 				},
 				want: 1,
@@ -62,7 +63,7 @@ func TestPerft(test *testing.T) {
 				name: "kings",
 				args: args{
 					boardInFEN: kings,
-					color:      models.White,
+					color:      common.White,
 					deep:       1,
 				},
 				want: 5,
@@ -71,7 +72,7 @@ func TestPerft(test *testing.T) {
 				name: "kings",
 				args: args{
 					boardInFEN: kings,
-					color:      models.White,
+					color:      common.White,
 					deep:       2,
 				},
 				want: 25,
@@ -80,7 +81,7 @@ func TestPerft(test *testing.T) {
 				name: "kings",
 				args: args{
 					boardInFEN: kings,
-					color:      models.White,
+					color:      common.White,
 					deep:       3,
 				},
 				want: 170,
@@ -89,7 +90,7 @@ func TestPerft(test *testing.T) {
 				name: "kings",
 				args: args{
 					boardInFEN: kings,
-					color:      models.White,
+					color:      common.White,
 					deep:       4,
 				},
 				want: 1156,
@@ -98,7 +99,7 @@ func TestPerft(test *testing.T) {
 				name: "kings",
 				args: args{
 					boardInFEN: kings,
-					color:      models.White,
+					color:      common.White,
 					deep:       5,
 				},
 				want: 7922,
@@ -107,7 +108,7 @@ func TestPerft(test *testing.T) {
 				name: "queens",
 				args: args{
 					boardInFEN: queens,
-					color:      models.White,
+					color:      common.White,
 					deep:       0,
 				},
 				want: 1,
@@ -116,7 +117,7 @@ func TestPerft(test *testing.T) {
 				name: "queens",
 				args: args{
 					boardInFEN: queens,
-					color:      models.White,
+					color:      common.White,
 					deep:       1,
 				},
 				want: 20,
@@ -125,7 +126,7 @@ func TestPerft(test *testing.T) {
 				name: "queens",
 				args: args{
 					boardInFEN: queens,
-					color:      models.White,
+					color:      common.White,
 					deep:       2,
 				},
 				want: 301,
@@ -134,7 +135,7 @@ func TestPerft(test *testing.T) {
 				name: "queens",
 				args: args{
 					boardInFEN: queens,
-					color:      models.White,
+					color:      common.White,
 					deep:       3,
 				},
 				want: 6063,
@@ -143,7 +144,7 @@ func TestPerft(test *testing.T) {
 				name: "rooks",
 				args: args{
 					boardInFEN: rooks,
-					color:      models.White,
+					color:      common.White,
 					deep:       0,
 				},
 				want: 1,
@@ -152,7 +153,7 @@ func TestPerft(test *testing.T) {
 				name: "rooks",
 				args: args{
 					boardInFEN: rooks,
-					color:      models.White,
+					color:      common.White,
 					deep:       1,
 				},
 				want: 24,
@@ -161,7 +162,7 @@ func TestPerft(test *testing.T) {
 				name: "rooks",
 				args: args{
 					boardInFEN: rooks,
-					color:      models.White,
+					color:      common.White,
 					deep:       2,
 				},
 				want: 482,
@@ -170,7 +171,7 @@ func TestPerft(test *testing.T) {
 				name: "rooks",
 				args: args{
 					boardInFEN: rooks,
-					color:      models.White,
+					color:      common.White,
 					deep:       3,
 				},
 				want: 11522,
@@ -179,7 +180,7 @@ func TestPerft(test *testing.T) {
 				name: "bishops",
 				args: args{
 					boardInFEN: bishops,
-					color:      models.White,
+					color:      common.White,
 					deep:       0,
 				},
 				want: 1,
@@ -188,7 +189,7 @@ func TestPerft(test *testing.T) {
 				name: "bishops",
 				args: args{
 					boardInFEN: bishops,
-					color:      models.White,
+					color:      common.White,
 					deep:       1,
 				},
 				want: 18,
@@ -197,7 +198,7 @@ func TestPerft(test *testing.T) {
 				name: "bishops",
 				args: args{
 					boardInFEN: bishops,
-					color:      models.White,
+					color:      common.White,
 					deep:       2,
 				},
 				want: 305,
@@ -206,7 +207,7 @@ func TestPerft(test *testing.T) {
 				name: "bishops",
 				args: args{
 					boardInFEN: bishops,
-					color:      models.White,
+					color:      common.White,
 					deep:       3,
 				},
 				want: 5575,
@@ -215,7 +216,7 @@ func TestPerft(test *testing.T) {
 				name: "knights",
 				args: args{
 					boardInFEN: knights,
-					color:      models.White,
+					color:      common.White,
 					deep:       0,
 				},
 				want: 1,
@@ -224,7 +225,7 @@ func TestPerft(test *testing.T) {
 				name: "knights",
 				args: args{
 					boardInFEN: knights,
-					color:      models.White,
+					color:      common.White,
 					deep:       1,
 				},
 				want: 11,
@@ -233,7 +234,7 @@ func TestPerft(test *testing.T) {
 				name: "knights",
 				args: args{
 					boardInFEN: knights,
-					color:      models.White,
+					color:      common.White,
 					deep:       2,
 				},
 				want: 121,
@@ -242,7 +243,7 @@ func TestPerft(test *testing.T) {
 				name: "knights",
 				args: args{
 					boardInFEN: knights,
-					color:      models.White,
+					color:      common.White,
 					deep:       3,
 				},
 				want: 1551,
@@ -251,7 +252,7 @@ func TestPerft(test *testing.T) {
 				name: "knights",
 				args: args{
 					boardInFEN: knights,
-					color:      models.White,
+					color:      common.White,
 					deep:       4,
 				},
 				want: 19764,
@@ -260,7 +261,7 @@ func TestPerft(test *testing.T) {
 				name: "pawns",
 				args: args{
 					boardInFEN: pawns,
-					color:      models.White,
+					color:      common.White,
 					deep:       0,
 				},
 				want: 1,
@@ -269,7 +270,7 @@ func TestPerft(test *testing.T) {
 				name: "pawns",
 				args: args{
 					boardInFEN: pawns,
-					color:      models.White,
+					color:      common.White,
 					deep:       1,
 				},
 				want: 10,
@@ -278,7 +279,7 @@ func TestPerft(test *testing.T) {
 				name: "pawns",
 				args: args{
 					boardInFEN: pawns,
-					color:      models.White,
+					color:      common.White,
 					deep:       2,
 				},
 				want: 100,
@@ -287,7 +288,7 @@ func TestPerft(test *testing.T) {
 				name: "pawns",
 				args: args{
 					boardInFEN: pawns,
-					color:      models.White,
+					color:      common.White,
 					deep:       3,
 				},
 				want: 1030,
@@ -296,7 +297,7 @@ func TestPerft(test *testing.T) {
 				name: "pawns",
 				args: args{
 					boardInFEN: pawns,
-					color:      models.White,
+					color:      common.White,
 					deep:       4,
 				},
 				want: 10609,
@@ -305,7 +306,7 @@ func TestPerft(test *testing.T) {
 				name: "initial",
 				args: args{
 					boardInFEN: initial,
-					color:      models.White,
+					color:      common.White,
 					deep:       0,
 				},
 				want: 1,
@@ -314,7 +315,7 @@ func TestPerft(test *testing.T) {
 				name: "initial",
 				args: args{
 					boardInFEN: initial,
-					color:      models.White,
+					color:      common.White,
 					deep:       1,
 				},
 				want: 12,
@@ -323,7 +324,7 @@ func TestPerft(test *testing.T) {
 				name: "initial",
 				args: args{
 					boardInFEN: initial,
-					color:      models.White,
+					color:      common.White,
 					deep:       2,
 				},
 				want: 144,
@@ -332,7 +333,7 @@ func TestPerft(test *testing.T) {
 				name: "initial",
 				args: args{
 					boardInFEN: initial,
-					color:      models.White,
+					color:      common.White,
 					deep:       3,
 				},
 				want: 2124,
@@ -341,7 +342,7 @@ func TestPerft(test *testing.T) {
 				name: "kiwipete",
 				args: args{
 					boardInFEN: kiwipete,
-					color:      models.White,
+					color:      common.White,
 					deep:       0,
 				},
 				want: 1,
@@ -350,7 +351,7 @@ func TestPerft(test *testing.T) {
 				name: "kiwipete",
 				args: args{
 					boardInFEN: kiwipete,
-					color:      models.White,
+					color:      common.White,
 					deep:       1,
 				},
 				want: 44,
@@ -359,7 +360,7 @@ func TestPerft(test *testing.T) {
 				name: "kiwipete",
 				args: args{
 					boardInFEN: kiwipete,
-					color:      models.White,
+					color:      common.White,
 					deep:       2,
 				},
 				want: 1740,

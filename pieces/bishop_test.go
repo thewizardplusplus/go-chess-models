@@ -5,11 +5,12 @@ import (
 	"testing"
 
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/common"
 	"github.com/thewizardplusplus/go-chess-models/encoding/uci"
 )
 
 func TestNewBishop(test *testing.T) {
-	piece := NewBishop(models.White, models.Position{
+	piece := NewBishop(common.White, models.Position{
 		File: 2,
 		Rank: 3,
 	})
@@ -17,7 +18,7 @@ func TestNewBishop(test *testing.T) {
 	expectedPiece := Bishop{
 		Base: Base{
 			kind:  models.Bishop,
-			color: models.White,
+			color: common.White,
 			position: models.Position{
 				File: 2,
 				Rank: 3,
@@ -30,7 +31,7 @@ func TestNewBishop(test *testing.T) {
 }
 
 func TestBishopApplyPosition(test *testing.T) {
-	piece := NewBishop(models.White, models.Position{
+	piece := NewBishop(common.White, models.Position{
 		File: 2,
 		Rank: 3,
 	})
@@ -42,7 +43,7 @@ func TestBishopApplyPosition(test *testing.T) {
 	expectedPiece := Bishop{
 		Base: Base{
 			kind:  models.Bishop,
-			color: models.White,
+			color: common.White,
 			position: models.Position{
 				File: 2,
 				Rank: 3,
@@ -56,7 +57,7 @@ func TestBishopApplyPosition(test *testing.T) {
 	expectedNextPiece := Bishop{
 		Base: Base{
 			kind:  models.Bishop,
-			color: models.White,
+			color: common.White,
 			position: models.Position{
 				File: 4,
 				Rank: 2,
