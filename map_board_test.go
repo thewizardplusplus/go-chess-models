@@ -12,7 +12,7 @@ type MockPiece struct {
 	color    common.Color
 	position common.Position
 
-	checkMove func(move Move, storage PieceStorage) bool
+	checkMove func(move common.Move, storage PieceStorage) bool
 }
 
 func (piece MockPiece) Kind() common.Kind {
@@ -36,7 +36,7 @@ func (piece MockPiece) ApplyPosition(position common.Position) Piece {
 	}
 }
 
-func (piece MockPiece) CheckMove(move Move, storage PieceStorage) bool {
+func (piece MockPiece) CheckMove(move common.Move, storage PieceStorage) bool {
 	if piece.checkMove == nil {
 		panic("not implemented")
 	}
@@ -145,7 +145,7 @@ func TestMapBoardApplyMove(test *testing.T) {
 		MockPiece{position: common.Position{2, 3}},
 		MockPiece{position: common.Position{4, 2}},
 	})
-	nextBoard := board.ApplyMove(Move{
+	nextBoard := board.ApplyMove(common.Move{
 		Start:  common.Position{4, 2},
 		Finish: common.Position{1, 2},
 	})

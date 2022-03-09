@@ -16,30 +16,10 @@ var (
 	ErrKingCapture    = errors.New("king capture")
 )
 
-// Move ...
-type Move struct {
-	Start  common.Position
-	Finish common.Position
-}
-
-// IsZero ...
-//
-// It checks that all fields of the move are zero.
-func (move Move) IsZero() bool {
-	return move == Move{}
-}
-
-// IsEmpty ...
-//
-// It checks that the start of the move equals its finish.
-func (move Move) IsEmpty() bool {
-	return move.Start == move.Finish
-}
-
 // CheckMove ...
 //
 // It doesn't check for a check before or after the move.
-func CheckMove(storage PieceStorage, move Move) error {
+func CheckMove(storage PieceStorage, move common.Move) error {
 	if move.IsEmpty() {
 		return ErrNoMove
 	}

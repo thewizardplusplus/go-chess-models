@@ -6,117 +6,13 @@ import (
 	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
-func TestMoveIsZero(test *testing.T) {
-	type fields struct {
-		start  common.Position
-		finish common.Position
-	}
-	type data struct {
-		fields fields
-		want   bool
-	}
-
-	for _, data := range []data{
-		{
-			fields: fields{
-				start:  common.Position{1, 2},
-				finish: common.Position{3, 4},
-			},
-			want: false,
-		},
-		{
-			fields: fields{
-				start:  common.Position{1, 0},
-				finish: common.Position{3, 0},
-			},
-			want: false,
-		},
-		{
-			fields: fields{
-				start:  common.Position{1, 2},
-				finish: common.Position{0, 0},
-			},
-			want: false,
-		},
-		{
-			fields: fields{
-				start:  common.Position{0, 0},
-				finish: common.Position{0, 0},
-			},
-			want: true,
-		},
-	} {
-		move := Move{
-			Start:  data.fields.start,
-			Finish: data.fields.finish,
-		}
-		got := move.IsZero()
-
-		if got != data.want {
-			test.Fail()
-		}
-	}
-}
-
-func TestMoveIsEmpty(test *testing.T) {
-	type fields struct {
-		start  common.Position
-		finish common.Position
-	}
-	type data struct {
-		fields fields
-		want   bool
-	}
-
-	for _, data := range []data{
-		{
-			fields: fields{
-				start:  common.Position{1, 2},
-				finish: common.Position{3, 4},
-			},
-			want: false,
-		},
-		{
-			fields: fields{
-				start:  common.Position{1, 2},
-				finish: common.Position{1, 4},
-			},
-			want: false,
-		},
-		{
-			fields: fields{
-				start:  common.Position{1, 2},
-				finish: common.Position{3, 2},
-			},
-			want: false,
-		},
-		{
-			fields: fields{
-				start:  common.Position{1, 2},
-				finish: common.Position{1, 2},
-			},
-			want: true,
-		},
-	} {
-		move := Move{
-			Start:  data.fields.start,
-			Finish: data.fields.finish,
-		}
-		got := move.IsEmpty()
-
-		if got != data.want {
-			test.Fail()
-		}
-	}
-}
-
 func TestCheckMove(test *testing.T) {
 	type fields struct {
 		size  Size
 		piece func(position common.Position) (piece Piece, ok bool)
 	}
 	type args struct {
-		move Move
+		move common.Move
 	}
 	type data struct {
 		fields fields
@@ -133,7 +29,7 @@ func TestCheckMove(test *testing.T) {
 				},
 			},
 			args: args{
-				move: Move{
+				move: common.Move{
 					Start:  common.Position{0, 0},
 					Finish: common.Position{0, 0},
 				},
@@ -148,7 +44,7 @@ func TestCheckMove(test *testing.T) {
 				},
 			},
 			args: args{
-				move: Move{
+				move: common.Move{
 					Start:  common.Position{0, 0},
 					Finish: common.Position{-1, -1},
 				},
@@ -163,7 +59,7 @@ func TestCheckMove(test *testing.T) {
 				},
 			},
 			args: args{
-				move: Move{
+				move: common.Move{
 					Start:  common.Position{0, 0},
 					Finish: common.Position{1, 1},
 				},
@@ -183,7 +79,7 @@ func TestCheckMove(test *testing.T) {
 				},
 			},
 			args: args{
-				move: Move{
+				move: common.Move{
 					Start:  common.Position{0, 0},
 					Finish: common.Position{1, 1},
 				},
@@ -200,7 +96,7 @@ func TestCheckMove(test *testing.T) {
 
 					piece = MockPiece{
 						position: position,
-						checkMove: func(move Move, storage PieceStorage) bool {
+						checkMove: func(move common.Move, storage PieceStorage) bool {
 							return false
 						},
 					}
@@ -208,7 +104,7 @@ func TestCheckMove(test *testing.T) {
 				},
 			},
 			args: args{
-				move: Move{
+				move: common.Move{
 					Start:  common.Position{0, 0},
 					Finish: common.Position{1, 1},
 				},
@@ -224,7 +120,7 @@ func TestCheckMove(test *testing.T) {
 						piece = MockPiece{
 							color:    common.Black,
 							position: common.Position{0, 0},
-							checkMove: func(move Move, storage PieceStorage) bool {
+							checkMove: func(move common.Move, storage PieceStorage) bool {
 								return true
 							},
 						}
@@ -241,7 +137,7 @@ func TestCheckMove(test *testing.T) {
 				},
 			},
 			args: args{
-				move: Move{
+				move: common.Move{
 					Start:  common.Position{0, 0},
 					Finish: common.Position{1, 1},
 				},
@@ -258,7 +154,7 @@ func TestCheckMove(test *testing.T) {
 
 					piece = MockPiece{
 						position: position,
-						checkMove: func(move Move, storage PieceStorage) bool {
+						checkMove: func(move common.Move, storage PieceStorage) bool {
 							return true
 						},
 					}
@@ -266,7 +162,7 @@ func TestCheckMove(test *testing.T) {
 				},
 			},
 			args: args{
-				move: Move{
+				move: common.Move{
 					Start:  common.Position{0, 0},
 					Finish: common.Position{1, 1},
 				},

@@ -83,7 +83,7 @@ func TestKnightCheckMove(test *testing.T) {
 		Rank: 2,
 	})
 
-	expectedMoves := []models.Move{
+	expectedMoves := []common.Move{
 		{
 			Start: common.Position{
 				File: 2,

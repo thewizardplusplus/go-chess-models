@@ -99,7 +99,7 @@ func TestSliceBoardApplyMove(test *testing.T) {
 		MockPiece{position: common.Position{2, 3}},
 		MockPiece{position: common.Position{4, 2}},
 	})
-	nextBoard := board.ApplyMove(Move{
+	nextBoard := board.ApplyMove(common.Move{
 		Start:  common.Position{4, 2},
 		Finish: common.Position{1, 2},
 	})

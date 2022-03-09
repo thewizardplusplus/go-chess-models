@@ -32,7 +32,7 @@ func (board SliceBoard) Piece(position common.Position) (piece Piece, ok bool) {
 // ApplyMove ...
 //
 // It doesn't check that the move is correct.
-func (board SliceBoard) ApplyMove(move Move) PieceStorage {
+func (board SliceBoard) ApplyMove(move common.Move) PieceStorage {
 	pieceGroupCopy := make([]Piece, len(board.pieces))
 	copy(pieceGroupCopy, board.pieces)
 

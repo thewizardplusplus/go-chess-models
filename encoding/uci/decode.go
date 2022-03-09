@@ -53,22 +53,22 @@ func DecodePosition(text string) (position common.Position, err error) {
 // DecodeMove ...
 //
 // It decodes a move from pure algebraic coordinate notation.
-func DecodeMove(text string) (move models.Move, err error) {
+func DecodeMove(text string) (move common.Move, err error) {
 	if len(text) != 4 {
-		return models.Move{}, errors.New("incorrect length")
+		return common.Move{}, errors.New("incorrect length")
 	}
 
 	start, err := DecodePosition(text[:2])
 	if err != nil {
-		return models.Move{}, fmt.Errorf("incorrect start: %s", err)
+		return common.Move{}, fmt.Errorf("incorrect start: %s", err)
 	}
 
 	finish, err := DecodePosition(text[2:])
 	if err != nil {
-		return models.Move{}, fmt.Errorf("incorrect finish: %s", err)
+		return common.Move{}, fmt.Errorf("incorrect finish: %s", err)
 	}
 
-	return models.Move{Start: start, Finish: finish}, nil
+	return common.Move{Start: start, Finish: finish}, nil
 }
 
 // DecodePiece ...

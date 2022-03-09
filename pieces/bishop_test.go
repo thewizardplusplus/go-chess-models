@@ -76,7 +76,7 @@ func TestBishopCheckMove(test *testing.T) {
 	}
 	type data struct {
 		args      args
-		wantMoves []models.Move
+		wantMoves []common.Move
 		wantErr   error
 	}
 
@@ -89,7 +89,7 @@ func TestBishopCheckMove(test *testing.T) {
 					Rank: 2,
 				},
 			},
-			wantMoves: []models.Move{
+			wantMoves: []common.Move{
 				{
 					Start: common.Position{
 						File: 2,
@@ -181,7 +181,7 @@ func TestBishopCheckMove(test *testing.T) {
 					Rank: 2,
 				},
 			},
-			wantMoves: []models.Move{
+			wantMoves: []common.Move{
 				{
 					Start: common.Position{
 						File: 2,
@@ -254,7 +254,7 @@ func TestBishopCheckMove(test *testing.T) {
 					Rank: 3,
 				},
 			},
-			wantMoves: []models.Move{
+			wantMoves: []common.Move{
 				{
 					Start: common.Position{
 						File: 1,

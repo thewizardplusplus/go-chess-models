@@ -36,13 +36,13 @@ func ExampleBoard_CheckMove() { // nolint: vet
 		pieces.NewBishop(common.White, common.Position{File: 3, Rank: 3}),
 	})
 
-	moveOne := models.Move{
+	moveOne := common.Move{
 		Start:  common.Position{File: 2, Rank: 2},
 		Finish: common.Position{File: 3, Rank: 3},
 	}
 	fmt.Printf("%+v: %v\n", moveOne, board.CheckMove(moveOne))
 
-	moveTwo := models.Move{
+	moveTwo := common.Move{
 		Start:  common.Position{File: 3, Rank: 3},
 		Finish: common.Position{File: 2, Rank: 2},
 	}
@@ -62,7 +62,7 @@ func ExampleBoard_ApplyMove() {
 	sort.Sort(ByPosition(pieces))
 	fmt.Printf("%+v\n", pieces)
 
-	updatedBoard := board.ApplyMove(models.Move{
+	updatedBoard := board.ApplyMove(common.Move{
 		Start:  common.Position{File: 3, Rank: 3},
 		Finish: common.Position{File: 2, Rank: 2},
 	})

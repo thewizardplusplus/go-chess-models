@@ -22,7 +22,7 @@ func (piece King) ApplyPosition(position common.Position) models.Piece {
 
 // CheckMove ...
 func (piece King) CheckMove(
-	move models.Move,
+	move common.Move,
 	storage models.PieceStorage,
 ) bool {
 	start, finish := move.Start, move.Finish

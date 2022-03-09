@@ -17,8 +17,8 @@ type MoveGenerator struct{}
 func (generator MoveGenerator) MovesForColor(
 	storage PieceStorage,
 	color common.Color,
-) ([]Move, error) {
-	var moves []Move
+) ([]common.Move, error) {
+	var moves []common.Move
 	for _, piece := range storage.Pieces() {
 		if piece.Color() != color {
 			continue
@@ -44,10 +44,10 @@ func (generator MoveGenerator) MovesForColor(
 func (generator MoveGenerator) MovesForPosition(
 	storage PieceStorage,
 	position common.Position,
-) ([]Move, error) {
-	var moves []Move
+) ([]common.Move, error) {
+	var moves []common.Move
 	if err := storage.Size().IteratePositions(func(finish common.Position) error {
-		move := Move{position, finish}
+		move := common.Move{position, finish}
 		if err := storage.CheckMove(move); err != nil {
 			// if the move captures a king, break a generating
 			if err == ErrKingCapture {
@@ -69,11 +69,11 @@ func (generator MoveGenerator) MovesForPosition(
 
 // PerftMoveGenerator ...
 type PerftMoveGenerator interface {
-	MovesForColor(storage PieceStorage, color common.Color) ([]Move, error)
+	MovesForColor(storage PieceStorage, color common.Color) ([]common.Move, error)
 }
 
 // PerftHandler ...
-type PerftHandler func(move Move, count int, deep int)
+type PerftHandler func(move common.Move, count int, deep int)
 
 // Perft ...
 func Perft(

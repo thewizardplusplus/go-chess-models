@@ -28,7 +28,7 @@ func (storage MockBasePieceStorage) Piece(
 	return storage.piece(position)
 }
 
-func (storage MockBasePieceStorage) ApplyMove(move Move) PieceStorage {
+func (storage MockBasePieceStorage) ApplyMove(move common.Move) PieceStorage {
 	panic("not implemented")
 }
 
@@ -41,10 +41,10 @@ func (pieceGroupGetter MockPieceGroupGetter) Pieces() []Piece {
 }
 
 type MockMoveChecker struct {
-	checkMove func(move Move) error
+	checkMove func(move common.Move) error
 }
 
-func (moveChecker MockMoveChecker) CheckMove(move Move) error {
+func (moveChecker MockMoveChecker) CheckMove(move common.Move) error {
 	if moveChecker.checkMove == nil {
 		panic("not implemented")
 	}
@@ -118,7 +118,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 		piece func(position common.Position) (piece Piece, ok bool)
 	}
 	type args struct {
-		move Move
+		move common.Move
 	}
 	type data struct {
 		fields fields
@@ -135,7 +135,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 				},
 			},
 			args: args{
-				move: Move{
+				move: common.Move{
 					Start:  common.Position{0, 0},
 					Finish: common.Position{0, 0},
 				},
@@ -150,7 +150,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 				},
 			},
 			args: args{
-				move: Move{
+				move: common.Move{
 					Start:  common.Position{0, 0},
 					Finish: common.Position{-1, -1},
 				},
@@ -165,7 +165,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 				},
 			},
 			args: args{
-				move: Move{
+				move: common.Move{
 					Start:  common.Position{0, 0},
 					Finish: common.Position{1, 1},
 				},
@@ -185,7 +185,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 				},
 			},
 			args: args{
-				move: Move{
+				move: common.Move{
 					Start:  common.Position{0, 0},
 					Finish: common.Position{1, 1},
 				},
@@ -202,7 +202,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 
 					piece = MockPiece{
 						position: position,
-						checkMove: func(move Move, storage PieceStorage) bool {
+						checkMove: func(move common.Move, storage PieceStorage) bool {
 							return false
 						},
 					}
@@ -210,7 +210,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 				},
 			},
 			args: args{
-				move: Move{
+				move: common.Move{
 					Start:  common.Position{0, 0},
 					Finish: common.Position{1, 1},
 				},
@@ -226,7 +226,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 						piece = MockPiece{
 							color:    common.Black,
 							position: common.Position{0, 0},
-							checkMove: func(move Move, storage PieceStorage) bool {
+							checkMove: func(move common.Move, storage PieceStorage) bool {
 								return true
 							},
 						}
@@ -243,7 +243,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 				},
 			},
 			args: args{
-				move: Move{
+				move: common.Move{
 					Start:  common.Position{0, 0},
 					Finish: common.Position{1, 1},
 				},
@@ -260,7 +260,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 
 					piece = MockPiece{
 						position: position,
-						checkMove: func(move Move, storage PieceStorage) bool {
+						checkMove: func(move common.Move, storage PieceStorage) bool {
 							return true
 						},
 					}
@@ -268,7 +268,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 				},
 			},
 			args: args{
-				move: Move{
+				move: common.Move{
 					Start:  common.Position{0, 0},
 					Finish: common.Position{1, 1},
 				},
@@ -296,7 +296,7 @@ func TestDefaultBoardWrapperCheckMove_withMoveCheckerInterface(
 		BasePieceStorage BasePieceStorage
 	}
 	type args struct {
-		move Move
+		move common.Move
 	}
 	type data struct {
 		fields fields
@@ -312,8 +312,8 @@ func TestDefaultBoardWrapperCheckMove_withMoveCheckerInterface(
 					MockMoveChecker
 				}{
 					MockMoveChecker: MockMoveChecker{
-						checkMove: func(move Move) error {
-							if !reflect.DeepEqual(move, Move{
+						checkMove: func(move common.Move) error {
+							if !reflect.DeepEqual(move, common.Move{
 								Start:  common.Position{0, 0},
 								Finish: common.Position{1, 1},
 							}) {
@@ -326,7 +326,7 @@ func TestDefaultBoardWrapperCheckMove_withMoveCheckerInterface(
 				},
 			},
 			args: args{
-				move: Move{
+				move: common.Move{
 					Start:  common.Position{0, 0},
 					Finish: common.Position{1, 1},
 				},
@@ -340,8 +340,8 @@ func TestDefaultBoardWrapperCheckMove_withMoveCheckerInterface(
 					MockMoveChecker
 				}{
 					MockMoveChecker: MockMoveChecker{
-						checkMove: func(move Move) error {
-							if !reflect.DeepEqual(move, Move{
+						checkMove: func(move common.Move) error {
+							if !reflect.DeepEqual(move, common.Move{
 								Start:  common.Position{0, 0},
 								Finish: common.Position{1, 1},
 							}) {
@@ -354,7 +354,7 @@ func TestDefaultBoardWrapperCheckMove_withMoveCheckerInterface(
 				},
 			},
 			args: args{
-				move: Move{
+				move: common.Move{
 					Start:  common.Position{0, 0},
 					Finish: common.Position{1, 1},
 				},

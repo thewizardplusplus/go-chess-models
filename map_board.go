@@ -34,7 +34,7 @@ func (board MapBoard) Piece(position common.Position) (piece Piece, ok bool) {
 // ApplyMove ...
 //
 // It doesn't check that the move is correct.
-func (board MapBoard) ApplyMove(move Move) PieceStorage {
+func (board MapBoard) ApplyMove(move common.Move) PieceStorage {
 	piece := board.pieces[move.Start]
 	movedPiece := piece.ApplyPosition(move.Finish)
 

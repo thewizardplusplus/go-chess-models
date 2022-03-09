@@ -22,7 +22,7 @@ func (piece Bishop) ApplyPosition(position common.Position) models.Piece {
 
 // CheckMove ...
 func (piece Bishop) CheckMove(
-	move models.Move,
+	move common.Move,
 	storage models.PieceStorage,
 ) bool {
 	start, finish := move.Start, move.Finish

@@ -1,5 +1,9 @@
 package chessmodels
 
+import (
+	"github.com/thewizardplusplus/go-chess-models/common"
+)
+
 // DefaultBoardWrapper ...
 type DefaultBoardWrapper struct {
 	BasePieceStorage
@@ -17,7 +21,7 @@ func (board DefaultBoardWrapper) Pieces() []Piece {
 // CheckMove ...
 //
 // It doesn't check for a check before or after the move.
-func (board DefaultBoardWrapper) CheckMove(move Move) error {
+func (board DefaultBoardWrapper) CheckMove(move common.Move) error {
 	if moveChecker, ok := board.BasePieceStorage.(MoveChecker); ok {
 		return moveChecker.CheckMove(move)
 	}

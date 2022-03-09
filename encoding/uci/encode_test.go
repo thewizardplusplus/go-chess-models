@@ -30,7 +30,7 @@ func (piece MockPiece) ApplyPosition(position common.Position) models.Piece {
 }
 
 func (piece MockPiece) CheckMove(
-	move models.Move,
+	move common.Move,
 	storage models.PieceStorage,
 ) bool {
 	panic("not implemented")
@@ -61,12 +61,12 @@ func (storage MockPieceStorage) Pieces() []models.Piece {
 }
 
 func (storage MockPieceStorage) ApplyMove(
-	move models.Move,
+	move common.Move,
 ) models.PieceStorage {
 	panic("not implemented")
 }
 
-func (storage MockPieceStorage) CheckMove(move models.Move) error {
+func (storage MockPieceStorage) CheckMove(move common.Move) error {
 	panic("not implemented")
 }
 
@@ -109,7 +109,7 @@ func TestEncodePosition(test *testing.T) {
 
 func TestEncodeMove(test *testing.T) {
 	type args struct {
-		move models.Move
+		move common.Move
 	}
 	type data struct {
 		args args
@@ -119,7 +119,7 @@ func TestEncodeMove(test *testing.T) {
 	for _, data := range []data{
 		{
 			args: args{
-				move: models.Move{
+				move: common.Move{
 					Start: common.Position{
 						File: 2,
 						Rank: 1,
@@ -134,7 +134,7 @@ func TestEncodeMove(test *testing.T) {
 		},
 		{
 			args: args{
-				move: models.Move{
+				move: common.Move{
 					Start: common.Position{
 						File: 5,
 						Rank: 6,

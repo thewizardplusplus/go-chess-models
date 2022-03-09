@@ -28,3 +28,6 @@ const (
 
 // Position ...
 type Position = common.Position
+
+// Move ...
+type Move = common.Move

@@ -39,7 +39,7 @@ func ExampleDecodeMove() {
 }
 
 func ExampleEncodeMove() {
-	move := uci.EncodeMove(models.Move{
+	move := uci.EncodeMove(common.Move{
 		Start:  common.Position{File: 3, Rank: 3},
 		Finish: common.Position{File: 2, Rank: 2},
 	})

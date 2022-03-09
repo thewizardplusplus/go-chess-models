@@ -19,7 +19,7 @@ func (size Size) HasPosition(position common.Position) bool {
 }
 
 // HasMove ...
-func (size Size) HasMove(move Move) bool {
+func (size Size) HasMove(move common.Move) bool {
 	return size.HasPosition(move.Start) && size.HasPosition(move.Finish)
 }
 

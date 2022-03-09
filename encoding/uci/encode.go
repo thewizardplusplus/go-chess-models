@@ -21,7 +21,7 @@ func EncodePosition(position common.Position) string {
 // EncodeMove ...
 //
 // It converts the move to pure algebraic coordinate notation.
-func EncodeMove(move models.Move) string {
+func EncodeMove(move common.Move) string {
 	start := EncodePosition(move.Start)
 	finish := EncodePosition(move.Finish)
 	return start + finish

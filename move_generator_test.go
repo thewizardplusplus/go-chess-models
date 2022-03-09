@@ -18,7 +18,7 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 	type fields struct {
 		size      Size
 		pieces    []Piece
-		checkMove func(move Move) error
+		checkMove func(move common.Move) error
 	}
 	type args struct {
 		color common.Color
@@ -26,7 +26,7 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 	type data struct {
 		fields    fields
 		args      args
-		wantMoves []Move
+		wantMoves []common.Move
 		wantErr   error
 	}
 
@@ -52,12 +52,12 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 						position: common.Position{1, 1},
 					},
 				},
-				checkMove: func(move Move) error {
+				checkMove: func(move common.Move) error {
 					return nil
 				},
 			},
 			args: args{common.Black},
-			wantMoves: []Move{
+			wantMoves: []common.Move{
 				{
 					Start:  common.Position{0, 0},
 					Finish: common.Position{0, 0},
@@ -115,12 +115,12 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 						position: common.Position{1, 1},
 					},
 				},
-				checkMove: func(move Move) error {
+				checkMove: func(move common.Move) error {
 					return nil
 				},
 			},
 			args: args{common.White},
-			wantMoves: []Move{
+			wantMoves: []common.Move{
 				{
 					Start:  common.Position{1, 0},
 					Finish: common.Position{0, 0},
@@ -178,7 +178,7 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 						position: common.Position{1, 1},
 					},
 				},
-				checkMove: func(move Move) error {
+				checkMove: func(move common.Move) error {
 					return errors.New("dummy")
 				},
 			},
@@ -207,7 +207,7 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 						position: common.Position{1, 1},
 					},
 				},
-				checkMove: func(move Move) error {
+				checkMove: func(move common.Move) error {
 					return ErrKingCapture
 				},
 			},
@@ -242,7 +242,7 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 func TestMoveCheckerMovesForPosition(test *testing.T) {
 	type fields struct {
 		size      Size
-		checkMove func(move Move) error
+		checkMove func(move common.Move) error
 	}
 	type args struct {
 		position common.Position
@@ -250,7 +250,7 @@ func TestMoveCheckerMovesForPosition(test *testing.T) {
 	type data struct {
 		fields    fields
 		args      args
-		wantMoves []Move
+		wantMoves []common.Move
 		wantErr   error
 	}
 
@@ -258,7 +258,7 @@ func TestMoveCheckerMovesForPosition(test *testing.T) {
 		{
 			fields: fields{
 				size: Size{2, 2},
-				checkMove: func(move Move) error {
+				checkMove: func(move common.Move) error {
 					return errors.New("dummy")
 				},
 			},
@@ -269,7 +269,7 @@ func TestMoveCheckerMovesForPosition(test *testing.T) {
 		{
 			fields: fields{
 				size: Size{2, 2},
-				checkMove: func(move Move) error {
+				checkMove: func(move common.Move) error {
 					return ErrKingCapture
 				},
 			},
@@ -280,12 +280,12 @@ func TestMoveCheckerMovesForPosition(test *testing.T) {
 		{
 			fields: fields{
 				size: Size{2, 2},
-				checkMove: func(move Move) error {
+				checkMove: func(move common.Move) error {
 					return nil
 				},
 			},
 			args: args{common.Position{1, 1}},
-			wantMoves: []Move{
+			wantMoves: []common.Move{
 				{
 					Start:  common.Position{1, 1},
 					Finish: common.Position{0, 0},
@@ -308,7 +308,7 @@ func TestMoveCheckerMovesForPosition(test *testing.T) {
 		{
 			fields: fields{
 				size: Size{2, 2},
-				checkMove: func(move Move) error {
+				checkMove: func(move common.Move) error {
 					if move.Finish.Rank == 1 {
 						return errors.New("dummy")
 					}
@@ -317,7 +317,7 @@ func TestMoveCheckerMovesForPosition(test *testing.T) {
 				},
 			},
 			args: args{common.Position{1, 1}},
-			wantMoves: []Move{
+			wantMoves: []common.Move{
 				{
 					Start:  common.Position{1, 1},
 					Finish: common.Position{0, 0},

@@ -22,7 +22,7 @@ func (piece Queen) ApplyPosition(position common.Position) models.Piece {
 
 // CheckMove ...
 func (piece Queen) CheckMove(
-	move models.Move,
+	move common.Move,
 	storage models.PieceStorage,
 ) bool {
 	okForRook := Rook(piece).CheckMove(move, storage)

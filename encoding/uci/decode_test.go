@@ -68,14 +68,14 @@ func TestDecodeMove(test *testing.T) {
 	}
 	type data struct {
 		args     args
-		wantMove models.Move
+		wantMove common.Move
 		wantErr  bool
 	}
 
 	for _, data := range []data{
 		{
 			args: args{"e2e4"},
-			wantMove: models.Move{
+			wantMove: common.Move{
 				Start: common.Position{
 					File: 4,
 					Rank: 1,
@@ -89,22 +89,22 @@ func TestDecodeMove(test *testing.T) {
 		},
 		{
 			args:     args{"e2e"},
-			wantMove: models.Move{},
+			wantMove: common.Move{},
 			wantErr:  true,
 		},
 		{
 			args:     args{"e2e42"},
-			wantMove: models.Move{},
+			wantMove: common.Move{},
 			wantErr:  true,
 		},
 		{
 			args:     args{"e\ne4"},
-			wantMove: models.Move{},
+			wantMove: common.Move{},
 			wantErr:  true,
 		},
 		{
 			args:     args{"e2e\n"},
-			wantMove: models.Move{},
+			wantMove: common.Move{},
 			wantErr:  true,
 		},
 	} {

@@ -384,7 +384,7 @@ func TestPerft(test *testing.T) {
 				storage,
 				data.args.color,
 				data.args.deep,
-				func(move models.Move, count int, deep int) {
+				func(move common.Move, count int, deep int) {
 					// log only the top-level moves
 					if deep == data.args.deep {
 						topLevelMoves = append(topLevelMoves, fmt.Sprintf("%v: %d", move, count))

@@ -112,7 +112,7 @@ func TestSizeHasMove(test *testing.T) {
 		Height int
 	}
 	type args struct {
-		move Move
+		move common.Move
 	}
 	type data struct {
 		fields fields
@@ -127,7 +127,7 @@ func TestSizeHasMove(test *testing.T) {
 				Height: 8,
 			},
 			args: args{
-				move: Move{
+				move: common.Move{
 					Start:  common.Position{4, 1},
 					Finish: common.Position{4, 3},
 				},
@@ -140,7 +140,7 @@ func TestSizeHasMove(test *testing.T) {
 				Height: 8,
 			},
 			args: args{
-				move: Move{
+				move: common.Move{
 					Start:  common.Position{-1, 1},
 					Finish: common.Position{4, 3},
 				},
@@ -153,7 +153,7 @@ func TestSizeHasMove(test *testing.T) {
 				Height: 8,
 			},
 			args: args{
-				move: Move{
+				move: common.Move{
 					Start:  common.Position{4, 1},
 					Finish: common.Position{-1, 3},
 				},
@@ -166,7 +166,7 @@ func TestSizeHasMove(test *testing.T) {
 				Height: 8,
 			},
 			args: args{
-				move: Move{
+				move: common.Move{
 					Start:  common.Position{-1, 1},
 					Finish: common.Position{-1, 3},
 				},

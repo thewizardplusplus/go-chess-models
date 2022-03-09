@@ -26,7 +26,7 @@ type Piece interface {
 	// on the move finish position.
 	//
 	// It shouldn't check for a check before or after the move.
-	CheckMove(move Move, storage PieceStorage) bool
+	CheckMove(move common.Move, storage PieceStorage) bool
 }
 
 // BasePieceStorage ...
@@ -35,7 +35,7 @@ type BasePieceStorage interface {
 	Piece(position common.Position) (piece Piece, ok bool)
 
 	// It shouldn't check that the move is correct.
-	ApplyMove(move Move) PieceStorage
+	ApplyMove(move common.Move) PieceStorage
 }
 
 // PieceGroupGetter ...
@@ -46,7 +46,7 @@ type PieceGroupGetter interface {
 // MoveChecker ...
 type MoveChecker interface {
 	// It shouldn't check for a check before or after the move.
-	CheckMove(move Move) error
+	CheckMove(move common.Move) error
 }
 
 // PieceStorage ...
