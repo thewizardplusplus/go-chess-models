@@ -1,6 +1,7 @@
 package chessmodels
 
 import (
+	"github.com/thewizardplusplus/go-chess-models/boards"
 	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
@@ -8,7 +9,7 @@ type pieceGroup map[common.Position]common.Piece
 
 // MapBoard ...
 type MapBoard struct {
-	BaseBoard
+	boards.BaseBoard
 
 	pieces pieceGroup
 }
@@ -20,7 +21,7 @@ func NewMapBoard(size common.Size, pieces []common.Piece) common.PieceStorage {
 		pieceGroup[piece.Position()] = piece
 	}
 
-	baseBoard := NewBaseBoard(size)
+	baseBoard := boards.NewBaseBoard(size)
 	mapBoard := MapBoard{baseBoard, pieceGroup}
 	return DefaultBoardWrapper{mapBoard}
 }

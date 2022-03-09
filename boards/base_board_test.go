@@ -1,4 +1,4 @@
-package chessmodels
+package boards
 
 import (
 	"reflect"

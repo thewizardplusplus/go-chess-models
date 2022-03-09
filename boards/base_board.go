@@ -1,4 +1,4 @@
-package chessmodels
+package boards
 
 import (
 	"github.com/thewizardplusplus/go-chess-models/common"

@@ -4,6 +4,7 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/thewizardplusplus/go-chess-models/boards"
 	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
@@ -52,9 +53,7 @@ func TestNewMapBoard(test *testing.T) {
 
 	expectedBoard := DefaultBoardWrapper{
 		BasePieceStorage: MapBoard{
-			BaseBoard: BaseBoard{
-				size: common.Size{5, 5},
-			},
+			BaseBoard: boards.NewBaseBoard(common.Size{5, 5}),
 
 			pieces: pieceGroup{
 				common.Position{2, 3}: MockPiece{
@@ -123,9 +122,7 @@ func TestMapBoardPiece(test *testing.T) {
 		},
 	} {
 		board := MapBoard{
-			BaseBoard: BaseBoard{
-				size: data.fields.size,
-			},
+			BaseBoard: boards.NewBaseBoard(data.fields.size),
 
 			pieces: data.fields.pieces,
 		}
@@ -152,9 +149,7 @@ func TestMapBoardApplyMove(test *testing.T) {
 
 	expectedBoard := DefaultBoardWrapper{
 		BasePieceStorage: MapBoard{
-			BaseBoard: BaseBoard{
-				size: common.Size{5, 5},
-			},
+			BaseBoard: boards.NewBaseBoard(common.Size{5, 5}),
 
 			pieces: pieceGroup{
 				common.Position{2, 3}: MockPiece{
@@ -172,9 +167,7 @@ func TestMapBoardApplyMove(test *testing.T) {
 
 	expectedNextBoard := DefaultBoardWrapper{
 		BasePieceStorage: MapBoard{
-			BaseBoard: BaseBoard{
-				size: common.Size{5, 5},
-			},
+			BaseBoard: boards.NewBaseBoard(common.Size{5, 5}),
 
 			pieces: pieceGroup{
 				common.Position{1, 2}: MockPiece{

@@ -4,6 +4,7 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/thewizardplusplus/go-chess-models/boards"
 	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
@@ -15,9 +16,7 @@ func TestNewSliceBoard(test *testing.T) {
 
 	expectedBoard := DefaultBoardWrapper{
 		BasePieceStorage: SliceBoard{
-			BaseBoard: BaseBoard{
-				size: common.Size{5, 5},
-			},
+			BaseBoard: boards.NewBaseBoard(common.Size{5, 5}),
 
 			pieces: []common.Piece{
 				14: MockPiece{position: common.Position{4, 2}},
@@ -77,9 +76,7 @@ func TestSliceBoardPiece(test *testing.T) {
 		},
 	} {
 		board := SliceBoard{
-			BaseBoard: BaseBoard{
-				size: data.fields.size,
-			},
+			BaseBoard: boards.NewBaseBoard(data.fields.size),
 
 			pieces: data.fields.pieces,
 		}
@@ -106,9 +103,7 @@ func TestSliceBoardApplyMove(test *testing.T) {
 
 	expectedBoard := DefaultBoardWrapper{
 		BasePieceStorage: SliceBoard{
-			BaseBoard: BaseBoard{
-				size: common.Size{5, 5},
-			},
+			BaseBoard: boards.NewBaseBoard(common.Size{5, 5}),
 
 			pieces: []common.Piece{
 				14: MockPiece{position: common.Position{4, 2}},
@@ -123,9 +118,7 @@ func TestSliceBoardApplyMove(test *testing.T) {
 
 	expectedNextBoard := DefaultBoardWrapper{
 		BasePieceStorage: SliceBoard{
-			BaseBoard: BaseBoard{
-				size: common.Size{5, 5},
-			},
+			BaseBoard: boards.NewBaseBoard(common.Size{5, 5}),
 
 			pieces: []common.Piece{
 				11: MockPiece{position: common.Position{1, 2}},
