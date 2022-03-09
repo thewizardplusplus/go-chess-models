@@ -37,12 +37,12 @@ func (piece MockPiece) CheckMove(
 }
 
 type MockPieceStorage struct {
-	size models.Size
+	size common.Size
 
 	piece func(position common.Position) (piece models.Piece, ok bool)
 }
 
-func (storage MockPieceStorage) Size() models.Size {
+func (storage MockPieceStorage) Size() common.Size {
 	return storage.size
 }
 
@@ -242,7 +242,7 @@ func TestEncodePieceStorage(test *testing.T) {
 		{
 			args: args{
 				storage: MockPieceStorage{
-					size: models.Size{
+					size: common.Size{
 						Width:  5,
 						Height: 5,
 					},
@@ -256,7 +256,7 @@ func TestEncodePieceStorage(test *testing.T) {
 		{
 			args: args{
 				storage: MockPieceStorage{
-					size: models.Size{
+					size: common.Size{
 						Width:  5,
 						Height: 5,
 					},
@@ -279,7 +279,7 @@ func TestEncodePieceStorage(test *testing.T) {
 		{
 			args: args{
 				storage: MockPieceStorage{
-					size: models.Size{
+					size: common.Size{
 						Width:  5,
 						Height: 5,
 					},
@@ -302,7 +302,7 @@ func TestEncodePieceStorage(test *testing.T) {
 		{
 			args: args{
 				storage: MockPieceStorage{
-					size: models.Size{
+					size: common.Size{
 						Width:  5,
 						Height: 5,
 					},
@@ -330,7 +330,7 @@ func TestEncodePieceStorage(test *testing.T) {
 		{
 			args: args{
 				storage: MockPieceStorage{
-					size: models.Size{
+					size: common.Size{
 						Width:  5,
 						Height: 5,
 					},
@@ -358,7 +358,7 @@ func TestEncodePieceStorage(test *testing.T) {
 		{
 			args: args{
 				storage: MockPieceStorage{
-					size: models.Size{
+					size: common.Size{
 						Width:  5,
 						Height: 5,
 					},
@@ -402,7 +402,7 @@ func TestEncodePieceStorage(test *testing.T) {
 		{
 			args: args{
 				storage: MockPieceStorage{
-					size: models.Size{
+					size: common.Size{
 						Width:  5,
 						Height: 3,
 					},

@@ -1,11 +1,9 @@
-package chessmodels
+package common
 
 import (
 	"errors"
 	"reflect"
 	"testing"
-
-	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
 func TestSizeHasPosition(test *testing.T) {
@@ -14,7 +12,7 @@ func TestSizeHasPosition(test *testing.T) {
 		Height int
 	}
 	type args struct {
-		position common.Position
+		position Position
 	}
 	type data struct {
 		fields fields
@@ -29,7 +27,7 @@ func TestSizeHasPosition(test *testing.T) {
 				Height: 8,
 			},
 			args: args{
-				position: common.Position{4, 1},
+				position: Position{4, 1},
 			},
 			want: true,
 		},
@@ -39,7 +37,7 @@ func TestSizeHasPosition(test *testing.T) {
 				Height: 8,
 			},
 			args: args{
-				position: common.Position{-1, 1},
+				position: Position{-1, 1},
 			},
 			want: false,
 		},
@@ -49,7 +47,7 @@ func TestSizeHasPosition(test *testing.T) {
 				Height: 8,
 			},
 			args: args{
-				position: common.Position{4, -1},
+				position: Position{4, -1},
 			},
 			want: false,
 		},
@@ -59,7 +57,7 @@ func TestSizeHasPosition(test *testing.T) {
 				Height: 8,
 			},
 			args: args{
-				position: common.Position{-1, -1},
+				position: Position{-1, -1},
 			},
 			want: false,
 		},
@@ -69,7 +67,7 @@ func TestSizeHasPosition(test *testing.T) {
 				Height: 8,
 			},
 			args: args{
-				position: common.Position{10, 1},
+				position: Position{10, 1},
 			},
 			want: false,
 		},
@@ -79,7 +77,7 @@ func TestSizeHasPosition(test *testing.T) {
 				Height: 8,
 			},
 			args: args{
-				position: common.Position{4, 10},
+				position: Position{4, 10},
 			},
 			want: false,
 		},
@@ -89,7 +87,7 @@ func TestSizeHasPosition(test *testing.T) {
 				Height: 8,
 			},
 			args: args{
-				position: common.Position{10, 10},
+				position: Position{10, 10},
 			},
 			want: false,
 		},
@@ -112,7 +110,7 @@ func TestSizeHasMove(test *testing.T) {
 		Height int
 	}
 	type args struct {
-		move common.Move
+		move Move
 	}
 	type data struct {
 		fields fields
@@ -127,9 +125,9 @@ func TestSizeHasMove(test *testing.T) {
 				Height: 8,
 			},
 			args: args{
-				move: common.Move{
-					Start:  common.Position{4, 1},
-					Finish: common.Position{4, 3},
+				move: Move{
+					Start:  Position{4, 1},
+					Finish: Position{4, 3},
 				},
 			},
 			want: true,
@@ -140,9 +138,9 @@ func TestSizeHasMove(test *testing.T) {
 				Height: 8,
 			},
 			args: args{
-				move: common.Move{
-					Start:  common.Position{-1, 1},
-					Finish: common.Position{4, 3},
+				move: Move{
+					Start:  Position{-1, 1},
+					Finish: Position{4, 3},
 				},
 			},
 			want: false,
@@ -153,9 +151,9 @@ func TestSizeHasMove(test *testing.T) {
 				Height: 8,
 			},
 			args: args{
-				move: common.Move{
-					Start:  common.Position{4, 1},
-					Finish: common.Position{-1, 3},
+				move: Move{
+					Start:  Position{4, 1},
+					Finish: Position{-1, 3},
 				},
 			},
 			want: false,
@@ -166,9 +164,9 @@ func TestSizeHasMove(test *testing.T) {
 				Height: 8,
 			},
 			args: args{
-				move: common.Move{
-					Start:  common.Position{-1, 1},
-					Finish: common.Position{-1, 3},
+				move: Move{
+					Start:  Position{-1, 1},
+					Finish: Position{-1, 3},
 				},
 			},
 			want: false,
@@ -192,7 +190,7 @@ func TestSizePositionIndex(test *testing.T) {
 		Height int
 	}
 	type args struct {
-		position common.Position
+		position Position
 	}
 	type data struct {
 		fields fields
@@ -207,7 +205,7 @@ func TestSizePositionIndex(test *testing.T) {
 				Height: 8,
 			},
 			args: args{
-				position: common.Position{0, 0},
+				position: Position{0, 0},
 			},
 			want: 0,
 		},
@@ -217,7 +215,7 @@ func TestSizePositionIndex(test *testing.T) {
 				Height: 8,
 			},
 			args: args{
-				position: common.Position{2, 3},
+				position: Position{2, 3},
 			},
 			want: 26,
 		},
@@ -227,7 +225,7 @@ func TestSizePositionIndex(test *testing.T) {
 				Height: 8,
 			},
 			args: args{
-				position: common.Position{7, 7},
+				position: Position{7, 7},
 			},
 			want: 63,
 		},
@@ -255,7 +253,7 @@ func TestSizePositionCount(test *testing.T) {
 func TestSizePositions(test *testing.T) {
 	positions := Size{3, 3}.Positions()
 
-	expectedPositions := []common.Position{
+	expectedPositions := []Position{
 		{0, 0},
 		{1, 0},
 		{2, 0},
@@ -277,12 +275,12 @@ func TestSizeIteratePositions(test *testing.T) {
 		Height int
 	}
 	type args struct {
-		makeHandler func(positions *[]common.Position) PositionHandler
+		makeHandler func(positions *[]Position) PositionHandler
 	}
 	type data struct {
 		fields        fields
 		args          args
-		wantPositions []common.Position
+		wantPositions []Position
 		wantErr       error
 	}
 
@@ -293,14 +291,14 @@ func TestSizeIteratePositions(test *testing.T) {
 				Height: 3,
 			},
 			args: args{
-				makeHandler: func(positions *[]common.Position) PositionHandler {
-					return func(position common.Position) error {
+				makeHandler: func(positions *[]Position) PositionHandler {
+					return func(position Position) error {
 						*positions = append(*positions, position)
 						return nil
 					}
 				},
 			},
-			wantPositions: []common.Position{
+			wantPositions: []Position{
 				{0, 0},
 				{1, 0},
 				{2, 0},
@@ -319,8 +317,8 @@ func TestSizeIteratePositions(test *testing.T) {
 				Height: 3,
 			},
 			args: args{
-				makeHandler: func(positions *[]common.Position) PositionHandler {
-					return func(position common.Position) error {
+				makeHandler: func(positions *[]Position) PositionHandler {
+					return func(position Position) error {
 						if position.Rank > 1 {
 							return errors.New("dummy")
 						}
@@ -330,7 +328,7 @@ func TestSizeIteratePositions(test *testing.T) {
 					}
 				},
 			},
-			wantPositions: []common.Position{
+			wantPositions: []Position{
 				{0, 0},
 				{1, 0},
 				{2, 0},
@@ -346,7 +344,7 @@ func TestSizeIteratePositions(test *testing.T) {
 			Height: data.fields.Height,
 		}
 
-		var gotPositions []common.Position
+		var gotPositions []Position
 		gotErr := size.IteratePositions(data.args.makeHandler(&gotPositions))
 
 		if !reflect.DeepEqual(gotPositions, data.wantPositions) {

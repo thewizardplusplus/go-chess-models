@@ -8,7 +8,7 @@ import (
 
 func TestCheckMove(test *testing.T) {
 	type fields struct {
-		size  Size
+		size  common.Size
 		piece func(position common.Position) (piece Piece, ok bool)
 	}
 	type args struct {
@@ -23,7 +23,7 @@ func TestCheckMove(test *testing.T) {
 	for _, data := range []data{
 		{
 			fields: fields{
-				size: Size{2, 2},
+				size: common.Size{2, 2},
 				piece: func(position common.Position) (piece Piece, ok bool) {
 					return nil, false
 				},
@@ -38,7 +38,7 @@ func TestCheckMove(test *testing.T) {
 		},
 		{
 			fields: fields{
-				size: Size{2, 2},
+				size: common.Size{2, 2},
 				piece: func(position common.Position) (piece Piece, ok bool) {
 					return nil, false
 				},
@@ -53,7 +53,7 @@ func TestCheckMove(test *testing.T) {
 		},
 		{
 			fields: fields{
-				size: Size{2, 2},
+				size: common.Size{2, 2},
 				piece: func(position common.Position) (piece Piece, ok bool) {
 					return nil, false
 				},
@@ -68,7 +68,7 @@ func TestCheckMove(test *testing.T) {
 		},
 		{
 			fields: fields{
-				size: Size{2, 2},
+				size: common.Size{2, 2},
 				piece: func(position common.Position) (piece Piece, ok bool) {
 					if position != (common.Position{0, 0}) && position != (common.Position{1, 1}) {
 						return nil, false
@@ -88,7 +88,7 @@ func TestCheckMove(test *testing.T) {
 		},
 		{
 			fields: fields{
-				size: Size{2, 2},
+				size: common.Size{2, 2},
 				piece: func(position common.Position) (piece Piece, ok bool) {
 					if position != (common.Position{0, 0}) {
 						return nil, false
@@ -113,7 +113,7 @@ func TestCheckMove(test *testing.T) {
 		},
 		{
 			fields: fields{
-				size: Size{2, 2},
+				size: common.Size{2, 2},
 				piece: func(position common.Position) (piece Piece, ok bool) {
 					switch position {
 					case common.Position{0, 0}:
@@ -146,7 +146,7 @@ func TestCheckMove(test *testing.T) {
 		},
 		{
 			fields: fields{
-				size: Size{2, 2},
+				size: common.Size{2, 2},
 				piece: func(position common.Position) (piece Piece, ok bool) {
 					if position != (common.Position{0, 0}) {
 						return nil, false

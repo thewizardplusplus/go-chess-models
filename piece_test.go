@@ -10,7 +10,7 @@ import (
 func TestPieces(test *testing.T) {
 	storage := MockPieceStorage{
 		MockBasePieceStorage: MockBasePieceStorage{
-			size: Size{5, 5},
+			size: common.Size{5, 5},
 			piece: func(position common.Position) (piece Piece, ok bool) {
 				if position != (common.Position{2, 3}) && position != (common.Position{4, 2}) {
 					return nil, false

@@ -16,7 +16,7 @@ type MockPieceStorage struct {
 
 func TestMoveCheckerMovesForColor(test *testing.T) {
 	type fields struct {
-		size      Size
+		size      common.Size
 		pieces    []Piece
 		checkMove func(move common.Move) error
 	}
@@ -33,7 +33,7 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 	for _, data := range []data{
 		{
 			fields: fields{
-				size: Size{2, 2},
+				size: common.Size{2, 2},
 				pieces: []Piece{
 					MockPiece{
 						color:    common.Black,
@@ -96,7 +96,7 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 		},
 		{
 			fields: fields{
-				size: Size{2, 2},
+				size: common.Size{2, 2},
 				pieces: []Piece{
 					MockPiece{
 						color:    common.Black,
@@ -159,7 +159,7 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 		},
 		{
 			fields: fields{
-				size: Size{2, 2},
+				size: common.Size{2, 2},
 				pieces: []Piece{
 					MockPiece{
 						color:    common.Black,
@@ -188,7 +188,7 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 		},
 		{
 			fields: fields{
-				size: Size{2, 2},
+				size: common.Size{2, 2},
 				pieces: []Piece{
 					MockPiece{
 						color:    common.Black,
@@ -241,7 +241,7 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 
 func TestMoveCheckerMovesForPosition(test *testing.T) {
 	type fields struct {
-		size      Size
+		size      common.Size
 		checkMove func(move common.Move) error
 	}
 	type args struct {
@@ -257,7 +257,7 @@ func TestMoveCheckerMovesForPosition(test *testing.T) {
 	for _, data := range []data{
 		{
 			fields: fields{
-				size: Size{2, 2},
+				size: common.Size{2, 2},
 				checkMove: func(move common.Move) error {
 					return errors.New("dummy")
 				},
@@ -268,7 +268,7 @@ func TestMoveCheckerMovesForPosition(test *testing.T) {
 		},
 		{
 			fields: fields{
-				size: Size{2, 2},
+				size: common.Size{2, 2},
 				checkMove: func(move common.Move) error {
 					return ErrKingCapture
 				},
@@ -279,7 +279,7 @@ func TestMoveCheckerMovesForPosition(test *testing.T) {
 		},
 		{
 			fields: fields{
-				size: Size{2, 2},
+				size: common.Size{2, 2},
 				checkMove: func(move common.Move) error {
 					return nil
 				},
@@ -307,7 +307,7 @@ func TestMoveCheckerMovesForPosition(test *testing.T) {
 		},
 		{
 			fields: fields{
-				size: Size{2, 2},
+				size: common.Size{2, 2},
 				checkMove: func(move common.Move) error {
 					if move.Finish.Rank == 1 {
 						return errors.New("dummy")

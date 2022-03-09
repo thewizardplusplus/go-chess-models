@@ -45,7 +45,7 @@ func (piece MockPiece) CheckMove(move common.Move, storage PieceStorage) bool {
 }
 
 func TestNewMapBoard(test *testing.T) {
-	board := NewMapBoard(Size{5, 5}, []Piece{
+	board := NewMapBoard(common.Size{5, 5}, []Piece{
 		MockPiece{position: common.Position{2, 3}},
 		MockPiece{position: common.Position{4, 2}},
 	})
@@ -53,7 +53,7 @@ func TestNewMapBoard(test *testing.T) {
 	expectedBoard := DefaultBoardWrapper{
 		BasePieceStorage: MapBoard{
 			BaseBoard: BaseBoard{
-				size: Size{5, 5},
+				size: common.Size{5, 5},
 			},
 
 			pieces: pieceGroup{
@@ -73,7 +73,7 @@ func TestNewMapBoard(test *testing.T) {
 
 func TestMapBoardPiece(test *testing.T) {
 	type fields struct {
-		size   Size
+		size   common.Size
 		pieces pieceGroup
 	}
 	type args struct {
@@ -89,7 +89,7 @@ func TestMapBoardPiece(test *testing.T) {
 	for _, data := range []data{
 		{
 			fields: fields{
-				size: Size{5, 5},
+				size: common.Size{5, 5},
 				pieces: pieceGroup{
 					common.Position{2, 3}: MockPiece{
 						position: common.Position{2, 3},
@@ -107,7 +107,7 @@ func TestMapBoardPiece(test *testing.T) {
 		},
 		{
 			fields: fields{
-				size: Size{5, 5},
+				size: common.Size{5, 5},
 				pieces: pieceGroup{
 					common.Position{2, 3}: MockPiece{
 						position: common.Position{2, 3},
@@ -141,7 +141,7 @@ func TestMapBoardPiece(test *testing.T) {
 }
 
 func TestMapBoardApplyMove(test *testing.T) {
-	board := NewMapBoard(Size{5, 5}, []Piece{
+	board := NewMapBoard(common.Size{5, 5}, []Piece{
 		MockPiece{position: common.Position{2, 3}},
 		MockPiece{position: common.Position{4, 2}},
 	})
@@ -153,7 +153,7 @@ func TestMapBoardApplyMove(test *testing.T) {
 	expectedBoard := DefaultBoardWrapper{
 		BasePieceStorage: MapBoard{
 			BaseBoard: BaseBoard{
-				size: Size{5, 5},
+				size: common.Size{5, 5},
 			},
 
 			pieces: pieceGroup{
@@ -173,7 +173,7 @@ func TestMapBoardApplyMove(test *testing.T) {
 	expectedNextBoard := DefaultBoardWrapper{
 		BasePieceStorage: MapBoard{
 			BaseBoard: BaseBoard{
-				size: Size{5, 5},
+				size: common.Size{5, 5},
 			},
 
 			pieces: pieceGroup{

@@ -215,7 +215,7 @@ func TestDecodePieceStorage(test *testing.T) {
 				fen: "2K3q/8/pp1R",
 			},
 			wantStorage: models.NewBoard(
-				models.Size{
+				common.Size{
 					Width:  8,
 					Height: 3,
 				},
@@ -249,7 +249,7 @@ func TestDecodePieceStorage(test *testing.T) {
 				fen: "1/2K3q/8/pp1R",
 			},
 			wantStorage: models.NewBoard(
-				models.Size{
+				common.Size{
 					Width:  8,
 					Height: 4,
 				},
@@ -283,7 +283,7 @@ func TestDecodePieceStorage(test *testing.T) {
 				fen: "2K3q/8/pp1R/1",
 			},
 			wantStorage: models.NewBoard(
-				models.Size{
+				common.Size{
 					Width:  8,
 					Height: 4,
 				},

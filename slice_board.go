@@ -12,7 +12,7 @@ type SliceBoard struct {
 }
 
 // NewSliceBoard ...
-func NewSliceBoard(size Size, pieces []Piece) PieceStorage {
+func NewSliceBoard(size common.Size, pieces []Piece) PieceStorage {
 	extendedPieces := make([]Piece, size.PositionCount())
 	for _, piece := range pieces {
 		extendedPieces[size.PositionIndex(piece.Position())] = piece

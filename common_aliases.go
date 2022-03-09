@@ -31,3 +31,9 @@ type Position = common.Position
 
 // Move ...
 type Move = common.Move
+
+// PositionHandler ...
+type PositionHandler = common.PositionHandler
+
+// Size ...
+type Size = common.Size

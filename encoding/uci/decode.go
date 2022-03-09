@@ -20,7 +20,7 @@ type PieceFactory func(
 
 // PieceStorageFactory ...
 type PieceStorageFactory func(
-	size models.Size,
+	size common.Size,
 	pieces []models.Piece,
 ) models.PieceStorage
 
@@ -129,7 +129,7 @@ func DecodePieceStorage(
 		}
 	}
 
-	size := models.Size{Width: width, Height: len(ranks)}
+	size := common.Size{Width: width, Height: len(ranks)}
 	storage := pieceStorageFactory(size, pieces)
 	return storage, nil
 }

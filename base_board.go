@@ -1,16 +1,20 @@
 package chessmodels
 
+import (
+	"github.com/thewizardplusplus/go-chess-models/common"
+)
+
 // BaseBoard ...
 type BaseBoard struct {
-	size Size
+	size common.Size
 }
 
 // NewBaseBoard ...
-func NewBaseBoard(size Size) BaseBoard {
+func NewBaseBoard(size common.Size) BaseBoard {
 	return BaseBoard{size}
 }
 
-// Size ...
-func (board BaseBoard) Size() Size {
+// common.Size ...
+func (board BaseBoard) Size() common.Size {
 	return board.size
 }

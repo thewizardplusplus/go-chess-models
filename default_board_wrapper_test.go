@@ -9,12 +9,12 @@ import (
 )
 
 type MockBasePieceStorage struct {
-	size Size
+	size common.Size
 
 	piece func(position common.Position) (piece Piece, ok bool)
 }
 
-func (storage MockBasePieceStorage) Size() Size {
+func (storage MockBasePieceStorage) Size() common.Size {
 	return storage.size
 }
 
@@ -65,7 +65,7 @@ func TestDefaultBoardWrapperPieces(test *testing.T) {
 		{
 			fields: fields{
 				BasePieceStorage: MockBasePieceStorage{
-					size: Size{5, 5},
+					size: common.Size{5, 5},
 					piece: func(position common.Position) (piece Piece, ok bool) {
 						if position != (common.Position{2, 3}) && position != (common.Position{4, 2}) {
 							return nil, false
@@ -114,7 +114,7 @@ func TestDefaultBoardWrapperPieces(test *testing.T) {
 
 func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 	type fields struct {
-		size  Size
+		size  common.Size
 		piece func(position common.Position) (piece Piece, ok bool)
 	}
 	type args struct {
@@ -129,7 +129,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 	for _, data := range []data{
 		{
 			fields: fields{
-				size: Size{2, 2},
+				size: common.Size{2, 2},
 				piece: func(position common.Position) (piece Piece, ok bool) {
 					return nil, false
 				},
@@ -144,7 +144,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 		},
 		{
 			fields: fields{
-				size: Size{2, 2},
+				size: common.Size{2, 2},
 				piece: func(position common.Position) (piece Piece, ok bool) {
 					return nil, false
 				},
@@ -159,7 +159,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 		},
 		{
 			fields: fields{
-				size: Size{2, 2},
+				size: common.Size{2, 2},
 				piece: func(position common.Position) (piece Piece, ok bool) {
 					return nil, false
 				},
@@ -174,7 +174,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 		},
 		{
 			fields: fields{
-				size: Size{2, 2},
+				size: common.Size{2, 2},
 				piece: func(position common.Position) (piece Piece, ok bool) {
 					if position != (common.Position{0, 0}) && position != (common.Position{1, 1}) {
 						return nil, false
@@ -194,7 +194,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 		},
 		{
 			fields: fields{
-				size: Size{2, 2},
+				size: common.Size{2, 2},
 				piece: func(position common.Position) (piece Piece, ok bool) {
 					if position != (common.Position{0, 0}) {
 						return nil, false
@@ -219,7 +219,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 		},
 		{
 			fields: fields{
-				size: Size{2, 2},
+				size: common.Size{2, 2},
 				piece: func(position common.Position) (piece Piece, ok bool) {
 					switch position {
 					case common.Position{0, 0}:
@@ -252,7 +252,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 		},
 		{
 			fields: fields{
-				size: Size{2, 2},
+				size: common.Size{2, 2},
 				piece: func(position common.Position) (piece Piece, ok bool) {
 					if position != (common.Position{0, 0}) {
 						return nil, false

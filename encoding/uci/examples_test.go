@@ -59,7 +59,7 @@ func ExampleDecodePieceStorage() {
 }
 
 func ExampleEncodePieceStorage() {
-	board := models.NewBoard(models.Size{Width: 5, Height: 5}, []models.Piece{
+	board := models.NewBoard(common.Size{Width: 5, Height: 5}, []models.Piece{
 		pieces.NewRook(common.Black, common.Position{File: 2, Rank: 2}),
 		pieces.NewBishop(common.White, common.Position{File: 3, Rank: 3}),
 	})

@@ -31,7 +31,7 @@ type Piece interface {
 
 // BasePieceStorage ...
 type BasePieceStorage interface {
-	Size() Size
+	Size() common.Size
 	Piece(position common.Position) (piece Piece, ok bool)
 
 	// It shouldn't check that the move is correct.

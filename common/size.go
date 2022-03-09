@@ -1,11 +1,7 @@
-package chessmodels
-
-import (
-	"github.com/thewizardplusplus/go-chess-models/common"
-)
+package common
 
 // PositionHandler ...
-type PositionHandler func(position common.Position) error
+type PositionHandler func(position Position) error
 
 // Size ...
 type Size struct {
@@ -14,17 +10,17 @@ type Size struct {
 }
 
 // HasPosition ...
-func (size Size) HasPosition(position common.Position) bool {
+func (size Size) HasPosition(position Position) bool {
 	return less(position.File, size.Width) && less(position.Rank, size.Height)
 }
 
 // HasMove ...
-func (size Size) HasMove(move common.Move) bool {
+func (size Size) HasMove(move Move) bool {
 	return size.HasPosition(move.Start) && size.HasPosition(move.Finish)
 }
 
 // PositionIndex ...
-func (size Size) PositionIndex(position common.Position) int {
+func (size Size) PositionIndex(position Position) int {
 	return size.Width*position.Rank + position.File
 }
 
@@ -34,9 +30,9 @@ func (size Size) PositionCount() int {
 }
 
 // Positions ...
-func (size Size) Positions() []common.Position {
-	positions := make([]common.Position, 0, size.PositionCount())
-	size.IteratePositions(func(position common.Position) error { // nolint: errcheck, gosec, lll
+func (size Size) Positions() []Position {
+	positions := make([]Position, 0, size.PositionCount())
+	size.IteratePositions(func(position Position) error { // nolint: errcheck, gosec, lll
 		positions = append(positions, position)
 		return nil
 	})
@@ -48,7 +44,7 @@ func (size Size) Positions() []common.Position {
 func (size Size) IteratePositions(handler PositionHandler) error {
 	for rank := 0; rank < size.Height; rank++ {
 		for file := 0; file < size.Width; file++ {
-			position := common.Position{file, rank}
+			position := Position{file, rank}
 			if err := handler(position); err != nil {
 				return err
 			}

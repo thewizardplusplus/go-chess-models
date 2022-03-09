@@ -8,7 +8,7 @@ import (
 )
 
 func TestNewSliceBoard(test *testing.T) {
-	board := NewSliceBoard(Size{5, 5}, []Piece{
+	board := NewSliceBoard(common.Size{5, 5}, []Piece{
 		MockPiece{position: common.Position{2, 3}},
 		MockPiece{position: common.Position{4, 2}},
 	})
@@ -16,7 +16,7 @@ func TestNewSliceBoard(test *testing.T) {
 	expectedBoard := DefaultBoardWrapper{
 		BasePieceStorage: SliceBoard{
 			BaseBoard: BaseBoard{
-				size: Size{5, 5},
+				size: common.Size{5, 5},
 			},
 
 			pieces: []Piece{
@@ -33,7 +33,7 @@ func TestNewSliceBoard(test *testing.T) {
 
 func TestSliceBoardPiece(test *testing.T) {
 	type fields struct {
-		size   Size
+		size   common.Size
 		pieces []Piece
 	}
 	type args struct {
@@ -49,7 +49,7 @@ func TestSliceBoardPiece(test *testing.T) {
 	for _, data := range []data{
 		{
 			fields: fields{
-				size: Size{5, 5},
+				size: common.Size{5, 5},
 				pieces: []Piece{
 					14: MockPiece{position: common.Position{4, 2}},
 					17: MockPiece{position: common.Position{2, 3}},
@@ -64,7 +64,7 @@ func TestSliceBoardPiece(test *testing.T) {
 		},
 		{
 			fields: fields{
-				size: Size{5, 5},
+				size: common.Size{5, 5},
 				pieces: []Piece{
 					14: MockPiece{position: common.Position{4, 2}},
 					17: MockPiece{position: common.Position{2, 3}},
@@ -95,7 +95,7 @@ func TestSliceBoardPiece(test *testing.T) {
 }
 
 func TestSliceBoardApplyMove(test *testing.T) {
-	board := NewSliceBoard(Size{5, 5}, []Piece{
+	board := NewSliceBoard(common.Size{5, 5}, []Piece{
 		MockPiece{position: common.Position{2, 3}},
 		MockPiece{position: common.Position{4, 2}},
 	})
@@ -107,7 +107,7 @@ func TestSliceBoardApplyMove(test *testing.T) {
 	expectedBoard := DefaultBoardWrapper{
 		BasePieceStorage: SliceBoard{
 			BaseBoard: BaseBoard{
-				size: Size{5, 5},
+				size: common.Size{5, 5},
 			},
 
 			pieces: []Piece{
@@ -124,7 +124,7 @@ func TestSliceBoardApplyMove(test *testing.T) {
 	expectedNextBoard := DefaultBoardWrapper{
 		BasePieceStorage: SliceBoard{
 			BaseBoard: BaseBoard{
-				size: Size{5, 5},
+				size: common.Size{5, 5},
 			},
 
 			pieces: []Piece{
