@@ -8,6 +8,6 @@ import (
 type Board = SliceBoard
 
 // NewBoard ...
-func NewBoard(size common.Size, pieces []Piece) PieceStorage {
+func NewBoard(size common.Size, pieces []common.Piece) common.PieceStorage {
 	return NewSliceBoard(size, pieces)
 }

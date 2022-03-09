@@ -10,7 +10,7 @@ import (
 	"github.com/thewizardplusplus/go-chess-models/pieces"
 )
 
-type ByPosition []models.Piece
+type ByPosition []common.Piece
 
 func (group ByPosition) Len() int {
 	return len(group)
@@ -59,7 +59,7 @@ func ExampleDecodePieceStorage() {
 }
 
 func ExampleEncodePieceStorage() {
-	board := models.NewBoard(common.Size{Width: 5, Height: 5}, []models.Piece{
+	board := models.NewBoard(common.Size{Width: 5, Height: 5}, []common.Piece{
 		pieces.NewRook(common.Black, common.Position{File: 2, Rank: 2}),
 		pieces.NewBishop(common.White, common.Position{File: 3, Rank: 3}),
 	})

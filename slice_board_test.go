@@ -8,7 +8,7 @@ import (
 )
 
 func TestNewSliceBoard(test *testing.T) {
-	board := NewSliceBoard(common.Size{5, 5}, []Piece{
+	board := NewSliceBoard(common.Size{5, 5}, []common.Piece{
 		MockPiece{position: common.Position{2, 3}},
 		MockPiece{position: common.Position{4, 2}},
 	})
@@ -19,7 +19,7 @@ func TestNewSliceBoard(test *testing.T) {
 				size: common.Size{5, 5},
 			},
 
-			pieces: []Piece{
+			pieces: []common.Piece{
 				14: MockPiece{position: common.Position{4, 2}},
 				17: MockPiece{position: common.Position{2, 3}},
 				24: nil,
@@ -34,7 +34,7 @@ func TestNewSliceBoard(test *testing.T) {
 func TestSliceBoardPiece(test *testing.T) {
 	type fields struct {
 		size   common.Size
-		pieces []Piece
+		pieces []common.Piece
 	}
 	type args struct {
 		position common.Position
@@ -42,7 +42,7 @@ func TestSliceBoardPiece(test *testing.T) {
 	type data struct {
 		fields    fields
 		args      args
-		wantPiece Piece
+		wantPiece common.Piece
 		wantOk    bool
 	}
 
@@ -50,7 +50,7 @@ func TestSliceBoardPiece(test *testing.T) {
 		{
 			fields: fields{
 				size: common.Size{5, 5},
-				pieces: []Piece{
+				pieces: []common.Piece{
 					14: MockPiece{position: common.Position{4, 2}},
 					17: MockPiece{position: common.Position{2, 3}},
 					24: nil,
@@ -65,7 +65,7 @@ func TestSliceBoardPiece(test *testing.T) {
 		{
 			fields: fields{
 				size: common.Size{5, 5},
-				pieces: []Piece{
+				pieces: []common.Piece{
 					14: MockPiece{position: common.Position{4, 2}},
 					17: MockPiece{position: common.Position{2, 3}},
 					24: nil,
@@ -95,7 +95,7 @@ func TestSliceBoardPiece(test *testing.T) {
 }
 
 func TestSliceBoardApplyMove(test *testing.T) {
-	board := NewSliceBoard(common.Size{5, 5}, []Piece{
+	board := NewSliceBoard(common.Size{5, 5}, []common.Piece{
 		MockPiece{position: common.Position{2, 3}},
 		MockPiece{position: common.Position{4, 2}},
 	})
@@ -110,7 +110,7 @@ func TestSliceBoardApplyMove(test *testing.T) {
 				size: common.Size{5, 5},
 			},
 
-			pieces: []Piece{
+			pieces: []common.Piece{
 				14: MockPiece{position: common.Position{4, 2}},
 				17: MockPiece{position: common.Position{2, 3}},
 				24: nil,
@@ -127,7 +127,7 @@ func TestSliceBoardApplyMove(test *testing.T) {
 				size: common.Size{5, 5},
 			},
 
-			pieces: []Piece{
+			pieces: []common.Piece{
 				11: MockPiece{position: common.Position{1, 2}},
 				17: MockPiece{position: common.Position{2, 3}},
 				24: nil,

@@ -9,7 +9,7 @@ import (
 
 func TestNewBoard(test *testing.T) {
 	size := common.Size{5, 5}
-	pieces := []Piece{
+	pieces := []common.Piece{
 		MockPiece{position: common.Position{2, 3}},
 		MockPiece{position: common.Position{4, 2}},
 	}

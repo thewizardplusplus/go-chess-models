@@ -19,7 +19,7 @@ var (
 // CheckMove ...
 //
 // It doesn't check for a check before or after the move.
-func CheckMove(storage PieceStorage, move common.Move) error {
+func CheckMove(storage common.PieceStorage, move common.Move) error {
 	if move.IsEmpty() {
 		return ErrNoMove
 	}

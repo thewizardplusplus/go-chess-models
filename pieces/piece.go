@@ -1,7 +1,6 @@
 package pieces
 
 import (
-	models "github.com/thewizardplusplus/go-chess-models"
 	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
@@ -10,8 +9,8 @@ func NewPiece(
 	kind common.Kind,
 	color common.Color,
 	position common.Position,
-) models.Piece {
-	var piece models.Piece
+) common.Piece {
+	var piece common.Piece
 	switch kind {
 	case common.King:
 		piece = NewKing(color, position)

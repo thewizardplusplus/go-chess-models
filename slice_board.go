@@ -8,12 +8,12 @@ import (
 type SliceBoard struct {
 	BaseBoard
 
-	pieces []Piece
+	pieces []common.Piece
 }
 
 // NewSliceBoard ...
-func NewSliceBoard(size common.Size, pieces []Piece) PieceStorage {
-	extendedPieces := make([]Piece, size.PositionCount())
+func NewSliceBoard(size common.Size, pieces []common.Piece) common.PieceStorage {
+	extendedPieces := make([]common.Piece, size.PositionCount())
 	for _, piece := range pieces {
 		extendedPieces[size.PositionIndex(piece.Position())] = piece
 	}
@@ -23,8 +23,8 @@ func NewSliceBoard(size common.Size, pieces []Piece) PieceStorage {
 	return DefaultBoardWrapper{sliceBoard}
 }
 
-// Piece ...
-func (board SliceBoard) Piece(position common.Position) (piece Piece, ok bool) {
+// common.Piece ...
+func (board SliceBoard) Piece(position common.Position) (piece common.Piece, ok bool) {
 	piece = board.pieces[board.size.PositionIndex(position)]
 	return piece, piece != nil
 }
@@ -32,8 +32,8 @@ func (board SliceBoard) Piece(position common.Position) (piece Piece, ok bool) {
 // ApplyMove ...
 //
 // It doesn't check that the move is correct.
-func (board SliceBoard) ApplyMove(move common.Move) PieceStorage {
-	pieceGroupCopy := make([]Piece, len(board.pieces))
+func (board SliceBoard) ApplyMove(move common.Move) common.PieceStorage {
+	pieceGroupCopy := make([]common.Piece, len(board.pieces))
 	copy(pieceGroupCopy, board.pieces)
 
 	startIndex, finishIndex :=

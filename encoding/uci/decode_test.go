@@ -127,7 +127,7 @@ func TestDecodePiece(test *testing.T) {
 	}
 	type data struct {
 		args      args
-		wantPiece models.Piece
+		wantPiece common.Piece
 		wantErr   bool
 	}
 
@@ -205,7 +205,7 @@ func TestDecodePieceStorage(test *testing.T) {
 	}
 	type data struct {
 		args        args
-		wantStorage models.PieceStorage
+		wantStorage common.PieceStorage
 		wantErr     bool
 	}
 
@@ -219,7 +219,7 @@ func TestDecodePieceStorage(test *testing.T) {
 					Width:  8,
 					Height: 3,
 				},
-				[]models.Piece{
+				[]common.Piece{
 					pieces.NewPawn(common.Black, common.Position{
 						File: 0,
 						Rank: 0,
@@ -253,7 +253,7 @@ func TestDecodePieceStorage(test *testing.T) {
 					Width:  8,
 					Height: 4,
 				},
-				[]models.Piece{
+				[]common.Piece{
 					pieces.NewPawn(common.Black, common.Position{
 						File: 0,
 						Rank: 0,
@@ -287,7 +287,7 @@ func TestDecodePieceStorage(test *testing.T) {
 					Width:  8,
 					Height: 4,
 				},
-				[]models.Piece{
+				[]common.Piece{
 					pieces.NewPawn(common.Black, common.Position{
 						File: 0,
 						Rank: 1,
@@ -341,7 +341,7 @@ func TestDecodeRank(test *testing.T) {
 	}
 	type data struct {
 		args        args
-		wantPieces  []models.Piece
+		wantPieces  []common.Piece
 		wantMaxFile int
 		wantErr     bool
 	}
@@ -361,7 +361,7 @@ func TestDecodeRank(test *testing.T) {
 				index: 7,
 				fen:   "K",
 			},
-			wantPieces: []models.Piece{
+			wantPieces: []common.Piece{
 				pieces.NewKing(common.White, common.Position{
 					File: 0,
 					Rank: 7,
@@ -375,7 +375,7 @@ func TestDecodeRank(test *testing.T) {
 				index: 7,
 				fen:   "2K",
 			},
-			wantPieces: []models.Piece{
+			wantPieces: []common.Piece{
 				pieces.NewKing(common.White, common.Position{
 					File: 2,
 					Rank: 7,
@@ -389,7 +389,7 @@ func TestDecodeRank(test *testing.T) {
 				index: 7,
 				fen:   "2Kq",
 			},
-			wantPieces: []models.Piece{
+			wantPieces: []common.Piece{
 				pieces.NewKing(common.White, common.Position{
 					File: 2,
 					Rank: 7,
@@ -407,7 +407,7 @@ func TestDecodeRank(test *testing.T) {
 				index: 7,
 				fen:   "2K3q",
 			},
-			wantPieces: []models.Piece{
+			wantPieces: []common.Piece{
 				pieces.NewKing(common.White, common.Position{
 					File: 2,
 					Rank: 7,
@@ -425,7 +425,7 @@ func TestDecodeRank(test *testing.T) {
 				index: 7,
 				fen:   "2K3q4",
 			},
-			wantPieces: []models.Piece{
+			wantPieces: []common.Piece{
 				pieces.NewKing(common.White, common.Position{
 					File: 2,
 					Rank: 7,

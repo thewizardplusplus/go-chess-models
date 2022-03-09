@@ -1,7 +1,6 @@
 package pieces
 
 import (
-	models "github.com/thewizardplusplus/go-chess-models"
 	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
@@ -31,7 +30,7 @@ func steps(a int, b int) int {
 }
 
 func search(
-	storage models.PieceStorage,
+	storage common.PieceStorage,
 	a int,
 	b int,
 	makePosition func(i int) common.Position,

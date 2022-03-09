@@ -11,7 +11,7 @@ func TestPieces(test *testing.T) {
 	storage := MockPieceStorage{
 		MockBasePieceStorage: MockBasePieceStorage{
 			size: common.Size{5, 5},
-			piece: func(position common.Position) (piece Piece, ok bool) {
+			piece: func(position common.Position) (piece common.Piece, ok bool) {
 				if position != (common.Position{2, 3}) && position != (common.Position{4, 2}) {
 					return nil, false
 				}
@@ -23,7 +23,7 @@ func TestPieces(test *testing.T) {
 	}
 	pieces := Pieces(storage)
 
-	expectedPieces := []Piece{
+	expectedPieces := []common.Piece{
 		MockPiece{position: common.Position{4, 2}},
 		MockPiece{position: common.Position{2, 3}},
 	}

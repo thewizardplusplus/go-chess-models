@@ -4,7 +4,7 @@ import (
 	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
-type pieceGroup map[common.Position]Piece
+type pieceGroup map[common.Position]common.Piece
 
 // MapBoard ...
 type MapBoard struct {
@@ -14,7 +14,7 @@ type MapBoard struct {
 }
 
 // NewMapBoard ...
-func NewMapBoard(size common.Size, pieces []Piece) PieceStorage {
+func NewMapBoard(size common.Size, pieces []common.Piece) common.PieceStorage {
 	pieceGroup := make(pieceGroup) // nolint: vetshadow
 	for _, piece := range pieces {
 		pieceGroup[piece.Position()] = piece
@@ -25,8 +25,8 @@ func NewMapBoard(size common.Size, pieces []Piece) PieceStorage {
 	return DefaultBoardWrapper{mapBoard}
 }
 
-// Piece ...
-func (board MapBoard) Piece(position common.Position) (piece Piece, ok bool) {
+// common.Piece ...
+func (board MapBoard) Piece(position common.Position) (piece common.Piece, ok bool) {
 	piece, ok = board.pieces[position]
 	return piece, ok
 }
@@ -34,7 +34,7 @@ func (board MapBoard) Piece(position common.Position) (piece Piece, ok bool) {
 // ApplyMove ...
 //
 // It doesn't check that the move is correct.
-func (board MapBoard) ApplyMove(move common.Move) PieceStorage {
+func (board MapBoard) ApplyMove(move common.Move) common.PieceStorage {
 	piece := board.pieces[move.Start]
 	movedPiece := piece.ApplyPosition(move.Finish)
 

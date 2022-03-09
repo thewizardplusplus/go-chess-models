@@ -3,7 +3,6 @@ package uci
 import (
 	"testing"
 
-	models "github.com/thewizardplusplus/go-chess-models"
 	"github.com/thewizardplusplus/go-chess-models/common"
 	"github.com/thewizardplusplus/go-chess-models/pieces"
 )
@@ -25,13 +24,13 @@ func (piece MockPiece) Position() common.Position {
 	panic("not implemented")
 }
 
-func (piece MockPiece) ApplyPosition(position common.Position) models.Piece {
+func (piece MockPiece) ApplyPosition(position common.Position) common.Piece {
 	panic("not implemented")
 }
 
 func (piece MockPiece) CheckMove(
 	move common.Move,
-	storage models.PieceStorage,
+	storage common.PieceStorage,
 ) bool {
 	panic("not implemented")
 }
@@ -39,7 +38,7 @@ func (piece MockPiece) CheckMove(
 type MockPieceStorage struct {
 	size common.Size
 
-	piece func(position common.Position) (piece models.Piece, ok bool)
+	piece func(position common.Position) (piece common.Piece, ok bool)
 }
 
 func (storage MockPieceStorage) Size() common.Size {
@@ -48,7 +47,7 @@ func (storage MockPieceStorage) Size() common.Size {
 
 func (storage MockPieceStorage) Piece(
 	position common.Position,
-) (piece models.Piece, ok bool) {
+) (piece common.Piece, ok bool) {
 	if storage.piece == nil {
 		panic("not implemented")
 	}
@@ -56,13 +55,13 @@ func (storage MockPieceStorage) Piece(
 	return storage.piece(position)
 }
 
-func (storage MockPieceStorage) Pieces() []models.Piece {
+func (storage MockPieceStorage) Pieces() []common.Piece {
 	panic("not implemented")
 }
 
 func (storage MockPieceStorage) ApplyMove(
 	move common.Move,
-) models.PieceStorage {
+) common.PieceStorage {
 	panic("not implemented")
 }
 
@@ -158,7 +157,7 @@ func TestEncodeMove(test *testing.T) {
 
 func TestEncodePiece(test *testing.T) {
 	type args struct {
-		piece models.Piece
+		piece common.Piece
 	}
 	type data struct {
 		args args
@@ -231,7 +230,7 @@ func TestEncodePiece(test *testing.T) {
 
 func TestEncodePieceStorage(test *testing.T) {
 	type args struct {
-		storage models.PieceStorage
+		storage common.PieceStorage
 	}
 	type data struct {
 		args args
@@ -246,7 +245,7 @@ func TestEncodePieceStorage(test *testing.T) {
 						Width:  5,
 						Height: 5,
 					},
-					piece: func(position common.Position) (piece models.Piece, ok bool) {
+					piece: func(position common.Position) (piece common.Piece, ok bool) {
 						return nil, false
 					},
 				},
@@ -260,7 +259,7 @@ func TestEncodePieceStorage(test *testing.T) {
 						Width:  5,
 						Height: 5,
 					},
-					piece: func(position common.Position) (piece models.Piece, ok bool) {
+					piece: func(position common.Position) (piece common.Piece, ok bool) {
 						switch position {
 						case common.Position{File: 0, Rank: 2}:
 							piece = pieces.NewKing(common.White, common.Position{
@@ -283,7 +282,7 @@ func TestEncodePieceStorage(test *testing.T) {
 						Width:  5,
 						Height: 5,
 					},
-					piece: func(position common.Position) (piece models.Piece, ok bool) {
+					piece: func(position common.Position) (piece common.Piece, ok bool) {
 						switch position {
 						case common.Position{File: 1, Rank: 2}:
 							piece = pieces.NewKing(common.White, common.Position{
@@ -306,7 +305,7 @@ func TestEncodePieceStorage(test *testing.T) {
 						Width:  5,
 						Height: 5,
 					},
-					piece: func(position common.Position) (piece models.Piece, ok bool) {
+					piece: func(position common.Position) (piece common.Piece, ok bool) {
 						switch position {
 						case common.Position{File: 1, Rank: 2}:
 							piece = pieces.NewKing(common.White, common.Position{
@@ -334,7 +333,7 @@ func TestEncodePieceStorage(test *testing.T) {
 						Width:  5,
 						Height: 5,
 					},
-					piece: func(position common.Position) (piece models.Piece, ok bool) {
+					piece: func(position common.Position) (piece common.Piece, ok bool) {
 						switch position {
 						case common.Position{File: 1, Rank: 2}:
 							piece = pieces.NewKing(common.White, common.Position{
@@ -362,7 +361,7 @@ func TestEncodePieceStorage(test *testing.T) {
 						Width:  5,
 						Height: 5,
 					},
-					piece: func(position common.Position) (piece models.Piece, ok bool) {
+					piece: func(position common.Position) (piece common.Piece, ok bool) {
 						switch position {
 						case common.Position{File: 0, Rank: 3}:
 							piece = pieces.NewKing(common.White, common.Position{
@@ -406,7 +405,7 @@ func TestEncodePieceStorage(test *testing.T) {
 						Width:  5,
 						Height: 3,
 					},
-					piece: func(position common.Position) (piece models.Piece, ok bool) {
+					piece: func(position common.Position) (piece common.Piece, ok bool) {
 						switch position {
 						case common.Position{File: 0, Rank: 2}:
 							piece = pieces.NewKing(common.White, common.Position{

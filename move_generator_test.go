@@ -17,7 +17,7 @@ type MockPieceStorage struct {
 func TestMoveCheckerMovesForColor(test *testing.T) {
 	type fields struct {
 		size      common.Size
-		pieces    []Piece
+		pieces    []common.Piece
 		checkMove func(move common.Move) error
 	}
 	type args struct {
@@ -34,7 +34,7 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 		{
 			fields: fields{
 				size: common.Size{2, 2},
-				pieces: []Piece{
+				pieces: []common.Piece{
 					MockPiece{
 						color:    common.Black,
 						position: common.Position{0, 0},
@@ -97,7 +97,7 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 		{
 			fields: fields{
 				size: common.Size{2, 2},
-				pieces: []Piece{
+				pieces: []common.Piece{
 					MockPiece{
 						color:    common.Black,
 						position: common.Position{0, 0},
@@ -160,7 +160,7 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 		{
 			fields: fields{
 				size: common.Size{2, 2},
-				pieces: []Piece{
+				pieces: []common.Piece{
 					MockPiece{
 						color:    common.Black,
 						position: common.Position{0, 0},
@@ -189,7 +189,7 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 		{
 			fields: fields{
 				size: common.Size{2, 2},
-				pieces: []Piece{
+				pieces: []common.Piece{
 					MockPiece{
 						color:    common.Black,
 						position: common.Position{0, 0},

@@ -9,7 +9,7 @@ import (
 func TestCheckMove(test *testing.T) {
 	type fields struct {
 		size  common.Size
-		piece func(position common.Position) (piece Piece, ok bool)
+		piece func(position common.Position) (piece common.Piece, ok bool)
 	}
 	type args struct {
 		move common.Move
@@ -24,7 +24,7 @@ func TestCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: common.Size{2, 2},
-				piece: func(position common.Position) (piece Piece, ok bool) {
+				piece: func(position common.Position) (piece common.Piece, ok bool) {
 					return nil, false
 				},
 			},
@@ -39,7 +39,7 @@ func TestCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: common.Size{2, 2},
-				piece: func(position common.Position) (piece Piece, ok bool) {
+				piece: func(position common.Position) (piece common.Piece, ok bool) {
 					return nil, false
 				},
 			},
@@ -54,7 +54,7 @@ func TestCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: common.Size{2, 2},
-				piece: func(position common.Position) (piece Piece, ok bool) {
+				piece: func(position common.Position) (piece common.Piece, ok bool) {
 					return nil, false
 				},
 			},
@@ -69,7 +69,7 @@ func TestCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: common.Size{2, 2},
-				piece: func(position common.Position) (piece Piece, ok bool) {
+				piece: func(position common.Position) (piece common.Piece, ok bool) {
 					if position != (common.Position{0, 0}) && position != (common.Position{1, 1}) {
 						return nil, false
 					}
@@ -89,14 +89,14 @@ func TestCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: common.Size{2, 2},
-				piece: func(position common.Position) (piece Piece, ok bool) {
+				piece: func(position common.Position) (piece common.Piece, ok bool) {
 					if position != (common.Position{0, 0}) {
 						return nil, false
 					}
 
 					piece = MockPiece{
 						position: position,
-						checkMove: func(move common.Move, storage PieceStorage) bool {
+						checkMove: func(move common.Move, storage common.PieceStorage) bool {
 							return false
 						},
 					}
@@ -114,13 +114,13 @@ func TestCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: common.Size{2, 2},
-				piece: func(position common.Position) (piece Piece, ok bool) {
+				piece: func(position common.Position) (piece common.Piece, ok bool) {
 					switch position {
 					case common.Position{0, 0}:
 						piece = MockPiece{
 							color:    common.Black,
 							position: common.Position{0, 0},
-							checkMove: func(move common.Move, storage PieceStorage) bool {
+							checkMove: func(move common.Move, storage common.PieceStorage) bool {
 								return true
 							},
 						}
@@ -147,14 +147,14 @@ func TestCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: common.Size{2, 2},
-				piece: func(position common.Position) (piece Piece, ok bool) {
+				piece: func(position common.Position) (piece common.Piece, ok bool) {
 					if position != (common.Position{0, 0}) {
 						return nil, false
 					}
 
 					piece = MockPiece{
 						position: position,
-						checkMove: func(move common.Move, storage PieceStorage) bool {
+						checkMove: func(move common.Move, storage common.PieceStorage) bool {
 							return true
 						},
 					}

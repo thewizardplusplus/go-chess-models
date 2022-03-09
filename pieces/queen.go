@@ -1,7 +1,6 @@
 package pieces
 
 import (
-	models "github.com/thewizardplusplus/go-chess-models"
 	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
@@ -15,7 +14,7 @@ func NewQueen(color common.Color, position common.Position) Queen {
 }
 
 // ApplyPosition ...
-func (piece Queen) ApplyPosition(position common.Position) models.Piece {
+func (piece Queen) ApplyPosition(position common.Position) common.Piece {
 	base := piece.Base.ApplyPosition(position)
 	return Queen{base}
 }
@@ -23,7 +22,7 @@ func (piece Queen) ApplyPosition(position common.Position) models.Piece {
 // CheckMove ...
 func (piece Queen) CheckMove(
 	move common.Move,
-	storage models.PieceStorage,
+	storage common.PieceStorage,
 ) bool {
 	okForRook := Rook(piece).CheckMove(move, storage)
 	okForBishop := Bishop(piece).CheckMove(move, storage)

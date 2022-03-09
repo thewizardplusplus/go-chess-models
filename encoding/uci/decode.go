@@ -7,7 +7,6 @@ import (
 	"strings"
 	"unicode"
 
-	models "github.com/thewizardplusplus/go-chess-models"
 	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
@@ -16,13 +15,13 @@ type PieceFactory func(
 	kind common.Kind,
 	color common.Color,
 	position common.Position,
-) models.Piece
+) common.Piece
 
 // PieceStorageFactory ...
 type PieceStorageFactory func(
 	size common.Size,
-	pieces []models.Piece,
-) models.PieceStorage
+	pieces []common.Piece,
+) common.PieceStorage
 
 const (
 	minFileSymbol = 'a'
@@ -74,7 +73,7 @@ func DecodeMove(text string) (move common.Move, err error) {
 // DecodePiece ...
 //
 // It decodes a piece from FEN (only a kind and a color, not a position).
-func DecodePiece(fen rune, factory PieceFactory) (models.Piece, error) {
+func DecodePiece(fen rune, factory PieceFactory) (common.Piece, error) {
 	var kind common.Kind
 	switch unicode.ToLower(fen) {
 	case 'k':
@@ -111,11 +110,11 @@ func DecodePieceStorage(
 	fen string,
 	pieceFactory PieceFactory,
 	pieceStorageFactory PieceStorageFactory,
-) (models.PieceStorage, error) {
+) (common.PieceStorage, error) {
 	ranks := strings.Split(fen, "/")
 	reverse(ranks)
 
-	var pieces []models.Piece
+	var pieces []common.Piece
 	var width int
 	for index, rank := range ranks {
 		rankPieces, rankWidth, err := decodeRank(index, rank, pieceFactory)
@@ -138,7 +137,7 @@ func decodeRank(
 	index int,
 	fen string,
 	pieceFactory PieceFactory,
-) (pieces []models.Piece, maxFile int, err error) {
+) (pieces []common.Piece, maxFile int, err error) {
 	for _, symbol := range fen {
 		piece, err := DecodePiece(symbol, pieceFactory)
 		if err != nil {

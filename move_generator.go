@@ -15,7 +15,7 @@ type MoveGenerator struct{}
 //
 // It returns an error only on a king capture.
 func (generator MoveGenerator) MovesForColor(
-	storage PieceStorage,
+	storage common.PieceStorage,
 	color common.Color,
 ) ([]common.Move, error) {
 	var moves []common.Move
@@ -42,7 +42,7 @@ func (generator MoveGenerator) MovesForColor(
 //
 // It returns an error only on a king capture.
 func (generator MoveGenerator) MovesForPosition(
-	storage PieceStorage,
+	storage common.PieceStorage,
 	position common.Position,
 ) ([]common.Move, error) {
 	var moves []common.Move
@@ -69,7 +69,7 @@ func (generator MoveGenerator) MovesForPosition(
 
 // PerftMoveGenerator ...
 type PerftMoveGenerator interface {
-	MovesForColor(storage PieceStorage, color common.Color) ([]common.Move, error)
+	MovesForColor(storage common.PieceStorage, color common.Color) ([]common.Move, error)
 }
 
 // PerftHandler ...
@@ -78,7 +78,7 @@ type PerftHandler func(move common.Move, count int, deep int)
 // Perft ...
 func Perft(
 	generator PerftMoveGenerator,
-	storage PieceStorage,
+	storage common.PieceStorage,
 	color common.Color,
 	deep int,
 	handler PerftHandler,

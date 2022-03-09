@@ -37,3 +37,9 @@ type PositionHandler = common.PositionHandler
 
 // Size ...
 type Size = common.Size
+
+// Piece ...
+type Piece = common.Piece
+
+// PieceStorage ...
+type PieceStorage = common.PieceStorage

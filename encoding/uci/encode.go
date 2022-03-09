@@ -5,7 +5,6 @@ import (
 	"strings"
 	"unicode"
 
-	models "github.com/thewizardplusplus/go-chess-models"
 	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
@@ -30,7 +29,7 @@ func EncodeMove(move common.Move) string {
 // EncodePiece ...
 //
 // It converts the piece to FEN (only a kind and a color, not a position).
-func EncodePiece(piece models.Piece) string {
+func EncodePiece(piece common.Piece) string {
 	var kindCase int
 	switch piece.Color() {
 	case common.Black:
@@ -62,7 +61,7 @@ func EncodePiece(piece models.Piece) string {
 // EncodePieceStorage ...
 //
 // It converts the piece storage to FEN.
-func EncodePieceStorage(storage models.PieceStorage) string {
+func EncodePieceStorage(storage common.PieceStorage) string {
 	var rank string
 	var shift int
 	resetShift := func() {

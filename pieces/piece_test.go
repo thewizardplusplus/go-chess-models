@@ -4,7 +4,6 @@ import (
 	"reflect"
 	"testing"
 
-	models "github.com/thewizardplusplus/go-chess-models"
 	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
@@ -16,7 +15,7 @@ func TestNewPiece(test *testing.T) {
 	}
 	type data struct {
 		args args
-		want models.Piece
+		want common.Piece
 	}
 
 	for _, data := range []data{
