@@ -9,13 +9,13 @@ import (
 type Bishop struct{ Base }
 
 // NewBishop ...
-func NewBishop(color common.Color, position models.Position) Bishop {
+func NewBishop(color common.Color, position common.Position) Bishop {
 	base := NewBase(common.Bishop, color, position)
 	return Bishop{base}
 }
 
 // ApplyPosition ...
-func (piece Bishop) ApplyPosition(position models.Position) models.Piece {
+func (piece Bishop) ApplyPosition(position common.Position) models.Piece {
 	base := piece.Base.ApplyPosition(position)
 	return Bishop{base}
 }
@@ -47,9 +47,9 @@ func (piece Bishop) CheckMove(
 	}
 
 	fileMin := min(start.File, finish.File)
-	return !search(storage, start.File, finish.File, func(i int) models.Position {
+	return !search(storage, start.File, finish.File, func(i int) common.Position {
 		step := i - fileMin
-		return models.Position{
+		return common.Position{
 			File: i,
 			Rank: rankStart + step*rankSign,
 		}

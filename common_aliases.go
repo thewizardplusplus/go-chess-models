@@ -25,3 +25,6 @@ const (
 	Knight = common.Knight
 	Pawn   = common.Pawn
 )
+
+// Position ...
+type Position = common.Position

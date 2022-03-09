@@ -12,7 +12,7 @@ import (
 // EncodePosition ...
 //
 // It converts the position to pure algebraic coordinate notation.
-func EncodePosition(position models.Position) string {
+func EncodePosition(position common.Position) string {
 	file := string(rune(position.File + minFileSymbol))
 	rank := strconv.Itoa(position.Rank + 1)
 	return file + rank
@@ -73,7 +73,7 @@ func EncodePieceStorage(storage models.PieceStorage) string {
 	}
 
 	ranks := make([]string, 0, storage.Size().Height)
-	storage.Size().IteratePositions(func(position models.Position) error { // nolint: errcheck, gosec, lll
+	storage.Size().IteratePositions(func(position common.Position) error { // nolint: errcheck, gosec, lll
 		if piece, ok := storage.Piece(position); ok {
 			resetShift()
 

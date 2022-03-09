@@ -43,10 +43,10 @@ func (generator MoveGenerator) MovesForColor(
 // It returns an error only on a king capture.
 func (generator MoveGenerator) MovesForPosition(
 	storage PieceStorage,
-	position Position,
+	position common.Position,
 ) ([]Move, error) {
 	var moves []Move
-	if err := storage.Size().IteratePositions(func(finish Position) error {
+	if err := storage.Size().IteratePositions(func(finish common.Position) error {
 		move := Move{position, finish}
 		if err := storage.CheckMove(move); err != nil {
 			// if the move captures a king, break a generating

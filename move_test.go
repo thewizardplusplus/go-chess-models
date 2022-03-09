@@ -8,8 +8,8 @@ import (
 
 func TestMoveIsZero(test *testing.T) {
 	type fields struct {
-		start  Position
-		finish Position
+		start  common.Position
+		finish common.Position
 	}
 	type data struct {
 		fields fields
@@ -19,29 +19,29 @@ func TestMoveIsZero(test *testing.T) {
 	for _, data := range []data{
 		{
 			fields: fields{
-				start:  Position{1, 2},
-				finish: Position{3, 4},
+				start:  common.Position{1, 2},
+				finish: common.Position{3, 4},
 			},
 			want: false,
 		},
 		{
 			fields: fields{
-				start:  Position{1, 0},
-				finish: Position{3, 0},
+				start:  common.Position{1, 0},
+				finish: common.Position{3, 0},
 			},
 			want: false,
 		},
 		{
 			fields: fields{
-				start:  Position{1, 2},
-				finish: Position{0, 0},
+				start:  common.Position{1, 2},
+				finish: common.Position{0, 0},
 			},
 			want: false,
 		},
 		{
 			fields: fields{
-				start:  Position{0, 0},
-				finish: Position{0, 0},
+				start:  common.Position{0, 0},
+				finish: common.Position{0, 0},
 			},
 			want: true,
 		},
@@ -60,8 +60,8 @@ func TestMoveIsZero(test *testing.T) {
 
 func TestMoveIsEmpty(test *testing.T) {
 	type fields struct {
-		start  Position
-		finish Position
+		start  common.Position
+		finish common.Position
 	}
 	type data struct {
 		fields fields
@@ -71,29 +71,29 @@ func TestMoveIsEmpty(test *testing.T) {
 	for _, data := range []data{
 		{
 			fields: fields{
-				start:  Position{1, 2},
-				finish: Position{3, 4},
+				start:  common.Position{1, 2},
+				finish: common.Position{3, 4},
 			},
 			want: false,
 		},
 		{
 			fields: fields{
-				start:  Position{1, 2},
-				finish: Position{1, 4},
+				start:  common.Position{1, 2},
+				finish: common.Position{1, 4},
 			},
 			want: false,
 		},
 		{
 			fields: fields{
-				start:  Position{1, 2},
-				finish: Position{3, 2},
+				start:  common.Position{1, 2},
+				finish: common.Position{3, 2},
 			},
 			want: false,
 		},
 		{
 			fields: fields{
-				start:  Position{1, 2},
-				finish: Position{1, 2},
+				start:  common.Position{1, 2},
+				finish: common.Position{1, 2},
 			},
 			want: true,
 		},
@@ -113,7 +113,7 @@ func TestMoveIsEmpty(test *testing.T) {
 func TestCheckMove(test *testing.T) {
 	type fields struct {
 		size  Size
-		piece func(position Position) (piece Piece, ok bool)
+		piece func(position common.Position) (piece Piece, ok bool)
 	}
 	type args struct {
 		move Move
@@ -128,14 +128,14 @@ func TestCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: Size{2, 2},
-				piece: func(position Position) (piece Piece, ok bool) {
+				piece: func(position common.Position) (piece Piece, ok bool) {
 					return nil, false
 				},
 			},
 			args: args{
 				move: Move{
-					Start:  Position{0, 0},
-					Finish: Position{0, 0},
+					Start:  common.Position{0, 0},
+					Finish: common.Position{0, 0},
 				},
 			},
 			want: ErrNoMove,
@@ -143,14 +143,14 @@ func TestCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: Size{2, 2},
-				piece: func(position Position) (piece Piece, ok bool) {
+				piece: func(position common.Position) (piece Piece, ok bool) {
 					return nil, false
 				},
 			},
 			args: args{
 				move: Move{
-					Start:  Position{0, 0},
-					Finish: Position{-1, -1},
+					Start:  common.Position{0, 0},
+					Finish: common.Position{-1, -1},
 				},
 			},
 			want: ErrOutOfSize,
@@ -158,14 +158,14 @@ func TestCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: Size{2, 2},
-				piece: func(position Position) (piece Piece, ok bool) {
+				piece: func(position common.Position) (piece Piece, ok bool) {
 					return nil, false
 				},
 			},
 			args: args{
 				move: Move{
-					Start:  Position{0, 0},
-					Finish: Position{1, 1},
+					Start:  common.Position{0, 0},
+					Finish: common.Position{1, 1},
 				},
 			},
 			want: ErrNoPiece,
@@ -173,8 +173,8 @@ func TestCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: Size{2, 2},
-				piece: func(position Position) (piece Piece, ok bool) {
-					if position != (Position{0, 0}) && position != (Position{1, 1}) {
+				piece: func(position common.Position) (piece Piece, ok bool) {
+					if position != (common.Position{0, 0}) && position != (common.Position{1, 1}) {
 						return nil, false
 					}
 
@@ -184,8 +184,8 @@ func TestCheckMove(test *testing.T) {
 			},
 			args: args{
 				move: Move{
-					Start:  Position{0, 0},
-					Finish: Position{1, 1},
+					Start:  common.Position{0, 0},
+					Finish: common.Position{1, 1},
 				},
 			},
 			want: ErrFriendlyTarget,
@@ -193,8 +193,8 @@ func TestCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: Size{2, 2},
-				piece: func(position Position) (piece Piece, ok bool) {
-					if position != (Position{0, 0}) {
+				piece: func(position common.Position) (piece Piece, ok bool) {
+					if position != (common.Position{0, 0}) {
 						return nil, false
 					}
 
@@ -209,8 +209,8 @@ func TestCheckMove(test *testing.T) {
 			},
 			args: args{
 				move: Move{
-					Start:  Position{0, 0},
-					Finish: Position{1, 1},
+					Start:  common.Position{0, 0},
+					Finish: common.Position{1, 1},
 				},
 			},
 			want: ErrIllegalMove,
@@ -218,21 +218,21 @@ func TestCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: Size{2, 2},
-				piece: func(position Position) (piece Piece, ok bool) {
+				piece: func(position common.Position) (piece Piece, ok bool) {
 					switch position {
-					case Position{0, 0}:
+					case common.Position{0, 0}:
 						piece = MockPiece{
 							color:    common.Black,
-							position: Position{0, 0},
+							position: common.Position{0, 0},
 							checkMove: func(move Move, storage PieceStorage) bool {
 								return true
 							},
 						}
-					case Position{1, 1}:
+					case common.Position{1, 1}:
 						piece = MockPiece{
 							kind:     common.King,
 							color:    common.White,
-							position: Position{1, 1},
+							position: common.Position{1, 1},
 						}
 					}
 
@@ -242,8 +242,8 @@ func TestCheckMove(test *testing.T) {
 			},
 			args: args{
 				move: Move{
-					Start:  Position{0, 0},
-					Finish: Position{1, 1},
+					Start:  common.Position{0, 0},
+					Finish: common.Position{1, 1},
 				},
 			},
 			want: ErrKingCapture,
@@ -251,8 +251,8 @@ func TestCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: Size{2, 2},
-				piece: func(position Position) (piece Piece, ok bool) {
-					if position != (Position{0, 0}) {
+				piece: func(position common.Position) (piece Piece, ok bool) {
+					if position != (common.Position{0, 0}) {
 						return nil, false
 					}
 
@@ -267,8 +267,8 @@ func TestCheckMove(test *testing.T) {
 			},
 			args: args{
 				move: Move{
-					Start:  Position{0, 0},
-					Finish: Position{1, 1},
+					Start:  common.Position{0, 0},
+					Finish: common.Position{1, 1},
 				},
 			},
 			want: nil,

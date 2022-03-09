@@ -12,3 +12,9 @@ const (
 	Knight
 	Pawn
 )
+
+// Position ...
+type Position struct {
+	File int // column
+	Rank int // row
+}

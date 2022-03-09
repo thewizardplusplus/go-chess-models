@@ -15,7 +15,7 @@ import (
 type PieceFactory func(
 	kind common.Kind,
 	color common.Color,
-	position models.Position,
+	position common.Position,
 ) models.Piece
 
 // PieceStorageFactory ...
@@ -31,23 +31,23 @@ const (
 // DecodePosition ...
 //
 // It decodes a position from pure algebraic coordinate notation.
-func DecodePosition(text string) (position models.Position, err error) {
+func DecodePosition(text string) (position common.Position, err error) {
 	if len(text) != 2 {
-		return models.Position{}, errors.New("incorrect length")
+		return common.Position{}, errors.New("incorrect length")
 	}
 
 	file := int(text[0]) - minFileSymbol
 	if file < 0 {
-		return models.Position{}, errors.New("incorrect file")
+		return common.Position{}, errors.New("incorrect file")
 	}
 
 	rank, err := strconv.Atoi(text[1:])
 	if err != nil {
-		return models.Position{}, fmt.Errorf("incorrect rank: %s", err)
+		return common.Position{}, fmt.Errorf("incorrect rank: %s", err)
 	}
 	rank--
 
-	return models.Position{File: file, Rank: rank}, nil
+	return common.Position{File: file, Rank: rank}, nil
 }
 
 // DecodeMove ...
@@ -100,7 +100,7 @@ func DecodePiece(fen rune, factory PieceFactory) (models.Piece, error) {
 		color = common.White
 	}
 
-	piece := factory(kind, color, models.Position{})
+	piece := factory(kind, color, common.Position{})
 	return piece, nil
 }
 
@@ -152,7 +152,7 @@ func decodeRank(
 		}
 
 		placedPiece :=
-			piece.ApplyPosition(models.Position{File: maxFile, Rank: index})
+			piece.ApplyPosition(common.Position{File: maxFile, Rank: index})
 		pieces = append(pieces, placedPiece)
 
 		maxFile++

@@ -2,6 +2,7 @@ package pieces
 
 import (
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
 func min(a int, b int) int {
@@ -33,7 +34,7 @@ func search(
 	storage models.PieceStorage,
 	a int,
 	b int,
-	makePosition func(i int) models.Position,
+	makePosition func(i int) common.Position,
 ) (ok bool) {
 	start, finish := min(a, b), max(a, b)
 	for i := start + 1; i < finish; i++ {

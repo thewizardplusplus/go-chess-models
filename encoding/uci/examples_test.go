@@ -40,8 +40,8 @@ func ExampleDecodeMove() {
 
 func ExampleEncodeMove() {
 	move := uci.EncodeMove(models.Move{
-		Start:  models.Position{File: 3, Rank: 3},
-		Finish: models.Position{File: 2, Rank: 2},
+		Start:  common.Position{File: 3, Rank: 3},
+		Finish: common.Position{File: 2, Rank: 2},
 	})
 	fmt.Printf("%v\n", move)
 
@@ -60,8 +60,8 @@ func ExampleDecodePieceStorage() {
 
 func ExampleEncodePieceStorage() {
 	board := models.NewBoard(models.Size{Width: 5, Height: 5}, []models.Piece{
-		pieces.NewRook(common.Black, models.Position{File: 2, Rank: 2}),
-		pieces.NewBishop(common.White, models.Position{File: 3, Rank: 3}),
+		pieces.NewRook(common.Black, common.Position{File: 2, Rank: 2}),
+		pieces.NewBishop(common.White, common.Position{File: 3, Rank: 3}),
 	})
 	fen := uci.EncodePieceStorage(board)
 	fmt.Printf("%v\n", fen)

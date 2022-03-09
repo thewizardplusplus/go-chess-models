@@ -9,13 +9,13 @@ import (
 type Pawn struct{ Base }
 
 // NewPawn ...
-func NewPawn(color common.Color, position models.Position) Pawn {
+func NewPawn(color common.Color, position common.Position) Pawn {
 	base := NewBase(common.Pawn, color, position)
 	return Pawn{base}
 }
 
 // ApplyPosition ...
-func (piece Pawn) ApplyPosition(position models.Position) models.Piece {
+func (piece Pawn) ApplyPosition(position common.Position) models.Piece {
 	base := piece.Base.ApplyPosition(position)
 	return Pawn{base}
 }

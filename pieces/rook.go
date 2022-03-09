@@ -9,13 +9,13 @@ import (
 type Rook struct{ Base }
 
 // NewRook ...
-func NewRook(color common.Color, position models.Position) Rook {
+func NewRook(color common.Color, position common.Position) Rook {
 	base := NewBase(common.Rook, color, position)
 	return Rook{base}
 }
 
 // ApplyPosition ...
-func (piece Rook) ApplyPosition(position models.Position) models.Piece {
+func (piece Rook) ApplyPosition(position common.Position) models.Piece {
 	base := piece.Base.ApplyPosition(position)
 	return Rook{base}
 }
@@ -33,19 +33,19 @@ func (piece Rook) CheckMove(
 	}
 
 	var a, b int
-	var makePosition func(i int) models.Position
+	var makePosition func(i int) common.Position
 	if fileSteps == 0 {
 		a, b = start.Rank, finish.Rank
-		makePosition = func(i int) models.Position {
-			return models.Position{
+		makePosition = func(i int) common.Position {
+			return common.Position{
 				File: start.File,
 				Rank: i,
 			}
 		}
 	} else {
 		a, b = start.File, finish.File
-		makePosition = func(i int) models.Position {
-			return models.Position{
+		makePosition = func(i int) common.Position {
+			return common.Position{
 				File: i,
 				Rank: start.Rank,
 			}

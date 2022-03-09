@@ -10,7 +10,7 @@ import (
 )
 
 func TestNewKnight(test *testing.T) {
-	piece := NewKnight(common.White, models.Position{
+	piece := NewKnight(common.White, common.Position{
 		File: 2,
 		Rank: 3,
 	})
@@ -19,7 +19,7 @@ func TestNewKnight(test *testing.T) {
 		Base: Base{
 			kind:  common.Knight,
 			color: common.White,
-			position: models.Position{
+			position: common.Position{
 				File: 2,
 				Rank: 3,
 			},
@@ -31,11 +31,11 @@ func TestNewKnight(test *testing.T) {
 }
 
 func TestKnightApplyPosition(test *testing.T) {
-	piece := NewKnight(common.White, models.Position{
+	piece := NewKnight(common.White, common.Position{
 		File: 2,
 		Rank: 3,
 	})
-	nextPiece := piece.ApplyPosition(models.Position{
+	nextPiece := piece.ApplyPosition(common.Position{
 		File: 4,
 		Rank: 2,
 	})
@@ -44,7 +44,7 @@ func TestKnightApplyPosition(test *testing.T) {
 		Base: Base{
 			kind:  common.Knight,
 			color: common.White,
-			position: models.Position{
+			position: common.Position{
 				File: 2,
 				Rank: 3,
 			},
@@ -58,7 +58,7 @@ func TestKnightApplyPosition(test *testing.T) {
 		Base: Base{
 			kind:  common.Knight,
 			color: common.White,
-			position: models.Position{
+			position: common.Position{
 				File: 4,
 				Rank: 2,
 			},
@@ -78,88 +78,88 @@ func TestKnightCheckMove(test *testing.T) {
 	}
 
 	var generator models.MoveGenerator
-	moves, err := generator.MovesForPosition(storage, models.Position{
+	moves, err := generator.MovesForPosition(storage, common.Position{
 		File: 2,
 		Rank: 2,
 	})
 
 	expectedMoves := []models.Move{
 		{
-			Start: models.Position{
+			Start: common.Position{
 				File: 2,
 				Rank: 2,
 			},
-			Finish: models.Position{
+			Finish: common.Position{
 				File: 1,
 				Rank: 0,
 			},
 		},
 		{
-			Start: models.Position{
+			Start: common.Position{
 				File: 2,
 				Rank: 2,
 			},
-			Finish: models.Position{
+			Finish: common.Position{
 				File: 3,
 				Rank: 0,
 			},
 		},
 		{
-			Start: models.Position{
+			Start: common.Position{
 				File: 2,
 				Rank: 2,
 			},
-			Finish: models.Position{
+			Finish: common.Position{
 				File: 0,
 				Rank: 1,
 			},
 		},
 		{
-			Start: models.Position{
+			Start: common.Position{
 				File: 2,
 				Rank: 2,
 			},
-			Finish: models.Position{
+			Finish: common.Position{
 				File: 4,
 				Rank: 1,
 			},
 		},
 		{
-			Start: models.Position{
+			Start: common.Position{
 				File: 2,
 				Rank: 2,
 			},
-			Finish: models.Position{
+			Finish: common.Position{
 				File: 0,
 				Rank: 3,
 			},
 		},
 		{
-			Start: models.Position{
+			Start: common.Position{
 				File: 2,
 				Rank: 2,
 			},
-			Finish: models.Position{
+			Finish: common.Position{
 				File: 4,
 				Rank: 3,
 			},
 		},
 		{
-			Start: models.Position{
+			Start: common.Position{
 				File: 2,
 				Rank: 2,
 			},
-			Finish: models.Position{
+			Finish: common.Position{
 				File: 1,
 				Rank: 4,
 			},
 		},
 		{
-			Start: models.Position{
+			Start: common.Position{
 				File: 2,
 				Rank: 2,
 			},
-			Finish: models.Position{
+			Finish: common.Position{
 				File: 3,
 				Rank: 4,
 			},

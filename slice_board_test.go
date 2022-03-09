@@ -3,12 +3,14 @@ package chessmodels
 import (
 	"reflect"
 	"testing"
+
+	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
 func TestNewSliceBoard(test *testing.T) {
 	board := NewSliceBoard(Size{5, 5}, []Piece{
-		MockPiece{position: Position{2, 3}},
-		MockPiece{position: Position{4, 2}},
+		MockPiece{position: common.Position{2, 3}},
+		MockPiece{position: common.Position{4, 2}},
 	})
 
 	expectedBoard := DefaultBoardWrapper{
@@ -18,8 +20,8 @@ func TestNewSliceBoard(test *testing.T) {
 			},
 
 			pieces: []Piece{
-				14: MockPiece{position: Position{4, 2}},
-				17: MockPiece{position: Position{2, 3}},
+				14: MockPiece{position: common.Position{4, 2}},
+				17: MockPiece{position: common.Position{2, 3}},
 				24: nil,
 			},
 		},
@@ -35,7 +37,7 @@ func TestSliceBoardPiece(test *testing.T) {
 		pieces []Piece
 	}
 	type args struct {
-		position Position
+		position common.Position
 	}
 	type data struct {
 		fields    fields
@@ -49,14 +51,14 @@ func TestSliceBoardPiece(test *testing.T) {
 			fields: fields{
 				size: Size{5, 5},
 				pieces: []Piece{
-					14: MockPiece{position: Position{4, 2}},
-					17: MockPiece{position: Position{2, 3}},
+					14: MockPiece{position: common.Position{4, 2}},
+					17: MockPiece{position: common.Position{2, 3}},
 					24: nil,
 				},
 			},
-			args: args{Position{2, 3}},
+			args: args{common.Position{2, 3}},
 			wantPiece: MockPiece{
-				position: Position{2, 3},
+				position: common.Position{2, 3},
 			},
 			wantOk: true,
 		},
@@ -64,12 +66,12 @@ func TestSliceBoardPiece(test *testing.T) {
 			fields: fields{
 				size: Size{5, 5},
 				pieces: []Piece{
-					14: MockPiece{position: Position{4, 2}},
-					17: MockPiece{position: Position{2, 3}},
+					14: MockPiece{position: common.Position{4, 2}},
+					17: MockPiece{position: common.Position{2, 3}},
 					24: nil,
 				},
 			},
-			args:      args{Position{0, 0}},
+			args:      args{common.Position{0, 0}},
 			wantPiece: nil,
 			wantOk:    false,
 		},
@@ -94,12 +96,12 @@ func TestSliceBoardPiece(test *testing.T) {
 
 func TestSliceBoardApplyMove(test *testing.T) {
 	board := NewSliceBoard(Size{5, 5}, []Piece{
-		MockPiece{position: Position{2, 3}},
-		MockPiece{position: Position{4, 2}},
+		MockPiece{position: common.Position{2, 3}},
+		MockPiece{position: common.Position{4, 2}},
 	})
 	nextBoard := board.ApplyMove(Move{
-		Start:  Position{4, 2},
-		Finish: Position{1, 2},
+		Start:  common.Position{4, 2},
+		Finish: common.Position{1, 2},
 	})
 
 	expectedBoard := DefaultBoardWrapper{
@@ -109,8 +111,8 @@ func TestSliceBoardApplyMove(test *testing.T) {
 			},
 
 			pieces: []Piece{
-				14: MockPiece{position: Position{4, 2}},
-				17: MockPiece{position: Position{2, 3}},
+				14: MockPiece{position: common.Position{4, 2}},
+				17: MockPiece{position: common.Position{2, 3}},
 				24: nil,
 			},
 		},
@@ -126,8 +128,8 @@ func TestSliceBoardApplyMove(test *testing.T) {
 			},
 
 			pieces: []Piece{
-				11: MockPiece{position: Position{1, 2}},
-				17: MockPiece{position: Position{2, 3}},
+				11: MockPiece{position: common.Position{1, 2}},
+				17: MockPiece{position: common.Position{2, 3}},
 				24: nil,
 			},
 		},

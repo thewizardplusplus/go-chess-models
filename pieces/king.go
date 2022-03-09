@@ -9,13 +9,13 @@ import (
 type King struct{ Base }
 
 // NewKing ...
-func NewKing(color common.Color, position models.Position) King {
+func NewKing(color common.Color, position common.Position) King {
 	base := NewBase(common.King, color, position)
 	return King{base}
 }
 
 // ApplyPosition ...
-func (piece King) ApplyPosition(position models.Position) models.Piece {
+func (piece King) ApplyPosition(position common.Position) models.Piece {
 	base := piece.Base.ApplyPosition(position)
 	return King{base}
 }

@@ -4,12 +4,11 @@ import (
 	"reflect"
 	"testing"
 
-	models "github.com/thewizardplusplus/go-chess-models"
 	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
 func TestNewBase(test *testing.T) {
-	piece := NewBase(common.Pawn, common.White, models.Position{
+	piece := NewBase(common.Pawn, common.White, common.Position{
 		File: 2,
 		Rank: 3,
 	})
@@ -17,7 +16,7 @@ func TestNewBase(test *testing.T) {
 	expectedPiece := Base{
 		kind:  common.Pawn,
 		color: common.White,
-		position: models.Position{
+		position: common.Position{
 			File: 2,
 			Rank: 3,
 		},
@@ -47,14 +46,14 @@ func TestBaseColor(test *testing.T) {
 
 func TestBasePosition(test *testing.T) {
 	piece := Base{
-		position: models.Position{
+		position: common.Position{
 			File: 2,
 			Rank: 3,
 		},
 	}
 	position := piece.Position()
 
-	expectedPosition := models.Position{
+	expectedPosition := common.Position{
 		File: 2,
 		Rank: 3,
 	}
@@ -67,12 +66,12 @@ func TestBaseApplyPosition(test *testing.T) {
 	piece := Base{
 		kind:  common.Pawn,
 		color: common.White,
-		position: models.Position{
+		position: common.Position{
 			File: 2,
 			Rank: 3,
 		},
 	}
-	nextPiece := piece.ApplyPosition(models.Position{
+	nextPiece := piece.ApplyPosition(common.Position{
 		File: 4,
 		Rank: 2,
 	})
@@ -80,7 +79,7 @@ func TestBaseApplyPosition(test *testing.T) {
 	expectedPiece := Base{
 		kind:  common.Pawn,
 		color: common.White,
-		position: models.Position{
+		position: common.Position{
 			File: 2,
 			Rank: 3,
 		},
@@ -92,7 +91,7 @@ func TestBaseApplyPosition(test *testing.T) {
 	expectedNextPiece := Base{
 		kind:  common.Pawn,
 		color: common.White,
-		position: models.Position{
+		position: common.Position{
 			File: 4,
 			Rank: 2,
 		},

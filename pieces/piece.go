@@ -9,7 +9,7 @@ import (
 func NewPiece(
 	kind common.Kind,
 	color common.Color,
-	position models.Position,
+	position common.Position,
 ) models.Piece {
 	var piece models.Piece
 	switch kind {

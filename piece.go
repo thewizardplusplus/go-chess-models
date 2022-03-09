@@ -4,18 +4,12 @@ import (
 	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
-// Position ...
-type Position struct {
-	File int // column
-	Rank int // row
-}
-
 // Piece ...
 type Piece interface {
 	Kind() common.Kind
 	Color() common.Color
-	Position() Position
-	ApplyPosition(position Position) Piece
+	Position() common.Position
+	ApplyPosition(position common.Position) Piece
 
 	// It shouldn't check that move positions is inside the board.
 	//
@@ -38,7 +32,7 @@ type Piece interface {
 // BasePieceStorage ...
 type BasePieceStorage interface {
 	Size() Size
-	Piece(position Position) (piece Piece, ok bool)
+	Piece(position common.Position) (piece Piece, ok bool)
 
 	// It shouldn't check that the move is correct.
 	ApplyMove(move Move) PieceStorage
@@ -65,7 +59,7 @@ type PieceStorage interface {
 // Pieces ...
 func Pieces(storage PieceStorage) []Piece {
 	var pieces []Piece
-	storage.Size().IteratePositions(func(position Position) error { // nolint: errcheck, gosec, lll
+	storage.Size().IteratePositions(func(position common.Position) error { // nolint: errcheck, gosec, lll
 		if piece, ok := storage.Piece(position); ok {
 			pieces = append(pieces, piece)
 		}

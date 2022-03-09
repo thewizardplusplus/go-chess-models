@@ -18,8 +18,8 @@ var (
 
 // Move ...
 type Move struct {
-	Start  Position
-	Finish Position
+	Start  common.Position
+	Finish common.Position
 }
 
 // IsZero ...

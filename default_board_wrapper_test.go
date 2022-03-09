@@ -11,7 +11,7 @@ import (
 type MockBasePieceStorage struct {
 	size Size
 
-	piece func(position Position) (piece Piece, ok bool)
+	piece func(position common.Position) (piece Piece, ok bool)
 }
 
 func (storage MockBasePieceStorage) Size() Size {
@@ -19,7 +19,7 @@ func (storage MockBasePieceStorage) Size() Size {
 }
 
 func (storage MockBasePieceStorage) Piece(
-	position Position,
+	position common.Position,
 ) (piece Piece, ok bool) {
 	if storage.piece == nil {
 		panic("not implemented")
@@ -66,8 +66,8 @@ func TestDefaultBoardWrapperPieces(test *testing.T) {
 			fields: fields{
 				BasePieceStorage: MockBasePieceStorage{
 					size: Size{5, 5},
-					piece: func(position Position) (piece Piece, ok bool) {
-						if position != (Position{2, 3}) && position != (Position{4, 2}) {
+					piece: func(position common.Position) (piece Piece, ok bool) {
+						if position != (common.Position{2, 3}) && position != (common.Position{4, 2}) {
 							return nil, false
 						}
 
@@ -77,8 +77,8 @@ func TestDefaultBoardWrapperPieces(test *testing.T) {
 				},
 			},
 			want: []Piece{
-				MockPiece{position: Position{4, 2}},
-				MockPiece{position: Position{2, 3}},
+				MockPiece{position: common.Position{4, 2}},
+				MockPiece{position: common.Position{2, 3}},
 			},
 		},
 		{
@@ -89,15 +89,15 @@ func TestDefaultBoardWrapperPieces(test *testing.T) {
 				}{
 					MockPieceGroupGetter: MockPieceGroupGetter{
 						pieces: []Piece{
-							MockPiece{position: Position{4, 2}},
-							MockPiece{position: Position{2, 3}},
+							MockPiece{position: common.Position{4, 2}},
+							MockPiece{position: common.Position{2, 3}},
 						},
 					},
 				},
 			},
 			want: []Piece{
-				MockPiece{position: Position{4, 2}},
-				MockPiece{position: Position{2, 3}},
+				MockPiece{position: common.Position{4, 2}},
+				MockPiece{position: common.Position{2, 3}},
 			},
 		},
 	} {
@@ -115,7 +115,7 @@ func TestDefaultBoardWrapperPieces(test *testing.T) {
 func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 	type fields struct {
 		size  Size
-		piece func(position Position) (piece Piece, ok bool)
+		piece func(position common.Position) (piece Piece, ok bool)
 	}
 	type args struct {
 		move Move
@@ -130,14 +130,14 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: Size{2, 2},
-				piece: func(position Position) (piece Piece, ok bool) {
+				piece: func(position common.Position) (piece Piece, ok bool) {
 					return nil, false
 				},
 			},
 			args: args{
 				move: Move{
-					Start:  Position{0, 0},
-					Finish: Position{0, 0},
+					Start:  common.Position{0, 0},
+					Finish: common.Position{0, 0},
 				},
 			},
 			want: ErrNoMove,
@@ -145,14 +145,14 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: Size{2, 2},
-				piece: func(position Position) (piece Piece, ok bool) {
+				piece: func(position common.Position) (piece Piece, ok bool) {
 					return nil, false
 				},
 			},
 			args: args{
 				move: Move{
-					Start:  Position{0, 0},
-					Finish: Position{-1, -1},
+					Start:  common.Position{0, 0},
+					Finish: common.Position{-1, -1},
 				},
 			},
 			want: ErrOutOfSize,
@@ -160,14 +160,14 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: Size{2, 2},
-				piece: func(position Position) (piece Piece, ok bool) {
+				piece: func(position common.Position) (piece Piece, ok bool) {
 					return nil, false
 				},
 			},
 			args: args{
 				move: Move{
-					Start:  Position{0, 0},
-					Finish: Position{1, 1},
+					Start:  common.Position{0, 0},
+					Finish: common.Position{1, 1},
 				},
 			},
 			want: ErrNoPiece,
@@ -175,8 +175,8 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: Size{2, 2},
-				piece: func(position Position) (piece Piece, ok bool) {
-					if position != (Position{0, 0}) && position != (Position{1, 1}) {
+				piece: func(position common.Position) (piece Piece, ok bool) {
+					if position != (common.Position{0, 0}) && position != (common.Position{1, 1}) {
 						return nil, false
 					}
 
@@ -186,8 +186,8 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 			},
 			args: args{
 				move: Move{
-					Start:  Position{0, 0},
-					Finish: Position{1, 1},
+					Start:  common.Position{0, 0},
+					Finish: common.Position{1, 1},
 				},
 			},
 			want: ErrFriendlyTarget,
@@ -195,8 +195,8 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: Size{2, 2},
-				piece: func(position Position) (piece Piece, ok bool) {
-					if position != (Position{0, 0}) {
+				piece: func(position common.Position) (piece Piece, ok bool) {
+					if position != (common.Position{0, 0}) {
 						return nil, false
 					}
 
@@ -211,8 +211,8 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 			},
 			args: args{
 				move: Move{
-					Start:  Position{0, 0},
-					Finish: Position{1, 1},
+					Start:  common.Position{0, 0},
+					Finish: common.Position{1, 1},
 				},
 			},
 			want: ErrIllegalMove,
@@ -220,21 +220,21 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: Size{2, 2},
-				piece: func(position Position) (piece Piece, ok bool) {
+				piece: func(position common.Position) (piece Piece, ok bool) {
 					switch position {
-					case Position{0, 0}:
+					case common.Position{0, 0}:
 						piece = MockPiece{
 							color:    common.Black,
-							position: Position{0, 0},
+							position: common.Position{0, 0},
 							checkMove: func(move Move, storage PieceStorage) bool {
 								return true
 							},
 						}
-					case Position{1, 1}:
+					case common.Position{1, 1}:
 						piece = MockPiece{
 							kind:     common.King,
 							color:    common.White,
-							position: Position{1, 1},
+							position: common.Position{1, 1},
 						}
 					}
 
@@ -244,8 +244,8 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 			},
 			args: args{
 				move: Move{
-					Start:  Position{0, 0},
-					Finish: Position{1, 1},
+					Start:  common.Position{0, 0},
+					Finish: common.Position{1, 1},
 				},
 			},
 			want: ErrKingCapture,
@@ -253,8 +253,8 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 		{
 			fields: fields{
 				size: Size{2, 2},
-				piece: func(position Position) (piece Piece, ok bool) {
-					if position != (Position{0, 0}) {
+				piece: func(position common.Position) (piece Piece, ok bool) {
+					if position != (common.Position{0, 0}) {
 						return nil, false
 					}
 
@@ -269,8 +269,8 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 			},
 			args: args{
 				move: Move{
-					Start:  Position{0, 0},
-					Finish: Position{1, 1},
+					Start:  common.Position{0, 0},
+					Finish: common.Position{1, 1},
 				},
 			},
 			want: nil,
@@ -314,8 +314,8 @@ func TestDefaultBoardWrapperCheckMove_withMoveCheckerInterface(
 					MockMoveChecker: MockMoveChecker{
 						checkMove: func(move Move) error {
 							if !reflect.DeepEqual(move, Move{
-								Start:  Position{0, 0},
-								Finish: Position{1, 1},
+								Start:  common.Position{0, 0},
+								Finish: common.Position{1, 1},
 							}) {
 								test.Fail()
 							}
@@ -327,8 +327,8 @@ func TestDefaultBoardWrapperCheckMove_withMoveCheckerInterface(
 			},
 			args: args{
 				move: Move{
-					Start:  Position{0, 0},
-					Finish: Position{1, 1},
+					Start:  common.Position{0, 0},
+					Finish: common.Position{1, 1},
 				},
 			},
 			want: errors.New("dummy"),
@@ -342,8 +342,8 @@ func TestDefaultBoardWrapperCheckMove_withMoveCheckerInterface(
 					MockMoveChecker: MockMoveChecker{
 						checkMove: func(move Move) error {
 							if !reflect.DeepEqual(move, Move{
-								Start:  Position{0, 0},
-								Finish: Position{1, 1},
+								Start:  common.Position{0, 0},
+								Finish: common.Position{1, 1},
 							}) {
 								test.Fail()
 							}
@@ -355,8 +355,8 @@ func TestDefaultBoardWrapperCheckMove_withMoveCheckerInterface(
 			},
 			args: args{
 				move: Move{
-					Start:  Position{0, 0},
-					Finish: Position{1, 1},
+					Start:  common.Position{0, 0},
+					Finish: common.Position{1, 1},
 				},
 			},
 			want: nil,

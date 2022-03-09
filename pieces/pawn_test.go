@@ -10,7 +10,7 @@ import (
 )
 
 func TestNewPawn(test *testing.T) {
-	piece := NewPawn(common.White, models.Position{
+	piece := NewPawn(common.White, common.Position{
 		File: 2,
 		Rank: 3,
 	})
@@ -19,7 +19,7 @@ func TestNewPawn(test *testing.T) {
 		Base: Base{
 			kind:  common.Pawn,
 			color: common.White,
-			position: models.Position{
+			position: common.Position{
 				File: 2,
 				Rank: 3,
 			},
@@ -31,11 +31,11 @@ func TestNewPawn(test *testing.T) {
 }
 
 func TestPawnApplyPosition(test *testing.T) {
-	piece := NewPawn(common.White, models.Position{
+	piece := NewPawn(common.White, common.Position{
 		File: 2,
 		Rank: 3,
 	})
-	nextPiece := piece.ApplyPosition(models.Position{
+	nextPiece := piece.ApplyPosition(common.Position{
 		File: 4,
 		Rank: 2,
 	})
@@ -44,7 +44,7 @@ func TestPawnApplyPosition(test *testing.T) {
 		Base: Base{
 			kind:  common.Pawn,
 			color: common.White,
-			position: models.Position{
+			position: common.Position{
 				File: 2,
 				Rank: 3,
 			},
@@ -58,7 +58,7 @@ func TestPawnApplyPosition(test *testing.T) {
 		Base: Base{
 			kind:  common.Pawn,
 			color: common.White,
-			position: models.Position{
+			position: common.Position{
 				File: 4,
 				Rank: 2,
 			},
@@ -72,7 +72,7 @@ func TestPawnApplyPosition(test *testing.T) {
 func TestPawnCheckMove(test *testing.T) {
 	type args struct {
 		boardInFEN string
-		position   models.Position
+		position   common.Position
 	}
 	type data struct {
 		args      args
@@ -84,18 +84,18 @@ func TestPawnCheckMove(test *testing.T) {
 		{
 			args: args{
 				boardInFEN: "5/5/2p2/5/5",
-				position: models.Position{
+				position: common.Position{
 					File: 2,
 					Rank: 2,
 				},
 			},
 			wantMoves: []models.Move{
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 2,
 						Rank: 1,
 					},
@@ -106,28 +106,28 @@ func TestPawnCheckMove(test *testing.T) {
 		{
 			args: args{
 				boardInFEN: "5/5/2p2/1PPP1/5",
-				position: models.Position{
+				position: common.Position{
 					File: 2,
 					Rank: 2,
 				},
 			},
 			wantMoves: []models.Move{
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 1,
 						Rank: 1,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 3,
 						Rank: 1,
 					},
@@ -138,18 +138,18 @@ func TestPawnCheckMove(test *testing.T) {
 		{
 			args: args{
 				boardInFEN: "5/5/2P2/5/5",
-				position: models.Position{
+				position: common.Position{
 					File: 2,
 					Rank: 2,
 				},
 			},
 			wantMoves: []models.Move{
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 2,
 						Rank: 3,
 					},
@@ -160,28 +160,28 @@ func TestPawnCheckMove(test *testing.T) {
 		{
 			args: args{
 				boardInFEN: "5/1ppp1/2P2/5/5",
-				position: models.Position{
+				position: common.Position{
 					File: 2,
 					Rank: 2,
 				},
 			},
 			wantMoves: []models.Move{
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 1,
 						Rank: 3,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 3,
 						Rank: 3,
 					},

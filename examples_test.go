@@ -32,19 +32,19 @@ func (group ByPosition) Less(
 
 func ExampleBoard_CheckMove() { // nolint: vet
 	board := models.NewBoard(models.Size{Width: 5, Height: 5}, []models.Piece{
-		pieces.NewRook(common.Black, models.Position{File: 2, Rank: 2}),
-		pieces.NewBishop(common.White, models.Position{File: 3, Rank: 3}),
+		pieces.NewRook(common.Black, common.Position{File: 2, Rank: 2}),
+		pieces.NewBishop(common.White, common.Position{File: 3, Rank: 3}),
 	})
 
 	moveOne := models.Move{
-		Start:  models.Position{File: 2, Rank: 2},
-		Finish: models.Position{File: 3, Rank: 3},
+		Start:  common.Position{File: 2, Rank: 2},
+		Finish: common.Position{File: 3, Rank: 3},
 	}
 	fmt.Printf("%+v: %v\n", moveOne, board.CheckMove(moveOne))
 
 	moveTwo := models.Move{
-		Start:  models.Position{File: 3, Rank: 3},
-		Finish: models.Position{File: 2, Rank: 2},
+		Start:  common.Position{File: 3, Rank: 3},
+		Finish: common.Position{File: 2, Rank: 2},
 	}
 	fmt.Printf("%+v: %v\n", moveTwo, board.CheckMove(moveTwo))
 
@@ -55,16 +55,16 @@ func ExampleBoard_CheckMove() { // nolint: vet
 
 func ExampleBoard_ApplyMove() {
 	board := models.NewBoard(models.Size{Width: 5, Height: 5}, []models.Piece{
-		pieces.NewRook(common.Black, models.Position{File: 2, Rank: 2}),
-		pieces.NewBishop(common.White, models.Position{File: 3, Rank: 3}),
+		pieces.NewRook(common.Black, common.Position{File: 2, Rank: 2}),
+		pieces.NewBishop(common.White, common.Position{File: 3, Rank: 3}),
 	})
 	pieces := board.Pieces()
 	sort.Sort(ByPosition(pieces))
 	fmt.Printf("%+v\n", pieces)
 
 	updatedBoard := board.ApplyMove(models.Move{
-		Start:  models.Position{File: 3, Rank: 3},
-		Finish: models.Position{File: 2, Rank: 2},
+		Start:  common.Position{File: 3, Rank: 3},
+		Finish: common.Position{File: 2, Rank: 2},
 	})
 	updatedPieces := updatedBoard.Pieces()
 	sort.Sort(ByPosition(updatedPieces))
@@ -77,9 +77,9 @@ func ExampleBoard_ApplyMove() {
 
 func ExampleMoveGenerator_MovesForColor() {
 	board := models.NewBoard(models.Size{Width: 5, Height: 5}, []models.Piece{
-		pieces.NewRook(common.Black, models.Position{File: 2, Rank: 2}),
-		pieces.NewKnight(common.White, models.Position{File: 3, Rank: 3}),
-		pieces.NewPawn(common.White, models.Position{File: 4, Rank: 3}),
+		pieces.NewRook(common.Black, common.Position{File: 2, Rank: 2}),
+		pieces.NewKnight(common.White, common.Position{File: 3, Rank: 3}),
+		pieces.NewPawn(common.White, common.Position{File: 4, Rank: 3}),
 	})
 
 	var generator models.MoveGenerator

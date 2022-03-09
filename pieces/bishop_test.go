@@ -10,7 +10,7 @@ import (
 )
 
 func TestNewBishop(test *testing.T) {
-	piece := NewBishop(common.White, models.Position{
+	piece := NewBishop(common.White, common.Position{
 		File: 2,
 		Rank: 3,
 	})
@@ -19,7 +19,7 @@ func TestNewBishop(test *testing.T) {
 		Base: Base{
 			kind:  common.Bishop,
 			color: common.White,
-			position: models.Position{
+			position: common.Position{
 				File: 2,
 				Rank: 3,
 			},
@@ -31,11 +31,11 @@ func TestNewBishop(test *testing.T) {
 }
 
 func TestBishopApplyPosition(test *testing.T) {
-	piece := NewBishop(common.White, models.Position{
+	piece := NewBishop(common.White, common.Position{
 		File: 2,
 		Rank: 3,
 	})
-	nextPiece := piece.ApplyPosition(models.Position{
+	nextPiece := piece.ApplyPosition(common.Position{
 		File: 4,
 		Rank: 2,
 	})
@@ -44,7 +44,7 @@ func TestBishopApplyPosition(test *testing.T) {
 		Base: Base{
 			kind:  common.Bishop,
 			color: common.White,
-			position: models.Position{
+			position: common.Position{
 				File: 2,
 				Rank: 3,
 			},
@@ -58,7 +58,7 @@ func TestBishopApplyPosition(test *testing.T) {
 		Base: Base{
 			kind:  common.Bishop,
 			color: common.White,
-			position: models.Position{
+			position: common.Position{
 				File: 4,
 				Rank: 2,
 			},
@@ -72,7 +72,7 @@ func TestBishopApplyPosition(test *testing.T) {
 func TestBishopCheckMove(test *testing.T) {
 	type args struct {
 		boardInFEN string
-		position   models.Position
+		position   common.Position
 	}
 	type data struct {
 		args      args
@@ -84,88 +84,88 @@ func TestBishopCheckMove(test *testing.T) {
 		{
 			args: args{
 				boardInFEN: "5/5/2B2/5/5",
-				position: models.Position{
+				position: common.Position{
 					File: 2,
 					Rank: 2,
 				},
 			},
 			wantMoves: []models.Move{
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 0,
 						Rank: 0,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 4,
 						Rank: 0,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 1,
 						Rank: 1,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 3,
 						Rank: 1,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 1,
 						Rank: 3,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 3,
 						Rank: 3,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 0,
 						Rank: 4,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 4,
 						Rank: 4,
 					},
@@ -176,68 +176,68 @@ func TestBishopCheckMove(test *testing.T) {
 		{
 			args: args{
 				boardInFEN: "5/5/2B2/1p1p1/5",
-				position: models.Position{
+				position: common.Position{
 					File: 2,
 					Rank: 2,
 				},
 			},
 			wantMoves: []models.Move{
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 1,
 						Rank: 1,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 3,
 						Rank: 1,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 1,
 						Rank: 3,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 3,
 						Rank: 3,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 0,
 						Rank: 4,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 4,
 						Rank: 4,
 					},
@@ -249,58 +249,58 @@ func TestBishopCheckMove(test *testing.T) {
 		{
 			args: args{
 				boardInFEN: "5/1B3/5/3p1/5",
-				position: models.Position{
+				position: common.Position{
 					File: 1,
 					Rank: 3,
 				},
 			},
 			wantMoves: []models.Move{
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 1,
 						Rank: 3,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 3,
 						Rank: 1,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 1,
 						Rank: 3,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 0,
 						Rank: 2,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 1,
 						Rank: 3,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 2,
 						Rank: 2,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 1,
 						Rank: 3,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 0,
 						Rank: 4,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 1,
 						Rank: 3,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 2,
 						Rank: 4,
 					},

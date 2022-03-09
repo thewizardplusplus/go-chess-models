@@ -1,5 +1,9 @@
 package chessmodels
 
+import (
+	"github.com/thewizardplusplus/go-chess-models/common"
+)
+
 // SliceBoard ...
 type SliceBoard struct {
 	BaseBoard
@@ -20,7 +24,7 @@ func NewSliceBoard(size Size, pieces []Piece) PieceStorage {
 }
 
 // Piece ...
-func (board SliceBoard) Piece(position Position) (piece Piece, ok bool) {
+func (board SliceBoard) Piece(position common.Position) (piece Piece, ok bool) {
 	piece = board.pieces[board.size.PositionIndex(position)]
 	return piece, piece != nil
 }

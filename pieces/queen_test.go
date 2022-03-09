@@ -10,7 +10,7 @@ import (
 )
 
 func TestNewQueen(test *testing.T) {
-	piece := NewQueen(common.White, models.Position{
+	piece := NewQueen(common.White, common.Position{
 		File: 2,
 		Rank: 3,
 	})
@@ -19,7 +19,7 @@ func TestNewQueen(test *testing.T) {
 		Base: Base{
 			kind:  common.Queen,
 			color: common.White,
-			position: models.Position{
+			position: common.Position{
 				File: 2,
 				Rank: 3,
 			},
@@ -31,11 +31,11 @@ func TestNewQueen(test *testing.T) {
 }
 
 func TestQueenApplyPosition(test *testing.T) {
-	piece := NewQueen(common.White, models.Position{
+	piece := NewQueen(common.White, common.Position{
 		File: 2,
 		Rank: 3,
 	})
-	nextPiece := piece.ApplyPosition(models.Position{
+	nextPiece := piece.ApplyPosition(common.Position{
 		File: 4,
 		Rank: 2,
 	})
@@ -44,7 +44,7 @@ func TestQueenApplyPosition(test *testing.T) {
 		Base: Base{
 			kind:  common.Queen,
 			color: common.White,
-			position: models.Position{
+			position: common.Position{
 				File: 2,
 				Rank: 3,
 			},
@@ -58,7 +58,7 @@ func TestQueenApplyPosition(test *testing.T) {
 		Base: Base{
 			kind:  common.Queen,
 			color: common.White,
-			position: models.Position{
+			position: common.Position{
 				File: 4,
 				Rank: 2,
 			},
@@ -72,7 +72,7 @@ func TestQueenApplyPosition(test *testing.T) {
 func TestQueenCheckMove(test *testing.T) {
 	type args struct {
 		boardInFEN string
-		position   models.Position
+		position   common.Position
 	}
 	type data struct {
 		args      args
@@ -84,168 +84,168 @@ func TestQueenCheckMove(test *testing.T) {
 		{
 			args: args{
 				boardInFEN: "5/5/2Q2/5/5",
-				position: models.Position{
+				position: common.Position{
 					File: 2,
 					Rank: 2,
 				},
 			},
 			wantMoves: []models.Move{
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 0,
 						Rank: 0,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 2,
 						Rank: 0,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 4,
 						Rank: 0,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 1,
 						Rank: 1,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 2,
 						Rank: 1,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 3,
 						Rank: 1,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 0,
 						Rank: 2,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 1,
 						Rank: 2,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 3,
 						Rank: 2,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 4,
 						Rank: 2,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 1,
 						Rank: 3,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 2,
 						Rank: 3,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 3,
 						Rank: 3,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 0,
 						Rank: 4,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 2,
 						Rank: 4,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 4,
 						Rank: 4,
 					},
@@ -256,138 +256,138 @@ func TestQueenCheckMove(test *testing.T) {
 		{
 			args: args{
 				boardInFEN: "5/5/1pQ2/1pp2/5",
-				position: models.Position{
+				position: common.Position{
 					File: 2,
 					Rank: 2,
 				},
 			},
 			wantMoves: []models.Move{
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 4,
 						Rank: 0,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 1,
 						Rank: 1,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 2,
 						Rank: 1,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 3,
 						Rank: 1,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 1,
 						Rank: 2,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 3,
 						Rank: 2,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 4,
 						Rank: 2,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 1,
 						Rank: 3,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 2,
 						Rank: 3,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 3,
 						Rank: 3,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 0,
 						Rank: 4,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 2,
 						Rank: 4,
 					},
 				},
 				{
-					Start: models.Position{
+					Start: common.Position{
 						File: 2,
 						Rank: 2,
 					},
-					Finish: models.Position{
+					Finish: common.Position{
 						File: 4,
 						Rank: 4,
 					},

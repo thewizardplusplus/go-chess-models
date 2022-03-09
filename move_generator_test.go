@@ -37,19 +37,19 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 				pieces: []Piece{
 					MockPiece{
 						color:    common.Black,
-						position: Position{0, 0},
+						position: common.Position{0, 0},
 					},
 					MockPiece{
 						color:    common.Black,
-						position: Position{0, 1},
+						position: common.Position{0, 1},
 					},
 					MockPiece{
 						color:    common.White,
-						position: Position{1, 0},
+						position: common.Position{1, 0},
 					},
 					MockPiece{
 						color:    common.White,
-						position: Position{1, 1},
+						position: common.Position{1, 1},
 					},
 				},
 				checkMove: func(move Move) error {
@@ -59,37 +59,37 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 			args: args{common.Black},
 			wantMoves: []Move{
 				{
-					Start:  Position{0, 0},
-					Finish: Position{0, 0},
+					Start:  common.Position{0, 0},
+					Finish: common.Position{0, 0},
 				},
 				{
-					Start:  Position{0, 0},
-					Finish: Position{1, 0},
+					Start:  common.Position{0, 0},
+					Finish: common.Position{1, 0},
 				},
 				{
-					Start:  Position{0, 0},
-					Finish: Position{0, 1},
+					Start:  common.Position{0, 0},
+					Finish: common.Position{0, 1},
 				},
 				{
-					Start:  Position{0, 0},
-					Finish: Position{1, 1},
+					Start:  common.Position{0, 0},
+					Finish: common.Position{1, 1},
 				},
 
 				{
-					Start:  Position{0, 1},
-					Finish: Position{0, 0},
+					Start:  common.Position{0, 1},
+					Finish: common.Position{0, 0},
 				},
 				{
-					Start:  Position{0, 1},
-					Finish: Position{1, 0},
+					Start:  common.Position{0, 1},
+					Finish: common.Position{1, 0},
 				},
 				{
-					Start:  Position{0, 1},
-					Finish: Position{0, 1},
+					Start:  common.Position{0, 1},
+					Finish: common.Position{0, 1},
 				},
 				{
-					Start:  Position{0, 1},
-					Finish: Position{1, 1},
+					Start:  common.Position{0, 1},
+					Finish: common.Position{1, 1},
 				},
 			},
 			wantErr: nil,
@@ -100,19 +100,19 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 				pieces: []Piece{
 					MockPiece{
 						color:    common.Black,
-						position: Position{0, 0},
+						position: common.Position{0, 0},
 					},
 					MockPiece{
 						color:    common.Black,
-						position: Position{0, 1},
+						position: common.Position{0, 1},
 					},
 					MockPiece{
 						color:    common.White,
-						position: Position{1, 0},
+						position: common.Position{1, 0},
 					},
 					MockPiece{
 						color:    common.White,
-						position: Position{1, 1},
+						position: common.Position{1, 1},
 					},
 				},
 				checkMove: func(move Move) error {
@@ -122,37 +122,37 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 			args: args{common.White},
 			wantMoves: []Move{
 				{
-					Start:  Position{1, 0},
-					Finish: Position{0, 0},
+					Start:  common.Position{1, 0},
+					Finish: common.Position{0, 0},
 				},
 				{
-					Start:  Position{1, 0},
-					Finish: Position{1, 0},
+					Start:  common.Position{1, 0},
+					Finish: common.Position{1, 0},
 				},
 				{
-					Start:  Position{1, 0},
-					Finish: Position{0, 1},
+					Start:  common.Position{1, 0},
+					Finish: common.Position{0, 1},
 				},
 				{
-					Start:  Position{1, 0},
-					Finish: Position{1, 1},
+					Start:  common.Position{1, 0},
+					Finish: common.Position{1, 1},
 				},
 
 				{
-					Start:  Position{1, 1},
-					Finish: Position{0, 0},
+					Start:  common.Position{1, 1},
+					Finish: common.Position{0, 0},
 				},
 				{
-					Start:  Position{1, 1},
-					Finish: Position{1, 0},
+					Start:  common.Position{1, 1},
+					Finish: common.Position{1, 0},
 				},
 				{
-					Start:  Position{1, 1},
-					Finish: Position{0, 1},
+					Start:  common.Position{1, 1},
+					Finish: common.Position{0, 1},
 				},
 				{
-					Start:  Position{1, 1},
-					Finish: Position{1, 1},
+					Start:  common.Position{1, 1},
+					Finish: common.Position{1, 1},
 				},
 			},
 			wantErr: nil,
@@ -163,19 +163,19 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 				pieces: []Piece{
 					MockPiece{
 						color:    common.Black,
-						position: Position{0, 0},
+						position: common.Position{0, 0},
 					},
 					MockPiece{
 						color:    common.Black,
-						position: Position{0, 1},
+						position: common.Position{0, 1},
 					},
 					MockPiece{
 						color:    common.White,
-						position: Position{1, 0},
+						position: common.Position{1, 0},
 					},
 					MockPiece{
 						color:    common.White,
-						position: Position{1, 1},
+						position: common.Position{1, 1},
 					},
 				},
 				checkMove: func(move Move) error {
@@ -192,19 +192,19 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 				pieces: []Piece{
 					MockPiece{
 						color:    common.Black,
-						position: Position{0, 0},
+						position: common.Position{0, 0},
 					},
 					MockPiece{
 						color:    common.Black,
-						position: Position{0, 1},
+						position: common.Position{0, 1},
 					},
 					MockPiece{
 						color:    common.White,
-						position: Position{1, 0},
+						position: common.Position{1, 0},
 					},
 					MockPiece{
 						color:    common.White,
-						position: Position{1, 1},
+						position: common.Position{1, 1},
 					},
 				},
 				checkMove: func(move Move) error {
@@ -245,7 +245,7 @@ func TestMoveCheckerMovesForPosition(test *testing.T) {
 		checkMove func(move Move) error
 	}
 	type args struct {
-		position Position
+		position common.Position
 	}
 	type data struct {
 		fields    fields
@@ -262,7 +262,7 @@ func TestMoveCheckerMovesForPosition(test *testing.T) {
 					return errors.New("dummy")
 				},
 			},
-			args:      args{Position{1, 1}},
+			args:      args{common.Position{1, 1}},
 			wantMoves: nil,
 			wantErr:   nil,
 		},
@@ -273,7 +273,7 @@ func TestMoveCheckerMovesForPosition(test *testing.T) {
 					return ErrKingCapture
 				},
 			},
-			args:      args{Position{1, 1}},
+			args:      args{common.Position{1, 1}},
 			wantMoves: nil,
 			wantErr:   ErrKingCapture,
 		},
@@ -284,23 +284,23 @@ func TestMoveCheckerMovesForPosition(test *testing.T) {
 					return nil
 				},
 			},
-			args: args{Position{1, 1}},
+			args: args{common.Position{1, 1}},
 			wantMoves: []Move{
 				{
-					Start:  Position{1, 1},
-					Finish: Position{0, 0},
+					Start:  common.Position{1, 1},
+					Finish: common.Position{0, 0},
 				},
 				{
-					Start:  Position{1, 1},
-					Finish: Position{1, 0},
+					Start:  common.Position{1, 1},
+					Finish: common.Position{1, 0},
 				},
 				{
-					Start:  Position{1, 1},
-					Finish: Position{0, 1},
+					Start:  common.Position{1, 1},
+					Finish: common.Position{0, 1},
 				},
 				{
-					Start:  Position{1, 1},
-					Finish: Position{1, 1},
+					Start:  common.Position{1, 1},
+					Finish: common.Position{1, 1},
 				},
 			},
 			wantErr: nil,
@@ -316,15 +316,15 @@ func TestMoveCheckerMovesForPosition(test *testing.T) {
 					return nil
 				},
 			},
-			args: args{Position{1, 1}},
+			args: args{common.Position{1, 1}},
 			wantMoves: []Move{
 				{
-					Start:  Position{1, 1},
-					Finish: Position{0, 0},
+					Start:  common.Position{1, 1},
+					Finish: common.Position{0, 0},
 				},
 				{
-					Start:  Position{1, 1},
-					Finish: Position{1, 0},
+					Start:  common.Position{1, 1},
+					Finish: common.Position{1, 0},
 				},
 			},
 			wantErr: nil,

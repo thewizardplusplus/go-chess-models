@@ -3,13 +3,15 @@ package chessmodels
 import (
 	"reflect"
 	"testing"
+
+	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
 func TestNewBoard(test *testing.T) {
 	size := Size{5, 5}
 	pieces := []Piece{
-		MockPiece{position: Position{2, 3}},
-		MockPiece{position: Position{4, 2}},
+		MockPiece{position: common.Position{2, 3}},
+		MockPiece{position: common.Position{4, 2}},
 	}
 	board := NewBoard(size, pieces)
 

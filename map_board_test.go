@@ -10,7 +10,7 @@ import (
 type MockPiece struct {
 	kind     common.Kind
 	color    common.Color
-	position Position
+	position common.Position
 
 	checkMove func(move Move, storage PieceStorage) bool
 }
@@ -23,11 +23,11 @@ func (piece MockPiece) Color() common.Color {
 	return piece.color
 }
 
-func (piece MockPiece) Position() Position {
+func (piece MockPiece) Position() common.Position {
 	return piece.position
 }
 
-func (piece MockPiece) ApplyPosition(position Position) Piece {
+func (piece MockPiece) ApplyPosition(position common.Position) Piece {
 	return MockPiece{
 		kind:      piece.kind,
 		color:     piece.color,
@@ -46,8 +46,8 @@ func (piece MockPiece) CheckMove(move Move, storage PieceStorage) bool {
 
 func TestNewMapBoard(test *testing.T) {
 	board := NewMapBoard(Size{5, 5}, []Piece{
-		MockPiece{position: Position{2, 3}},
-		MockPiece{position: Position{4, 2}},
+		MockPiece{position: common.Position{2, 3}},
+		MockPiece{position: common.Position{4, 2}},
 	})
 
 	expectedBoard := DefaultBoardWrapper{
@@ -57,11 +57,11 @@ func TestNewMapBoard(test *testing.T) {
 			},
 
 			pieces: pieceGroup{
-				Position{2, 3}: MockPiece{
-					position: Position{2, 3},
+				common.Position{2, 3}: MockPiece{
+					position: common.Position{2, 3},
 				},
-				Position{4, 2}: MockPiece{
-					position: Position{4, 2},
+				common.Position{4, 2}: MockPiece{
+					position: common.Position{4, 2},
 				},
 			},
 		},
@@ -77,7 +77,7 @@ func TestMapBoardPiece(test *testing.T) {
 		pieces pieceGroup
 	}
 	type args struct {
-		position Position
+		position common.Position
 	}
 	type data struct {
 		fields    fields
@@ -91,17 +91,17 @@ func TestMapBoardPiece(test *testing.T) {
 			fields: fields{
 				size: Size{5, 5},
 				pieces: pieceGroup{
-					Position{2, 3}: MockPiece{
-						position: Position{2, 3},
+					common.Position{2, 3}: MockPiece{
+						position: common.Position{2, 3},
 					},
-					Position{4, 2}: MockPiece{
-						position: Position{4, 2},
+					common.Position{4, 2}: MockPiece{
+						position: common.Position{4, 2},
 					},
 				},
 			},
-			args: args{Position{2, 3}},
+			args: args{common.Position{2, 3}},
 			wantPiece: MockPiece{
-				position: Position{2, 3},
+				position: common.Position{2, 3},
 			},
 			wantOk: true,
 		},
@@ -109,15 +109,15 @@ func TestMapBoardPiece(test *testing.T) {
 			fields: fields{
 				size: Size{5, 5},
 				pieces: pieceGroup{
-					Position{2, 3}: MockPiece{
-						position: Position{2, 3},
+					common.Position{2, 3}: MockPiece{
+						position: common.Position{2, 3},
 					},
-					Position{4, 2}: MockPiece{
-						position: Position{4, 2},
+					common.Position{4, 2}: MockPiece{
+						position: common.Position{4, 2},
 					},
 				},
 			},
-			args:      args{Position{0, 0}},
+			args:      args{common.Position{0, 0}},
 			wantPiece: nil,
 			wantOk:    false,
 		},
@@ -142,12 +142,12 @@ func TestMapBoardPiece(test *testing.T) {
 
 func TestMapBoardApplyMove(test *testing.T) {
 	board := NewMapBoard(Size{5, 5}, []Piece{
-		MockPiece{position: Position{2, 3}},
-		MockPiece{position: Position{4, 2}},
+		MockPiece{position: common.Position{2, 3}},
+		MockPiece{position: common.Position{4, 2}},
 	})
 	nextBoard := board.ApplyMove(Move{
-		Start:  Position{4, 2},
-		Finish: Position{1, 2},
+		Start:  common.Position{4, 2},
+		Finish: common.Position{1, 2},
 	})
 
 	expectedBoard := DefaultBoardWrapper{
@@ -157,11 +157,11 @@ func TestMapBoardApplyMove(test *testing.T) {
 			},
 
 			pieces: pieceGroup{
-				Position{2, 3}: MockPiece{
-					position: Position{2, 3},
+				common.Position{2, 3}: MockPiece{
+					position: common.Position{2, 3},
 				},
-				Position{4, 2}: MockPiece{
-					position: Position{4, 2},
+				common.Position{4, 2}: MockPiece{
+					position: common.Position{4, 2},
 				},
 			},
 		},
@@ -177,11 +177,11 @@ func TestMapBoardApplyMove(test *testing.T) {
 			},
 
 			pieces: pieceGroup{
-				Position{1, 2}: MockPiece{
-					position: Position{1, 2},
+				common.Position{1, 2}: MockPiece{
+					position: common.Position{1, 2},
 				},
-				Position{2, 3}: MockPiece{
-					position: Position{2, 3},
+				common.Position{2, 3}: MockPiece{
+					position: common.Position{2, 3},
 				},
 			},
 		},
