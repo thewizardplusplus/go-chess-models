@@ -38,26 +38,62 @@ func (pieceGroupGetter MockPieceGroupGetter) Pieces() []Piece {
 }
 
 func TestDefaultBoardWrapperPieces(test *testing.T) {
-	baseStorage := MockBasePieceStorage{
-		size: Size{5, 5},
-		piece: func(position Position) (piece Piece, ok bool) {
-			if position != (Position{2, 3}) && position != (Position{4, 2}) {
-				return nil, false
-			}
+	type fields struct {
+		BasePieceStorage BasePieceStorage
+	}
+	type data struct {
+		fields fields
+		want   []Piece
+	}
 
-			piece = MockPiece{position: position}
-			return piece, true
+	for _, data := range []data{
+		{
+			fields: fields{
+				BasePieceStorage: MockBasePieceStorage{
+					size: Size{5, 5},
+					piece: func(position Position) (piece Piece, ok bool) {
+						if position != (Position{2, 3}) && position != (Position{4, 2}) {
+							return nil, false
+						}
+
+						piece = MockPiece{position: position}
+						return piece, true
+					},
+				},
+			},
+			want: []Piece{
+				MockPiece{position: Position{4, 2}},
+				MockPiece{position: Position{2, 3}},
+			},
 		},
-	}
-	board := DefaultBoardWrapper{baseStorage}
-	pieces := board.Pieces()
+		{
+			fields: fields{
+				BasePieceStorage: struct {
+					MockBasePieceStorage
+					MockPieceGroupGetter
+				}{
+					MockPieceGroupGetter: MockPieceGroupGetter{
+						pieces: []Piece{
+							MockPiece{position: Position{4, 2}},
+							MockPiece{position: Position{2, 3}},
+						},
+					},
+				},
+			},
+			want: []Piece{
+				MockPiece{position: Position{4, 2}},
+				MockPiece{position: Position{2, 3}},
+			},
+		},
+	} {
+		board := DefaultBoardWrapper{
+			BasePieceStorage: data.fields.BasePieceStorage,
+		}
+		got := board.Pieces()
 
-	expectedPieces := []Piece{
-		MockPiece{position: Position{4, 2}},
-		MockPiece{position: Position{2, 3}},
-	}
-	if !reflect.DeepEqual(pieces, expectedPieces) {
-		test.Fail()
+		if !reflect.DeepEqual(got, data.want) {
+			test.Fail()
+		}
 	}
 }
 
