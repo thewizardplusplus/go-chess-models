@@ -58,13 +58,17 @@ type PieceGroupGetter interface {
 	Pieces() []Piece
 }
 
+// MoveChecker ...
+type MoveChecker interface {
+	// It shouldn't check for a check before or after the move.
+	CheckMove(move Move) error
+}
+
 // PieceStorage ...
 type PieceStorage interface {
 	BasePieceStorage
 	PieceGroupGetter
-
-	// It shouldn't check for a check before or after the move.
-	CheckMove(move Move) error
+	MoveChecker
 }
 
 // Pieces ...
