@@ -1,6 +1,7 @@
 package chessmodels
 
 import (
+	"errors"
 	"reflect"
 	"testing"
 )
@@ -281,6 +282,90 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 		got := board.CheckMove(data.args.move)
 
 		if got != data.want {
+			test.Fail()
+		}
+	}
+}
+
+func TestDefaultBoardWrapperCheckMove_withMoveCheckerInterface(
+	test *testing.T,
+) {
+	type fields struct {
+		BasePieceStorage BasePieceStorage
+	}
+	type args struct {
+		move Move
+	}
+	type data struct {
+		fields fields
+		args   args
+		want   error
+	}
+
+	for _, data := range []data{
+		{
+			fields: fields{
+				BasePieceStorage: struct {
+					MockBasePieceStorage
+					MockMoveChecker
+				}{
+					MockMoveChecker: MockMoveChecker{
+						checkMove: func(move Move) error {
+							if !reflect.DeepEqual(move, Move{
+								Start:  Position{0, 0},
+								Finish: Position{1, 1},
+							}) {
+								test.Fail()
+							}
+
+							return errors.New("dummy")
+						},
+					},
+				},
+			},
+			args: args{
+				move: Move{
+					Start:  Position{0, 0},
+					Finish: Position{1, 1},
+				},
+			},
+			want: errors.New("dummy"),
+		},
+		{
+			fields: fields{
+				BasePieceStorage: struct {
+					MockBasePieceStorage
+					MockMoveChecker
+				}{
+					MockMoveChecker: MockMoveChecker{
+						checkMove: func(move Move) error {
+							if !reflect.DeepEqual(move, Move{
+								Start:  Position{0, 0},
+								Finish: Position{1, 1},
+							}) {
+								test.Fail()
+							}
+
+							return nil
+						},
+					},
+				},
+			},
+			args: args{
+				move: Move{
+					Start:  Position{0, 0},
+					Finish: Position{1, 1},
+				},
+			},
+			want: nil,
+		},
+	} {
+		board := DefaultBoardWrapper{
+			BasePieceStorage: data.fields.BasePieceStorage,
+		}
+		got := board.CheckMove(data.args.move)
+
+		if !reflect.DeepEqual(got, data.want) {
 			test.Fail()
 		}
 	}
