@@ -10,7 +10,7 @@ type Knight struct{ Base }
 
 // NewKnight ...
 func NewKnight(color common.Color, position models.Position) Knight {
-	base := NewBase(models.Knight, color, position)
+	base := NewBase(common.Knight, color, position)
 	return Knight{base}
 }
 

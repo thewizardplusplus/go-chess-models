@@ -7,14 +7,14 @@ import (
 
 // Base ...
 type Base struct {
-	kind     models.Kind
+	kind     common.Kind
 	color    common.Color
 	position models.Position
 }
 
 // NewBase ...
 func NewBase(
-	kind models.Kind,
+	kind common.Kind,
 	color common.Color,
 	position models.Position,
 ) Base {
@@ -22,7 +22,7 @@ func NewBase(
 }
 
 // Kind ...
-func (piece Base) Kind() models.Kind {
+func (piece Base) Kind() common.Kind {
 	return piece.kind
 }
 

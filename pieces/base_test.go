@@ -9,13 +9,13 @@ import (
 )
 
 func TestNewBase(test *testing.T) {
-	piece := NewBase(models.Pawn, common.White, models.Position{
+	piece := NewBase(common.Pawn, common.White, models.Position{
 		File: 2,
 		Rank: 3,
 	})
 
 	expectedPiece := Base{
-		kind:  models.Pawn,
+		kind:  common.Pawn,
 		color: common.White,
 		position: models.Position{
 			File: 2,
@@ -28,10 +28,10 @@ func TestNewBase(test *testing.T) {
 }
 
 func TestBaseKind(test *testing.T) {
-	piece := Base{kind: models.Pawn}
+	piece := Base{kind: common.Pawn}
 	kind := piece.Kind()
 
-	if kind != models.Pawn {
+	if kind != common.Pawn {
 		test.Fail()
 	}
 }
@@ -65,7 +65,7 @@ func TestBasePosition(test *testing.T) {
 
 func TestBaseApplyPosition(test *testing.T) {
 	piece := Base{
-		kind:  models.Pawn,
+		kind:  common.Pawn,
 		color: common.White,
 		position: models.Position{
 			File: 2,
@@ -78,7 +78,7 @@ func TestBaseApplyPosition(test *testing.T) {
 	})
 
 	expectedPiece := Base{
-		kind:  models.Pawn,
+		kind:  common.Pawn,
 		color: common.White,
 		position: models.Position{
 			File: 2,
@@ -90,7 +90,7 @@ func TestBaseApplyPosition(test *testing.T) {
 	}
 
 	expectedNextPiece := Base{
-		kind:  models.Pawn,
+		kind:  common.Pawn,
 		color: common.White,
 		position: models.Position{
 			File: 4,

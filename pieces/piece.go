@@ -7,23 +7,23 @@ import (
 
 // NewPiece ...
 func NewPiece(
-	kind models.Kind,
+	kind common.Kind,
 	color common.Color,
 	position models.Position,
 ) models.Piece {
 	var piece models.Piece
 	switch kind {
-	case models.King:
+	case common.King:
 		piece = NewKing(color, position)
-	case models.Queen:
+	case common.Queen:
 		piece = NewQueen(color, position)
-	case models.Rook:
+	case common.Rook:
 		piece = NewRook(color, position)
-	case models.Bishop:
+	case common.Bishop:
 		piece = NewBishop(color, position)
-	case models.Knight:
+	case common.Knight:
 		piece = NewKnight(color, position)
-	case models.Pawn:
+	case common.Pawn:
 		piece = NewPawn(color, position)
 	}
 

@@ -10,7 +10,7 @@ type Rook struct{ Base }
 
 // NewRook ...
 func NewRook(color common.Color, position models.Position) Rook {
-	base := NewBase(models.Rook, color, position)
+	base := NewBase(common.Rook, color, position)
 	return Rook{base}
 }
 

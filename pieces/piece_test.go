@@ -10,7 +10,7 @@ import (
 
 func TestNewPiece(test *testing.T) {
 	type args struct {
-		kind     models.Kind
+		kind     common.Kind
 		color    common.Color
 		position models.Position
 	}
@@ -22,7 +22,7 @@ func TestNewPiece(test *testing.T) {
 	for _, data := range []data{
 		{
 			args: args{
-				kind:  models.King,
+				kind:  common.King,
 				color: common.White,
 				position: models.Position{
 					File: 2,
@@ -36,7 +36,7 @@ func TestNewPiece(test *testing.T) {
 		},
 		{
 			args: args{
-				kind:  models.Queen,
+				kind:  common.Queen,
 				color: common.Black,
 				position: models.Position{
 					File: 4,
@@ -50,7 +50,7 @@ func TestNewPiece(test *testing.T) {
 		},
 		{
 			args: args{
-				kind:  models.Rook,
+				kind:  common.Rook,
 				color: common.White,
 				position: models.Position{
 					File: 2,
@@ -64,7 +64,7 @@ func TestNewPiece(test *testing.T) {
 		},
 		{
 			args: args{
-				kind:  models.Bishop,
+				kind:  common.Bishop,
 				color: common.Black,
 				position: models.Position{
 					File: 4,
@@ -78,7 +78,7 @@ func TestNewPiece(test *testing.T) {
 		},
 		{
 			args: args{
-				kind:  models.Knight,
+				kind:  common.Knight,
 				color: common.White,
 				position: models.Position{
 					File: 2,
@@ -92,7 +92,7 @@ func TestNewPiece(test *testing.T) {
 		},
 		{
 			args: args{
-				kind:  models.Pawn,
+				kind:  common.Pawn,
 				color: common.Black,
 				position: models.Position{
 					File: 4,

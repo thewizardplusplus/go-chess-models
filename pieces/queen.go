@@ -10,7 +10,7 @@ type Queen struct{ Base }
 
 // NewQueen ...
 func NewQueen(color common.Color, position models.Position) Queen {
-	base := NewBase(models.Queen, color, position)
+	base := NewBase(common.Queen, color, position)
 	return Queen{base}
 }
 

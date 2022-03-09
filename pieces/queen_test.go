@@ -17,7 +17,7 @@ func TestNewQueen(test *testing.T) {
 
 	expectedPiece := Queen{
 		Base: Base{
-			kind:  models.Queen,
+			kind:  common.Queen,
 			color: common.White,
 			position: models.Position{
 				File: 2,
@@ -42,7 +42,7 @@ func TestQueenApplyPosition(test *testing.T) {
 
 	expectedPiece := Queen{
 		Base: Base{
-			kind:  models.Queen,
+			kind:  common.Queen,
 			color: common.White,
 			position: models.Position{
 				File: 2,
@@ -56,7 +56,7 @@ func TestQueenApplyPosition(test *testing.T) {
 
 	expectedNextPiece := Queen{
 		Base: Base{
-			kind:  models.Queen,
+			kind:  common.Queen,
 			color: common.White,
 			position: models.Position{
 				File: 4,

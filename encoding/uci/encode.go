@@ -41,17 +41,17 @@ func EncodePiece(piece models.Piece) string {
 
 	var kindInFEN rune
 	switch piece.Kind() {
-	case models.King:
+	case common.King:
 		kindInFEN = 'k'
-	case models.Queen:
+	case common.Queen:
 		kindInFEN = 'q'
-	case models.Rook:
+	case common.Rook:
 		kindInFEN = 'r'
-	case models.Bishop:
+	case common.Bishop:
 		kindInFEN = 'b'
-	case models.Knight:
+	case common.Knight:
 		kindInFEN = 'n'
-	case models.Pawn:
+	case common.Pawn:
 		kindInFEN = 'p'
 	}
 

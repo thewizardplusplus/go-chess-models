@@ -4,19 +4,6 @@ import (
 	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
-// Kind ...
-type Kind int
-
-// ...
-const (
-	King Kind = iota
-	Queen
-	Rook
-	Bishop
-	Knight
-	Pawn
-)
-
 // Position ...
 type Position struct {
 	File int // column
@@ -25,7 +12,7 @@ type Position struct {
 
 // Piece ...
 type Piece interface {
-	Kind() Kind
+	Kind() common.Kind
 	Color() common.Color
 	Position() Position
 	ApplyPosition(position Position) Piece

@@ -10,7 +10,7 @@ type Bishop struct{ Base }
 
 // NewBishop ...
 func NewBishop(color common.Color, position models.Position) Bishop {
-	base := NewBase(models.Bishop, color, position)
+	base := NewBase(common.Bishop, color, position)
 	return Bishop{base}
 }
 

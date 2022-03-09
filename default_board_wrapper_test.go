@@ -232,7 +232,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 						}
 					case Position{1, 1}:
 						piece = MockPiece{
-							kind:     King,
+							kind:     common.King,
 							color:    common.White,
 							position: Position{1, 1},
 						}

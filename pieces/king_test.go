@@ -17,7 +17,7 @@ func TestNewKing(test *testing.T) {
 
 	expectedPiece := King{
 		Base: Base{
-			kind:  models.King,
+			kind:  common.King,
 			color: common.White,
 			position: models.Position{
 				File: 2,
@@ -42,7 +42,7 @@ func TestKingApplyPosition(test *testing.T) {
 
 	expectedPiece := King{
 		Base: Base{
-			kind:  models.King,
+			kind:  common.King,
 			color: common.White,
 			position: models.Position{
 				File: 2,
@@ -56,7 +56,7 @@ func TestKingApplyPosition(test *testing.T) {
 
 	expectedNextPiece := King{
 		Base: Base{
-			kind:  models.King,
+			kind:  common.King,
 			color: common.White,
 			position: models.Position{
 				File: 4,

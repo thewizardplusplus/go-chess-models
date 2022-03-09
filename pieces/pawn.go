@@ -10,7 +10,7 @@ type Pawn struct{ Base }
 
 // NewPawn ...
 func NewPawn(color common.Color, position models.Position) Pawn {
-	base := NewBase(models.Pawn, color, position)
+	base := NewBase(common.Pawn, color, position)
 	return Pawn{base}
 }
 

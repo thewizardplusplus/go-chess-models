@@ -13,7 +13,7 @@ import (
 
 // PieceFactory ...
 type PieceFactory func(
-	kind models.Kind,
+	kind common.Kind,
 	color common.Color,
 	position models.Position,
 ) models.Piece
@@ -75,20 +75,20 @@ func DecodeMove(text string) (move models.Move, err error) {
 //
 // It decodes a piece from FEN (only a kind and a color, not a position).
 func DecodePiece(fen rune, factory PieceFactory) (models.Piece, error) {
-	var kind models.Kind
+	var kind common.Kind
 	switch unicode.ToLower(fen) {
 	case 'k':
-		kind = models.King
+		kind = common.King
 	case 'q':
-		kind = models.Queen
+		kind = common.Queen
 	case 'r':
-		kind = models.Rook
+		kind = common.Rook
 	case 'b':
-		kind = models.Bishop
+		kind = common.Bishop
 	case 'n':
-		kind = models.Knight
+		kind = common.Knight
 	case 'p':
-		kind = models.Pawn
+		kind = common.Pawn
 	default:
 		return nil, errors.New("unknown kind")
 	}

@@ -8,14 +8,14 @@ import (
 )
 
 type MockPiece struct {
-	kind     Kind
+	kind     common.Kind
 	color    common.Color
 	position Position
 
 	checkMove func(move Move, storage PieceStorage) bool
 }
 
-func (piece MockPiece) Kind() Kind {
+func (piece MockPiece) Kind() common.Kind {
 	return piece.kind
 }
 

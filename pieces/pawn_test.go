@@ -17,7 +17,7 @@ func TestNewPawn(test *testing.T) {
 
 	expectedPiece := Pawn{
 		Base: Base{
-			kind:  models.Pawn,
+			kind:  common.Pawn,
 			color: common.White,
 			position: models.Position{
 				File: 2,
@@ -42,7 +42,7 @@ func TestPawnApplyPosition(test *testing.T) {
 
 	expectedPiece := Pawn{
 		Base: Base{
-			kind:  models.Pawn,
+			kind:  common.Pawn,
 			color: common.White,
 			position: models.Position{
 				File: 2,
@@ -56,7 +56,7 @@ func TestPawnApplyPosition(test *testing.T) {
 
 	expectedNextPiece := Pawn{
 		Base: Base{
-			kind:  models.Pawn,
+			kind:  common.Pawn,
 			color: common.White,
 			position: models.Position{
 				File: 4,

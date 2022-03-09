@@ -9,11 +9,11 @@ import (
 )
 
 type MockPiece struct {
-	kind  models.Kind
+	kind  common.Kind
 	color common.Color
 }
 
-func (piece MockPiece) Kind() models.Kind {
+func (piece MockPiece) Kind() common.Kind {
 	return piece.kind
 }
 
@@ -169,7 +169,7 @@ func TestEncodePiece(test *testing.T) {
 		{
 			args: args{
 				piece: MockPiece{
-					kind:  models.King,
+					kind:  common.King,
 					color: common.White,
 				},
 			},
@@ -178,7 +178,7 @@ func TestEncodePiece(test *testing.T) {
 		{
 			args: args{
 				piece: MockPiece{
-					kind:  models.Queen,
+					kind:  common.Queen,
 					color: common.Black,
 				},
 			},
@@ -187,7 +187,7 @@ func TestEncodePiece(test *testing.T) {
 		{
 			args: args{
 				piece: MockPiece{
-					kind:  models.Rook,
+					kind:  common.Rook,
 					color: common.White,
 				},
 			},
@@ -196,7 +196,7 @@ func TestEncodePiece(test *testing.T) {
 		{
 			args: args{
 				piece: MockPiece{
-					kind:  models.Bishop,
+					kind:  common.Bishop,
 					color: common.Black,
 				},
 			},
@@ -205,7 +205,7 @@ func TestEncodePiece(test *testing.T) {
 		{
 			args: args{
 				piece: MockPiece{
-					kind:  models.Knight,
+					kind:  common.Knight,
 					color: common.White,
 				},
 			},
@@ -214,7 +214,7 @@ func TestEncodePiece(test *testing.T) {
 		{
 			args: args{
 				piece: MockPiece{
-					kind:  models.Pawn,
+					kind:  common.Pawn,
 					color: common.Black,
 				},
 			},

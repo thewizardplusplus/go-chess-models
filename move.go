@@ -2,6 +2,8 @@ package chessmodels
 
 import (
 	"errors"
+
+	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
 // ...
@@ -65,7 +67,7 @@ func CheckMove(storage PieceStorage, move Move) error {
 	//
 	// it's necessary because of a wider area of ​​influence of this error
 	// compared to rest ones
-	if hasTarget && target.Kind() == King {
+	if hasTarget && target.Kind() == common.King {
 		return ErrKingCapture
 	}
 
