@@ -53,11 +53,15 @@ type BasePieceStorage interface {
 	ApplyMove(move Move) PieceStorage
 }
 
+// PieceGroupGetter ...
+type PieceGroupGetter interface {
+	Pieces() []Piece
+}
+
 // PieceStorage ...
 type PieceStorage interface {
 	BasePieceStorage
-
-	Pieces() []Piece
+	PieceGroupGetter
 
 	// It shouldn't check for a check before or after the move.
 	CheckMove(move Move) error
