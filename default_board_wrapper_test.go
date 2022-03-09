@@ -29,6 +29,14 @@ func (storage MockBasePieceStorage) ApplyMove(move Move) PieceStorage {
 	panic("not implemented")
 }
 
+type MockPieceGroupGetter struct {
+	pieces []Piece
+}
+
+func (pieceGroupGetter MockPieceGroupGetter) Pieces() []Piece {
+	return pieceGroupGetter.pieces
+}
+
 func TestDefaultBoardWrapperPieces(test *testing.T) {
 	baseStorage := MockBasePieceStorage{
 		size: Size{5, 5},

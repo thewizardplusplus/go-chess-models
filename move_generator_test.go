@@ -8,14 +8,9 @@ import (
 
 type MockPieceStorage struct {
 	MockBasePieceStorage
-
-	pieces []Piece
+	MockPieceGroupGetter
 
 	checkMove func(move Move) error
-}
-
-func (storage MockPieceStorage) Pieces() []Piece {
-	return storage.pieces
 }
 
 func (storage MockPieceStorage) CheckMove(move Move) error {
@@ -232,8 +227,10 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 			MockBasePieceStorage: MockBasePieceStorage{
 				size: data.fields.size,
 			},
+			MockPieceGroupGetter: MockPieceGroupGetter{
+				pieces: data.fields.pieces,
+			},
 
-			pieces:    data.fields.pieces,
 			checkMove: data.fields.checkMove,
 		}
 		var generator MoveGenerator
