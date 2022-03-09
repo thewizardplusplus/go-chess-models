@@ -7,6 +7,10 @@ type DefaultBoardWrapper struct {
 
 // Pieces ...
 func (board DefaultBoardWrapper) Pieces() []Piece {
+	if pieceGroupGetter, ok := board.BasePieceStorage.(PieceGroupGetter); ok {
+		return pieceGroupGetter.Pieces()
+	}
+
 	return Pieces(board)
 }
 
