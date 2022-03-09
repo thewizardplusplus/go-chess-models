@@ -37,6 +37,18 @@ func (pieceGroupGetter MockPieceGroupGetter) Pieces() []Piece {
 	return pieceGroupGetter.pieces
 }
 
+type MockMoveChecker struct {
+	checkMove func(move Move) error
+}
+
+func (moveChecker MockMoveChecker) CheckMove(move Move) error {
+	if moveChecker.checkMove == nil {
+		panic("not implemented")
+	}
+
+	return moveChecker.checkMove(move)
+}
+
 func TestDefaultBoardWrapperPieces(test *testing.T) {
 	type fields struct {
 		BasePieceStorage BasePieceStorage

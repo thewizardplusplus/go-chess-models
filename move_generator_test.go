@@ -9,16 +9,7 @@ import (
 type MockPieceStorage struct {
 	MockBasePieceStorage
 	MockPieceGroupGetter
-
-	checkMove func(move Move) error
-}
-
-func (storage MockPieceStorage) CheckMove(move Move) error {
-	if storage.checkMove == nil {
-		panic("not implemented")
-	}
-
-	return storage.checkMove(move)
+	MockMoveChecker
 }
 
 func TestMoveCheckerMovesForColor(test *testing.T) {
@@ -230,8 +221,9 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 			MockPieceGroupGetter: MockPieceGroupGetter{
 				pieces: data.fields.pieces,
 			},
-
-			checkMove: data.fields.checkMove,
+			MockMoveChecker: MockMoveChecker{
+				checkMove: data.fields.checkMove,
+			},
 		}
 		var generator MoveGenerator
 		gotMoves, gotErr := generator.MovesForColor(storage, data.args.color)
@@ -340,8 +332,9 @@ func TestMoveCheckerMovesForPosition(test *testing.T) {
 			MockBasePieceStorage: MockBasePieceStorage{
 				size: data.fields.size,
 			},
-
-			checkMove: data.fields.checkMove,
+			MockMoveChecker: MockMoveChecker{
+				checkMove: data.fields.checkMove,
+			},
 		}
 		var generator MoveGenerator
 		gotMoves, gotErr := generator.MovesForPosition(storage, data.args.position)
