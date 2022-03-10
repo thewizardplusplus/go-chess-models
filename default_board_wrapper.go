@@ -15,7 +15,7 @@ func (board DefaultBoardWrapper) Pieces() []common.Piece {
 		return pieceGroupGetter.Pieces()
 	}
 
-	return Pieces(board)
+	return common.Pieces(board)
 }
 
 // CheckMove ...

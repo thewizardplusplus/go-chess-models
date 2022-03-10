@@ -60,3 +60,8 @@ var (
 func CheckMove(storage PieceStorage, move Move) error {
 	return common.CheckMove(storage, move)
 }
+
+// Pieces ...
+func Pieces(storage PieceStorage) []Piece {
+	return common.Pieces(storage)
+}
