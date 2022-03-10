@@ -11,6 +11,14 @@ type BaseBoard = boards.BaseBoard
 // DefaultBoardWrapper ...
 type DefaultBoardWrapper = boards.DefaultBoardWrapper
 
+// Board ...
+type Board = boards.SliceBoard
+
+// NewBoard ...
+func NewBoard(size common.Size, pieces []common.Piece) common.PieceStorage {
+	return boards.NewSliceBoard(size, pieces)
+}
+
 // MapBoard ...
 type MapBoard = boards.MapBoard
 
