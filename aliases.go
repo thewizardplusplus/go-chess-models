@@ -1,6 +1,7 @@
 package chessmodels
 
 import (
+	"github.com/thewizardplusplus/go-chess-models/boards"
 	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
@@ -32,9 +33,6 @@ type Position = common.Position
 // Move ...
 type Move = common.Move
 
-// PositionHandler ...
-type PositionHandler = common.PositionHandler
-
 // Size ...
 type Size = common.Size
 
@@ -46,22 +44,10 @@ type PieceStorage = common.PieceStorage
 
 // ...
 var (
-	ErrNoMove         = common.ErrNoMove
-	ErrOutOfSize      = common.ErrOutOfSize
-	ErrNoPiece        = common.ErrNoPiece
-	ErrFriendlyTarget = common.ErrFriendlyTarget
-	ErrIllegalMove    = common.ErrIllegalMove
-	ErrKingCapture    = common.ErrKingCapture
+	ErrKingCapture = common.ErrKingCapture
 )
 
-// CheckMove ...
-//
-// It doesn't check for a check before or after the move.
-func CheckMove(storage PieceStorage, move Move) error {
-	return common.CheckMove(storage, move)
-}
-
-// Pieces ...
-func Pieces(storage PieceStorage) []Piece {
-	return common.Pieces(storage)
+// NewBoard ...
+func NewBoard(size common.Size, pieces []common.Piece) common.PieceStorage {
+	return boards.NewSliceBoard(size, pieces)
 }
