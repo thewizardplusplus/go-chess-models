@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/boards"
 	"github.com/thewizardplusplus/go-chess-models/common"
 	"github.com/thewizardplusplus/go-chess-models/encoding/uci"
 )
@@ -191,7 +192,7 @@ func TestPawnCheckMove(test *testing.T) {
 		},
 	} {
 		storage, err :=
-			uci.DecodePieceStorage(data.args.boardInFEN, NewPiece, models.NewBoard)
+			uci.DecodePieceStorage(data.args.boardInFEN, NewPiece, boards.NewMapBoard)
 		if err != nil {
 			test.Fail()
 			continue

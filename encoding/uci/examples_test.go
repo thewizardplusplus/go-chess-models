@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sort"
 
-	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/boards"
 	"github.com/thewizardplusplus/go-chess-models/common"
 	"github.com/thewizardplusplus/go-chess-models/encoding/uci"
 	"github.com/thewizardplusplus/go-chess-models/pieces"
@@ -50,7 +50,7 @@ func ExampleEncodeMove() {
 
 func ExampleDecodePieceStorage() {
 	const fen = "8/8/8/8/3B4/2r5/8/8"
-	storage, _ := uci.DecodePieceStorage(fen, pieces.NewPiece, models.NewBoard)
+	storage, _ := uci.DecodePieceStorage(fen, pieces.NewPiece, boards.NewMapBoard)
 	pieces := storage.Pieces()
 	sort.Sort(ByPosition(pieces))
 	fmt.Printf("%+v\n", pieces)
@@ -59,7 +59,7 @@ func ExampleDecodePieceStorage() {
 }
 
 func ExampleEncodePieceStorage() {
-	board := models.NewBoard(common.Size{Width: 5, Height: 5}, []common.Piece{
+	board := boards.NewMapBoard(common.Size{Width: 5, Height: 5}, []common.Piece{
 		pieces.NewRook(common.Black, common.Position{File: 2, Rank: 2}),
 		pieces.NewBishop(common.White, common.Position{File: 3, Rank: 3}),
 	})

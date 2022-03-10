@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/boards"
 	"github.com/thewizardplusplus/go-chess-models/common"
 	"github.com/thewizardplusplus/go-chess-models/pieces"
 )
@@ -214,7 +214,7 @@ func TestDecodePieceStorage(test *testing.T) {
 			args: args{
 				fen: "2K3q/8/pp1R",
 			},
-			wantStorage: models.NewBoard(
+			wantStorage: boards.NewMapBoard(
 				common.Size{
 					Width:  8,
 					Height: 3,
@@ -248,7 +248,7 @@ func TestDecodePieceStorage(test *testing.T) {
 			args: args{
 				fen: "1/2K3q/8/pp1R",
 			},
-			wantStorage: models.NewBoard(
+			wantStorage: boards.NewMapBoard(
 				common.Size{
 					Width:  8,
 					Height: 4,
@@ -282,7 +282,7 @@ func TestDecodePieceStorage(test *testing.T) {
 			args: args{
 				fen: "2K3q/8/pp1R/1",
 			},
-			wantStorage: models.NewBoard(
+			wantStorage: boards.NewMapBoard(
 				common.Size{
 					Width:  8,
 					Height: 4,
@@ -321,7 +321,7 @@ func TestDecodePieceStorage(test *testing.T) {
 		},
 	} {
 		gotStorage, gotErr :=
-			DecodePieceStorage(data.args.fen, pieces.NewPiece, models.NewBoard)
+			DecodePieceStorage(data.args.fen, pieces.NewPiece, boards.NewMapBoard)
 
 		if !reflect.DeepEqual(gotStorage, data.wantStorage) {
 			test.Fail()

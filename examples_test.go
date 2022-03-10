@@ -5,6 +5,7 @@ import (
 	"sort"
 
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/boards"
 	"github.com/thewizardplusplus/go-chess-models/common"
 	"github.com/thewizardplusplus/go-chess-models/pieces"
 )
@@ -31,7 +32,7 @@ func (group ByPosition) Less(
 }
 
 func ExampleBoard_CheckMove() { // nolint: vet
-	board := models.NewBoard(common.Size{Width: 5, Height: 5}, []common.Piece{
+	board := boards.NewMapBoard(common.Size{Width: 5, Height: 5}, []common.Piece{
 		pieces.NewRook(common.Black, common.Position{File: 2, Rank: 2}),
 		pieces.NewBishop(common.White, common.Position{File: 3, Rank: 3}),
 	})
@@ -54,7 +55,7 @@ func ExampleBoard_CheckMove() { // nolint: vet
 }
 
 func ExampleBoard_ApplyMove() {
-	board := models.NewBoard(common.Size{Width: 5, Height: 5}, []common.Piece{
+	board := boards.NewMapBoard(common.Size{Width: 5, Height: 5}, []common.Piece{
 		pieces.NewRook(common.Black, common.Position{File: 2, Rank: 2}),
 		pieces.NewBishop(common.White, common.Position{File: 3, Rank: 3}),
 	})
@@ -76,7 +77,7 @@ func ExampleBoard_ApplyMove() {
 }
 
 func ExampleMoveGenerator_MovesForColor() {
-	board := models.NewBoard(common.Size{Width: 5, Height: 5}, []common.Piece{
+	board := boards.NewMapBoard(common.Size{Width: 5, Height: 5}, []common.Piece{
 		pieces.NewRook(common.Black, common.Position{File: 2, Rank: 2}),
 		pieces.NewKnight(common.White, common.Position{File: 3, Rank: 3}),
 		pieces.NewPawn(common.White, common.Position{File: 4, Rank: 3}),
