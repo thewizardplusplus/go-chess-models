@@ -208,12 +208,12 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 					},
 				},
 				checkMove: func(move common.Move) error {
-					return ErrKingCapture
+					return common.ErrKingCapture
 				},
 			},
 			args:      args{common.Black},
 			wantMoves: nil,
-			wantErr:   ErrKingCapture,
+			wantErr:   common.ErrKingCapture,
 		},
 	} {
 		storage := MockPieceStorage{
@@ -270,12 +270,12 @@ func TestMoveCheckerMovesForPosition(test *testing.T) {
 			fields: fields{
 				size: common.Size{2, 2},
 				checkMove: func(move common.Move) error {
-					return ErrKingCapture
+					return common.ErrKingCapture
 				},
 			},
 			args:      args{common.Position{1, 1}},
 			wantMoves: nil,
-			wantErr:   ErrKingCapture,
+			wantErr:   common.ErrKingCapture,
 		},
 		{
 			fields: fields{

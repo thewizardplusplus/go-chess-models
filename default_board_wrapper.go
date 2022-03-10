@@ -26,5 +26,5 @@ func (board DefaultBoardWrapper) CheckMove(move common.Move) error {
 		return moveChecker.CheckMove(move)
 	}
 
-	return CheckMove(board, move)
+	return common.CheckMove(board, move)
 }

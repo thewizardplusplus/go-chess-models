@@ -50,7 +50,7 @@ func (generator MoveGenerator) MovesForPosition(
 		move := common.Move{position, finish}
 		if err := storage.CheckMove(move); err != nil {
 			// if the move captures a king, break a generating
-			if err == ErrKingCapture {
+			if err == common.ErrKingCapture {
 				return err
 			}
 

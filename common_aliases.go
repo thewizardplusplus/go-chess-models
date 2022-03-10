@@ -43,3 +43,20 @@ type Piece = common.Piece
 
 // PieceStorage ...
 type PieceStorage = common.PieceStorage
+
+// ...
+var (
+	ErrNoMove         = common.ErrNoMove
+	ErrOutOfSize      = common.ErrOutOfSize
+	ErrNoPiece        = common.ErrNoPiece
+	ErrFriendlyTarget = common.ErrFriendlyTarget
+	ErrIllegalMove    = common.ErrIllegalMove
+	ErrKingCapture    = common.ErrKingCapture
+)
+
+// CheckMove ...
+//
+// It doesn't check for a check before or after the move.
+func CheckMove(storage PieceStorage, move Move) error {
+	return common.CheckMove(storage, move)
+}

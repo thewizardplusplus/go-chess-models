@@ -140,7 +140,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 					Finish: common.Position{0, 0},
 				},
 			},
-			want: ErrNoMove,
+			want: common.ErrNoMove,
 		},
 		{
 			fields: fields{
@@ -155,7 +155,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 					Finish: common.Position{-1, -1},
 				},
 			},
-			want: ErrOutOfSize,
+			want: common.ErrOutOfSize,
 		},
 		{
 			fields: fields{
@@ -170,7 +170,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 					Finish: common.Position{1, 1},
 				},
 			},
-			want: ErrNoPiece,
+			want: common.ErrNoPiece,
 		},
 		{
 			fields: fields{
@@ -190,7 +190,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 					Finish: common.Position{1, 1},
 				},
 			},
-			want: ErrFriendlyTarget,
+			want: common.ErrFriendlyTarget,
 		},
 		{
 			fields: fields{
@@ -215,7 +215,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 					Finish: common.Position{1, 1},
 				},
 			},
-			want: ErrIllegalMove,
+			want: common.ErrIllegalMove,
 		},
 		{
 			fields: fields{
@@ -248,7 +248,7 @@ func TestDefaultBoardWrapperCheckMove(test *testing.T) {
 					Finish: common.Position{1, 1},
 				},
 			},
-			want: ErrKingCapture,
+			want: common.ErrKingCapture,
 		},
 		{
 			fields: fields{
