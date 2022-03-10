@@ -1,13 +1,12 @@
-package chessmodels
+package boards
 
 import (
-	"github.com/thewizardplusplus/go-chess-models/boards"
 	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
 // SliceBoard ...
 type SliceBoard struct {
-	boards.BaseBoard
+	BaseBoard
 
 	pieces []common.Piece
 }
@@ -19,9 +18,9 @@ func NewSliceBoard(size common.Size, pieces []common.Piece) common.PieceStorage 
 		extendedPieces[size.PositionIndex(piece.Position())] = piece
 	}
 
-	baseBoard := boards.NewBaseBoard(size)
+	baseBoard := NewBaseBoard(size)
 	sliceBoard := SliceBoard{baseBoard, extendedPieces}
-	return boards.DefaultBoardWrapper{sliceBoard}
+	return DefaultBoardWrapper{sliceBoard}
 }
 
 // common.Piece ...
@@ -46,5 +45,5 @@ func (board SliceBoard) ApplyMove(move common.Move) common.PieceStorage {
 	pieceGroupCopy[finishIndex] = movedPiece
 
 	sliceBoard := SliceBoard{board.BaseBoard, pieceGroupCopy}
-	return boards.DefaultBoardWrapper{sliceBoard}
+	return DefaultBoardWrapper{sliceBoard}
 }

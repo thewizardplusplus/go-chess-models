@@ -18,3 +18,11 @@ type MapBoard = boards.MapBoard
 func NewMapBoard(size common.Size, pieces []common.Piece) common.PieceStorage {
 	return boards.NewMapBoard(size, pieces)
 }
+
+// SliceBoard ...
+type SliceBoard = boards.SliceBoard
+
+// NewSliceBoard ...
+func NewSliceBoard(size common.Size, pieces []common.Piece) common.PieceStorage {
+	return boards.NewSliceBoard(size, pieces)
+}

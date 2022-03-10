@@ -38,7 +38,7 @@ func BenchmarkPerft(benchmark *testing.B) {
 		},
 		{
 			name:    "SliceBoard",
-			factory: models.NewSliceBoard,
+			factory: boards.NewSliceBoard,
 		},
 	} {
 		for _, data := range []data{

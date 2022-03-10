@@ -4,6 +4,7 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/thewizardplusplus/go-chess-models/boards"
 	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
@@ -15,7 +16,7 @@ func TestNewBoard(test *testing.T) {
 	}
 	board := NewBoard(size, pieces)
 
-	expectedBoard := NewSliceBoard(size, pieces)
+	expectedBoard := boards.NewSliceBoard(size, pieces)
 	if !reflect.DeepEqual(board, expectedBoard) {
 		test.Fail()
 	}

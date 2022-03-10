@@ -47,7 +47,7 @@ func TestPerft(test *testing.T) {
 		},
 		{
 			name:    "SliceBoard",
-			factory: models.NewSliceBoard,
+			factory: boards.NewSliceBoard,
 		},
 	} {
 		for _, data := range []data{

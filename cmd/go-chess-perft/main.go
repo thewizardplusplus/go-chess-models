@@ -50,7 +50,7 @@ func main() {
 	case "map":
 		pieceStorageFactory = boards.NewMapBoard
 	case "slice":
-		pieceStorageFactory = models.NewSliceBoard
+		pieceStorageFactory = boards.NewSliceBoard
 	default:
 		log.Fatal("incorrect piece storage kind")
 	}
