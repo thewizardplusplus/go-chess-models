@@ -8,6 +8,50 @@ import (
 	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
+type MockBasePieceStorage struct {
+	size common.Size
+
+	piece func(position common.Position) (piece common.Piece, ok bool)
+}
+
+func (storage MockBasePieceStorage) Size() common.Size {
+	return storage.size
+}
+
+func (storage MockBasePieceStorage) Piece(
+	position common.Position,
+) (piece common.Piece, ok bool) {
+	if storage.piece == nil {
+		panic("not implemented")
+	}
+
+	return storage.piece(position)
+}
+
+func (storage MockBasePieceStorage) ApplyMove(move common.Move) common.PieceStorage {
+	panic("not implemented")
+}
+
+type MockPieceGroupGetter struct {
+	pieces []common.Piece
+}
+
+func (pieceGroupGetter MockPieceGroupGetter) Pieces() []common.Piece {
+	return pieceGroupGetter.pieces
+}
+
+type MockMoveChecker struct {
+	checkMove func(move common.Move) error
+}
+
+func (moveChecker MockMoveChecker) CheckMove(move common.Move) error {
+	if moveChecker.checkMove == nil {
+		panic("not implemented")
+	}
+
+	return moveChecker.checkMove(move)
+}
+
 type MockPieceStorage struct {
 	MockBasePieceStorage
 	MockPieceGroupGetter

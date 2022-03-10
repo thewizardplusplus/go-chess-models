@@ -51,7 +51,7 @@ func TestNewMapBoard(test *testing.T) {
 		MockPiece{position: common.Position{4, 2}},
 	})
 
-	expectedBoard := DefaultBoardWrapper{
+	expectedBoard := boards.DefaultBoardWrapper{
 		BasePieceStorage: MapBoard{
 			BaseBoard: boards.NewBaseBoard(common.Size{5, 5}),
 
@@ -147,7 +147,7 @@ func TestMapBoardApplyMove(test *testing.T) {
 		Finish: common.Position{1, 2},
 	})
 
-	expectedBoard := DefaultBoardWrapper{
+	expectedBoard := boards.DefaultBoardWrapper{
 		BasePieceStorage: MapBoard{
 			BaseBoard: boards.NewBaseBoard(common.Size{5, 5}),
 
@@ -165,7 +165,7 @@ func TestMapBoardApplyMove(test *testing.T) {
 		test.Fail()
 	}
 
-	expectedNextBoard := DefaultBoardWrapper{
+	expectedNextBoard := boards.DefaultBoardWrapper{
 		BasePieceStorage: MapBoard{
 			BaseBoard: boards.NewBaseBoard(common.Size{5, 5}),
 

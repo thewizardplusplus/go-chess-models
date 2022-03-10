@@ -6,3 +6,6 @@ import (
 
 // BaseBoard ...
 type BaseBoard = boards.BaseBoard
+
+// DefaultBoardWrapper ...
+type DefaultBoardWrapper = boards.DefaultBoardWrapper
