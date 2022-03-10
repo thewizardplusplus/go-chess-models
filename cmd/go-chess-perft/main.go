@@ -10,6 +10,7 @@ import (
 
 	"github.com/thewizardplusplus/go-chess-cli/encoding/ascii"
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/boards"
 	"github.com/thewizardplusplus/go-chess-models/encoding/uci"
 	"github.com/thewizardplusplus/go-chess-models/pieces"
 )
@@ -47,7 +48,7 @@ func main() {
 	var pieceStorageFactory uci.PieceStorageFactory
 	switch *storageKind {
 	case "map":
-		pieceStorageFactory = models.NewMapBoard
+		pieceStorageFactory = boards.NewMapBoard
 	case "slice":
 		pieceStorageFactory = models.NewSliceBoard
 	default:

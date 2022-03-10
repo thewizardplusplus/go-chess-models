@@ -8,6 +8,43 @@ import (
 	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
+type MockPiece struct {
+	kind     common.Kind
+	color    common.Color
+	position common.Position
+
+	checkMove func(move common.Move, storage common.PieceStorage) bool
+}
+
+func (piece MockPiece) Kind() common.Kind {
+	return piece.kind
+}
+
+func (piece MockPiece) Color() common.Color {
+	return piece.color
+}
+
+func (piece MockPiece) Position() common.Position {
+	return piece.position
+}
+
+func (piece MockPiece) ApplyPosition(position common.Position) common.Piece {
+	return MockPiece{
+		kind:      piece.kind,
+		color:     piece.color,
+		position:  position,
+		checkMove: piece.checkMove,
+	}
+}
+
+func (piece MockPiece) CheckMove(move common.Move, storage common.PieceStorage) bool {
+	if piece.checkMove == nil {
+		panic("not implemented")
+	}
+
+	return piece.checkMove(move, storage)
+}
+
 type MockBasePieceStorage struct {
 	size common.Size
 

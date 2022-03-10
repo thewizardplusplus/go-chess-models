@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/boards"
 	"github.com/thewizardplusplus/go-chess-models/common"
 	"github.com/thewizardplusplus/go-chess-models/encoding/uci"
 	"github.com/thewizardplusplus/go-chess-models/pieces"
@@ -42,7 +43,7 @@ func TestPerft(test *testing.T) {
 	for _, storage := range []storage{
 		{
 			name:    "MapBoard",
-			factory: models.NewMapBoard,
+			factory: boards.NewMapBoard,
 		},
 		{
 			name:    "SliceBoard",
