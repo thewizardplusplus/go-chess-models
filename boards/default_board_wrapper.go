@@ -50,6 +50,20 @@ func (wrapper pieceStorageWrapper) CheckMove(move common.Move) error {
 	return common.CheckMove(wrapper, move)
 }
 
+// WrapBasePieceStorage ...
+func WrapBasePieceStorage(
+	baseStorage common.BasePieceStorage,
+) common.PieceStorage {
+	switch partialStorage := baseStorage.(type) {
+	case pieceStorageWithoutPieceGroupGetter:
+		return pieceGroupGetterWrapper{partialStorage}
+	case pieceStorageWithoutMoveChecker:
+		return moveCheckerWrapper{partialStorage}
+	default:
+		return pieceStorageWrapper{baseStorage}
+	}
+}
+
 // DefaultBoardWrapper ...
 type DefaultBoardWrapper struct {
 	common.BasePieceStorage

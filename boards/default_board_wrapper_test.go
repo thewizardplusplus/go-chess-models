@@ -505,6 +505,87 @@ func TestPieceStorageWrapperCheckMove(test *testing.T) {
 	}
 }
 
+func TestWrapBasePieceStorage(test *testing.T) {
+	type args struct {
+		baseStorage common.BasePieceStorage
+	}
+	type data struct {
+		args args
+		want common.PieceStorage
+	}
+
+	for _, data := range []data{
+		{
+			args: args{
+				baseStorage: struct {
+					MockBasePieceStorage
+					MockMoveChecker
+				}{
+					MockBasePieceStorage: MockBasePieceStorage{
+						size:  common.Size{5, 5},
+						piece: nil,
+					},
+				},
+			},
+			want: pieceGroupGetterWrapper{
+				pieceStorageWithoutPieceGroupGetter: struct {
+					MockBasePieceStorage
+					MockMoveChecker
+				}{
+					MockBasePieceStorage: MockBasePieceStorage{
+						size:  common.Size{5, 5},
+						piece: nil,
+					},
+				},
+			},
+		},
+		{
+			args: args{
+				baseStorage: struct {
+					MockBasePieceStorage
+					MockPieceGroupGetter
+				}{
+					MockBasePieceStorage: MockBasePieceStorage{
+						size:  common.Size{5, 5},
+						piece: nil,
+					},
+				},
+			},
+			want: moveCheckerWrapper{
+				pieceStorageWithoutMoveChecker: struct {
+					MockBasePieceStorage
+					MockPieceGroupGetter
+				}{
+					MockBasePieceStorage: MockBasePieceStorage{
+						size:  common.Size{5, 5},
+						piece: nil,
+					},
+				},
+			},
+		},
+		{
+			args: args{
+				baseStorage: MockBasePieceStorage{
+					size:  common.Size{5, 5},
+					piece: nil,
+				},
+			},
+			want: pieceStorageWrapper{
+				BasePieceStorage: MockBasePieceStorage{
+					size:  common.Size{5, 5},
+					piece: nil,
+				},
+			},
+		},
+	} {
+		got := WrapBasePieceStorage(data.args.baseStorage)
+
+		if !reflect.DeepEqual(got, data.want) {
+			test.Fail()
+		}
+	}
+}
+
 func TestDefaultBoardWrapperPieces(test *testing.T) {
 	type fields struct {
 		BasePieceStorage common.BasePieceStorage
