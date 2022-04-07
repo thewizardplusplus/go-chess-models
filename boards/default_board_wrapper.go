@@ -4,6 +4,20 @@ import (
 	"github.com/thewizardplusplus/go-chess-models/common"
 )
 
+type pieceStorageWithoutPieceGroupGetter interface {
+	common.BasePieceStorage
+	common.MoveChecker
+}
+
+type pieceGroupGetterWrapper struct {
+	pieceStorageWithoutPieceGroupGetter
+}
+
+// Pieces ...
+func (wrapper pieceGroupGetterWrapper) Pieces() []common.Piece {
+	return common.Pieces(wrapper)
+}
+
 type pieceStorageWithoutMoveChecker interface {
 	common.BasePieceStorage
 	common.PieceGroupGetter

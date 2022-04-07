@@ -89,6 +89,36 @@ func (moveChecker MockMoveChecker) CheckMove(move common.Move) error {
 	return moveChecker.checkMove(move)
 }
 
+func TestPieceGroupGetterWrapperPieces(test *testing.T) {
+	board := pieceGroupGetterWrapper{
+		pieceStorageWithoutPieceGroupGetter: struct {
+			MockBasePieceStorage
+			MockMoveChecker
+		}{
+			MockBasePieceStorage: MockBasePieceStorage{
+				size: common.Size{5, 5},
+				piece: func(position common.Position) (piece common.Piece, ok bool) {
+					if position != (common.Position{2, 3}) && position != (common.Position{4, 2}) {
+						return nil, false
+					}
+
+					piece = MockPiece{position: position}
+					return piece, true
+				},
+			},
+		},
+	}
+	pieces := board.Pieces()
+
+	expectedPieces := []common.Piece{
+		MockPiece{position: common.Position{4, 2}},
+		MockPiece{position: common.Position{2, 3}},
+	}
+	if !reflect.DeepEqual(pieces, expectedPieces) {
+		test.Fail()
+	}
+}
+
 func TestMoveCheckerWrapperCheckMove(test *testing.T) {
 	type fields struct {
 		size  common.Size
