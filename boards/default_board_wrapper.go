@@ -34,6 +34,22 @@ func (wrapper moveCheckerWrapper) CheckMove(move common.Move) error {
 	return common.CheckMove(wrapper, move)
 }
 
+type pieceStorageWrapper struct {
+	common.BasePieceStorage
+}
+
+// Pieces ...
+func (wrapper pieceStorageWrapper) Pieces() []common.Piece {
+	return common.Pieces(wrapper)
+}
+
+// CheckMove ...
+//
+// It doesn't check for a check before or after the move.
+func (wrapper pieceStorageWrapper) CheckMove(move common.Move) error {
+	return common.CheckMove(wrapper, move)
+}
+
 // DefaultBoardWrapper ...
 type DefaultBoardWrapper struct {
 	common.BasePieceStorage
