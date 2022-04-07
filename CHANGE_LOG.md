@@ -1,5 +1,35 @@
 # Change Log
 
+## [v1.8.1](https://github.com/thewizardplusplus/go-chess-models/tree/v1.8.1) (2022-04-07)
+
+Adding the `boards.WrapBasePieceStorage` function that universally implements the `Pieces()` and `CheckMove()` methods of the `common.PieceStorage` interface if necessary and refactoring.
+
+- new features:
+  - the `boards.WrapBasePieceStorage` function that universally implements the `Pieces()` and `CheckMove()` methods of the `common.PieceStorage` interface if necessary;
+- refactoring:
+  - separate out the following packages:
+    - separate out the `common` package:
+      - move the `chessmodels.Color` type to the `common` package;
+      - move the `chessmodels.Kind` type to the `common` package;
+      - move the `chessmodels.Position` structure to the `common` package;
+      - move the `chessmodels.Move` structure to the `common` package;
+      - move the `chessmodels.CheckMove()` function to the `common` package;
+      - move the `chessmodels.Size` structure to the `common` package;
+      - move the `chessmodels.Piece` interface to the `common` package;
+      - move the `chessmodels.PieceStorage` interface to the `common` package;
+      - move the `chessmodels.Pieces()` function to the `common` package;
+    - separate out the `boards` package:
+      - move the `chessmodels.BaseBoard` structure to the `boards` package;
+      - move the `chessmodels.MapBoard` structure to the `boards` package;
+      - move the `chessmodels.SliceBoard` structure to the `boards` package;
+    - add aliases to the `chessmodels` package for the moved entities:
+      - mark them as deprecated;
+  - add the `common.BasePieceStorage` interface;
+  - add the `common.PieceGroupGetter` interface;
+  - add the `common.MoveChecker` interface;
+- unit testing:
+  - use the `chessmodels.MockPieceStorage` structure in the tests of the `chessmodels.CheckMove()` function.
+
 ## [v1.8](https://github.com/thewizardplusplus/go-chess-models/tree/v1.8) (2022-02-05)
 
 Adding the `chessmodels.SliceBoard` structure; optimization.
