@@ -49,6 +49,15 @@ func TestPerft(test *testing.T) {
 			name:    "SliceBoard",
 			factory: boards.NewSliceBoard,
 		},
+		{
+			name: "BitBoard",
+			factory: func(
+				size common.Size,
+				pieceGroup []common.Piece,
+			) common.PieceStorage {
+				return boards.NewBitBoard(size, pieceGroup, pieces.NewPiece)
+			},
+		},
 	} {
 		for _, data := range []data{
 			{
