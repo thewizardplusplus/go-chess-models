@@ -11,6 +11,8 @@ const (
 	Bishop
 	Knight
 	Pawn
+
+	KindCount
 )
 
 // Position ...
@@ -43,6 +45,9 @@ type Piece interface {
 	// It shouldn't check for a check before or after the move.
 	CheckMove(move Move, storage PieceStorage) bool
 }
+
+// PieceFactory ...
+type PieceFactory func(kind Kind, color Color, position Position) Piece
 
 // BasePieceStorage ...
 type BasePieceStorage interface {
