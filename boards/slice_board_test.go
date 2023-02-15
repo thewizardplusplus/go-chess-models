@@ -91,42 +91,83 @@ func TestSliceBoardPiece(test *testing.T) {
 }
 
 func TestSliceBoardApplyMove(test *testing.T) {
-	board := NewSliceBoard(common.Size{5, 5}, []common.Piece{
-		MockPiece{position: common.Position{2, 3}},
-		MockPiece{position: common.Position{4, 2}},
-	})
-	nextBoard := board.ApplyMove(common.Move{
-		Start:  common.Position{4, 2},
-		Finish: common.Position{1, 2},
-	})
+	type fields struct {
+		size   common.Size
+		pieces []common.Piece
+	}
+	type args struct {
+		move common.Move
+	}
+	type data struct {
+		fields        fields
+		args          args
+		wantNextBoard common.PieceStorage
+	}
 
-	expectedBoard := pieceStorageWrapper{
-		BasePieceStorage: SliceBoard{
-			BaseBoard: NewBaseBoard(common.Size{5, 5}),
+	for _, data := range []data{
+		{
+			fields: fields{
+				size: common.Size{5, 5},
+				pieces: []common.Piece{
+					14: MockPiece{position: common.Position{4, 2}},
+					17: MockPiece{position: common.Position{2, 3}},
+					24: nil,
+				},
+			},
+			args: args{
+				move: common.Move{
+					Start:  common.Position{4, 2},
+					Finish: common.Position{1, 2},
+				},
+			},
+			wantNextBoard: pieceStorageWrapper{
+				BasePieceStorage: SliceBoard{
+					BaseBoard: NewBaseBoard(common.Size{5, 5}),
 
-			pieces: []common.Piece{
-				14: MockPiece{position: common.Position{4, 2}},
-				17: MockPiece{position: common.Position{2, 3}},
-				24: nil,
+					pieces: []common.Piece{
+						11: MockPiece{position: common.Position{1, 2}},
+						17: MockPiece{position: common.Position{2, 3}},
+						24: nil,
+					},
+				},
 			},
 		},
-	}
-	if !reflect.DeepEqual(board, expectedBoard) {
-		test.Fail()
-	}
+		{
+			fields: fields{
+				size: common.Size{5, 5},
+				pieces: []common.Piece{
+					14: MockPiece{position: common.Position{4, 2}},
+					17: MockPiece{position: common.Position{2, 3}},
+					24: nil,
+				},
+			},
+			args: args{
+				move: common.Move{
+					Start:  common.Position{4, 2},
+					Finish: common.Position{2, 3},
+				},
+			},
+			wantNextBoard: pieceStorageWrapper{
+				BasePieceStorage: SliceBoard{
+					BaseBoard: NewBaseBoard(common.Size{5, 5}),
 
-	expectedNextBoard := pieceStorageWrapper{
-		BasePieceStorage: SliceBoard{
-			BaseBoard: NewBaseBoard(common.Size{5, 5}),
-
-			pieces: []common.Piece{
-				11: MockPiece{position: common.Position{1, 2}},
-				17: MockPiece{position: common.Position{2, 3}},
-				24: nil,
+					pieces: []common.Piece{
+						17: MockPiece{position: common.Position{2, 3}},
+						24: nil,
+					},
+				},
 			},
 		},
-	}
-	if !reflect.DeepEqual(nextBoard, expectedNextBoard) {
-		test.Fail()
+	} {
+		board := SliceBoard{
+			BaseBoard: NewBaseBoard(data.fields.size),
+
+			pieces: data.fields.pieces,
+		}
+		gotNextBoard := board.ApplyMove(data.args.move)
+
+		if !reflect.DeepEqual(gotNextBoard, data.wantNextBoard) {
+			test.Fail()
+		}
 	}
 }

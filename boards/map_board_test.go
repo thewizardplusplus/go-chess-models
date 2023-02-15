@@ -100,48 +100,93 @@ func TestMapBoardPiece(test *testing.T) {
 }
 
 func TestMapBoardApplyMove(test *testing.T) {
-	board := NewMapBoard(common.Size{5, 5}, []common.Piece{
-		MockPiece{position: common.Position{2, 3}},
-		MockPiece{position: common.Position{4, 2}},
-	})
-	nextBoard := board.ApplyMove(common.Move{
-		Start:  common.Position{4, 2},
-		Finish: common.Position{1, 2},
-	})
+	type fields struct {
+		size   common.Size
+		pieces pieceGroup
+	}
+	type args struct {
+		move common.Move
+	}
+	type data struct {
+		fields        fields
+		args          args
+		wantNextBoard common.PieceStorage
+	}
 
-	expectedBoard := pieceStorageWrapper{
-		BasePieceStorage: MapBoard{
-			BaseBoard: NewBaseBoard(common.Size{5, 5}),
-
-			pieces: pieceGroup{
-				common.Position{2, 3}: MockPiece{
-					position: common.Position{2, 3},
+	for _, data := range []data{
+		{
+			fields: fields{
+				size: common.Size{5, 5},
+				pieces: pieceGroup{
+					common.Position{2, 3}: MockPiece{
+						position: common.Position{2, 3},
+					},
+					common.Position{4, 2}: MockPiece{
+						position: common.Position{4, 2},
+					},
 				},
-				common.Position{4, 2}: MockPiece{
-					position: common.Position{4, 2},
+			},
+			args: args{
+				move: common.Move{
+					Start:  common.Position{4, 2},
+					Finish: common.Position{1, 2},
+				},
+			},
+			wantNextBoard: pieceStorageWrapper{
+				BasePieceStorage: MapBoard{
+					BaseBoard: NewBaseBoard(common.Size{5, 5}),
+
+					pieces: pieceGroup{
+						common.Position{1, 2}: MockPiece{
+							position: common.Position{1, 2},
+						},
+						common.Position{2, 3}: MockPiece{
+							position: common.Position{2, 3},
+						},
+					},
 				},
 			},
 		},
-	}
-	if !reflect.DeepEqual(board, expectedBoard) {
-		test.Fail()
-	}
-
-	expectedNextBoard := pieceStorageWrapper{
-		BasePieceStorage: MapBoard{
-			BaseBoard: NewBaseBoard(common.Size{5, 5}),
-
-			pieces: pieceGroup{
-				common.Position{1, 2}: MockPiece{
-					position: common.Position{1, 2},
+		{
+			fields: fields{
+				size: common.Size{5, 5},
+				pieces: pieceGroup{
+					common.Position{2, 3}: MockPiece{
+						position: common.Position{2, 3},
+					},
+					common.Position{4, 2}: MockPiece{
+						position: common.Position{4, 2},
+					},
 				},
-				common.Position{2, 3}: MockPiece{
-					position: common.Position{2, 3},
+			},
+			args: args{
+				move: common.Move{
+					Start:  common.Position{4, 2},
+					Finish: common.Position{2, 3},
+				},
+			},
+			wantNextBoard: pieceStorageWrapper{
+				BasePieceStorage: MapBoard{
+					BaseBoard: NewBaseBoard(common.Size{5, 5}),
+
+					pieces: pieceGroup{
+						common.Position{2, 3}: MockPiece{
+							position: common.Position{2, 3},
+						},
+					},
 				},
 			},
 		},
-	}
-	if !reflect.DeepEqual(nextBoard, expectedNextBoard) {
-		test.Fail()
+	} {
+		board := MapBoard{
+			BaseBoard: NewBaseBoard(data.fields.size),
+
+			pieces: data.fields.pieces,
+		}
+		gotNextBoard := board.ApplyMove(data.args.move)
+
+		if !reflect.DeepEqual(gotNextBoard, data.wantNextBoard) {
+			test.Fail()
+		}
 	}
 }
