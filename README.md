@@ -21,7 +21,7 @@ _**Disclaimer:** this library was written directly on an Android smartphone with
 - generating moves via filtering from all possible ones;
 - [perft](https://www.chessprogramming.org/Perft) function;
 - using an abstraction of a piece;
-- [Forsyth–Edwards Notation](https://en.wikipedia.org/wiki/Forsyth–Edwards_Notation):
+- [Forsyth-Edwards Notation](https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation):
   - parsing:
     - of a position;
     - of a move;
