@@ -35,7 +35,8 @@ _**Disclaimer:** this library was written directly on an Android smartphone with
     - of a piece color;
     - of a board;
 - utilities:
-  - utility for counting all possible moves (based on the [perft](https://www.chessprogramming.org/Perft) function).
+  - utility for counting all possible moves (based on the [perft](https://www.chessprogramming.org/Perft) function);
+  - utility for generating all possible chess moves.
 
 ## Installation
 
@@ -323,6 +324,7 @@ BenchmarkPerft/SliceBoard/kiwipete/2Ply-8      	       5	 208109435 ns/op	103011
 ## Utilities
 
 - [go-chess-perft](cmd/go-chess-perft) &mdash; utility for counting all possible moves (based on the [perft](https://www.chessprogramming.org/Perft) function)
+- [go-chess-moves](cmd/go-chess-moves) &mdash; utility for generating all possible chess moves
 
 ## License
 
