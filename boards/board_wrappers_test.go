@@ -36,7 +36,10 @@ func (piece MockPiece) ApplyPosition(position common.Position) common.Piece {
 	}
 }
 
-func (piece MockPiece) CheckMove(move common.Move, storage common.PieceStorage) bool {
+func (piece MockPiece) CheckMove(
+	move common.Move,
+	storage common.PieceStorage,
+) bool {
 	if piece.checkMove == nil {
 		panic("not implemented")
 	}
@@ -54,9 +57,10 @@ func (storage MockBasePieceStorage) Size() common.Size {
 	return storage.size
 }
 
-func (storage MockBasePieceStorage) Piece(
-	position common.Position,
-) (piece common.Piece, ok bool) {
+func (storage MockBasePieceStorage) Piece(position common.Position) (
+	piece common.Piece,
+	ok bool,
+) {
 	if storage.piece == nil {
 		panic("not implemented")
 	}
@@ -64,7 +68,9 @@ func (storage MockBasePieceStorage) Piece(
 	return storage.piece(position)
 }
 
-func (storage MockBasePieceStorage) ApplyMove(move common.Move) common.PieceStorage {
+func (storage MockBasePieceStorage) ApplyMove(
+	move common.Move,
+) common.PieceStorage {
 	panic("not implemented")
 }
 
@@ -97,7 +103,8 @@ func TestPieceGroupGetterWrapperPieces(test *testing.T) {
 			MockBasePieceStorage: MockBasePieceStorage{
 				size: common.Size{5, 5},
 				piece: func(position common.Position) (piece common.Piece, ok bool) {
-					if position != (common.Position{2, 3}) && position != (common.Position{4, 2}) {
+					if position != (common.Position{2, 3}) &&
+						position != (common.Position{4, 2}) {
 						return nil, false
 					}
 
@@ -182,7 +189,8 @@ func TestMoveCheckerWrapperCheckMove(test *testing.T) {
 			fields: fields{
 				size: common.Size{2, 2},
 				piece: func(position common.Position) (piece common.Piece, ok bool) {
-					if position != (common.Position{0, 0}) && position != (common.Position{1, 1}) {
+					if position != (common.Position{0, 0}) &&
+						position != (common.Position{1, 1}) {
 						return nil, false
 					}
 
@@ -306,7 +314,8 @@ func TestPieceStorageWrapperPieces(test *testing.T) {
 		BasePieceStorage: MockBasePieceStorage{
 			size: common.Size{5, 5},
 			piece: func(position common.Position) (piece common.Piece, ok bool) {
-				if position != (common.Position{2, 3}) && position != (common.Position{4, 2}) {
+				if position != (common.Position{2, 3}) &&
+					position != (common.Position{4, 2}) {
 					return nil, false
 				}
 
@@ -390,7 +399,8 @@ func TestPieceStorageWrapperCheckMove(test *testing.T) {
 			fields: fields{
 				size: common.Size{2, 2},
 				piece: func(position common.Position) (piece common.Piece, ok bool) {
-					if position != (common.Position{0, 0}) && position != (common.Position{1, 1}) {
+					if position != (common.Position{0, 0}) &&
+						position != (common.Position{1, 1}) {
 						return nil, false
 					}
 

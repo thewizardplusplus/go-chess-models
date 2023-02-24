@@ -16,13 +16,11 @@ func (group ByPosition) Len() int {
 	return len(group)
 }
 
-func (group ByPosition) Swap(i, j int) {
+func (group ByPosition) Swap(i int, j int) {
 	group[i], group[j] = group[j], group[i]
 }
 
-func (group ByPosition) Less(
-	i, j int,
-) bool {
+func (group ByPosition) Less(i int, j int) bool {
 	a, b := group[i].Position(), group[j].Position()
 	if a.File == b.File {
 		return a.Rank < b.Rank

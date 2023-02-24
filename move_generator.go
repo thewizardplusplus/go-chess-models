@@ -69,7 +69,10 @@ func (generator MoveGenerator) MovesForPosition(
 
 // PerftMoveGenerator ...
 type PerftMoveGenerator interface {
-	MovesForColor(storage common.PieceStorage, color common.Color) ([]common.Move, error)
+	MovesForColor(storage common.PieceStorage, color common.Color) (
+		[]common.Move,
+		error,
+	)
 }
 
 // PerftHandler ...

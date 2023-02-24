@@ -15,7 +15,7 @@ type MapBoard struct {
 
 // NewMapBoard ...
 func NewMapBoard(size common.Size, pieces []common.Piece) common.PieceStorage {
-	pieceGroup := make(pieceGroup) // nolint: vetshadow
+	pieceGroup := make(pieceGroup, len(pieces))
 	for _, piece := range pieces {
 		pieceGroup[piece.Position()] = piece
 	}
@@ -26,7 +26,10 @@ func NewMapBoard(size common.Size, pieces []common.Piece) common.PieceStorage {
 }
 
 // common.Piece ...
-func (board MapBoard) Piece(position common.Position) (piece common.Piece, ok bool) {
+func (board MapBoard) Piece(position common.Position) (
+	piece common.Piece,
+	ok bool,
+) {
 	piece, ok = board.pieces[position]
 	return piece, ok
 }

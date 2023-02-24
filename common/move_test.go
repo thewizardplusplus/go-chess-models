@@ -51,9 +51,10 @@ func (storage MockBasePieceStorage) Size() Size {
 	return storage.size
 }
 
-func (storage MockBasePieceStorage) Piece(
-	position Position,
-) (piece Piece, ok bool) {
+func (storage MockBasePieceStorage) Piece(position Position) (
+	piece Piece,
+	ok bool,
+) {
 	if storage.piece == nil {
 		panic("not implemented")
 	}

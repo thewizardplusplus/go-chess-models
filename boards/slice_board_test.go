@@ -54,7 +54,9 @@ func TestSliceBoardPiece(test *testing.T) {
 					24: nil,
 				},
 			},
-			args: args{common.Position{2, 3}},
+			args: args{
+				position: common.Position{2, 3},
+			},
 			wantPiece: MockPiece{
 				position: common.Position{2, 3},
 			},
@@ -69,7 +71,9 @@ func TestSliceBoardPiece(test *testing.T) {
 					24: nil,
 				},
 			},
-			args:      args{common.Position{0, 0}},
+			args: args{
+				position: common.Position{0, 0},
+			},
 			wantPiece: nil,
 			wantOk:    false,
 		},

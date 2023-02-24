@@ -45,9 +45,10 @@ func (storage MockPieceStorage) Size() common.Size {
 	return storage.size
 }
 
-func (storage MockPieceStorage) Piece(
-	position common.Position,
-) (piece common.Piece, ok bool) {
+func (storage MockPieceStorage) Piece(position common.Position) (
+	piece common.Piece,
+	ok bool,
+) {
 	if storage.piece == nil {
 		panic("not implemented")
 	}

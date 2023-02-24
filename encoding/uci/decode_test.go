@@ -211,9 +211,7 @@ func TestDecodePieceStorage(test *testing.T) {
 
 	for _, data := range []data{
 		{
-			args: args{
-				fen: "2K3q/8/pp1R",
-			},
+			args: args{"2K3q/8/pp1R"},
 			wantStorage: boards.NewMapBoard(
 				common.Size{
 					Width:  8,
@@ -245,9 +243,7 @@ func TestDecodePieceStorage(test *testing.T) {
 			wantErr: false,
 		},
 		{
-			args: args{
-				fen: "1/2K3q/8/pp1R",
-			},
+			args: args{"1/2K3q/8/pp1R"},
 			wantStorage: boards.NewMapBoard(
 				common.Size{
 					Width:  8,
@@ -279,9 +275,7 @@ func TestDecodePieceStorage(test *testing.T) {
 			wantErr: false,
 		},
 		{
-			args: args{
-				fen: "2K3q/8/pp1R/1",
-			},
+			args: args{"2K3q/8/pp1R/1"},
 			wantStorage: boards.NewMapBoard(
 				common.Size{
 					Width:  8,
@@ -313,9 +307,7 @@ func TestDecodePieceStorage(test *testing.T) {
 			wantErr: false,
 		},
 		{
-			args: args{
-				fen: "2K3q/#/pp1R",
-			},
+			args:        args{"2K3q/#/pp1R"},
 			wantStorage: nil,
 			wantErr:     true,
 		},

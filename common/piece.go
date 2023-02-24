@@ -79,13 +79,14 @@ type PieceStorage interface {
 // Pieces ...
 func Pieces(storage PieceStorage) []Piece {
 	var pieces []Piece
-	storage.Size().IteratePositions(func(position Position) error { // nolint: errcheck, gosec, lll
-		if piece, ok := storage.Piece(position); ok {
-			pieces = append(pieces, piece)
-		}
+	storage.Size().
+		IteratePositions(func(position Position) error { // nolint: errcheck
+			if piece, ok := storage.Piece(position); ok {
+				pieces = append(pieces, piece)
+			}
 
-		return nil
-	})
+			return nil
+		})
 
 	return pieces
 }

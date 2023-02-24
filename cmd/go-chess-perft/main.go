@@ -68,7 +68,7 @@ func main() {
 
 	var generator models.MoveGenerator
 	moveCount := models.Perft(generator, storage, parsedColor, *deep, nil)
-	var unitEnding string
+	unitEnding := ""
 	if moveCount != 1 {
 		unitEnding = "s"
 	}

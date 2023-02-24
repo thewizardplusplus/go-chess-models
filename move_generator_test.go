@@ -37,7 +37,10 @@ func (piece MockPiece) ApplyPosition(position common.Position) common.Piece {
 	}
 }
 
-func (piece MockPiece) CheckMove(move common.Move, storage common.PieceStorage) bool {
+func (piece MockPiece) CheckMove(
+	move common.Move,
+	storage common.PieceStorage,
+) bool {
 	if piece.checkMove == nil {
 		panic("not implemented")
 	}
@@ -55,9 +58,10 @@ func (storage MockBasePieceStorage) Size() common.Size {
 	return storage.size
 }
 
-func (storage MockBasePieceStorage) Piece(
-	position common.Position,
-) (piece common.Piece, ok bool) {
+func (storage MockBasePieceStorage) Piece(position common.Position) (
+	piece common.Piece,
+	ok bool,
+) {
 	if storage.piece == nil {
 		panic("not implemented")
 	}
@@ -65,7 +69,9 @@ func (storage MockBasePieceStorage) Piece(
 	return storage.piece(position)
 }
 
-func (storage MockBasePieceStorage) ApplyMove(move common.Move) common.PieceStorage {
+func (storage MockBasePieceStorage) ApplyMove(
+	move common.Move,
+) common.PieceStorage {
 	panic("not implemented")
 }
 
@@ -137,7 +143,9 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 					return nil
 				},
 			},
-			args: args{common.Black},
+			args: args{
+				color: common.Black,
+			},
 			wantMoves: []common.Move{
 				{
 					Start:  common.Position{0, 0},
@@ -200,7 +208,9 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 					return nil
 				},
 			},
-			args: args{common.White},
+			args: args{
+				color: common.White,
+			},
 			wantMoves: []common.Move{
 				{
 					Start:  common.Position{1, 0},
@@ -263,7 +273,9 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 					return errors.New("dummy")
 				},
 			},
-			args:      args{common.Black},
+			args: args{
+				color: common.Black,
+			},
 			wantMoves: nil,
 			wantErr:   nil,
 		},
@@ -292,7 +304,9 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 					return common.ErrKingCapture
 				},
 			},
-			args:      args{common.Black},
+			args: args{
+				color: common.Black,
+			},
 			wantMoves: nil,
 			wantErr:   common.ErrKingCapture,
 		},
@@ -308,6 +322,7 @@ func TestMoveCheckerMovesForColor(test *testing.T) {
 				checkMove: data.fields.checkMove,
 			},
 		}
+
 		var generator MoveGenerator
 		gotMoves, gotErr := generator.MovesForColor(storage, data.args.color)
 
@@ -343,7 +358,9 @@ func TestMoveCheckerMovesForPosition(test *testing.T) {
 					return errors.New("dummy")
 				},
 			},
-			args:      args{common.Position{1, 1}},
+			args: args{
+				position: common.Position{1, 1},
+			},
 			wantMoves: nil,
 			wantErr:   nil,
 		},
@@ -354,7 +371,9 @@ func TestMoveCheckerMovesForPosition(test *testing.T) {
 					return common.ErrKingCapture
 				},
 			},
-			args:      args{common.Position{1, 1}},
+			args: args{
+				position: common.Position{1, 1},
+			},
 			wantMoves: nil,
 			wantErr:   common.ErrKingCapture,
 		},
@@ -365,7 +384,9 @@ func TestMoveCheckerMovesForPosition(test *testing.T) {
 					return nil
 				},
 			},
-			args: args{common.Position{1, 1}},
+			args: args{
+				position: common.Position{1, 1},
+			},
 			wantMoves: []common.Move{
 				{
 					Start:  common.Position{1, 1},
@@ -397,7 +418,9 @@ func TestMoveCheckerMovesForPosition(test *testing.T) {
 					return nil
 				},
 			},
-			args: args{common.Position{1, 1}},
+			args: args{
+				position: common.Position{1, 1},
+			},
 			wantMoves: []common.Move{
 				{
 					Start:  common.Position{1, 1},
@@ -419,6 +442,7 @@ func TestMoveCheckerMovesForPosition(test *testing.T) {
 				checkMove: data.fields.checkMove,
 			},
 		}
+
 		var generator MoveGenerator
 		gotMoves, gotErr := generator.MovesForPosition(storage, data.args.position)
 

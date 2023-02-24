@@ -39,7 +39,8 @@ func DecodePosition(text string) (position common.Position, err error) {
 	}
 	rank--
 
-	return common.Position{File: file, Rank: rank}, nil
+	position = common.Position{File: file, Rank: rank}
+	return position, nil
 }
 
 // DecodeMove ...
@@ -60,7 +61,8 @@ func DecodeMove(text string) (move common.Move, err error) {
 		return common.Move{}, fmt.Errorf("incorrect finish: %s", err)
 	}
 
-	return common.Move{Start: start, Finish: finish}, nil
+	move = common.Move{Start: start, Finish: finish}
+	return move, nil
 }
 
 // DecodePiece ...
@@ -126,11 +128,11 @@ func DecodePieceStorage(
 	return storage, nil
 }
 
-func decodeRank(
-	index int,
-	fen string,
-	pieceFactory common.PieceFactory,
-) (pieces []common.Piece, maxFile int, err error) {
+func decodeRank(index int, fen string, pieceFactory common.PieceFactory) (
+	pieces []common.Piece,
+	maxFile int,
+	err error,
+) {
 	for _, symbol := range fen {
 		piece, err := DecodePiece(symbol, pieceFactory)
 		if err != nil {

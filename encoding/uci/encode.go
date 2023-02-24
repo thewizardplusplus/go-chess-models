@@ -72,25 +72,26 @@ func EncodePieceStorage(storage common.PieceStorage) string {
 	}
 
 	ranks := make([]string, 0, storage.Size().Height)
-	storage.Size().IteratePositions(func(position common.Position) error { // nolint: errcheck, gosec, lll
-		if piece, ok := storage.Piece(position); ok {
-			resetShift()
+	storage.Size().
+		IteratePositions(func(position common.Position) error { // nolint: errcheck
+			if piece, ok := storage.Piece(position); ok {
+				resetShift()
 
-			rank += EncodePiece(piece)
-		} else {
-			shift++
-		}
+				rank += EncodePiece(piece)
+			} else {
+				shift++
+			}
 
-		// last file
-		if position.File == storage.Size().Width-1 {
-			resetShift()
+			// last file
+			if position.File == storage.Size().Width-1 {
+				resetShift()
 
-			ranks = append(ranks, rank)
-			rank = ""
-		}
+				ranks = append(ranks, rank)
+				rank = ""
+			}
 
-		return nil
-	})
+			return nil
+		})
 
 	reverse(ranks)
 	return strings.Join(ranks, "/")

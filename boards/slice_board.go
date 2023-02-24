@@ -12,10 +12,14 @@ type SliceBoard struct {
 }
 
 // NewSliceBoard ...
-func NewSliceBoard(size common.Size, pieces []common.Piece) common.PieceStorage {
+func NewSliceBoard(
+	size common.Size,
+	pieces []common.Piece,
+) common.PieceStorage {
 	extendedPieces := make([]common.Piece, size.PositionCount())
 	for _, piece := range pieces {
-		extendedPieces[size.PositionIndex(piece.Position())] = piece
+		positionIndex := size.PositionIndex(piece.Position())
+		extendedPieces[positionIndex] = piece
 	}
 
 	baseBoard := NewBaseBoard(size)
@@ -24,8 +28,12 @@ func NewSliceBoard(size common.Size, pieces []common.Piece) common.PieceStorage 
 }
 
 // common.Piece ...
-func (board SliceBoard) Piece(position common.Position) (piece common.Piece, ok bool) {
-	piece = board.pieces[board.Size().PositionIndex(position)]
+func (board SliceBoard) Piece(position common.Position) (
+	piece common.Piece,
+	ok bool,
+) {
+	positionIndex := board.Size().PositionIndex(position)
+	piece = board.pieces[positionIndex]
 	return piece, piece != nil
 }
 
@@ -36,13 +44,13 @@ func (board SliceBoard) ApplyMove(move common.Move) common.PieceStorage {
 	pieceGroupCopy := make([]common.Piece, len(board.pieces))
 	copy(pieceGroupCopy, board.pieces)
 
-	startIndex, finishIndex :=
-		board.Size().PositionIndex(move.Start), board.Size().PositionIndex(move.Finish)
-	piece := pieceGroupCopy[startIndex]
-	pieceGroupCopy[startIndex] = nil
+	startPositionIndex := board.Size().PositionIndex(move.Start)
+	piece := pieceGroupCopy[startPositionIndex]
+	pieceGroupCopy[startPositionIndex] = nil
 
+	finishPositionIndex := board.Size().PositionIndex(move.Finish)
 	movedPiece := piece.ApplyPosition(move.Finish)
-	pieceGroupCopy[finishIndex] = movedPiece
+	pieceGroupCopy[finishPositionIndex] = movedPiece
 
 	sliceBoard := SliceBoard{board.BaseBoard, pieceGroupCopy}
 	return WrapBasePieceStorage(sliceBoard)
