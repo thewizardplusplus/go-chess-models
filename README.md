@@ -332,4 +332,4 @@ BenchmarkPerft/SliceBoard/kiwipete/2Ply-8      	       5	 208109435 ns/op	103011
 
 The MIT License (MIT)
 
-Copyright &copy; 2019, 2022 thewizardplusplus
+Copyright &copy; 2019, 2022-2023 thewizardplusplus
