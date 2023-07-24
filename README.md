@@ -14,11 +14,17 @@ _**Disclaimer:** this library was written directly on an Android smartphone with
 - representing the board:
   - as an associative array of pieces with their positions as keys;
   - as a plain array of pieces with exact correspondence array indices to piece positions;
+  - as a set of integers corresponding to a particular combination of piece color and type, and where each bit corresponds to a particular piece position (so-called a [bitboard](https://en.wikipedia.org/wiki/Bitboard));
 - immutable applicating moves to the board via copying the latter;
 - checkings of moves:
   - universal;
   - individual for all types of pieces;
 - generating moves via filtering from all possible ones;
+- move restrictions (abandoned moves):
+  - pawn double-move;
+  - en passant capture;
+  - promotion;
+  - castling;
 - [perft](https://www.chessprogramming.org/Perft) function;
 - using an abstraction of a piece;
 - [Forsyth-Edwards Notation](https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation):
@@ -47,7 +53,7 @@ $ go get github.com/thewizardplusplus/go-chess-models
 
 ## Examples
 
-`chessmodels.Board.CheckMove()`:
+`boards.MapBoard.CheckMove()`:
 
 ```go
 package main
@@ -55,25 +61,26 @@ package main
 import (
 	"fmt"
 
-	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/boards"
+	"github.com/thewizardplusplus/go-chess-models/common"
 	"github.com/thewizardplusplus/go-chess-models/pieces"
 )
 
 func main() {
-	board := models.NewBoard(models.Size{Width: 5, Height: 5}, []models.Piece{
-		pieces.NewRook(models.Black, models.Position{File: 2, Rank: 2}),
-		pieces.NewBishop(models.White, models.Position{File: 3, Rank: 3}),
+	board := boards.NewMapBoard(common.Size{Width: 5, Height: 5}, []common.Piece{
+		pieces.NewRook(common.Black, common.Position{File: 2, Rank: 2}),
+		pieces.NewBishop(common.White, common.Position{File: 3, Rank: 3}),
 	})
 
-	moveOne := models.Move{
-		Start:  models.Position{File: 2, Rank: 2},
-		Finish: models.Position{File: 3, Rank: 3},
+	moveOne := common.Move{
+		Start:  common.Position{File: 2, Rank: 2},
+		Finish: common.Position{File: 3, Rank: 3},
 	}
 	fmt.Printf("%+v: %v\n", moveOne, board.CheckMove(moveOne))
 
-	moveTwo := models.Move{
-		Start:  models.Position{File: 3, Rank: 3},
-		Finish: models.Position{File: 2, Rank: 2},
+	moveTwo := common.Move{
+		Start:  common.Position{File: 3, Rank: 3},
+		Finish: common.Position{File: 2, Rank: 2},
 	}
 	fmt.Printf("%+v: %v\n", moveTwo, board.CheckMove(moveTwo))
 
@@ -83,7 +90,7 @@ func main() {
 }
 ```
 
-`chessmodels.Board.ApplyMove()`:
+`boards.MapBoard.ApplyMove()`:
 
 ```go
 package main
@@ -92,23 +99,22 @@ import (
 	"fmt"
 	"sort"
 
-	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/boards"
+	"github.com/thewizardplusplus/go-chess-models/common"
 	"github.com/thewizardplusplus/go-chess-models/pieces"
 )
 
-type ByPosition []models.Piece
+type ByPosition []common.Piece
 
 func (group ByPosition) Len() int {
 	return len(group)
 }
 
-func (group ByPosition) Swap(i, j int) {
+func (group ByPosition) Swap(i int, j int) {
 	group[i], group[j] = group[j], group[i]
 }
 
-func (group ByPosition) Less(
-	i, j int,
-) bool {
+func (group ByPosition) Less(i int, j int) bool {
 	a, b := group[i].Position(), group[j].Position()
 	if a.File == b.File {
 		return a.Rank < b.Rank
@@ -118,17 +124,17 @@ func (group ByPosition) Less(
 }
 
 func main() {
-	board := models.NewBoard(models.Size{Width: 5, Height: 5}, []models.Piece{
-		pieces.NewRook(models.Black, models.Position{File: 2, Rank: 2}),
-		pieces.NewBishop(models.White, models.Position{File: 3, Rank: 3}),
+	board := boards.NewMapBoard(common.Size{Width: 5, Height: 5}, []common.Piece{
+		pieces.NewRook(common.Black, common.Position{File: 2, Rank: 2}),
+		pieces.NewBishop(common.White, common.Position{File: 3, Rank: 3}),
 	})
 	pieces := board.Pieces()
 	sort.Sort(ByPosition(pieces))
 	fmt.Printf("%+v\n", pieces)
 
-	updatedBoard := board.ApplyMove(models.Move{
-		Start:  models.Position{File: 3, Rank: 3},
-		Finish: models.Position{File: 2, Rank: 2},
+	updatedBoard := board.ApplyMove(common.Move{
+		Start:  common.Position{File: 3, Rank: 3},
+		Finish: common.Position{File: 2, Rank: 2},
 	})
 	updatedPieces := updatedBoard.Pieces()
 	sort.Sort(ByPosition(updatedPieces))
@@ -150,18 +156,20 @@ import (
 	"sort"
 
 	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/boards"
+	"github.com/thewizardplusplus/go-chess-models/common"
 	"github.com/thewizardplusplus/go-chess-models/pieces"
 )
 
 func main() {
-	board := models.NewBoard(models.Size{Width: 5, Height: 5}, []models.Piece{
-		pieces.NewRook(models.Black, models.Position{File: 2, Rank: 2}),
-		pieces.NewKnight(models.White, models.Position{File: 3, Rank: 3}),
-		pieces.NewPawn(models.White, models.Position{File: 4, Rank: 3}),
+	board := boards.NewMapBoard(common.Size{Width: 5, Height: 5}, []common.Piece{
+		pieces.NewRook(common.Black, common.Position{File: 2, Rank: 2}),
+		pieces.NewKnight(common.White, common.Position{File: 3, Rank: 3}),
+		pieces.NewPawn(common.White, common.Position{File: 4, Rank: 3}),
 	})
 
 	var generator models.MoveGenerator
-	moves, _ := generator.MovesForColor(board, models.White)
+	moves, _ := generator.MovesForColor(board, common.White)
 
 	// sorting only by the final point will be sufficient for the reproducibility
 	// of this example
@@ -214,14 +222,14 @@ package main
 import (
 	"fmt"
 
-	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/common"
 	"github.com/thewizardplusplus/go-chess-models/encoding/uci"
 )
 
 func main() {
-	move := uci.EncodeMove(models.Move{
-		Start:  models.Position{File: 3, Rank: 3},
-		Finish: models.Position{File: 2, Rank: 2},
+	move := uci.EncodeMove(common.Move{
+		Start:  common.Position{File: 3, Rank: 3},
+		Finish: common.Position{File: 2, Rank: 2},
 	})
 	fmt.Printf("%v\n", move)
 
@@ -238,24 +246,23 @@ import (
 	"fmt"
 	"sort"
 
-	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/boards"
+	"github.com/thewizardplusplus/go-chess-models/common"
 	"github.com/thewizardplusplus/go-chess-models/encoding/uci"
 	"github.com/thewizardplusplus/go-chess-models/pieces"
 )
 
-type ByPosition []models.Piece
+type ByPosition []common.Piece
 
 func (group ByPosition) Len() int {
 	return len(group)
 }
 
-func (group ByPosition) Swap(i, j int) {
+func (group ByPosition) Swap(i int, j int) {
 	group[i], group[j] = group[j], group[i]
 }
 
-func (group ByPosition) Less(
-	i, j int,
-) bool {
+func (group ByPosition) Less(i int, j int) bool {
 	a, b := group[i].Position(), group[j].Position()
 	if a.File == b.File {
 		return a.Rank < b.Rank
@@ -266,7 +273,7 @@ func (group ByPosition) Less(
 
 func main() {
 	const fen = "8/8/8/8/3B4/2r5/8/8"
-	storage, _ := uci.DecodePieceStorage(fen, pieces.NewPiece, models.NewBoard)
+	storage, _ := uci.DecodePieceStorage(fen, pieces.NewPiece, boards.NewMapBoard)
 	pieces := storage.Pieces()
 	sort.Sort(ByPosition(pieces))
 	fmt.Printf("%+v\n", pieces)
@@ -283,15 +290,16 @@ package main
 import (
 	"fmt"
 
-	models "github.com/thewizardplusplus/go-chess-models"
+	"github.com/thewizardplusplus/go-chess-models/boards"
+	"github.com/thewizardplusplus/go-chess-models/common"
 	"github.com/thewizardplusplus/go-chess-models/encoding/uci"
 	"github.com/thewizardplusplus/go-chess-models/pieces"
 )
 
 func main() {
-	board := models.NewBoard(models.Size{Width: 5, Height: 5}, []models.Piece{
-		pieces.NewRook(models.Black, models.Position{File: 2, Rank: 2}),
-		pieces.NewBishop(models.White, models.Position{File: 3, Rank: 3}),
+	board := boards.NewMapBoard(common.Size{Width: 5, Height: 5}, []common.Piece{
+		pieces.NewRook(common.Black, common.Position{File: 2, Rank: 2}),
+		pieces.NewBishop(common.White, common.Position{File: 3, Rank: 3}),
 	})
 	fen := uci.EncodePieceStorage(board)
 	fmt.Printf("%v\n", fen)
@@ -302,7 +310,7 @@ func main() {
 
 ## Benchmarks
 
-The `chessmodels.Perft()` function using the `chessmodels.MapBoard` structure:
+The `chessmodels.Perft()` function using the `boards.MapBoard` structure:
 
 ```
 BenchmarkPerft/MapBoard/initial/1Ply-8         	     486	   2239365 ns/op	  507723 B/op	   13638 allocs/op
@@ -312,7 +320,7 @@ BenchmarkPerft/MapBoard/kiwipete/1Ply-8        	     150	   7844416 ns/op	 19591
 BenchmarkPerft/MapBoard/kiwipete/2Ply-8        	       4	 311539966 ns/op	80169034 B/op	 1892731 allocs/op
 ```
 
-The `chessmodels.Perft()` function used the `chessmodels.SliceBoard` structure:
+The `chessmodels.Perft()` function used the `boards.SliceBoard` structure:
 
 ```
 BenchmarkPerft/SliceBoard/initial/1Ply-8       	     810	   1419572 ns/op	   684016 B/op	   13646 allocs/op
@@ -320,6 +328,16 @@ BenchmarkPerft/SliceBoard/initial/2Ply-8       	      68	  17883575 ns/op	  8331
 BenchmarkPerft/SliceBoard/initial/3Ply-8       	       4	 253594389 ns/op	121325578 B/op	 2399248 allocs/op
 BenchmarkPerft/SliceBoard/kiwipete/1Ply-8      	     220	   5340912 ns/op	  2583824 B/op	   47672 allocs/op
 BenchmarkPerft/SliceBoard/kiwipete/2Ply-8      	       5	 208109435 ns/op	103011680 B/op	 1895999 allocs/op
+```
+
+The `chessmodels.Perft()` function used the `boards.BitBoard` structure:
+
+```
+BenchmarkPerft/BitBoard/initial/1Ply-8         	     284	   4036298 ns/op	   958048 B/op	   35888 allocs/op
+BenchmarkPerft/BitBoard/initial/2Ply-8         	      20	  54032966 ns/op	 11627104 B/op	  433592 allocs/op
+BenchmarkPerft/BitBoard/initial/3Ply-8         	       2	 708741154 ns/op	169201536 B/op	 6300499 allocs/op
+BenchmarkPerft/BitBoard/kiwipete/1Ply-8        	      74	  14372268 ns/op	  3546305 B/op	  124803 allocs/op
+BenchmarkPerft/BitBoard/kiwipete/2Ply-8        	       2	 637371490 ns/op	138270896 B/op	 4866744 allocs/op
 ```
 
 ## Utilities
