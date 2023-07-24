@@ -1,5 +1,28 @@
 # Change Log
 
+## [v1.9.0](https://github.com/thewizardplusplus/go-chess-models/tree/v1.9.0) (2023-07-24)
+
+Adding the `boards.BitBoard` structure; adding the `go-chess-moves` and `go-chess-comparator` tools.
+
+- new features:
+  - the `boards.BitBoard` structure:
+    - add the `boards.BitBoard` structure;
+    - add the `boards.BitBoard` structure to the `go-chess-perft` tool;
+  - add the `go.mod` file;
+  - tools:
+    - improve the `go-chess-perft` tool:
+      - improve the documentation;
+      - improve the options;
+      - validate the `deep` option;
+    - add the `go-chess-moves` tool;
+    - add the `go-chess-comparator` tool;
+- refactoring:
+  - fix the code style with the `golangci-lint` tool;
+- unit testing:
+  - improve the tests of the `ApplyMove()` methods;
+- examples:
+  - move the tests of the `boards` package to the right place.
+
 ## [v1.8.1](https://github.com/thewizardplusplus/go-chess-models/tree/v1.8.1) (2022-04-07)
 
 Adding the `boards.WrapBasePieceStorage` function that universally implements the `Pieces()` and `CheckMove()` methods of the `common.PieceStorage` interface if necessary and refactoring.
